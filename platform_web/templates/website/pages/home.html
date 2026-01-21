@@ -1,0 +1,36 @@
+{% extends 'website/parts/layout/base.html' %}
+{% load static %}
+
+{% block title %}
+  Home | {{ website_config.site_name }}
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/pages/home.css' %}" />
+{% endblock %}
+
+{% block content %}
+  {% comment %}add nav at the top right{% endcomment %}
+  <section class="hero">
+    {% include 'website/parts/layout/nav.html' %}
+
+    <video class="hero__video" autoplay muted loop playsinline preload="auto">
+      <source src="{% static 'media/video/hero-1.mp4' %}" type="video/mp4" />
+      <!-- fallback image -->
+    </video>
+
+    <div class="hero__overlay"></div>
+
+    <div class="hero__content">
+      <h1 class="title">Welcome to Code Levels!</h1>
+
+      <p class="text">Step-by-step programming projects made with fun and joy in heart!</p>
+
+      {% if user.is_authenticated %}
+        <a class="btn btn-primary" href="{% url 'dashboard' %}">Get started</a>
+      {% else %}
+        <a class="btn btn-primary" href="{% url 'account_login' %}">Get started</a>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

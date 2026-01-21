@@ -1,0 +1,1 @@
+- remove credentials from bash files (create_super_user, create_user etc)

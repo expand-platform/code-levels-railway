@@ -1,0 +1,134 @@
+{% extends 'website/parts/base.html' %}
+{% load static %}
+{% block title %}
+  Деталі вакансії
+{% endblock %}
+{% block content %}
+  <div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="bradcam_text">
+            <h3>{{ vacancy.position_title }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="job_details_area">
+    <section class="row mb-4">
+      <div class="col">
+        <div class="container">
+          <a href="{% url 'jobs' %}" class="btn btn-secondary btn-sm mb-2">&larr; До всіх вакансій</a>
+        </div>
+      </div>
+    </section>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="job_details_header">
+            <div class="single_jobs white-bg d-flex justify-content-between">
+              <div class="jobs_left d-flex align-items-center">
+                <div class="thumb">
+                  {% if vacancy %}
+                    <img src="{% static 'img/svg_icon/' %}{{ vacancy.icon_id }}.svg" alt="icon" />
+                  {% endif %}
+                </div>
+                <div class="jobs_conetent">
+                  <a href="#"><h4>{{ vacancy.position_title }}</h4></a>
+                  <div class="links_locat d-flex align-items-center">
+                    <div class="location">
+                      <p>
+                        <i class="fa fa-map-marker"></i> {{ vacancy.location }}
+                      </p>
+                    </div>
+                    <div class="location">
+                      <p>
+                        <i class="fa fa-clock-o"></i> {{ vacancy.get_employment_type_display }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="jobs_right">
+                <div class="apply_now"></div>
+              </div>
+            </div>
+          </div>
+          <div class="descript_wrap white-bg">
+            <div class="single_wrap">
+              <h4>Опис вакансії</h4>
+              {% if vacancy %}
+                <div>{{ vacancy.job_description|safe }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="job_sumary">
+            <div class="summery_header">
+              <h3>Коротко про вакансію</h3>
+            </div>
+            <div class="job_content">
+              <ul>
+                <li>
+                  Опубліковано: <span>{{ vacancy.publish_date|date:'d M, Y' }}</span>
+                </li>
+                <li>
+                  Активна до: <span>{{ vacancy.active_until|date:'d M, Y' }}</span>
+                </li>
+                <li>
+                  Зарплата: <span>
+                    {% if vacancy.salary_from or vacancy.salary_to %}
+                      USD{% if vacancy.salary_from %}{{ vacancy.salary_from }}{% endif %}
+                      {% if vacancy.salary_from and vacancy.salary_to %} - {% endif %}
+                      {% if vacancy.salary_to %}{{ vacancy.salary_to }}{% endif %}
+                    {% else %}
+                      {{ vacancy.salary_note }}
+                    {% endif %}
+                  </span>
+                </li>
+                <li>
+                  Місто: <span>{{ vacancy.location }}</span>
+                </li>
+                <li>
+                  Тип зайнятості: <span>{{ vacancy.get_employment_type_display }}</span>
+                </li>
+                <li>
+                  Компанія: <span>{{ vacancy.company }}</span>
+                </li>
+                <li>
+                  Галузь: <span>{{ vacancy.industry }}</span>
+                </li>
+                <li>
+                  Досвід: <span>{{ vacancy.experience_required }}</span>
+                </li>
+                <li>
+                  Освітній рівень: <span>{{ vacancy.get_education_level_display }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="share_wrap d-flex">
+            <span>Подiлитись:</span>
+            <ul>
+              <li>
+                <a href="#"><i class="fa fa-facebook"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-google-plus"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-envelope"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

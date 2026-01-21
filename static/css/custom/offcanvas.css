@@ -1,0 +1,25 @@
+:root {
+    --offcanvas-width: 25vw;
+    /* --offcanvas-bg: var(--soft-white);
+    --offcanvas-text: var(--dark-gray);
+    --offcanvas-border-color: var(--light-gray); */
+}
+
+:root[data-theme="dark"] {
+    /* --offcanvas-bg: #1f2937;
+    --offcanvas-text: var(--soft-white);
+    --offcanvas-border-color: #374151; */
+}
+
+.offcanvas,
+.offcanvas-lg,
+.offcanvas-md,
+.offcanvas-sm,
+.offcanvas-xl,
+.offcanvas-xxl {
+    /* --bs-offcanvas-zindex: 1045; */
+    --bs-offcanvas-width: var(--offcanvas-width);
+    /* --bs-offcanvas-height: 30vh;
+    --bs-offcanvas-padding-x: 1rem;
+    --bs-offcanvas-padding-y: 1rem; */
+}

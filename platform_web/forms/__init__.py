@@ -1,0 +1,2 @@
+from platform_web.forms.auth_forms import CustomLoginForm
+from platform_web.forms.custom_signup_form import CustomSignupForm

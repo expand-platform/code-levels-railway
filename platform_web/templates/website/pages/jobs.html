@@ -1,0 +1,88 @@
+{% extends 'website/parts/base.html' %}
+{% load static %}
+{% block title %}
+  Вакансії
+{% endblock %}
+
+{% block content %}
+  <div class="bradcam_area bradcam_bg_1">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="bradcam_text">
+            <h3>Шукайте вакансії разом з нами!</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="job_listing_area plus_padding">
+    <div class="container">
+      <div class="row">
+        {% if user.is_authenticated %}
+          <div class="container mb-4">
+            <div class="row">
+              <div class="col text-right">
+                <a href="{% url 'add_job' %}" class="btn btn-success green-bg"><i class="fa fa-plus"></i> Додати вакансію</a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        <div class="job_lists m-0 w-100">
+          <div class="row">
+            {% for vacancy in vacancies %}
+              <div class="col-lg-12 col-md-12">
+                <div class="single_jobs white-bg d-flex justify-content-between">
+                  <div class="jobs_left d-flex align-items-center">
+                    {% if user.is_authenticated and user.is_staff %}
+                      <div class="mr-3">
+                        <a href="{% url 'edit_job' pk=vacancy.id %}" class="btn btn-outline-info"><i class="fa fa-edit"></i> Редагувати</a>
+                      </div>
+                      <div class="mr-3">
+                        <form method="POST" action="{% url 'delete_job' pk=vacancy.id %}">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger"><i class="fa fa-trash fa-remove fa-trash-alt"></i></button>
+                        </form>
+                      </div>
+                    {% endif %}
+                    <div class="thumb">
+                      <img src="{% static 'img/svg_icon/' %}{{ vacancy.icon_id }}.svg" alt="icon" />
+                    </div>
+                    <div class="jobs_conetent">
+                      <a href="{% url 'job_single' id=vacancy.id %}"><h4>{{ vacancy.position_title }}</h4></a>
+                      <div class="links_locat d-flex align-items-center">
+                        <div class="location">
+                          <p>
+                            <i class="fa fa-map-marker"></i> {{ vacancy.location }}
+                          </p>
+                        </div>
+                        <div class="location">
+                          <p>
+                            <i class="fa fa-clock-o"></i> {{ vacancy.get_employment_type_display }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="jobs_right">
+                    <div class="apply_now">
+                      <a href="{% url 'job_single' id=vacancy.id %}" class="boxed-btn3">Вiдгукнутись</a>
+                    </div>
+                    <div class="date">
+                      <p>Опубліковано: {{ vacancy.publish_date|date:'d M Y' }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% empty %}
+              <div class="col-lg-12">
+                <p>Вакансій не знайдено.</p>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

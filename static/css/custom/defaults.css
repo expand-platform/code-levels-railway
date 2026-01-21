@@ -1,0 +1,11 @@
+@import url('/static/css/theme/colors.css');
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Google Sans', 'Roboto', 'Segoe UI', Arial, sans-serif;
+}
+
+a {
+    color: var(--text-primary);
+}

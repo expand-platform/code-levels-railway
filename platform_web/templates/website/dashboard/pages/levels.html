@@ -1,0 +1,79 @@
+{% extends 'website/dashboard/parts/layout.html' %}
+{% load static %}
+
+{% block title %}
+  Level {{ lesson_id }} | {{ website_config.site_name }}
+{% endblock %}
+
+{% block extra_css %}
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/dashboard/levels.css' %}" />
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/parts/codepen.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/levels.js' %}" defer type="module"></script>
+{% endblock %}
+
+{% block dashboard_content %}
+  <section class="levels row">
+    <aside class="sidebar description col-4">
+      <div class="description-content">
+        <h2>Level #{{ lesson_id }}: [title] {{ lesson_title }}</h2>
+        <p>{{ lesson_description }}</p>
+
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid omnis sapiente, ipsa, error reiciendis suscipit recusandae ut dicta similique adipisci quisquam. Deserunt a non ipsa illum laudantium nulla quo repellendus impedit nemo vel. Accusamus adipisci neque delectus voluptate doloribus cupiditate dolorum laudantium, excepturi nesciunt quaerat consectetur, rem similique! Cupiditate maiores molestiae adipisci explicabo non tempore illo quia labore, et veritatis voluptatem commodi illum magni porro perspiciatis? Modi quos assumenda iure dolore tempore repellat temporibus adipisci dolores reiciendis error nisi natus dolorum eos velit eaque officia nostrum ex consectetur sapiente tempora, eligendi quas voluptatum nihil! Consequatur ducimus aut maxime rem. Saepe facere, perferendis fugit, ipsa perspiciatis vel a ex quasi minima alias quis vero, laudantium sed? Laudantium ipsam iure eum cupiditate tempore repudiandae quam corporis autem itaque exercitationem dolores ullam, voluptatibus a aspernatur dolorum in soluta odit totam saepe possimus aut? Obcaecati doloribus blanditiis itaque facere consequuntur corrupti expedita sequi. Obcaecati, vitae quam officiis error minima totam vero repudiandae natus odit consequuntur accusantium ullam repellendus sint distinctio deserunt expedita optio quasi nihil odio tenetur, illo nesciunt dolorem tempore! Aut ratione nulla facere esse at similique, alias ipsum obcaecati mollitia facilis dolore beatae reprehenderit molestias cumque. Nostrum praesentium aliquid tempore dolorem cumque!</p>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque est tenetur sit tempora consequatur facilis molestiae magni aspernatur saepe enim, voluptates inventore quo doloremque amet officiis architecto. Dolorum temporibus totam praesentium, quia sit nisi soluta ipsa recusandae ut necessitatibus accusamus expedita voluptatibus blanditiis vitae facilis, esse possimus voluptatem perferendis repellat tempora nam dolor dolores veniam. Saepe nam temporibus amet totam, nihil tenetur voluptatum, sint in eligendi ipsum, est ab eum. Reiciendis ullam, incidunt neque repellendus excepturi sint soluta? Numquam architecto eveniet deserunt modi sit laborum rem dolores molestiae, beatae nisi sequi expedita voluptate, perspiciatis aut! Deserunt, quia. Cum, numquam quam!</p>
+      </div>
+      <hr class="line" />
+
+      {# objectives #}
+      <div class="objectives">
+        <h3>Objectives</h3>
+        <div class="row align-items-end">
+          <div class="col-8 objectives">
+            <form action="">
+              <ul>
+                <li>
+                  <input type="checkbox" name="" id="" />Objective 1
+                </li>
+                <li>
+                  <input type="checkbox" name="" id="" />Objective 2
+                </li>
+                <li>
+                  <input type="checkbox" name="" id="" />Objective 3
+                </li>
+              </ul>
+            </form>
+          </div>
+
+          {# buttons #}
+          <div class="col-4 actions text-end">
+            <button class="btn btn-outline-success">> Submit</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <main class="embeded task col-8 position-relative">
+      {# cover-line #}
+      <div class="no-code-cover-line"></div>
+
+      <div class="embeded-inner">
+        <div class="codepen" data-height="100%" data-width="95%" data-default-tab="result" data-editable="true" data-slug-hash="ExEENaZ" data-pen-title="Broken block (css rotate)" data-user="ca-tt" style="height: 100%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; padding: 1em; width: 95%; max-width: 100%;">
+          <span>See the Pen <a href="https://codepen.io/ca-tt/pen/ExEENaZ">Broken block (css rotate)</a> by Ca_tt (<a href="https://codepen.io/ca-tt">@ca-tt</a>) on <a href="https://codepen.io">CodePen</a>.</span>
+        </div>
+        <script async src="https://public.codepenassets.com/embed/index.js"></script>
+      </div>
+
+      <div class="row settings align-items-center p-2 position-relative">
+          <div class="show-code-switch d-flex justify-content-center align-items-center form-check form-switch pointer">
+            <input class="form-check-input me-2" type="checkbox" role="switch" id="switchCheckDefault" />
+            <label class="form-check-label pointer" for="switchCheckDefault">Show code</label>
+          </div>
+      </div>
+    </main>
+  </section>
+{% endblock %}

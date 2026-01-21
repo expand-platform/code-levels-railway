@@ -1,0 +1,33 @@
+@import url('/static/css/theme/colors.css');
+@import url('/static/css/theme/size.css');
+
+.btn {
+    --bs-font-size: var(--button-font-size);
+}
+
+.btn-primary, .btn-outline-primary {
+    transition: all .7s;
+    position: relative;
+    bottom: 0;
+
+    --bs-btn-color: var(--text-primary);
+    --bs-btn-bg: var(--button-bg-primary);
+    --bs-btn-border-color: var(--bg-primary);
+    --bs-btn-hover-color: var(--text-primary);
+    --bs-btn-hover-bg: var(--bg-primary-hover);
+    --bs-btn-hover-border-color: var(--light-purple);
+    /* --bs-btn-focus-shadow-rgb: 49, 132, 253; */
+    /* --bs-btn-active-color: #fff; */
+    /* --bs-btn-active-bg: #0a58ca; */
+    /* --bs-btn-active-border-color: #0a53be; */
+    /* --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); */
+    /* --bs-btn-disabled-color: #fff; */
+    /* --bs-btn-disabled-bg: #0d6efd; */
+    /* --bs-btn-disabled-border-color: #0d6efd; */
+}
+
+
+/* thin press animation */
+.btn:hover {
+    bottom: -1px;
+}

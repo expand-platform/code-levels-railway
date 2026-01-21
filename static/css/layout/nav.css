@@ -1,0 +1,23 @@
+@import url('/static/css/theme/colors.css');
+
+:root[data-theme="dark"] {
+    --nav-text: var(--soft-white);
+    
+    /* --nav-bg: #1f2937; */
+    /* --nav-hover-bg: #374151; */
+    /* --nav-hover-text: #f3f4f6;    */
+}
+
+.nav {
+    position: relative;
+    z-index: 5;
+}
+
+.nav a, .nav i {
+    color: var(--nav-text) !important;
+    /* transition: color 0.3s ease, background-color 0.3s ease; */
+}
+
+.nav-link i {
+    margin-right: .5rem;
+}

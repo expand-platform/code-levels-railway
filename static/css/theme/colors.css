@@ -1,0 +1,109 @@
+:root {
+  --light-purple: rgb(164, 125, 226);
+  --dark-purple: #6d28d9;
+  --dark-purple-transparent: rgba(109, 40, 217, 0.8);
+  --darker-purple: rgb(76, 24, 159);
+  --soft-white: #e5e7eb;
+  --dark-blue: #0f172a;
+}
+
+
+:root[data-theme="dark"] {
+  /* ===== Base ===== */
+  --bg-main: #0f172a;
+  --bg-surface: #111827;
+  --bg-elevated: #1e293b;
+
+  /* ===== Text ===== */
+  --text-primary: #e5e7eb;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #020617;
+
+  /* login */
+  --login-bg-primary: var(--dark-purple);
+  --login-bg-secondary: var(--light-purple);
+
+  /* Buttons */
+  --button-bg-primary: var(--dark-purple-transparent);
+  --button-text-primary: var(--soft-white);
+
+  /* ===== Brand ===== */
+  /* --bg-primary: #3b82f6; */
+  --bg-primary: var(--dark-purple);
+  --bg-primary-hover: var(--darker-purple);
+
+  /* --color-primary: #3b82f6;      */
+  /* --color-primary-hover: #2563eb; */
+  --color-accent: #22d3ee;
+
+  /* ===== States ===== */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #38bdf8;
+
+  /* ===== Borders & Dividers ===== */
+  --border-default: #1e293b;
+  --border-muted: #0b1220;
+
+  /* ===== Code ===== */
+  --code-bg: #020617;
+  --code-text: #e5e7eb;
+  --code-keyword: #38bdf8;
+  --code-string: #22c55e;
+  --code-number: #f59e0b;
+  --code-comment: #64748b;
+
+  /* ===== Shadows ===== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+  /* ===== Focus ===== */
+  --focus-ring: 0 0 0 2px rgba(59, 130, 246, 0.6);
+}
+
+:root[data-theme="light"] {
+  /* ===== Base ===== */
+  --bg-main: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f1f5f9;
+
+  /* ===== Text ===== */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  /* ===== Brand ===== */
+  --color-primary: #2563eb;
+  /* blue */
+  --color-primary-hover: #1d4ed8;
+  --color-accent: #f59e0b;
+  /* amber */
+
+  /* ===== States ===== */
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
+  --color-info: #0284c7;
+
+  /* ===== Borders & Dividers ===== */
+  --border-default: #e2e8f0;
+  --border-muted: #cbd5f5;
+
+  /* ===== Code ===== */
+  --code-bg: #020617;
+  --code-text: #e5e7eb;
+  --code-keyword: #2563eb;
+  --code-string: #16a34a;
+  --code-number: #d97706;
+  --code-comment: #64748b;
+
+  /* ===== Shadows ===== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.12);
+
+  /* ===== Focus ===== */
+  --focus-ring: 0 0 0 2px rgba(37, 99, 235, 0.5);
+}

@@ -1,0 +1,27 @@
+{% if user.is_authenticated %}
+  <nav class="nav justify-content-end p-3">
+    <i class="fa-solid fa-bars pointer" data-bs-toggle="offcanvas" href="#navbar-menu" role="button" aria-controls="offcanvasExample"></i>
+  </nav>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="navbar-menu" aria-labelledby="navbar-menuLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="navbar-menuLabel"><i class="fa-solid fa-person-running"></i>What's on your mind?</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="list-group list-group-flush">
+        {% if user.is_staff %}
+          <li class="list-group-item">
+            <a class="nav-link" href="{% url 'admin:index' %}"><i class="fa-solid fa-lock"></i>Admin</a>
+          </li>
+        {% endif %}
+        <li class="list-group-item">
+          <a class="nav-link" href="{% url 'dashboard' %}"><i class="fa-regular fa-house"></i>Dashboard</a>
+        </li>
+        <li class="list-group-item">
+          <a class="nav-link" href="{% url 'account_logout' %}" title="Logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+{% endif %}

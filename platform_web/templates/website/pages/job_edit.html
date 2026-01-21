@@ -1,0 +1,26 @@
+{% extends 'website/parts/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/pages/job-edit.css' %}" />
+{% endblock %}
+
+{% block title %}
+  Редагувати вакансію
+{% endblock %}
+{% block content %}
+  <main class="job-edit">
+    <div class="container mt-5">
+      <h1 class="text-center text-white">Редагувати вакансію</h1>
+      <form method="POST" class="mt-4">
+        <section class="row justify-content-center">
+          <div class="col-6 form-group p-4 bg-white rounded">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Зберегти</button>
+          </div>
+        </section>
+      </form>
+    </div>
+  </main>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="{% static 'img/favicon/favicon.ico' %}" type="image/x-icon" />
+
+    <title>
+      {% block title %}
+        Code levels
+      {% endblock %}
+    </title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="{% static 'css/libs/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/libs/all.min.css' %}" />
+    {% comment %}? libraries{% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/common.css' %}" />
+
+    {% block extra_css %}
+
+    {% endblock %}
+
+    <!-- JS Libraries -->
+    <script src="{% static 'js/libs/jquery.min.js' %}" defer></script>
+    <script src="{% static 'js/libs/bootstrap.min.js' %}" defer></script>
+
+    {% block extra_js %}
+
+    {% endblock %}
+  </head>
+  <body data-theme="dark">
+    {% block layout %}
+      <main class="content">
+        {% block content %}
+
+        {% endblock %}
+      </main>
+    {% endblock %}
+  </body>
+</html>

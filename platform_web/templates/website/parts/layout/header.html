@@ -1,0 +1,54 @@
+<header class="navbar navbar-expand-lg navbar-light shadow">
+  <div class="container d-flex justify-content-between align-items-center">
+    {% include 'website/parts/layout/logo.html' %}
+
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+    <div class="align-self-center collapse navbar-collapse flex-fill d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+      {# nav #}
+      {% include 'website/parts/layout/nav.html' %}
+      
+      
+      {% include 'website/parts/layout/user-area.html' %}
+    </div>
+  </div>
+</header>
+
+{% comment %} <header> {% endcomment %}
+  {% comment %} <div class="header-area"> {% endcomment %}
+    {% comment %} <div id="sticky-header" class="main-header-area">
+      <div class="container-fluid">
+        <div class="header_bottom_border">
+          <div class="row align-items-center">
+            <div class="col-xl-3 col-lg-2">
+              <div class="logo">
+                <a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" alt="" /></a>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-7">
+              {% include 'website/parts/nav.html' %}
+            </div>
+            <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+              <div class="Appointment">
+                <div class="d-none d-lg-block">
+                  {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="boxed-btn3">Вийти</button>
+                    </form>
+                  {% else %}
+                    <a class="boxed-btn3" href="{% url 'login' %}?next=/">Увійти</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mobile_menu d-block d-lg-none"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> {% endcomment %}
+{% comment %} </header> {% endcomment %}
+

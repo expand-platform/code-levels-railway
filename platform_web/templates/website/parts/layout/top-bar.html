@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+  <div class="container text-light">
+    <div class="w-100 d-flex justify-content-between">
+      <div>
+        <i class="fa fa-envelope mx-2"></i>
+        <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:{{ website_config.support_email }}">{{ website_config.support_email }}</a>
+        <i class="fa fa-phone mx-2"></i>
+        <a class="navbar-sm-brand text-light text-decoration-none" href="tel:{{ website_config.contact_phone }}">{{ website_config.contact_phone }}</a>
+      </div>
+      <div>
+        {% for link in social_media_links %}
+          <a class="text-light" href="{{ link.url }}" target="_blank"><i class="fab fa-{{ link.name }} fa-sm fa-fw me-2"></i></a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</nav>

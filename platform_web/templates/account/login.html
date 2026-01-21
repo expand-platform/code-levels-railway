@@ -1,0 +1,120 @@
+{% extends 'website/parts/layout/base.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block title %}
+  Login | {{ website_config.site_name }}
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/account/login.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/account/parts/google-button.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <div class="wrapper">
+    <div class="login-container">
+      <section>
+        <h2 class="subtitle">Welcome to Code Levels{{ website_config.site_name }}</h2>
+        <h4 class="fw-light mb-3">{{ website_config.tagline }}</h4>
+
+        {# form #}
+        <section class="row justify-content-center">
+          <form method="POST" action="{% url 'account_login' %}" class="form col-10">
+            <div class="mb-3">
+            </div>
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+            {% endif %}
+            {% csrf_token %}
+            {{ form.login }}
+            {{ form.password }} 
+            <button type="submit" id="login-button" class="mb-5">Login</button>
+            <a href="{% provider_login_url 'google' %}"><button type="button" class="login-with-google-btn">Sign in with Google</button></a>
+            <p class="help-text dont-have-account">
+              Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a>
+            </p>
+          </form>
+        </section>
+      </section>
+    </div>
+
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+{% endblock %}
+
+{% comment %} {% load static %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap" />
+    <link rel="stylesheet" href="{% static 'css/libs/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/templatemo.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/libs/fontawesome.min.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'css/pages/login.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/parts/google-button.css' %}" />
+    <script src="{% static 'js/pages/login.js' %}" defer></script>
+  </head>
+  <body>
+    {% include 'website/parts/layout/header.html' %}
+
+    <div class="wrapper">
+      <div class="login-container">
+        <section>
+          <h1>Welcome to {{ website_config.site_name }}</h1>
+          <h4 class="fw-light mb-3">{{ website_config.tagline }}</h4>
+
+          {# form #}
+          <section class="row justify-content-center">
+            <form method="POST" action="{% url 'account_login' %}" class="form col-8">
+              <div class="mb-3">
+                <a href="{% provider_login_url 'google' %}"><button type="button" class="login-with-google-btn">Sign in with Google</button></a>
+              </div>
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+              {% endif %}
+              {% csrf_token %}
+              {{ form.login }}
+              {{ form.password }}
+              <button type="submit" id="login-button">Login</button>
+              <p class="help-text dont-have-account">
+                Don't have an account? <a href="{% url 'account_signup' %}">Register</a>
+              </p>
+            </form>
+          </section>
+        </section>
+      </div>
+
+      <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  </body>
+</html> {% endcomment %}

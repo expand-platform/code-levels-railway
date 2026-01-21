@@ -1,0 +1,56 @@
+{% extends 'website/dashboard/parts/layout.html' %}
+{% load static %}
+
+{% block title %}
+  Level {{ lesson_id }} | {{ website_config.site_name }}
+{% endblock %}
+
+{% block extra_css %}
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/dashboard/projects.css' %}" />
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/parts/codepen.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/projects.js' %}" defer type="module"></script>
+{% endblock %}
+
+{% block dashboard_content %}
+  <section class="projects">
+    <div class="project-languages-section">
+      <h1>Projects by Programming Language</h1>
+      {% for language in languages %}
+        <section class="language-block">
+          <h2>{{ language.name }}</h2>
+          <div class="project-list">
+            {% for project in language.project_set.all %}
+              <div class="project-card">
+                {% if project.image %}
+                  <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" />
+                {% endif %}
+                <div class="project-info">
+                  <h3 class="mb-3">{{ project.title }}</h3>
+                  <span class="project-difficulty mb-3">{{ project.difficulty }}</span>
+
+                  {% if project.skills.all %}
+                    <ul class="project-skills d-flex flex-wrap column-gap-2 pe-3">
+                      {% for skill in project.skills.all %}
+                        <li>#{{ skill.name }}</li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              </div>
+            {% empty %}
+              <p>No projects for this language yet.</p>
+            {% endfor %}
+          </div>
+        </section>
+      {% empty %}
+        <p>No programming languages found.</p>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}
