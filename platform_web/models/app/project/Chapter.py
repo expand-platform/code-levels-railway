@@ -6,13 +6,12 @@ class Chapter(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     order = models.PositiveIntegerField(default=0)
-    
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
         related_name="chapters"
     )
-    parts = models.ManyToManyField(Part, through='ChapterPart', related_name='chapter_set')
+    parts = models.ManyToManyField(Part, related_name='chapter_set', blank=True)
 
     class Meta:
         db_table = "chapters"

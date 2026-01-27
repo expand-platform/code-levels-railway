@@ -1,3 +1,4 @@
+
 from django.contrib import admin
 from django_summernote.widgets import SummernoteWidget
 from django import forms
@@ -16,7 +17,6 @@ from platform_web.models.app.project.Review import Review
 from platform_web.models.app.project.Submission import Submission
 from platform_web.models.app.project.Framework import Framework
 from platform_web.models.app.project.Chapter import Chapter
-from platform_web.models.app.project.ChapterPart import ChapterPart
 
 
 class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
@@ -44,23 +44,33 @@ class FrameworkAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
-class ChapterPartInline(SortableInlineAdminMixin, NestedTabularInline):
-    model = ChapterPart
+# Inline for Parts under Project
+class PartInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = Part
     extra = 1
-    fields = ("part", "custom_title", "order")
-    autocomplete_fields = ["part"]
+    fields = ("title", "order", "description", "languages")
+    autocomplete_fields = ["languages"]
     ordering = ["order"]
 
+# Inline for Parts under Chapter
+class ChapterPartInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = Chapter.parts.through
+    extra = 1
+    verbose_name = "Part"
+    verbose_name_plural = "Parts"
+    autocomplete_fields = ["part"]
+    ordering = ["part__order"]
 
 class ChapterInline(SortableInlineAdminMixin, NestedTabularInline):
     model = Chapter
     extra = 1
     fields = ("title", "order", "description")
     ordering = ["order"]
+    inlines = [ChapterPartInline]
 
 
 class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
-    inlines = [ChapterInline]
+    inlines = [ChapterInline, PartInline]
     list_display = (
         "title",
         "course",
@@ -119,6 +129,18 @@ class ChapterAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
 
     part_count.short_description = "Parts"
 
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "parts":
+            if request.resolver_match and request.resolver_match.kwargs.get('object_id'):
+                try:
+                    chapter_id = int(request.resolver_match.kwargs['object_id'])
+                    from platform_web.models.app.project.Chapter import Chapter
+                    chapter = Chapter.objects.get(pk=chapter_id)
+                    kwargs["queryset"] = Part.objects.filter(project=chapter.project)
+                except Exception:
+                    pass
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
+
 
 class PartAdminForm(forms.ModelForm):
     class Meta:
@@ -146,5 +168,4 @@ admin.site.register(Stage, StagesAdmin)
 admin.site.register(Review)
 admin.site.register(Submission)
 admin.site.register(Chapter, ChapterAdmin)
-admin.site.register(ChapterPart)
 admin.site.register(Course, CourseAdmin)

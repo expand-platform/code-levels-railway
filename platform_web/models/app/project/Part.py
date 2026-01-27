@@ -7,8 +7,7 @@ class Part(models.Model):
     title = models.CharField(max_length=255)
     order = models.PositiveIntegerField(default=0)
     description = models.TextField(blank=True)
-    
-    projects = models.ManyToManyField(Project, related_name="parts", blank=True)
+    project = models.ForeignKey(Project, related_name="parts", on_delete=models.CASCADE)
     languages = models.ManyToManyField(ProgrammingLanguage, blank=True)
 
     class Meta:
