@@ -1,6 +1,9 @@
 from django.db import models
+
 from platform_web.models.app.project.Part import Part
 from platform_web.models.app.project.Project import Project
+from platform_web.models.app.project.ChapterPart import ChapterPart
+
 
 class Chapter(models.Model):
     title = models.CharField(max_length=255)
@@ -11,7 +14,12 @@ class Chapter(models.Model):
         on_delete=models.CASCADE,
         related_name="chapters"
     )
-    parts = models.ManyToManyField(Part, related_name='chapter_set', blank=True)
+    parts = models.ManyToManyField(
+        Part,
+        related_name='chapter_set',
+        through=ChapterPart,
+        blank=True
+    )
 
     class Meta:
         db_table = "chapters"

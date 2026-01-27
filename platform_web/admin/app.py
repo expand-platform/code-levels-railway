@@ -45,7 +45,7 @@ class FrameworkAdmin(admin.ModelAdmin):
 
 
 # Inline for Parts under Project
-class PartInline(SortableInlineAdminMixin, admin.TabularInline):
+class PartInline(SortableInlineAdminMixin, NestedTabularInline):
     model = Part
     extra = 1
     fields = ("title", "order", "description", "languages")
@@ -59,14 +59,13 @@ class ChapterPartInline(SortableInlineAdminMixin, admin.TabularInline):
     verbose_name = "Part"
     verbose_name_plural = "Parts"
     autocomplete_fields = ["part"]
-    ordering = ["part__order"]
 
 class ChapterInline(SortableInlineAdminMixin, NestedTabularInline):
     model = Chapter
     extra = 1
     fields = ("title", "order", "description")
     ordering = ["order"]
-    inlines = [ChapterPartInline]
+    # inlines = [ChapterPartInline]
 
 
 class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
