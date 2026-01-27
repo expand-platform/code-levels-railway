@@ -116,12 +116,13 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
     get_framework.short_description = "Frameworks"
 
 
-class ChapterAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
-    inlines = [ChapterPartInline]
+class ChapterAdmin(admin.ModelAdmin):  # type: ignore[misc]
+    # inlines = [ChapterPartInline]
     list_display = ("title", "project", "order", "part_count")
     list_filter = ("project",)
     search_fields = ("title",)
     ordering = ["project", "order"]
+    fields = ("title", "description", "order", "project")
 
     def part_count(self, obj):
         return obj.parts.count()

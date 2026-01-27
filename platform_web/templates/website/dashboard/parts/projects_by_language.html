@@ -11,7 +11,11 @@
                 <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" />
               {% endif %}
               <div class="project-info">
-                <h3 class="mb-3">{{ project.title }}</h3>
+                <h3 class="mb-3">
+                  <a href="{% url 'project_parts_view' slug=project.slug %}" style="text-decoration: underline; color: #007bff;">
+                    {{ project.title }}
+                  </a>
+                </h3>
                 <span class="project-difficulty mb-3">{{ project.difficulty }}</span>
                 {% if project.skills.all %}
                   <ul class="project-skills d-flex flex-wrap column-gap-2 pe-3">

@@ -1,0 +1,50 @@
+{% extends 'website/dashboard/parts/layout.html' %}
+{% load static %}
+
+{% block title %}
+  Level {{ lesson_id }} | {{ website_config.site_name }}
+{% endblock %}
+
+{% block extra_css %}
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/dashboard/projects.css' %}" />
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/parts/codepen.js' %}" defer type="module"></script>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="project-parts-container" style="display: flex; min-height: 80vh;">
+    <aside class="sidebar" style="width: 320px; background: #f8f9fa; border-right: 1px solid #e0e0e0; padding: 2rem 1rem;">
+        <h2 style="font-size: 1.3rem; margin-bottom: 1.5rem;">{{ project.title }}</h2>
+        <nav>
+            <ul style="list-style: none; padding: 0;">
+                {% for item in chapter_data %}
+                <li style="margin-bottom: 1.2rem;">
+                    <div style="font-weight: bold; color: #333;">{{ item.chapter.title }}</div>
+                    <ul style="margin: 0.5rem 0 0 1rem; padding: 0; list-style: disc; color: #666;">
+                        {% for part in item.parts %}
+                        <li style="margin-bottom: 0.3rem;">
+                            {{ part.title }}
+                        </li>
+                        {% empty %}
+                        <li style="color: #aaa;">No parts</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% empty %}
+                <li>No chapters found.</li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </aside>
+    <main class="main-content" style="flex: 1; padding: 2rem;">
+        <h1 style="font-size: 2rem; margin-bottom: 1rem;">Project Structure</h1>
+        <p style="color: #555;">Select a chapter or part from the sidebar to view more details (feature coming soon).</p>
+        <!-- You can add more interactive content here -->
+    </main>
+</div>
+{% endblock %}

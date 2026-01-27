@@ -59,7 +59,7 @@ def unseed_courses(apps, schema_editor):
 
 class Migration(migrations.Migration):
 	dependencies = [
-		("platform_web", "0007_alter_stage_name"),
+		("platform_web", "0006_seed_stages"),
 	]
 
 	operations = [

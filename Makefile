@@ -135,13 +135,13 @@ ssh-db:
 	railway ssh --project=395cd9f3-6608-4f63-9c8c-bda2f1e733c7 --environment=341aa6cf-5347-4fe4-92d7-c5a77124b984 --service=cfd73612-4ce8-4a9c-af42-cba5e7924446
 
 drop-db:
-	psql -U postgres -c "DROP DATABASE IF EXISTS railway;"
+	psql -U postgres -c "DROP DATABASE IF EXISTS $(db);"
 	
 create-db:
 	psql -U postgres -c "CREATE DATABASE $(db);"
 
 reset-db:
-	make drop-db database=$(database) && make create-db database=$(database) && python manage.py migrate
+	make drop-db database=$(db) && make create-db database=$(db) && python manage.py migrate
 
 grant-public:
 	psql -U postgres -d $(database) -c "GRANT ALL PRIVILEGES ON SCHEMA public TO postgres;"

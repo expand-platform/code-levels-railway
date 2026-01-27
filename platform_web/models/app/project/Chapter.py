@@ -9,10 +9,12 @@ class Chapter(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     order = models.PositiveIntegerField(default=0)
+    
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
-        related_name="chapters"
+        related_name="chapters",
+        blank=True
     )
     parts = models.ManyToManyField(
         Part,
