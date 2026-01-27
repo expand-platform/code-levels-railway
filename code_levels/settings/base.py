@@ -8,8 +8,8 @@ from code_levels.settings.plugins.colored_logs import *
 from code_levels.settings.admin.jazzmin import *
 
 
-# load_dotenv(".env")
-load_dotenv(".env.prod")
+load_dotenv(".env")
+# load_dotenv(".env.prod")
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 

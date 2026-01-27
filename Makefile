@@ -18,8 +18,19 @@ check:
 shell:
 	poetry run python manage.py shell
 
+# migrations
+migrate:
+	poetry run python manage.py makemigrations && poetry run python manage.py migrate
+
 showmigrations:
 	poetry run python manage.py showmigrations
+
+clean-migrations:
+	find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+	find . -path "*/migrations/*.pyc" -delete
+
+seed-data:
+	python manage.py makemigrations platform_web --empty -n $(name)
 
 newapp:
 	poetry run python manage.py startapp $(name)
@@ -34,9 +45,6 @@ check-active-user:
 	poetry run python manage.py dbshell 
 # and then - SELECT current_user;
 
-migrate:
-	poetry run python manage.py makemigrations && poetry run python manage.py migrate
-
 changepass:
 	poetry run python manage.py changepassword $(user)
 
@@ -47,6 +55,12 @@ requirements:
 # postgresql
 setup-postgres:
 	./bash/setup_postgres.sh
+
+drop-table:
+	psql -U postgres -d code_levels -c "DROP TABLE IF EXISTS $(table) CASCADE;"
+
+list-tables:
+	psql -U postgres -d code_levels -c "\dt"
 
 # railway
 gunicorn-prod:
@@ -106,7 +120,6 @@ rrun:
 up:
 	railway up
 
-
 # uvicorn
 uvi:
 	uvicorn code_levels.asgi:application \
@@ -116,3 +129,16 @@ uvi:
 # SSH
 ssh:
 	railway ssh --project=395cd9f3-6608-4f63-9c8c-bda2f1e733c7 --environment=341aa6cf-5347-4fe4-92d7-c5a77124b984 --service=625bc102-6f8a-438e-9369-4dbe37e4a942
+
+drop-db:
+	psql -U postgres -c "DROP DATABASE IF EXISTS $(db);"
+	
+create-db:
+	psql -U postgres -c "CREATE DATABASE $(database);"
+
+reset-db:
+	make drop-db database=$(database) && make create-db database=$(database) && poetry run python manage.py migrate
+
+grant-public:
+	psql -U postgres -d $(database) -c "GRANT ALL PRIVILEGES ON SCHEMA public TO postgres;"
+

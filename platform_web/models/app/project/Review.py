@@ -15,6 +15,9 @@ class Review(models.Model):
     feedback = models.TextField()
     score = models.PositiveIntegerField(default=0)
     reviewed_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = "reviews"
 
     def __str__(self):
         return f"Review for {self.submission}"

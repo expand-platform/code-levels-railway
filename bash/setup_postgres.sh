@@ -54,5 +54,3 @@ IN SCHEMA public GRANT ALL ON FUNCTIONS TO $DB_USER;
 EOF
 
 echo "🟢 PostgreSQL user and database configured successfully."
-echo "🔴 exec bash -l"
-

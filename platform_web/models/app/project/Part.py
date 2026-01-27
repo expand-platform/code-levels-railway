@@ -1,0 +1,21 @@
+from django.db import models
+from platform_web.models.app.project.Project import Project
+from platform_web.models.app.project.Chapter import Chapter
+from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
+
+
+class Part(models.Model):
+    title = models.CharField(max_length=255)
+    order = models.PositiveIntegerField(default=0)
+    description = models.TextField(blank=True)
+    
+    projects = models.ManyToManyField(Project, related_name="parts", blank=True)
+    chapters = models.ManyToManyField(Chapter, related_name="chapters", blank=True)
+    languages = models.ManyToManyField(ProgrammingLanguage, blank=True)
+
+    class Meta:
+        db_table = "project_parts"
+        ordering = ["order", "title"]
+
+    def __str__(self):
+        return self.title
