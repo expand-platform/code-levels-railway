@@ -14,43 +14,21 @@
 {% block extra_js %}
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/parts/codepen.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/projects.js' %}" defer type="module"></script>
 {% endblock %}
 
 {% block dashboard_content %}
   <section class="projects">
-    <div class="project-languages-section">
-      <h1>Projects by Programming Language</h1>
-      {% for language in languages %}
-        <section class="language-block">
-          <h2>{{ language.name }}</h2>
-          <div class="project-list">
-            {% for project in language.project_set.all %}
-              <div class="project-card">
-                {% if project.image %}
-                  <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" />
-                {% endif %}
-                <div class="project-info">
-                  <h3 class="mb-3">{{ project.title }}</h3>
-                  <span class="project-difficulty mb-3">{{ project.difficulty }}</span>
-
-                  {% if project.skills.all %}
-                    <ul class="project-skills d-flex flex-wrap column-gap-2 pe-3">
-                      {% for skill in project.skills.all %}
-                        <li>#{{ skill.name }}</li>
-                      {% endfor %}
-                    </ul>
-                  {% endif %}
-                </div>
-              </div>
-            {% empty %}
-              <p>No projects for this language yet.</p>
-            {% endfor %}
-          </div>
-        </section>
-      {% empty %}
-        <p>No programming languages found.</p>
-      {% endfor %}
-    </div>
+    <form method="get" class="projects-toggle-section" style="margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
+      <label for="projects-toggle-select" style="font-weight: 500;">View projects:</label>
+      <select id="projects-toggle-select" name="filter" class="form-select" style="width: auto;" onchange="this.form.submit()">
+        <option value="language" {% if filter_by == 'language' %} selected {% endif %} > By Language </option>
+        <option value="course" {% if filter_by == 'course' %}selected{% endif %}>By Course</option>
+      </select>
+    </form>
+    {% if filter_by == 'course' %}
+      {% include 'website/dashboard/parts/projects_by_course.html' %}
+    {% else %}
+      {% include 'website/dashboard/parts/projects_by_language.html' %}
+    {% endif %}
   </section>
 {% endblock %}

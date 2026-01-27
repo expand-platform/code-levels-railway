@@ -1,0 +1,34 @@
+{% if courses %}
+  <div class="project-languages-section">
+    <h1>Projects by Course</h1>
+    {% for course in courses %}
+      <section class="language-block">
+        <h2>{{ course.title }}</h2>
+        <div class="project-list">
+          {% for project in course.projects.all %}
+            <div class="project-card">
+              {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" />
+              {% endif %}
+              <div class="project-info">
+                <h3 class="mb-3">{{ project.title }}</h3>
+                <span class="project-difficulty mb-3">{{ project.difficulty }}</span>
+                {% if project.skills.all %}
+                  <ul class="project-skills d-flex flex-wrap column-gap-2 pe-3">
+                    {% for skill in project.skills.all %}
+                      <li>#{{ skill.name }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </div>
+            </div>
+          {% empty %}
+            <p>No projects for this course yet.</p>
+          {% endfor %}
+        </div>
+      </section>
+    {% empty %}
+      <p>No courses found.</p>
+    {% endfor %}
+  </div>
+{% endif %}

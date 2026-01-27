@@ -1,0 +1,34 @@
+{% if languages %}
+  <div class="project-languages-section">
+    <h1>Projects by Programming Language</h1>
+    {% for language in languages %}
+      <section class="language-block">
+        <h2>{{ language.name }}</h2>
+        <div class="project-list">
+          {% for project in language.project_set.all %}
+            <div class="project-card">
+              {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" />
+              {% endif %}
+              <div class="project-info">
+                <h3 class="mb-3">{{ project.title }}</h3>
+                <span class="project-difficulty mb-3">{{ project.difficulty }}</span>
+                {% if project.skills.all %}
+                  <ul class="project-skills d-flex flex-wrap column-gap-2 pe-3">
+                    {% for skill in project.skills.all %}
+                      <li>#{{ skill.name }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </div>
+            </div>
+          {% empty %}
+            <p>No projects for this language yet.</p>
+          {% endfor %}
+        </div>
+      </section>
+    {% empty %}
+      <p>No programming languages found.</p>
+    {% endfor %}
+  </div>
+{% endif %}

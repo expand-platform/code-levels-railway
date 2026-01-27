@@ -9,10 +9,20 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "website/dashboard/dashboard.html"
 
 
+
+from platform_web.models.app.project.Course import Course
+
 @login_required
 def projects_view(request):
-    languages = ProgrammingLanguage.objects.prefetch_related('project_set').all()
-    return render(request, 'website/dashboard/pages/projects.html', {'languages': languages})
+    filter_by = request.GET.get('filter', 'language')
+    context = {'filter_by': filter_by}
+    if filter_by == 'course':
+        courses = Course.objects.prefetch_related('projects').all()
+        context['courses'] = courses
+    else:
+        languages = ProgrammingLanguage.objects.prefetch_related('project_set').all()
+        context['languages'] = languages
+    return render(request, 'website/dashboard/pages/projects.html', context)
 
 
 class MapView(LoginRequiredMixin, TemplateView):
