@@ -408,6 +408,21 @@ argon2 = ["argon2-cffi (>=23.1.0)"]
 bcrypt = ["bcrypt (>=4.1.1)"]
 
 [[package]]
+name = "django-admin-sortable2"
+version = "2.3.1"
+description = "Generic drag-and-drop sorting for the List, the Stacked- and the Tabular-Inlines Views in the Django Admin"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "django_admin_sortable2-2.3.1-py3-none-any.whl", hash = "sha256:5784f441f3532013438c3c3226fbccc39b9c733f867b26a5f477d6b05f734b93"},
+    {file = "django_admin_sortable2-2.3.1.tar.gz", hash = "sha256:e397d08606f9e0da73e52661b841021ecab21be6f74783408e625ccddfe975af"},
+]
+
+[package.dependencies]
+Django = ">=4.2"
+
+[[package]]
 name = "django-allauth"
 version = "65.14.0"
 description = "Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication."
@@ -450,6 +465,22 @@ asgiref = ">=3.6"
 django = ">=4.2"
 
 [[package]]
+name = "django-ckeditor"
+version = "6.7.3"
+description = "Django admin CKEditor integration."
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "django_ckeditor-6.7.3-py3-none-any.whl", hash = "sha256:09771c9b8fb33b84bd2767dfc891a24b7fbdb0120910a7ec65b763a4ae6807bb"},
+    {file = "django_ckeditor-6.7.3.tar.gz", hash = "sha256:889fd80ee7d368e3c5b828c8dabf8907d56bcad6bf5881f3898416df4f2adfe7"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+django-js-asset = ">=2.0"
+
+[[package]]
 name = "django-jazzmin"
 version = "3.0.1"
 description = "Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy"
@@ -463,6 +494,43 @@ files = [
 
 [package.dependencies]
 django = ">=4.2"
+
+[[package]]
+name = "django-js-asset"
+version = "3.1.2"
+description = "script tag with additional attributes for django.forms.Media"
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "django_js_asset-3.1.2-py3-none-any.whl", hash = "sha256:b5ffe376aebbd73b7af886d675ac9f43ca63b39540190fa8409c9f8e79145f68"},
+    {file = "django_js_asset-3.1.2.tar.gz", hash = "sha256:1fc7584199ed1941ed7c8e7b87ca5524bb0f2ba941561d2a104e88ee9f07bedd"},
+]
+
+[package.dependencies]
+django = ">=4.2"
+
+[package.extras]
+tests = ["coverage"]
+
+[[package]]
+name = "django-nested-admin"
+version = "4.1.6"
+description = "Django admin classes that allow for nested inlines"
+optional = false
+python-versions = ">=3.6"
+groups = ["main"]
+files = [
+    {file = "django_nested_admin-4.1.6-py3-none-any.whl", hash = "sha256:ae3e1d910631e6cc3b5815d80129f18c6c081b7dd7f775bf392d9bb1ac88ef93"},
+    {file = "django_nested_admin-4.1.6.tar.gz", hash = "sha256:0222475cc343e7b8813d7a5db583cddef15f5c0f44dbe17b91b4d682db7bd73a"},
+]
+
+[package.dependencies]
+python-monkey-business = ">=1.0.0"
+
+[package.extras]
+dev = ["Pillow", "black", "dj-database-url", "django-selenosis", "flake8", "pytest", "pytest-cov", "pytest-django", "pytest-xdist", "selenium"]
+test = ["Pillow", "dj-database-url", "django-selenosis", "pytest", "pytest-cov", "pytest-django", "pytest-xdist", "selenium"]
 
 [[package]]
 name = "dotenv"
@@ -712,6 +780,18 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
+name = "python-monkey-business"
+version = "1.1.0"
+description = "Utility functions for monkey-patching python code"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "python-monkey-business-1.1.0.tar.gz", hash = "sha256:8393839cc741415ed5ddc2bd58e2d4ce07f966a7d26b7aebff19dcec64818edc"},
+    {file = "python_monkey_business-1.1.0-py2.py3-none-any.whl", hash = "sha256:15b4f603c749ba9a7b4f1acd36af023a6c5ba0f7e591c945f8253f0ef44bf389"},
+]
+
+[[package]]
 name = "requests"
 version = "2.32.5"
 description = "Python HTTP for Humans."
@@ -817,4 +897,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.14"
-content-hash = "d86f539163fc693a547a97d88dd0395453e1f6792e5ea4de41fb2b143864c8ca"
+content-hash = "e578c43e5db795e56aa3c0976f12be2340a49afee5cd1459cb2054a893737cf7"

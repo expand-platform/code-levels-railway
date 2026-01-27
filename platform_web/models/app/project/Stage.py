@@ -2,16 +2,20 @@ from django.db import models
 
 
 class Stage(models.Model):
-    HTML_CSS = "HTML/CSS: UI development"
-    JAVASCRIPT = "JavaScript: interactivity, client logic"
-    BACKEND = "Backend: server logic, database"
-    DEPLOYMENT = "Deployment: deployment and maintenance"
+    HTML_CSS = "HTML/CSS: UI, UX"
+    JAVASCRIPT = "JavaScript: client, interactivity"
+    BACKEND = "Backend: server, database"
+    REFACTORING = "Refactoring"
+    DEPLOYMENT = "Deployment"
+    TESTING = "Tests"
     
     STAGE_CHOICES = [
-        (HTML_CSS, "HTML/CSS: UI development"),
-        (JAVASCRIPT, "JavaScript: interactivity, client logic"),
-        (BACKEND, "Backend: server logic, database"),
-        (DEPLOYMENT, "Deployment: deployment and maintenance"),
+        (HTML_CSS, "HTML/CSS: UI, UX"),
+        (JAVASCRIPT, "JavaScript: client, interactivity"),
+        (BACKEND, "Backend: server, database"),
+        (REFACTORING, "Refactoring"),
+        (DEPLOYMENT, "Deployment"),
+        (TESTING, "Tests"),
     ]
     
     name = models.CharField(max_length=100, choices=STAGE_CHOICES, unique=True)

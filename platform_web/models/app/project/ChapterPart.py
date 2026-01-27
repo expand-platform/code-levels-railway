@@ -3,8 +3,8 @@ from platform_web.models.app.project.Chapter import Chapter
 from platform_web.models.app.project.Part import Part
 
 class ChapterPart(models.Model):
-    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name="chapter_parts")
     part = models.ForeignKey(Part, on_delete=models.CASCADE, related_name="chapter_links")
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, related_name="chapter_parts")
     order = models.PositiveIntegerField(default=0)
     custom_title = models.CharField(max_length=255, blank=True, help_text="Override the part title for this chapter context.")
 

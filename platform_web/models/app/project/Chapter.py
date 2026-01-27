@@ -1,4 +1,5 @@
 from django.db import models
+from platform_web.models.app.project.Part import Part
 from platform_web.models.app.project.Project import Project
 
 class Chapter(models.Model):
@@ -11,7 +12,7 @@ class Chapter(models.Model):
         on_delete=models.CASCADE,
         related_name="chapters"
     )
-    parts = models.ManyToManyField('platform_web.Part', through='ChapterPart', related_name='chapter_set')
+    parts = models.ManyToManyField(Part, through='ChapterPart', related_name='chapter_set')
 
     class Meta:
         db_table = "chapters"

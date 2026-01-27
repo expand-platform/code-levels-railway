@@ -44,7 +44,7 @@ def unseed_programming_languages(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("platform_web", "0005_alter_programminglanguage_options_and_more"),
+        ("platform_web", "0003_seed_frameworks"),
     ]
 
     operations = [

@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     # apps
     "platform_web.apps.PlatformWeb",
+    "nested_admin",
+    "adminsortable2",
 ]
 
 MIDDLEWARE = [

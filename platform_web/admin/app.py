@@ -1,4 +1,10 @@
 from django.contrib import admin
+from ckeditor.widgets import CKEditorWidget
+from django import forms
+
+from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
+from nested_admin.nested import NestedTabularInline, NestedModelAdmin
+
 from platform_web.models.app.project.Project import Project
 from platform_web.models.app.project.Part import Part
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
@@ -32,7 +38,7 @@ class FrameworkAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
-class ChapterPartInline(admin.TabularInline):
+class ChapterPartInline(SortableInlineAdminMixin, NestedTabularInline):
     model = ChapterPart
     extra = 1
     fields = ("part", "custom_title", "order")
@@ -40,17 +46,46 @@ class ChapterPartInline(admin.TabularInline):
     ordering = ["order"]
 
 
-class ProjectAdmin(admin.ModelAdmin):
+class ChapterInline(SortableInlineAdminMixin, NestedTabularInline):
+    model = Chapter
+    extra = 1
+    fields = ("title", "order", "description")
+    ordering = ["order"]
+
+
+class ProjectAdmin(SortableAdminMixin, NestedModelAdmin): # type: ignore[misc]
+    inlines = [ChapterInline]
     list_display = (
         "title",
         "get_programming_languages",
         "get_framework",
+        "chapter_count",
         "order",
         "difficulty",
         "is_active",
+        "created_at",
+        "updated_at",
     )
     list_filter = ("is_active", "difficulty", "programming_languages", "framework")
     search_fields = ("title", "description")
+    ordering = ["order"]
+    readonly_fields = ("created_at", "updated_at")
+
+    actions = ["publish_projects", "unpublish_projects"]
+
+    def publish_projects(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, f"{updated} project(s) published.")
+    publish_projects.short_description = "Publish selected projects"
+
+    def unpublish_projects(self, request, queryset):
+        updated = queryset.update(is_active=False)
+        self.message_user(request, f"{updated} project(s) unpublished.")
+    unpublish_projects.short_description = "Unpublish selected projects"
+
+    def chapter_count(self, obj):
+        return obj.chapters.count()
+    chapter_count.short_description = "Chapters"
 
     def get_programming_languages(self, obj):
         return ", ".join([pl.name for pl in obj.programming_languages.all()])
@@ -62,15 +97,28 @@ class ProjectAdmin(admin.ModelAdmin):
     get_framework.short_description = "Frameworks"
 
 
-class ChapterAdmin(admin.ModelAdmin):
+class ChapterAdmin(SortableAdminMixin, admin.ModelAdmin): # type: ignore[misc]
     inlines = [ChapterPartInline]
-    list_display = ("title", "project", "order")
+    list_display = ("title", "project", "order", "part_count")
     list_filter = ("project",)
     search_fields = ("title",)
     ordering = ["project", "order"]
 
+    def part_count(self, obj):
+        return obj.parts.count()
+    part_count.short_description = "Parts"
+
+
+class PartAdminForm(forms.ModelForm):
+    class Meta:
+        model = Part
+        fields = '__all__'
+        widgets = {
+            'description': CKEditorWidget(),
+        }
 
 class PartAdmin(admin.ModelAdmin):
+    form = PartAdminForm
     list_display = ("title", "order")
     search_fields = ("title",)
     ordering = ["order"]

@@ -10,20 +10,21 @@ ready:
 
 # django
 run:
-	poetry run python manage.py runserver
+	python manage.py runserver
 
 check:
-	poetry run python manage.py check
+	python manage.py check
 
 shell:
-	poetry run python manage.py shell
+	python manage.py shell
 
 # migrations
-migrate:
-	poetry run python manage.py makemigrations && poetry run python manage.py migrate
+migrations:
+	python manage.py makemigrations
 
-showmigrations:
-	poetry run python manage.py showmigrations
+migrate:
+	python manage.py migrate
+
 
 clean-migrations:
 	find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
@@ -33,20 +34,20 @@ seed-data:
 	python manage.py makemigrations platform_web --empty -n $(name)
 
 newapp:
-	poetry run python manage.py startapp $(name)
+	python manage.py startapp $(name)
 
 superuser:
-	poetry run python manage.py createsuperuser
+	python manage.py createsuperuser
 
 superuser-auto:
 	./bash/new_superuser.sh
 
 check-active-user:
-	poetry run python manage.py dbshell 
+	python manage.py dbshell 
 # and then - SELECT current_user;
 
 changepass:
-	poetry run python manage.py changepassword $(user)
+	python manage.py changepassword $(user)
 
 # deploy (railway)
 requirements:
@@ -130,15 +131,20 @@ uvi:
 ssh:
 	railway ssh --project=395cd9f3-6608-4f63-9c8c-bda2f1e733c7 --environment=341aa6cf-5347-4fe4-92d7-c5a77124b984 --service=625bc102-6f8a-438e-9369-4dbe37e4a942
 
+ssh-db:
+	railway ssh --project=395cd9f3-6608-4f63-9c8c-bda2f1e733c7 --environment=341aa6cf-5347-4fe4-92d7-c5a77124b984 --service=cfd73612-4ce8-4a9c-af42-cba5e7924446
+
 drop-db:
-	psql -U postgres -c "DROP DATABASE IF EXISTS $(db);"
+	psql -U postgres -c "DROP DATABASE IF EXISTS railway;"
 	
 create-db:
-	psql -U postgres -c "CREATE DATABASE $(database);"
+	psql -U postgres -c "CREATE DATABASE $(db);"
 
 reset-db:
-	make drop-db database=$(database) && make create-db database=$(database) && poetry run python manage.py migrate
+	make drop-db database=$(database) && make create-db database=$(database) && python manage.py migrate
 
 grant-public:
 	psql -U postgres -d $(database) -c "GRANT ALL PRIVILEGES ON SCHEMA public TO postgres;"
 
+reset-railway-db:
+	psql -U postgres -d postgres && SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'railway'; && DROP DATABASE IF EXISTS railway; && CREATE DATABASE railway; && \c railway && GRANT ALL PRIVILEGES ON SCHEMA public TO postgres;
