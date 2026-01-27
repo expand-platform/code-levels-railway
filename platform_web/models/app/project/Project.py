@@ -48,7 +48,7 @@ class Project(models.Model):
         Framework, blank=True, help_text="Predefined frameworks", verbose_name="Frameworks"
     )
     skills = models.ManyToManyField(Skill, blank=True)
-    stages = models.ManyToManyField(Stage, blank=True)
+    stages = models.ManyToManyField(Stage, blank=True)  
     
     # Metadata
     is_active = models.BooleanField(default=True)

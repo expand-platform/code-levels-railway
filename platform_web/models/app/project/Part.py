@@ -9,6 +9,8 @@ class Part(models.Model):
     description = models.TextField(blank=True)
     
     project = models.ForeignKey(Project, related_name="parts", on_delete=models.CASCADE)
+    chapter = models.ForeignKey('platform_web.Chapter', related_name='parts', on_delete=models.CASCADE, null=True, blank=True)
+    
     languages = models.ManyToManyField(ProgrammingLanguage, blank=True)
 
     class Meta:

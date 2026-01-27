@@ -2,7 +2,6 @@ from django.db import models
 
 from platform_web.models.app.project.Part import Part
 from platform_web.models.app.project.Project import Project
-from platform_web.models.app.project.ChapterPart import ChapterPart
 
 
 class Chapter(models.Model):
@@ -14,12 +13,6 @@ class Chapter(models.Model):
         Project,
         on_delete=models.CASCADE,
         related_name="chapters",
-        blank=True
-    )
-    parts = models.ManyToManyField(
-        Part,
-        related_name='chapter_set',
-        through=ChapterPart,
         blank=True
     )
 

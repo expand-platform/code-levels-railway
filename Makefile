@@ -141,7 +141,13 @@ create-db:
 	psql -U postgres -c "CREATE DATABASE $(db);"
 
 reset-db:
-	make drop-db database=$(db) && make create-db database=$(db) && python manage.py migrate
+	make drop-db database=$(db) && make create-db database=$(db) && rm -rf platform_web/migrations && mkdir platform_web/migrations && touch platform_web/migrations/__init__.py && make migrate && make users && make seed
+
+users:
+	./bash/setup_postgres.sh && ./bash/website_admin.sh
+
+seed:
+	cp platform_web/data/seed/*.* platform_web/migrations/
 
 grant-public:
 	psql -U postgres -d $(database) -c "GRANT ALL PRIVILEGES ON SCHEMA public TO postgres;"

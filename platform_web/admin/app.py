@@ -53,12 +53,12 @@ class PartInline(SortableInlineAdminMixin, NestedTabularInline):
     ordering = ["order"]
 
 # Inline for Parts under Chapter
-class ChapterPartInline(SortableInlineAdminMixin, admin.TabularInline):
-    model = Chapter.parts.through
-    extra = 1
-    verbose_name = "Part"
-    verbose_name_plural = "Parts"
-    autocomplete_fields = ["part"]
+# class ChapterPartInline(SortableInlineAdminMixin, admin.TabularInline):
+#     model = Chapter.parts.through
+#     extra = 1
+#     verbose_name = "Part"
+#     verbose_name_plural = "Parts"
+#     autocomplete_fields = ["part"]
 
 class ChapterInline(SortableInlineAdminMixin, NestedTabularInline):
     model = Chapter
