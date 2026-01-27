@@ -1,3 +1,4 @@
+import re
 from django.forms import SlugField
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -35,11 +36,22 @@ def project_parts_view(request: HttpRequest, slug: str) -> HttpResponse:
 
 def part_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
     part = get_object_or_404(Part, pk=pk)
+    codepen_hash = ""
+    codepen_user = ""
+    if part.codepen_url:
+        # Example: https://codepen.io/ca-tt/pen/ExEENaZ
+        hash_match = re.search(r"/pen/([a-zA-Z0-9]+)", part.codepen_url)
+        user_match = re.search(r"codepen.io/([^/]+)/pen/", part.codepen_url)
+        if hash_match:
+            codepen_hash = hash_match.group(1)
+        if user_match:
+            codepen_user = user_match.group(1)
     context = {
         "part": part,
         "lesson_id": part.pk,
         "lesson_title": part.title,
         "lesson_description": part.description,
-        # Add more context as needed
+        "codepen_hash": codepen_hash,
+        "codepen_user": codepen_user,
     }
     return render(request, "website/dashboard/pages/part.html", context)

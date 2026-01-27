@@ -12,6 +12,8 @@
 {% endblock %}
 
 {% block extra_js %}
+  <script async src="https://public.codepenassets.com/embed/index.js" defer></script>
+
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/parts/codepen.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/levels.js' %}" defer type="module"></script>
@@ -22,9 +24,7 @@
     <aside class="sidebar description col-4">
       <div class="description-content">
         <h2>Level #{{ lesson_id }}: {{ lesson_title }}</h2>
-        <div class="part-description">
-          {{ part.description|safe }}
-        </div>
+        <div class="part-description">{{ part.description|safe }}</div>
       </div>
       <hr class="line" />
 
@@ -35,22 +35,19 @@
           <div class="col-8 objectives">
             <form action="">
               <ul>
-                <li>
-                  <input type="checkbox" name="" id="" />Objective 1
-                </li>
-                <li>
-                  <input type="checkbox" name="" id="" />Objective 2
-                </li>
-                <li>
-                  <input type="checkbox" name="" id="" />Objective 3
-                </li>
+                {% for obj in part.objectives %}
+                  <li>
+                    <input type="checkbox" name="objective{{ forloop.counter }}" id="objective{{ forloop.counter }}" />
+                    {{ obj }}
+                  </li>
+                {% empty %}
+                  <li>No objectives set for this part.</li>
+                {% endfor %}
               </ul>
             </form>
           </div>
-
-          {# buttons #}
           <div class="col-4 actions text-end">
-            <button class="btn btn-outline-success">> Submit</button>
+            <button class="btn btn-outline-success">&gt; Submit</button>
           </div>
         </div>
       </div>
@@ -60,17 +57,19 @@
       <div class="no-code-cover-line"></div>
 
       <div class="embeded-inner">
-        <div class="codepen" data-height="100%" data-width="95%" data-default-tab="result" data-editable="true" data-slug-hash="ExEENaZ" data-pen-title="Broken block (css rotate)" data-user="ca-tt" style="height: 100%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; padding: 1em; width: 95%; max-width: 100%;">
-          <span>See the Pen <a href="https://codepen.io/ca-tt/pen/ExEENaZ">Broken block (css rotate)</a> by Ca_tt (<a href="https://codepen.io/ca-tt">@ca-tt</a>) on <a href="https://codepen.io">CodePen</a>.</span>
-        </div>
-        <script async src="https://public.codepenassets.com/embed/index.js"></script>
+        {% if part.codepen_url and codepen_hash and codepen_user %}
+          <div class="codepen" data-height="100%" data-width="95%" data-default-tab="result" data-editable="true" data-slug-hash="{{ codepen_hash }}" data-user="{{ codepen_user }}" style="height: 100%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; padding: 1em; width: 95%; max-width: 100%;"></div>
+        {% else %}
+          <div class="alert alert-info">No CodePen demo for this part.</div>
+        {% endif %}
       </div>
 
+
       <div class="row settings align-items-center p-2 position-relative">
-          <div class="show-code-switch d-flex justify-content-center align-items-center form-check form-switch pointer">
-            <input class="form-check-input me-2" type="checkbox" role="switch" id="switchCheckDefault" />
-            <label class="form-check-label pointer" for="switchCheckDefault">Show code</label>
-          </div>
+        <div class="show-code-switch d-flex justify-content-center align-items-center form-check form-switch pointer">
+          <input class="form-check-input me-2" type="checkbox" role="switch" id="switchCheckDefault" />
+          <label class="form-check-label pointer" for="switchCheckDefault">Show code</label>
+        </div>
       </div>
     </main>
   </section>
