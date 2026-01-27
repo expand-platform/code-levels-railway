@@ -5,7 +5,7 @@
       <section class="language-block">
         <h2>{{ course.title }}</h2>
         <div class="project-list">
-          {% for project in course.projects.all %}
+          {% for project in course.filtered_projects %}
             <div class="project-card">
               {% if project.image %}
                 <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" />

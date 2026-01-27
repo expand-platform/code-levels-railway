@@ -1,5 +1,3 @@
-from cProfile import label
-from ctypes.macholib import framework
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
@@ -13,16 +11,33 @@ from platform_web.models.app.project.Course import Course
 
 User = get_user_model()
 
+
 class Project(models.Model):
+    TOPIC = "topic"
+    PROJECT = "project"
+    
+    PROJECT_TYPE_CHOICES = [
+        (TOPIC, "Topic"),
+        (PROJECT, "Project"),
+    ]
+    
     title = models.CharField(max_length=255)
     order = models.PositiveIntegerField(default=0)
+    image = models.ImageField(upload_to="project_images/", blank=True, null=True)
+    type = models.CharField(
+        max_length=20,
+        choices=PROJECT_TYPE_CHOICES,
+        default=TOPIC,
+    )
+ 
     course = models.ForeignKey(
         Course,
         on_delete=models.CASCADE,
         related_name="projects",
-        null=True,  # Set to True for migration safety; set to False after data migration if needed
-        blank=True  # Set to True for migration safety; set to False after data migration if needed
+        null=True, 
+        blank=True 
     )
+    
     difficulty = models.ForeignKey(
         Difficulty, on_delete=models.SET_NULL, null=True, blank=True
     )
@@ -34,9 +49,10 @@ class Project(models.Model):
     )
     skills = models.ManyToManyField(Skill, blank=True)
     stages = models.ManyToManyField(Stage, blank=True)
-    image = models.ImageField(upload_to="project_images/", blank=True, null=True)
-    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    
+    # Metadata
     is_active = models.BooleanField(default=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

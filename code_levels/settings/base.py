@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "platform_web.apps.PlatformWeb",
     "nested_admin",
     "adminsortable2",
+    "django_summernote",
 ]
 
 MIDDLEWARE = [

@@ -21,8 +21,14 @@
     <form method="get" class="projects-toggle-section" style="margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
       <label for="projects-toggle-select" style="font-weight: 500;">View projects:</label>
       <select id="projects-toggle-select" name="filter" class="form-select" style="width: auto;" onchange="this.form.submit()">
-        <option value="language" {% if filter_by == 'language' %} selected {% endif %} > By Language </option>
+        <option value="language" {% if filter_by == 'language' %}selected{% endif %}>By Language</option>
         <option value="course" {% if filter_by == 'course' %}selected{% endif %}>By Course</option>
+      </select>
+      <label for="projects-type-select" style="font-weight: 500;">Type:</label>
+      <select id="projects-type-select" name="type" class="form-select" style="width: auto;" onchange="this.form.submit()">
+        <option value="all" {% if project_type == 'all' or not project_type %}selected{% endif %}>All</option>
+        <option value="topic" {% if project_type == 'topic' %}selected{% endif %}>Topic</option>
+        <option value="project" {% if project_type == 'project' %}selected{% endif %}>Project</option>
       </select>
     </form>
     {% if filter_by == 'course' %}

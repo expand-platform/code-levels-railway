@@ -15,6 +15,7 @@ urlpatterns = [
     path("cp/", admin.site.urls),
     path("account/", include(("allauth.urls"))),
     path("health/", lambda r: HttpResponse("OK"), name="health"),
+    path("summernote/", include("django_summernote.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 

@@ -1,10 +1,11 @@
 from django.contrib import admin
-from ckeditor.widgets import CKEditorWidget
+from django_summernote.widgets import SummernoteWidget
 from django import forms
 
 from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
 from nested_admin.nested import NestedTabularInline, NestedModelAdmin
 
+from platform_web.models.app.project.Course import Course
 from platform_web.models.app.project.Project import Project
 from platform_web.models.app.project.Part import Part
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
@@ -16,6 +17,11 @@ from platform_web.models.app.project.Submission import Submission
 from platform_web.models.app.project.Framework import Framework
 from platform_web.models.app.project.Chapter import Chapter
 from platform_web.models.app.project.ChapterPart import ChapterPart
+
+
+class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
+    list_display = ("title", "order")
+    search_fields = ("title",)
 
 
 class SkillsAdmin(admin.ModelAdmin):
@@ -53,20 +59,21 @@ class ChapterInline(SortableInlineAdminMixin, NestedTabularInline):
     ordering = ["order"]
 
 
-class ProjectAdmin(SortableAdminMixin, NestedModelAdmin): # type: ignore[misc]
+class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
     inlines = [ChapterInline]
     list_display = (
         "title",
+        "course",
+        "type",
+        "difficulty",
         "get_programming_languages",
         "get_framework",
         "chapter_count",
-        "order",
-        "difficulty",
-        "is_active",
-        "created_at",
         "updated_at",
+        "is_active",
+        "order",
     )
-    list_filter = ("is_active", "difficulty", "programming_languages", "framework")
+    list_filter = ("difficulty", "programming_languages",  "framework", "type", "course")
     search_fields = ("title", "description")
     ordering = ["order"]
     readonly_fields = ("created_at", "updated_at")
@@ -76,15 +83,18 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin): # type: ignore[misc]
     def publish_projects(self, request, queryset):
         updated = queryset.update(is_active=True)
         self.message_user(request, f"{updated} project(s) published.")
+
     publish_projects.short_description = "Publish selected projects"
 
     def unpublish_projects(self, request, queryset):
         updated = queryset.update(is_active=False)
         self.message_user(request, f"{updated} project(s) unpublished.")
+
     unpublish_projects.short_description = "Unpublish selected projects"
 
     def chapter_count(self, obj):
         return obj.chapters.count()
+
     chapter_count.short_description = "Chapters"
 
     def get_programming_languages(self, obj):
@@ -97,7 +107,7 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin): # type: ignore[misc]
     get_framework.short_description = "Frameworks"
 
 
-class ChapterAdmin(SortableAdminMixin, admin.ModelAdmin): # type: ignore[misc]
+class ChapterAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
     inlines = [ChapterPartInline]
     list_display = ("title", "project", "order", "part_count")
     list_filter = ("project",)
@@ -106,16 +116,18 @@ class ChapterAdmin(SortableAdminMixin, admin.ModelAdmin): # type: ignore[misc]
 
     def part_count(self, obj):
         return obj.parts.count()
+
     part_count.short_description = "Parts"
 
 
 class PartAdminForm(forms.ModelForm):
     class Meta:
         model = Part
-        fields = '__all__'
+        fields = "__all__"
         widgets = {
-            'description': CKEditorWidget(),
+            "description": SummernoteWidget(),
         }
+
 
 class PartAdmin(admin.ModelAdmin):
     form = PartAdminForm
@@ -135,3 +147,4 @@ admin.site.register(Review)
 admin.site.register(Submission)
 admin.site.register(Chapter, ChapterAdmin)
 admin.site.register(ChapterPart)
+admin.site.register(Course, CourseAdmin)
