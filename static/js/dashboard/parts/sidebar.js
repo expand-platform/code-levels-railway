@@ -1,15 +1,15 @@
 import { saveToLocalStorage, loadFromLocalStorage } from "./../../helpers/localStorage.js";
 
-const menuBar = document.querySelector('.dashboard-nav .bx.bx-menu');
-const sidebar = document.getElementById('sidebar');
+const sidebarBurgerButton = document.querySelector('.dashboard-nav .bx.bx-menu');
+const sidebar = document.getElementById('sidebar') || document.querySelector('.sidebar');
 const logo = document.querySelector('#sidebar .brand .text');
 const dashboardNav = document.querySelector('.dashboard .dashboard-nav');
 
 const sidebarStateKey = 'isDashboardSidebarHidden';
 
-menuBar.addEventListener('click', function () {
+sidebarBurgerButton.addEventListener('click', function () {
+    // false - visible, true - hidden, but save to localStorage as inversed value
     let isSidebarHidden = sidebar.classList.contains('hide');
-    console.log("🚀 ~ isSidebarHidden (after click):", isSidebarHidden)
 
     if (isSidebarHidden) {
         displayElements(true);
@@ -18,18 +18,17 @@ menuBar.addEventListener('click', function () {
         displayElements(false);
     }
 
-    saveToLocalStorage(sidebarStateKey, isSidebarHidden);
+    saveToLocalStorage(sidebarStateKey, !isSidebarHidden);
 });
 
 export function loadSidebarState() {
     let isSidebarHidden = loadFromLocalStorage(sidebarStateKey);
-    /* ! after page loaded, class is added, animation is toggled (bad) */
 
     if (isSidebarHidden) {
-        console.log('- if -');
-       displayElements(false);
+        console.log('- if hidden -');
+        displayElements(false);
     } else {
-        console.log('- else -');
+        console.log('- else (visible) -');
         displayElements(true);
     }
 

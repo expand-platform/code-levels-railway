@@ -1,6 +1,6 @@
 {% if languages %}
   <div class="project-languages-section">
-    <h1>Projects by Programming Language</h1>
+    {% comment %} <h1>Projects by Programming Language</h1> {% endcomment %}
     {% for language in languages %}
       <section class="language-block">
         <h2>{{ language.name }}</h2>

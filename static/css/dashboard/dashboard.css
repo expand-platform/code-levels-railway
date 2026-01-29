@@ -49,13 +49,6 @@ body {
     overflow-x: hidden;
 }
 
-
-
-/* .dashboard {
-    padding: 1rem 0;
-} */
-
-
 /* CONTENT */
 #content {
     position: relative;
@@ -73,9 +66,12 @@ body {
     padding: 5rem 2rem;
 }
 
-
-
-
+.dashboard .box {
+    background: var(--light);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
 
 
 /* MAIN */

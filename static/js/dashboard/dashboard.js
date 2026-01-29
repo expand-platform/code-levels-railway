@@ -1,25 +1,38 @@
 import { loadColorScheme, saveColorScheme } from "../ui/colorScheme.js";
 import { loadSidebarState } from "./parts/sidebar.js";
+import { saveToLocalStorage, loadFromLocalStorage } from "./../helpers/localStorage.js";
+
+const sideMenuLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
+const activeSideMenuItemKey = "activeSideMenuLinkIndex";
 
 function onLoad() {
     loadColorScheme();
     loadSidebarState();
+    setActiveSideMenuLink();
 }
 
 onLoad();
 
-const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
-
-allSideMenu.forEach(item => {
-    const li = item.parentElement;
-
-    item.addEventListener('click', function () {
-        allSideMenu.forEach(i => {
-            i.parentElement.classList.remove('active');
-        })
-        li.classList.add('active');
-    })
+sideMenuLinks.forEach((item, key) => {
+    item.onclick = () => {
+        saveToLocalStorage(activeSideMenuItemKey, key);
+    }
 });
+
+function setActiveSideMenuLink() {
+    const savedIndex = loadFromLocalStorage(activeSideMenuItemKey);
+
+    if (savedIndex == null || savedIndex == undefined) {
+        sideMenuLinks.forEach((item, key) => {
+            if (item.innerText.trim() == "Dashboard") {
+                item.parentElement.classList.add('active');
+            }
+        })
+    }
+    else {
+        sideMenuLinks[savedIndex].parentElement.classList.add('active');
+    }
+}
 
 
 // Arama butonunu toggle etme
