@@ -1,67 +1,35 @@
 <section id="sidebar">
-  <a href="#" class="brand ms-5">
-    {% comment %} <i class="bx bxs-smile bx-lg"></i> {% endcomment %}
-    <span class="text">{{website_config.site_name}}</span>
-  </a>
+  <a href="#" class="brand ms-5"><span class="text">{{ website_config.site_name }}</span></a>
   <ul class="side-menu top">
     {% if user.is_staff %}
-    <li class="">
-      <a href="{% url 'admin:index' %}">
-        <i class="bx bxs-dashboard bx-sm"></i>
-        <span class="text">Admin</span>
-      </a>
-    </li>
+      <li class="">
+        <a href="{% url 'admin:index' %}">
+          <i class="bx bi bi-person-lock bx"></i>
+          <span class="text">Admin</span>
+        </a>
+      </li>
     {% endif %}
     <li class="active">
-      <a href="#">
-        <i class="bx bxs-dashboard bx-sm"></i>
+      <a href="{% url 'dashboard' %}">
+        <i class="bi bi-columns-gap bx"></i>
         <span class="text">Dashboard</span>
       </a>
     </li>
     <li class="">
       <a href="{% url 'projects' %}">
-        <i class="bx bxs-dashboard bx-sm"></i>
+        <i class="bx bi bi-list-nested"></i>
         <span class="text">Projects</span>
       </a>
     </li>
-    <li>
+    {% comment %} <li>
       <a href="{% url 'dashboard_map' %}">
         <i class="bx bx-map-alt bx-sm"></i>
         <span class="text">Map</span>
       </a>
     </li>
-    <li>
-      <a href="#">
-        <i class="bx bxs-doughnut-chart bx-sm"></i>
-        <span class="text">Analytics</span>
-      </a>
-    </li>
-    <li>
-      <a href="#">
-        <i class="bx bxs-message-dots bx-sm"></i>
-        <span class="text">Message</span>
-      </a>
-    </li>
-    <li>
-      <a href="#">
-        <i class="bx bxs-group bx-sm"></i>
-        <span class="text">Team</span>
-      </a>
-    </li>
-    <li>
-      <a href="#">
-        <i class="bx bxs-group bx-sm"></i>
-        <span class="text">Tutorials</span>
-      </a>
-    </li>
+    {% endcomment %}
   </ul>
   <ul class="side-menu bottom">
-    <li>
-      <a href="#">
-        <i class="bx bxs-cog bx-sm bx-spin-hover"></i>
-        <span class="text">Settings</span>
-      </a>
-    </li>
     <li>
       <a href="{% url 'logout' %}" class="logout">
         <i class="bx bx-power-off bx-sm bx-burst-hover"></i>

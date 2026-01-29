@@ -1,8 +1,9 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth import get_user_model
 
 from platform_web.models.app.project.Submission import Submission
-from platform_web.models.app.project.Skill import Skill
 
 User = get_user_model()
 
@@ -15,6 +16,8 @@ class Review(models.Model):
     feedback = models.TextField()
     score = models.PositiveIntegerField(default=0)
     reviewed_at = models.DateTimeField(auto_now_add=True)
+    
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     
     class Meta:
         db_table = "reviews"

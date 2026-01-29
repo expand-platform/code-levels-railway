@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block extra_css %}
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
 {% endblock %}
 
@@ -17,15 +16,15 @@
 {% block layout %}
   <section class="dashboard">
     <!-- SIDEBAR -->
+    {% include 'website/dashboard/parts/nav.html' %}
     {% include 'website/dashboard/parts/side-menu.html' %}
 
     <!-- CONTENT -->
     <section id="content">
       <!-- NAVBAR -->
-      {% include 'website/dashboard/parts/nav.html' %}
 
       <!-- MAIN -->
-      <main>
+      <main class="dashboard-content">
         {% block dashboard_content %}
 
         {% endblock %}

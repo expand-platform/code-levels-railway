@@ -14,8 +14,8 @@
 {% block content %}
   <div class="wrapper">
     <div class="login-container">
-      <section>
-        <h2 class="subtitle">Welcome to Code Levels{{ website_config.site_name }}</h2>
+      <section class="login-form">
+        <h2 class="subtitle">Welcome to {{ website_config.site_name }}</h2>
         <h4 class="fw-light mb-3">{{ website_config.tagline }}</h4>
 
         {# form #}
@@ -30,7 +30,7 @@
             {{ form.login }}
             {{ form.password }} 
             <button type="submit" id="login-button" class="mb-5">Login</button>
-            <a href="{% provider_login_url 'google' %}"><button type="button" class="login-with-google-btn">Sign in with Google</button></a>
+            <a class="login-with-google-btn" href="{% provider_login_url 'google' %}">Sign in with Google</a>
             <p class="help-text dont-have-account">
               Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a>
             </p>

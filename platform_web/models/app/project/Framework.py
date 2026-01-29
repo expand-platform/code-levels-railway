@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 
@@ -26,6 +28,9 @@ class Framework(models.Model):
     order = models.PositiveIntegerField(
         default=0, help_text="Order for displaying frameworks (lower comes first)"
     )
+    
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+
 
     class Meta:
         db_table = "frameworks"

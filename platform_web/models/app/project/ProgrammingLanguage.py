@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils.text import slugify
 
@@ -52,6 +54,8 @@ class ProgrammingLanguage(models.Model):
     order = models.PositiveIntegerField(
         default=0, help_text="Order for displaying programming languages (lower comes first)"
     )
+    
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     
     class Meta:
         db_table = "programming_languages"

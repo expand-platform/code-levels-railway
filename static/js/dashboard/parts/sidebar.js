@@ -1,6 +1,6 @@
 import { saveToLocalStorage, loadFromLocalStorage } from "./../../helpers/localStorage.js";
 
-const menuBar = document.querySelector('#content nav .bx.bx-menu');
+const menuBar = document.querySelector('.dashboard-nav .bx.bx-menu');
 const sidebar = document.getElementById('sidebar');
 const logo = document.querySelector('#sidebar .brand .text');
 const dashboardNav = document.querySelector('.dashboard .dashboard-nav');
@@ -40,12 +40,12 @@ function displayElements(show) {
     if (show) {
         sidebar.classList.remove('hide');
         logo.classList.remove('visually-hidden');
-        // dashboardNav.remove('hide')
+        dashboardNav.classList.remove('start-0', 'opened')
     }
     else {
         sidebar.classList.add('hide');
         logo.classList.add('visually-hidden');
-        // dashboardNav.classList.add('hide')
+        dashboardNav.classList.add('start-0', 'opened')
     }
 }
 

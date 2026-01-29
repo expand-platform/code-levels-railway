@@ -1,8 +1,9 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth import get_user_model
 
 from platform_web.models.app.project.Part import Part
-from platform_web.models.app.project.Skill import Skill
 
 User = get_user_model()
 
@@ -12,6 +13,8 @@ class Submission(models.Model):
     submitted_at = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     is_checked = models.BooleanField(default=False)
+    
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     
     class Meta:
         db_table = "submissions"

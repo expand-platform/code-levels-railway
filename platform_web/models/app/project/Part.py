@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from platform_web.models.app.project.Project import Project
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
@@ -18,6 +20,8 @@ class Part(models.Model):
         help_text="List of lesson objectives"
     )
     languages = models.ManyToManyField(ProgrammingLanguage, blank=True)
+    
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
     class Meta:
         db_table = "project_parts"

@@ -1,25 +1,49 @@
-<nav class="dashboard-nav">
-  <i class="bx bx-menu bx-sm"></i>
-  <a href="#" class="nav-link">Categories</a>
-  <form action="#">
+<nav class="dashboard-nav row justify-content-between">
+  <aside class="col left">
+    <i class="bi bi-list fs-5 bx bx-menu bx-sm"></i>
+  </aside>
+  <aside class="col right justify-content-end d-flex align-items-center column-gap-3">
+    <div></div>
+    <input type="checkbox" class="checkbox" id="switch-mode" hidden />
+    <label class="swith-lm" for="switch-mode">
+      {% comment %} <i class="bx bxs-moon"></i> {% endcomment %}
+      <i class="bi bi-moon-stars"></i>
+      <i class="bi bi-sun-fill"></i>
+      {% comment %} <i class="bx bx-sun"></i> {% endcomment %}
+      <div class="ball"></div>
+    </label>
+    <div>
+      <a href="#" class="profile me-2" id="profileIcon"><img src="https://placehold.co/600x400/png" alt="Profile" /></a>
+    </div>
+
+    <div class="profile-menu" id="profileMenu">
+      <ul>
+        {% comment %} <li>
+          <a href="#">My Profile ({{ user.username }})</a>
+        </li> {% endcomment %}
+        {% comment %} <li>
+          <a href="#">Settings</a>
+        </li> {% endcomment %}
+        <li>
+          <a href="{% url 'account_logout' %} ">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+  {% comment %} <a href="#" class="nav-link">Categories</a> {% endcomment %}
+  {% comment %} <form action="#">
     <div class="form-input">
       <input type="search" placeholder="Search..." />
       <button type="submit" class="search-btn"><i class="bx bx-search"></i></button>
     </div>
-  </form>
-  <input type="checkbox" class="checkbox" id="switch-mode" hidden />
-  <label class="swith-lm" for="switch-mode">
-    <i class="bx bxs-moon"></i>
-    <i class="bx bx-sun"></i>
-    <div class="ball"></div>
-  </label>
+  </form> {% endcomment %}
 
   <!-- Notification Bell -->
-  <a href="#" class="notification" id="notificationIcon">
+  {% comment %} <a href="#" class="notification" id="notificationIcon">
     <i class="bx bxs-bell bx-tada-hover"></i>
     <span class="num">8</span>
-  </a>
-  <div class="notification-menu" id="notificationMenu">
+  </a> {% endcomment %}
+  {% comment %} <div class="notification-menu" id="notificationMenu">
     <ul>
       <li>New message from John</li>
       <li>Your order has been shipped</li>
@@ -27,21 +51,7 @@
       <li>Update available for your app</li>
       <li>Reminder: Meeting at 3PM</li>
     </ul>
-  </div>
+  </div> {% endcomment %}
 
   <!-- Profile Menu -->
-  <a href="#" class="profile" id="profileIcon"><img src="https://placehold.co/600x400/png" alt="Profile" /></a>
-  <div class="profile-menu" id="profileMenu">
-    <ul>
-      <li>
-        <a href="#">My Profile</a>
-      </li>
-      <li>
-        <a href="#">Settings</a>
-      </li>
-      <li>
-        <a href="#">Log Out</a>
-      </li>
-    </ul>
-  </div>
 </nav>

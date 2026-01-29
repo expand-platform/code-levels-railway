@@ -1,8 +1,9 @@
 {% extends 'website/parts/layout/base.html' %}
 {% load static %}
+{% load socialaccount %}
 
 {% block title %}
-  Complete Signup | {{ website_config.site_name }}
+  Login | {{ website_config.site_name }}
 {% endblock %}
 
 {% block extra_css %}
@@ -14,23 +15,24 @@
   <div class="wrapper">
     <div class="login-container">
       <section class="login-form">
-        <h2 class="subtitle">Complete Your Signup 123</h2>
+        <h2 class="subtitle">Welcome to {{ website_config.site_name }}</h2>
+        <h4 class="fw-light mb-3">{{ website_config.tagline }}</h4>
+
+        {# form #}
         <section class="row justify-content-center">
-          <form method="post" action="" class="form col-10">
+          <form method="POST" action="{% url 'account_login' %}" class="form col-10">
             <div class="mb-3"></div>
             {% if form.non_field_errors %}
-            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+              <div class="alert alert-danger">{{ form.non_field_errors }}</div>
             {% endif %}
             {% csrf_token %}
-            {% for field in form %}
-              <div class="mb-3">
-                {{ field }}
-                {% if field.errors %}
-                  <div class="text-danger small">{{ field.errors }}</div>
-                {% endif %}
-              </div>
-            {% endfor %}
-            <button type="submit" id="login-button" class="mb-5">Finish Signup</button>
+            {{ form.login }}
+            {{ form.password }}
+            <button type="submit" id="login-button" class="mb-5">Login</button>
+            <a href="{% provider_login_url 'google' %}"><button type="button" class="login-with-google-btn">Sign in with Google</button></a>
+            <p class="help-text dont-have-account">
+              Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a>
+            </p>
           </form>
         </section>
       </section>

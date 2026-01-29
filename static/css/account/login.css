@@ -96,21 +96,21 @@ body :-ms-input-placeholder {
     font-size: 2rem;
 }
 
-.login-container section {
-    max-width: 600px;
-}
-
 .login-container h1 {
     font-weight: 200;
     font-size: 5rem;
 }
 
-form {
+.login-form {
+    width: 30%;
+}
+
+.login-form {
     padding: 20px 0;
     font-size: 2rem;
 }
 
-form input {
+.login-form input {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -119,26 +119,26 @@ form input {
     background-color: rgba(255, 255, 255, 0.2);
     width: 100%;
     border-radius: 3px;
-    padding: 10px 15px;
+    padding: .5rem;
     margin: 0 auto 10px auto;
     display: block;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     color: white;
     transition-duration: 0.25s;
     font-weight: 300;
 }
 
-form input:hover {
+.login-form input:hover {
     background-color: rgba(255, 255, 255, 0.4);
 }
 
-form input:focus {
+.login-form input:focus {
     background-color: rgba(255, 255, 255, 0.4);
     color: #53e3a6;
 }
 
-form button {
+.login-form button, .login-with-google-btn {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -146,17 +146,17 @@ form button {
     /* background-color: white; */
     background-color: rgba(255, 255, 255, 0.2);
     border: 0;
-    padding: 10px 15px;
+    padding: .5rem;
     color: var(--button-text-primary);
     /* color: rgba(255, 255, 255, 0.2); */
     border-radius: 3px;
     width: 100%;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1.25rem;
     transition-duration: 0.25s;
 }
 
-form button:hover {
+.login-form button:hover, .login-with-google-btn:hover {
     background-color: var(--soft-white);
     color: var(--dark-blue);
 }

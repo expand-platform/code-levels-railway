@@ -25,8 +25,10 @@ migrations:
 migrate:
 	python manage.py migrate
 
+empty-migration:
+	python manage.py makemigrations $(app) --empty 
 
-clean-migrations:
+clear-migrations:
 	find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 	find . -path "*/migrations/*.pyc" -delete
 
@@ -141,7 +143,7 @@ create-db:
 	psql -U postgres -c "CREATE DATABASE $(db);"
 
 reset-db:
-	make drop-db database=$(db) && make create-db database=$(db) && rm -rf platform_web/migrations && mkdir platform_web/migrations && touch platform_web/migrations/__init__.py && make migrate && make users && make seed
+	make drop-db database=$(db) && make create-db database=$(db) && rm -rf platform_web/migrations && mkdir platform_web/migrations && touch platform_web/migrations/__init__.py && make migrations && make seed && make migrate && make users
 
 users:
 	./bash/setup_postgres.sh && ./bash/website_admin.sh
@@ -154,3 +156,21 @@ grant-public:
 
 reset-railway-db:
 	psql -U postgres -d postgres && SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'railway'; && DROP DATABASE IF EXISTS railway; && CREATE DATABASE railway; && \c railway && GRANT ALL PRIVILEGES ON SCHEMA public TO postgres;
+
+# backups
+db-backup:
+	pg_dump --format=custom $(db) > backup/db/db_backup_$$(date +%Y-%m-%d_%H-%M-%S).dump -U postgres
+
+media-backup:
+	tar -czf backup/media/media_backup_$$(date +%Y-%m-%d_%H-%M-%S).tar.gz media/
+
+# extract backups
+extract-media:
+	tar -xzf $(file) -C media/
+
+extract-db:
+	make reset-db db=$(db) && pg_restore --verbose --no-acl --no-owner --dbname=$(db) --username=postgres --no-password --clear --if-exists backup/db/$(file)
+
+# custom Django commands
+sync:
+	python manage.py sync_projects

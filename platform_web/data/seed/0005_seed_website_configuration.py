@@ -4,7 +4,7 @@ from django.db import migrations
 def seed_website_config(apps, schema_editor):
     WebsiteConfig = apps.get_model("platform_web", "WebsiteConfig")
     WebsiteConfig.objects.get_or_create(
-        site_name="CodeLeves", tagline="Step by step coding journey"
+        site_name="CodeLevels", tagline="Your step-by-step coding journey"
     )
 
 

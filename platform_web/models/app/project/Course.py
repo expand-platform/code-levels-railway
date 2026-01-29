@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
 
@@ -69,6 +71,11 @@ class Course(models.Model):
         ProgrammingLanguage, related_name="courses", blank=True
     )
     order = models.PositiveIntegerField(default=0)
+    
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+
+
+
 
     class Meta:
         db_table = "courses"

@@ -23,21 +23,21 @@ allSideMenu.forEach(item => {
 
 
 // Arama butonunu toggle etme
-const searchButton = document.querySelector('#content nav form .form-input button');
-const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-const searchForm = document.querySelector('#content nav form');
+// const searchButton = document.querySelector('.dashboard-nav form .form-input button');
+// const searchButtonIcon = document.querySelector('.dashboard-nav form .form-input button .bx');
+// const searchForm = document.querySelector('.dashboard-nav form');
 
-searchButton.addEventListener('click', function (e) {
-    if (window.innerWidth < 768) {
-        e.preventDefault();
-        searchForm.classList.toggle('show');
-        if (searchForm.classList.contains('show')) {
-            searchButtonIcon.classList.replace('bx-search', 'bx-x');
-        } else {
-            searchButtonIcon.classList.replace('bx-x', 'bx-search');
-        }
-    }
-})
+// searchButton.addEventListener('click', function (e) {
+//     if (window.innerWidth < 768) {
+//         e.preventDefault();
+//         searchForm.classList.toggle('show');
+//         if (searchForm.classList.contains('show')) {
+//             searchButtonIcon.classList.replace('bx-search', 'bx-x');
+//         } else {
+//             searchButtonIcon.classList.replace('bx-x', 'bx-search');
+//         }
+//     }
+// })
 
 // Dark Mode Switch
 const switchMode = document.getElementById('switch-mode');
@@ -49,21 +49,21 @@ switchMode.onchange = () => {
 }
 
 // Notification Menu Toggle
-document.querySelector('.notification').addEventListener('click', function () {
-    document.querySelector('.notification-menu').classList.toggle('show');
-    document.querySelector('.profile-menu').classList.remove('show'); // Close profile menu if open
-});
+// document.querySelector('.notification').addEventListener('click', function () {
+//     document.querySelector('.notification-menu').classList.toggle('show');
+//     document.querySelector('.profile-menu').classList.remove('show'); // Close profile menu if open
+// });
 
 // Profile Menu Toggle
 document.querySelector('.profile').addEventListener('click', function () {
     document.querySelector('.profile-menu').classList.toggle('show');
-    document.querySelector('.notification-menu').classList.remove('show'); // Close notification menu if open
+    // document.querySelector('.notification-menu').classList.remove('show'); // Close notification menu if open
 });
 
 // Close menus if clicked outside
 window.addEventListener('click', function (e) {
     if (!e.target.closest('.notification') && !e.target.closest('.profile')) {
-        document.querySelector('.notification-menu').classList.remove('show');
+        // document.querySelector('.notification-menu').classList.remove('show');
         document.querySelector('.profile-menu').classList.remove('show');
     }
 });

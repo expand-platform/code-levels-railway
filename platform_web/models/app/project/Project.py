@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
@@ -10,7 +12,6 @@ from platform_web.models.app.project.Framework import Framework
 from platform_web.models.app.project.Course import Course
 
 User = get_user_model()
-
 
 class Project(models.Model):
     TOPIC = "topic"
@@ -55,6 +56,7 @@ class Project(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
     class Meta:
         db_table = "projects"

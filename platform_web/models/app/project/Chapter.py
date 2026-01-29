@@ -1,6 +1,7 @@
+import uuid
+
 from django.db import models
 
-from platform_web.models.app.project.Part import Part
 from platform_web.models.app.project.Project import Project
 
 
@@ -15,6 +16,8 @@ class Chapter(models.Model):
         related_name="chapters",
         blank=True
     )
+
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
     class Meta:
         db_table = "chapters"

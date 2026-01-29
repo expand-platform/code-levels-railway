@@ -20,6 +20,9 @@ staticfiles/
 *.bak
 *.tmp
 
+# backups
+backup/
+
 # VS Code
 .vscode/
 

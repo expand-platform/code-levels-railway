@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 
@@ -20,6 +22,8 @@ class Stage(models.Model):
     
     name = models.CharField(max_length=100, choices=STAGE_CHOICES, unique=True)
     order = models.PositiveIntegerField(default=0)
+    
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     
     class Meta:
         db_table = "development_stages"

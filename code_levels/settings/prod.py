@@ -1,5 +1,6 @@
 import os
 from code_levels.settings.base import *
+from code_levels.settings.allauth.prod import *
 
 DEBUG = False
 
