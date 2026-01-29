@@ -4,6 +4,7 @@ import { saveToLocalStorage, loadFromLocalStorage } from "./../helpers/localStor
 
 const sideMenuLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
 const activeSideMenuItemKey = "activeSideMenuLinkIndex";
+const dashboardLinkText = "Dashboard";
 
 function onLoad() {
     loadColorScheme();
@@ -23,8 +24,8 @@ function setActiveSideMenuLink() {
     const savedIndex = loadFromLocalStorage(activeSideMenuItemKey);
 
     if (savedIndex == null || savedIndex == undefined) {
-        sideMenuLinks.forEach((item, key) => {
-            if (item.innerText.trim() == "Dashboard") {
+        sideMenuLinks.forEach((item) => {
+            if (item.innerText.trim() == dashboardLinkText) {
                 item.parentElement.classList.add('active');
             }
         })

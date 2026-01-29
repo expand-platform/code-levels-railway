@@ -13,9 +13,14 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 @login_required
 def projects_view(request):
-    filter_by = request.GET.get("filter", "language")
-    project_type = request.GET.get("type", "all")
+    default_filter = "course"
+    default_project_type = "all"
+
+    filter_by = request.GET.get("filter", default_filter)
+    project_type = request.GET.get("type", default_project_type)
+
     context = {"filter_by": filter_by, "project_type": project_type}
+
     if filter_by == "course":
         courses = Course.objects.prefetch_related("projects").all()
         if project_type != "all":
@@ -25,6 +30,7 @@ def projects_view(request):
             for course in courses:
                 course.filtered_projects = course.projects.all()
         context["courses"] = courses
+
     else:
         languages = ProgrammingLanguage.objects.prefetch_related("project_set").all()
         if project_type != "all":
