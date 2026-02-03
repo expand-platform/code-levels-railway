@@ -22,9 +22,9 @@
     <div class="hero__overlay"></div>
 
     <div class="hero__content">
-      <h1 class="title">Welcome to Code Levels!</h1>
+      <h1 class="title">Welcome to {{ website_config.site_name }}!</h1>
 
-      <p class="text">Step-by-step programming projects made with fun and joy in heart!</p>
+      <p class="text">{{ website_config.tagline }}</p>
 
       {% if user.is_authenticated %}
         <a class="btn btn-primary" href="{% url 'dashboard' %}">Get started</a>

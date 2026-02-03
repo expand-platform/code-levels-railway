@@ -13,15 +13,16 @@ from platform_web.models.app.project.Course import Course
 
 User = get_user_model()
 
+
 class Project(models.Model):
     TOPIC = "topic"
     PROJECT = "project"
-    
+
     PROJECT_TYPE_CHOICES = [
         (TOPIC, "Topic"),
         (PROJECT, "Project"),
     ]
-    
+
     title = models.CharField(max_length=255)
     order = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to="project_images/", blank=True, null=True)
@@ -30,15 +31,11 @@ class Project(models.Model):
         choices=PROJECT_TYPE_CHOICES,
         default=TOPIC,
     )
- 
+
     course = models.ForeignKey(
-        Course,
-        on_delete=models.CASCADE,
-        related_name="projects",
-        null=True, 
-        blank=True 
+        Course, on_delete=models.CASCADE, related_name="projects", null=True, blank=True
     )
-    
+
     difficulty = models.ForeignKey(
         Difficulty, on_delete=models.SET_NULL, null=True, blank=True
     )
@@ -46,11 +43,18 @@ class Project(models.Model):
         ProgrammingLanguage, blank=True, help_text="Predefined programming languages"
     )
     framework = models.ManyToManyField(
-        Framework, blank=True, help_text="Predefined frameworks", verbose_name="Frameworks"
+        Framework,
+        blank=True,
+        help_text="Predefined frameworks",
+        verbose_name="Frameworks",
     )
     skills = models.ManyToManyField(Skill, blank=True)
-    stages = models.ManyToManyField(Stage, blank=True)  
-    
+    stages = models.ManyToManyField(Stage, blank=True)
+
+    # description = models.TextField(
+    #     blank=True, help_text="Description for the Dashboard"
+    # )
+
     # Metadata
     is_active = models.BooleanField(default=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
@@ -68,17 +72,3 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
-
-
-
-
-# users_involved = models.ManyToManyField(
-#     User,
-#     related_name="projects",
-#     blank=True,
-#     help_text="Users signed up for this project",
-# )
-# description = models.TextField(
-#     blank=True, help_text="Description for the Dashboard"
-# )
-# icon = models.CharField(max_length=100, blank=True, help_text="CSS class for icon")

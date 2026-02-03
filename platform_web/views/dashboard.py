@@ -20,28 +20,23 @@ def projects_view(request):
     project_type = request.GET.get("type", default_project_type)
 
     context = {"filter_by": filter_by, "project_type": project_type}
+    context_key = "courses"
 
     if filter_by == "course":
-        courses = Course.objects.prefetch_related("projects").all()
-        if project_type != "all":
-            for course in courses:
-                course.filtered_projects = course.projects.filter(type=project_type)
-        else:
-            for course in courses:
-                course.filtered_projects = course.projects.all()
-        context["courses"] = courses
-
+        items = Course.objects.prefetch_related("projects").all()
+        get_projects = lambda item: item.projects
     else:
-        languages = ProgrammingLanguage.objects.prefetch_related("project_set").all()
+        items = ProgrammingLanguage.objects.prefetch_related("project_set").all()
+        get_projects = lambda item: item.project_set
+        context_key = "languages"
+
+    for item in items:
         if project_type != "all":
-            for language in languages:
-                language.filtered_projects = language.project_set.filter(
-                    type=project_type
-                )
+            item.filtered_projects = get_projects(item).filter(type=project_type)
         else:
-            for language in languages:
-                language.filtered_projects = language.project_set.all()
-        context["languages"] = languages
+            item.filtered_projects = get_projects(item).all()
+    context[context_key] = items
+
     return render(request, "website/dashboard/pages/projects.html", context)
 
 

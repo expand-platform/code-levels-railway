@@ -1,0 +1,38 @@
+{% extends 'website/dashboard/parts/layout.html' %}
+{% load static %}
+
+{% block title %}
+  Level {{ lesson_id }} | {{ website_config.site_name }}
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/dashboard/projects.css' %}" />
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/parts/codepen.js' %}" defer type="module"></script>
+{% endblock %}
+
+{% block dashboard_content %}
+
+    {% comment %} 
+        Inner project page:
+        - title
+        - subtitle (# project number in course (2 of 10 in "Web Development"))
+        - image
+        - difficulty
+        - full description
+        - steps (60+) (collapse)
+        - languages (tags)
+        - skills (tags)
+        - updated at
+        - start button
+
+    {% endcomment %}
+
+
+
+
+{% endblock %}

@@ -174,3 +174,7 @@ extract-db:
 # custom Django commands
 sync:
 	python manage.py sync_projects
+
+# ngrok
+ngrok:
+	ngrok http 8000
