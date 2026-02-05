@@ -16,8 +16,9 @@
 {% endblock %}
 
 {% block dashboard_content %}
+
 <section class="row align-items-end mb-2">
-  <div class="col dashboard-title head-title">
+  <div class="col dashboard-title head-title d-flex align-items-center justify-content-between">
     <div class="left">
       <h1>Projects</h1>
       <ul class="breadcrumb">
@@ -28,10 +29,23 @@
           <i class="fs-6 bi bi-caret-right-fill"></i>
         </li>
         <li>
+          {% if user.is_staff %}
+          <a class="active" target="_blank" href="/cp/platform_web/project/">Projects</a>
+          {% else %}
           <a class="active" href="#">Projects</a>
+          {% endif %}
         </li>
       </ul>
     </div>
+    <!-- Plus button moved to bottom right -->
+    {% if user.is_staff %}
+    <a href="/cp/platform_web/project/add/" target="_blank"
+       class="btn d-flex align-items-center justify-content-center"
+       style="position: fixed; right: 36px; bottom: 36px; z-index: 1050; border-radius: 50%; width: 60px; height: 60px; font-size: 2rem; background: #007bff; color: #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.12);"
+       title="Add New Project">
+      <i class="bi bi-plus"></i>
+    </a>
+    {% endif %}
   </div>
 
   <div class="col row justify-content-end align-items-end">

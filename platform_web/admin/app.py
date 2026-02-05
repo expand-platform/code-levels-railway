@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from django_summernote.widgets import SummernoteWidget
 from django import forms
@@ -52,6 +51,7 @@ class PartInline(SortableInlineAdminMixin, NestedTabularInline):
     autocomplete_fields = ["languages"]
     ordering = ["order"]
 
+
 # Inline for Parts under Chapter
 # class ChapterPartInline(SortableInlineAdminMixin, admin.TabularInline):
 #     model = Chapter.parts.through
@@ -59,6 +59,7 @@ class PartInline(SortableInlineAdminMixin, NestedTabularInline):
 #     verbose_name = "Part"
 #     verbose_name_plural = "Parts"
 #     autocomplete_fields = ["part"]
+
 
 class ChapterInline(SortableInlineAdminMixin, NestedTabularInline):
     model = Chapter
@@ -68,9 +69,20 @@ class ChapterInline(SortableInlineAdminMixin, NestedTabularInline):
     # inlines = [ChapterPartInline]
 
 
+class ProjectAdminForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = "__all__"
+        widgets = {
+            "description": SummernoteWidget(),
+        }
+
+
 class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
+    form = ProjectAdminForm
     inlines = [ChapterInline, PartInline]
     list_display = (
+        "order",
         "title",
         "course",
         "type",
@@ -78,14 +90,13 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
         "get_programming_languages",
         "get_framework",
         "chapter_count",
-        "updated_at",
         "is_active",
         "language_order",
         "course_order",
     )
-    list_filter = ("difficulty", "programming_languages",  "framework", "type", "course")
+    list_filter = ("difficulty", "programming_languages", "framework", "type", "course")
     search_fields = ("title", "description")
-    ordering = ["-updated_at"]
+    ordering = ["order"]
     readonly_fields = ("created_at", "updated_at")
 
     actions = ["publish_projects", "unpublish_projects"]
@@ -132,10 +143,13 @@ class ChapterAdmin(admin.ModelAdmin):  # type: ignore[misc]
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "parts":
-            if request.resolver_match and request.resolver_match.kwargs.get('object_id'):
+            if request.resolver_match and request.resolver_match.kwargs.get(
+                "object_id"
+            ):
                 try:
-                    chapter_id = int(request.resolver_match.kwargs['object_id'])
+                    chapter_id = int(request.resolver_match.kwargs["object_id"])
                     from platform_web.models.app.project.Chapter import Chapter
+
                     chapter = Chapter.objects.get(pk=chapter_id)
                     kwargs["queryset"] = Part.objects.filter(project=chapter.project)
                 except Exception:

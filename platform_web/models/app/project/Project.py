@@ -24,7 +24,7 @@ class Project(models.Model):
     ]
 
     title = models.CharField(max_length=255)
-    # order = models.PositiveIntegerField(default=0)
+    order = models.PositiveIntegerField(default=0, help_text="Ordering for admin sorting")
     language_order = models.PositiveIntegerField(default=0)
     course_order = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to="project_images/", blank=True, null=True)
@@ -67,7 +67,7 @@ class Project(models.Model):
 
     class Meta:
         db_table = "projects"
-        ordering = ["-updated_at", "title"]
+        ordering = ["order", "-updated_at", "title"]
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

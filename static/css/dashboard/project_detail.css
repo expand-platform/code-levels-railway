@@ -104,6 +104,29 @@
     border-bottom: 1px solid rgba(154, 147, 147, 0.684);
 }
 
+.project-details .nav-icon {
+    --icon-size: 3rem;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    display: inline-block;
+    border: 1px solid #ddd;
+    transition: box-shadow 0.3s;
+}
+
+.project-details .nav-icon i {
+    font-size: 1.4rem;
+    color: #007bff;
+}
+.project-details .nav-icon.back-icon  {
+    padding: 3px 2px 0 0;
+}
+
+.project-details .nav-icon.back-icon i {
+    font-size: 1.7rem;
+}
+
+
+
 .project-start {
     text-align: center;
     margin-top: 2rem;
