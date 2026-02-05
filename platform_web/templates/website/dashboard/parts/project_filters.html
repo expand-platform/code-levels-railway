@@ -1,0 +1,17 @@
+<div class="col row justify-content-end align-items-end">
+    <form method="get" class="projects-toggle-section col col-6 d-flex justify-content-end column-gap-3 mb-3" >
+      <div class="d-flex flex-column align-items-end">
+        <select id="projects-toggle-select" name="filter" class="form-select" style="width: auto;" onchange="this.form.submit()">
+          <option value="course" {% if filter_by == 'course' %} selected {% endif %}> By Course </option>
+          <option value="language" {% if filter_by == 'language' %} selected {% endif %}> By Language </option>
+        </select>
+        </div>
+      <div class="d-flex flex-column align-items-end">
+        <select id="projects-type-select" name="type" class="form-select" style="width: auto;" onchange="this.form.submit()">
+          <option value="all" {% if project_type == 'all' or not project_type %}selected{% endif %}>All</option>
+          <option value="topic" {% if project_type == 'topic' %}selected{% endif %}>Topic</option>
+          <option value="project" {% if project_type == 'project' %}selected{% endif %}>Project</option>
+        </select>
+      </div>
+    </form>
+  </div>
