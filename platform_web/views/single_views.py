@@ -1,3 +1,4 @@
+
 import re
 from django.forms import SlugField
 from django.http import HttpRequest, HttpResponse
@@ -73,3 +74,31 @@ def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
         "parts": parts,
     }
     return render(request, "website/dashboard/pages/project_details.html", context)
+
+
+def part_detail_view(request: HttpRequest, slug: str, order: int) -> HttpResponse:
+    """
+    Article-style view for a single project part, with navigation and sidebar.
+    """
+    project = get_object_or_404(Project, slug=slug)
+    parts = list(project.parts.all().order_by("order", "title"))
+    part = get_object_or_404(Part, project=project, order=order)
+    # Find prev/next part
+    prev_part = next_part = None
+    for idx, p in enumerate(parts):
+        if p.order == part.order:
+            if idx > 0:
+                prev_part = parts[idx-1]
+            if idx < len(parts)-1:
+                next_part = parts[idx+1]
+            break
+    context = {
+        "project": project,
+        "part": part,
+        "parts": parts,
+        "prev_part": prev_part,
+        "next_part": next_part,
+        "website_config": getattr(request, 'website_config', None),
+        "user": request.user,
+    }
+    return render(request, "website/dashboard/pages/part_detail.html", context)

@@ -97,7 +97,7 @@
         </section>
 
         <div class="project-start mb-2">
-          {% if start_url and parts %}
+          {% if parts %}
             <a href="{% url 'part_detail' slug=project.slug order=parts.0.order %}" class="start-project-btn d-inline-block"><i class="bi bi-chevron-double-right d-inline-block pt-1"></i> Start the Project</a>
           {% else %}
             <span class="text-muted">No parts available to start.</span>

@@ -6,11 +6,12 @@ from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLangu
 
 
 class Part(models.Model):
+    project = models.ForeignKey(Project, related_name="parts", on_delete=models.CASCADE)
+    
     title = models.CharField(max_length=255)
     order = models.PositiveIntegerField(default=0)
     description = models.TextField(blank=True)
     
-    project = models.ForeignKey(Project, related_name="parts", on_delete=models.CASCADE)
     chapter = models.ForeignKey('platform_web.Chapter', related_name='parts', on_delete=models.CASCADE, null=True, blank=True)
     
     codepen_url = models.URLField(blank=True, null=True)

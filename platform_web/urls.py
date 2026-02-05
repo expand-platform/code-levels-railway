@@ -13,5 +13,6 @@ urlpatterns = [
     path("project/<slug:slug>/", project_details_view, name="project_details"),
     # Project parts view (old inner project view)
     path("project/<slug:slug>/parts/", project_parts_view, name="project_parts_view"),
+    # path("project/<slug:slug>/part/<int:order>/", part_detail_view, name="part_detail"),
     path("project/<slug:slug>/part/<int:order>/", part_detail_view, name="part_detail"),
 ]

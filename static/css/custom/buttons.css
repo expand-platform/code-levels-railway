@@ -10,12 +10,12 @@
     position: relative;
     bottom: 0;
 
-    --bs-btn-color: var(--text-primary);
+    /* --bs-btn-color: var(--text-primary);
     --bs-btn-bg: var(--button-bg-primary);
     --bs-btn-border-color: var(--bg-primary);
     --bs-btn-hover-color: var(--text-primary);
     --bs-btn-hover-bg: var(--bg-primary-hover);
-    --bs-btn-hover-border-color: var(--light-purple);
+    --bs-btn-hover-border-color: var(--light-purple); */
     /* --bs-btn-focus-shadow-rgb: 49, 132, 253; */
     /* --bs-btn-active-color: #fff; */
     /* --bs-btn-active-bg: #0a58ca; */
