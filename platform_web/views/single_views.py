@@ -55,3 +55,18 @@ def part_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
         "codepen_user": codepen_user,
     }
     return render(request, "website/dashboard/pages/part.html", context)
+
+
+def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
+    project = get_object_or_404(Project, slug=slug)
+    start_url = None
+    # You may want to generate the start_url for the first part of the project
+    # For now, just link to the project parts view as a placeholder
+    if project:
+        start_url = f"/project/{project.slug}/parts/"
+    context = {
+        "project": project,
+        "start_url": start_url,
+        "website_config": getattr(request, 'website_config', None),
+    }
+    return render(request, "website/dashboard/pages/project_details.html", context)

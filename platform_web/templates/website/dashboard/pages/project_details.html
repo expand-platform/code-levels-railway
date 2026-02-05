@@ -2,37 +2,73 @@
 {% load static %}
 
 {% block title %}
-  Level {{ lesson_id }} | {{ website_config.site_name }}
+  {{ project.title }} | {{ website_config.site_name }}
 {% endblock %}
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/projects.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/dashboard/project_detail.css' %}" />
 {% endblock %}
 
 {% block extra_js %}
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/parts/codepen.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/project_detail.js' %}" defer type="module"></script>
 {% endblock %}
 
 {% block dashboard_content %}
-
-    {% comment %} 
-        Inner project page:
-        - title
-        - subtitle (# project number in course (2 of 10 in "Web Development"))
-        - image
-        - difficulty
-        - full description
-        - steps (60+) (collapse)
-        - languages (tags)
-        - skills (tags)
-        - updated at
-        - start button
-
-    {% endcomment %}
-
-
-
-
+  <div class="project-details">
+    <div class="container">
+      <h1 class="title">{{ project.title }}</h1>
+      <div class="text">
+        {% if project.course and project.course.projects %}
+          Project #{{ project.course_order }} of {{ project.course.projects.count }} in "{{ project.course.title }}"
+        {% else %}
+          Project #{{ project.course_order }}
+        {% endif %}
+      </div>
+      <div class="project-tags">
+        {% if project.course %}
+          <span class="tag">{{ project.course.title }}</span>
+        {% endif %}
+        {% for fw in project.framework.all %}
+          <span class="tag">{{ fw.name }}</span>
+        {% endfor %}
+        <span class="tag">{{ project.get_type_display }}</span>
+        {% for lang in project.programming_languages.all %}
+          <span class="tag">{{ lang.name }}</span>
+        {% endfor %}
+      </div>
+      {% if project.image %}
+        <div class="thumbnail mb-2">
+          <img src="{{ project.image.url }}" alt="{{ project.title }} thumbnail" />
+        </div>
+      {% endif %}
+      <div class="row justify-content-between align-items-center mb-2">
+        <p class="col text">Difficulty: {{ project.difficulty|default:'N/A' }}</p>
+        <p class="col text-small text-end">
+          <i class="fas fa-clock"></i> Updated: {{ project.updated_at|date:'M d, Y' }}
+        </p>
+      </div>
+      <div class="description mb-4">
+        <h2 class="subtitle">Description</h2>
+        <p>{{ project.description|linebreaks }}</p>
+      </div>
+      <div class="stages mb-2">
+        <h2 class="subtitle mb-3">Development Stages</h2>
+        {% comment %} <button class="toggle-stages" onclick="toggleStages()" aria-expanded="false" aria-controls="stages-list">Show/Hide Stages</button> {% endcomment %}
+        <ol id="stages-list" class="stages-list">
+          {% for stage in project.stages %}
+            <li>{{ stage }}</li>
+          {% empty %}
+            <li>No stages defined.</li>
+          {% endfor %}
+        </ol>
+      </div>
+      <div class="project-start">
+        <a href="{{ start_url }}" class="start-project-btn">Start the Project</a>
+      </div>
+    </div>
+  </div>
 {% endblock %}

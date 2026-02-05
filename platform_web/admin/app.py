@@ -80,11 +80,12 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
         "chapter_count",
         "updated_at",
         "is_active",
-        "order",
+        "language_order",
+        "course_order",
     )
     list_filter = ("difficulty", "programming_languages",  "framework", "type", "course")
     search_fields = ("title", "description")
-    ordering = ["order"]
+    ordering = ["-updated_at"]
     readonly_fields = ("created_at", "updated_at")
 
     actions = ["publish_projects", "unpublish_projects"]

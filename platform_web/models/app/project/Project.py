@@ -24,7 +24,9 @@ class Project(models.Model):
     ]
 
     title = models.CharField(max_length=255)
-    order = models.PositiveIntegerField(default=0)
+    # order = models.PositiveIntegerField(default=0)
+    language_order = models.PositiveIntegerField(default=0)
+    course_order = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to="project_images/", blank=True, null=True)
     type = models.CharField(
         max_length=20,
@@ -51,9 +53,10 @@ class Project(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     stages = models.ManyToManyField(Stage, blank=True)
 
-    # description = models.TextField(
-    #     blank=True, help_text="Description for the Dashboard"
-    # )
+    description = models.TextField(
+        blank=True, help_text="Description for the Dashboard"
+    )
+    stages = models.JSONField(default=list, blank=True, null=True)
 
     # Metadata
     is_active = models.BooleanField(default=True)
@@ -64,7 +67,7 @@ class Project(models.Model):
 
     class Meta:
         db_table = "projects"
-        ordering = ["order", "title"]
+        ordering = ["-updated_at", "title"]
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
