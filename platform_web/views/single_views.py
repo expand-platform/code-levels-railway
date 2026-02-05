@@ -34,8 +34,9 @@ def project_parts_view(request: HttpRequest, slug: str) -> HttpResponse:
     )
 
 
-def part_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
-    part = get_object_or_404(Part, pk=pk)
+def part_detail_view(request: HttpRequest, slug: str, order: int) -> HttpResponse:
+    project = get_object_or_404(Project, slug=slug)
+    part = get_object_or_404(Part, project=project, order=order)
     codepen_hash = ""
     codepen_user = ""
     if part.codepen_url:
@@ -48,7 +49,7 @@ def part_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
             codepen_user = user_match.group(1)
     context = {
         "part": part,
-        "lesson_id": part.pk,
+        "lesson_number": part.order,
         "lesson_title": part.title,
         "lesson_description": part.description,
         "codepen_hash": codepen_hash,
@@ -64,9 +65,11 @@ def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
     # For now, just link to the project parts view as a placeholder
     if project:
         start_url = f"/project/{project.slug}/parts/"
+    parts = project.parts.all().order_by("order", "title")
     context = {
         "project": project,
         "start_url": start_url,
         "website_config": getattr(request, 'website_config', None),
+        "parts": parts,
     }
     return render(request, "website/dashboard/pages/project_details.html", context)

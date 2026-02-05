@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  Level {{ lesson_id }} | {{ website_config.site_name }}
+  Level {{ lesson_number }} | {{ website_config.site_name }}
 {% endblock %}
 
 {% block extra_css %}
@@ -22,7 +22,7 @@
   <section class="levels row">
     <aside class="sidebar description col-4">
       <div class="description-content">
-        <h2>Level #{{ lesson_id }}: {{ lesson_title }}</h2>
+        <h2>Level #{{ lesson_number }}: {{ lesson_title }}</h2>
         <div class="part-description">{{ part.description|safe }}</div>
       </div>
       <hr class="line" />

@@ -18,8 +18,8 @@
 {% endblock %}
 
 {% block dashboard_content %}
-  <div class="project-details">
-    <div class="container">
+  <section class="project-details">
+    <section class="container">
       <h1 class="title">{{ project.title }}</h1>
       <div class="text">
         {% if project.course and project.course.projects %}
@@ -45,30 +45,83 @@
           <img src="{{ project.image.url }}" alt="{{ project.title }} thumbnail" />
         </div>
       {% endif %}
-      <div class="row justify-content-between align-items-center mb-2">
+
+      <section class="row justify-content-between align-items-center mb-2 px-1">
         <p class="col text">Difficulty: {{ project.difficulty|default:'N/A' }}</p>
         <p class="col text-small text-end">
           <i class="fas fa-clock"></i> Updated: {{ project.updated_at|date:'M d, Y' }}
         </p>
-      </div>
-      <div class="description mb-4">
-        <h2 class="subtitle">Description</h2>
-        <p>{{ project.description|linebreaks }}</p>
-      </div>
-      <div class="stages mb-2">
-        <h2 class="subtitle mb-3">Development Stages</h2>
-        {% comment %} <button class="toggle-stages" onclick="toggleStages()" aria-expanded="false" aria-controls="stages-list">Show/Hide Stages</button> {% endcomment %}
-        <ol id="stages-list" class="stages-list">
-          {% for stage in project.stages %}
-            <li>{{ stage }}</li>
-          {% empty %}
-            <li>No stages defined.</li>
-          {% endfor %}
-        </ol>
-      </div>
-      <div class="project-start">
-        <a href="{{ start_url }}" class="start-project-btn">Start the Project</a>
-      </div>
-    </div>
-  </div>
+      </section>
+
+      <main class="content box">
+        <section class="description mb-4">
+          <h2 class="subtitle">Description</h2>
+          <p>{{ project.description|linebreaks }}</p>
+        </section>
+
+        <hr class="line mb-5" />
+
+        <section class="stages mb-4">
+          <h2 class="subtitle mb-3">Project Stages</h2>
+          <ol id="stages-list" class="stages-list">
+            {% for stage in project.stages %}
+              <li>{{ stage }}</li>
+            {% empty %}
+              <li>No stages defined.</li>
+            {% endfor %}
+          </ol>
+        </section>
+
+        <hr class="line mb-5" />
+
+        <section class="project-parts mb-5">
+          <div class="d-flex align-items-center mb-3">
+            <h2 class="subtitle mb-0 me-2" style="color: #222; font-weight: 600;">Project Parts</h2>
+            <button id="toggle-parts-btn" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" onclick="togglePartsList()" title="Show/Hide Parts"><i id="toggle-parts-icon" class="bi bi-chevron-down"></i></button>
+          </div>
+          {% if parts %}
+            <ol id="parts-list" class="list-group" style="background: #f9f9f9; border-radius: 8px; border: 1px solid #eee; transition: max-height 0.3s;">
+              {% for part in parts %}
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="background: #fff; border: none; border-bottom: 1px solid #f0f0f0; color: #333;">
+                  <a href="{% url 'part_detail' slug=project.slug order=part.order %}" style="color: #007bff; text-decoration: none; font-weight: 500; padding-left: 10px;">{{ part.title }}</a>
+                  <span class="badge bg-light text-dark border" style="font-size: 0.95em;">#{{ part.order }}</span>
+                </li>
+              {% endfor %}
+            </ol>
+          {% else %}
+            <p class="text-muted">No parts for this project yet.</p>
+          {% endif %}
+        </section>
+
+        <div class="project-start mb-2">
+          {% if start_url and parts %}
+            <a href="{% url 'part_detail' slug=project.slug order=parts.0.order %}" class="start-project-btn d-inline-block"><i class="bi bi-chevron-double-right d-inline-block pt-1"></i> Start the Project</a>
+          {% else %}
+            <span class="text-muted">No parts available to start.</span>
+          {% endif %}
+        </div>
+      </main>
+
+      <script>
+        function togglePartsList() {
+          const list = document.getElementById('parts-list')
+          const icon = document.getElementById('toggle-parts-icon')
+          if (!list) return
+          if (list.style.display === 'none') {
+            list.style.display = ''
+            icon.classList.remove('bi-chevron-right')
+            icon.classList.add('bi-chevron-down')
+          } else {
+            list.style.display = 'none'
+            icon.classList.remove('bi-chevron-down')
+            icon.classList.add('bi-chevron-right')
+          }
+        }
+      </script>
+    </section>
+
+    {% comment %}Add the parts toggle here{% endcomment %}
+
+    {% comment %} <button class="toggle-stages" onclick="toggleStages()" aria-expanded="false" aria-controls="stages-list">Show/Hide Stages</button> {% endcomment %}
+  </section>
 {% endblock %}

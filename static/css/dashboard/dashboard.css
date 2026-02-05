@@ -3,20 +3,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-a {
-    text-decoration: none;
-}
-
-li {
-    list-style: none;
-}
-
 :root {
     --poppins: 'Poppins', sans-serif;
     --lato: 'Lato', sans-serif;
@@ -34,6 +20,21 @@ li {
     --light-orange: #FFE0D3;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+
 html {
     overflow-x: hidden;
 }
@@ -49,7 +50,6 @@ body {
     overflow-x: hidden;
 }
 
-/* CONTENT */
 #content {
     position: relative;
     width: calc(100% - 220px);
@@ -73,15 +73,6 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-
-/* MAIN */
-/* #content main {
-    width: 100%;
-    padding: 36px 24px;
-    font-family: var(--poppins);
-    max-height: calc(100vh - 56px);
-    overflow-y: auto;
-} */
 
 #content main .head-title {
     display: flex;

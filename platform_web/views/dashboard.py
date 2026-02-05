@@ -2,10 +2,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.app.project.Course import Course
-
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "website/dashboard/dashboard.html"

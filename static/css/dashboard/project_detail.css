@@ -15,6 +15,13 @@
     color: black;
 }
 
+.project-details .box {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    padding: 1.5rem;
+}
+
 .project-details .title,
 .project-details .subtitle {
     color: var(--project-detail-text-color);
@@ -90,6 +97,11 @@
     overflow-y: auto;
     padding-right: 1rem;
     line-height: 2rem;
+}
+
+.project-details .line {
+    border-top: 0;
+    border-bottom: 1px solid rgba(154, 147, 147, 0.684);
 }
 
 .project-start {
