@@ -44,16 +44,24 @@ def project_parts_view(request: HttpRequest, slug: str) -> HttpResponse:
 def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
     project = get_object_or_404(Project, slug=slug)
     start_url = None
-    
-    # You may want to generate the start_url for the first part of the project
-    # For now, just link to the project parts view as a placeholder
     if project:
         start_url = f"/project/{project.slug}/parts/"
     parts = project.parts.all().order_by("order", "title")
+
+    # Filter projects and topics for this course
+    filtered_projects = []
+    filtered_topics = []
+    if project.course:
+        all_course_projects = project.course.projects.all().order_by("order", "title")
+        filtered_projects = [p for p in all_course_projects if getattr(p, 'type', None) == 'project']
+        filtered_topics = [p for p in all_course_projects if getattr(p, 'type', None) == 'topic']
+
     context = {
         "project": project,
         "start_url": start_url,
         "parts": parts,
+        "filtered_projects": filtered_projects,
+        "filtered_topics": filtered_topics,
     }
     return render(request, "website/dashboard/pages/project_details.html", context)
 

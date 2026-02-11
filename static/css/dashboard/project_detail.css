@@ -121,11 +121,14 @@
 
 /* Back Icon fix */
 .project-details .nav-icon.back-icon  {
-    padding: 3px 2px 0 0;
+    --icon-size: 2.5rem;
+    padding: 2px 2px 0 0;
+    width: var(--icon-size);
+    height: var(--icon-size);
 }
 
 .project-details .nav-icon.back-icon i {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
 }
 
 /* Delete Icon fix */

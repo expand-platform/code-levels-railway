@@ -148,6 +148,7 @@ class LessonAdminForm(forms.ModelForm):
             "description": SummernoteWidget(),
         }
 
+#! Latest edited project appears first in the "Project" dropdown when editing a lesson in admin
 
 class LessonsAdmin(SortableAdminMixin, admin.ModelAdmin): # type: ignore[misc]
     form = LessonAdminForm

@@ -12,7 +12,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 @login_required
 def projects_view(request):
     default_filter = "course"
-    default_project_type = "all"
+    default_project_type = "project"
 
     filter_by = request.GET.get("filter", default_filter)
     project_type = request.GET.get("type", default_project_type)

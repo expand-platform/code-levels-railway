@@ -13,6 +13,10 @@
     top: 20%;
     left: 2.5%;
 }
+.lesson-details .back-to-project-wrapper {
+    top: 100px;
+    left: 20%;
+}
 
 
 .lesson-details .content h2,

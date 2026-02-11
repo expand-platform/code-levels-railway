@@ -4,7 +4,6 @@ from django.db import models
 from platform_web.models.app.project.Project import Project
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
 
-#! Make order sortable / drag-and-drop in admin
 
 TYPE_CHOICES = [
     ("theory", "Theory"),
@@ -15,6 +14,7 @@ TYPE_CHOICES = [
     ("project", "Project"),
 ]
 
+#! 1. Add Codepen url and make a shortcode parsing (onload page in JS) for it
 
 class Lesson(models.Model):
     project = models.ForeignKey(Project, related_name="parts", on_delete=models.CASCADE)

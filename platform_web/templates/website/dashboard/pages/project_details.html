@@ -14,7 +14,7 @@
 {% block extra_js %}
   <script async src="https://public.codepenassets.com/embed/index.js" defer></script>
   <script src="{% static 'js/libs/Sortable.min.js' %}" type="module" defer></script>
-  
+
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/project_detail.js' %}" defer type="module"></script>
 {% endblock %}
@@ -27,12 +27,25 @@
     <section class="container">
       <h1 class="title">{{ project.title }}</h1>
       <div class="text">
-        {% if project.course and project.course.projects.count == 1 %}
-          Project #1 in "{{ project.course.title }}"
-        {% elif project.course and project.course.projects %}
-          Project #{{ project.course_order }} of {{ project.course.projects.count }} in "{{ project.course.title }}"
+      {% comment %} {{filtered_topics}} {% endcomment %}
+        {% if project.course %}
+          {% if project.type == 'project' %}
+            {% if filtered_projects|length == 1 %}
+              Project #1 in "{{ project.course.title }}"
+            {% else %}
+              Project #{{ project.course_order }} of {{ filtered_projects|length }} in "{{ project.course.title }}"
+            {% endif %}
+          {% elif project.type == 'topic' %}
+            {% if filtered_topics|length == 1 %}
+              Topic #1 in "{{ project.course.title }}"
+            {% else %}
+              Topic #{% for t in filtered_topics %}{% if t.pk == project.pk %}{{ forloop.counter }}{% endif %}{% endfor %} of {{ filtered_topics|length }} in "{{ project.course.title }}"
+            {% endif %}
+          {% else %}
+            #{{ project.course_order }} in "{{ project.course.title }}"
+          {% endif %}
         {% else %}
-          Project #{{ project.course_order }}
+          #{{ project.course_order }}
         {% endif %}
       </div>
       <div class="project-tags">
@@ -108,7 +121,14 @@
 
         <div class="project-start mb-2">
           {% if parts %}
-            <a href="{% url 'lesson_details' slug=project.slug order=parts.0.order %}" class="start-project-btn d-inline-block"><i class="bi bi-chevron-double-right d-inline-block pt-1"></i> Start the Project</a>
+            <a href="{% url 'lesson_details' slug=project.slug order=parts.0.order %}" class="start-project-btn d-inline-block">
+              <i class="bi bi-chevron-double-right d-inline-block pt-1"></i>
+              {% if project.type == 'Project' %}
+                <span>Start the Project</span>
+              {% else %}
+                <span>Explore {{ project.title }}</span>
+              {% endif %}
+            </a>
           {% else %}
             <span class="text-muted">No parts available to start.</span>
           {% endif %}
