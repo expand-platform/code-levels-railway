@@ -21,18 +21,18 @@ def projects_view(request):
     context_key = "courses"
 
     if filter_by == "course":
-        items = Course.objects.prefetch_related("projects").all()
-        get_projects = lambda item: item.projects
+        items = Course.objects.prefetch_related("projects").order_by("order", "title")
+        get_projects = lambda item: item.projects.order_by("course_order", "order", "-updated_at", "title")
     else:
-        items = ProgrammingLanguage.objects.prefetch_related("project_set").all()
-        get_projects = lambda item: item.project_set
+        items = ProgrammingLanguage.objects.prefetch_related("project_set").order_by("order", "name")
+        get_projects = lambda item: item.project_set.order_by("language_order", "order", "-updated_at", "title")
         context_key = "languages"
 
     for item in items:
         if project_type != "all":
-            item.filtered_projects = get_projects(item).filter(type=project_type)
+            setattr(item, 'filtered_projects', get_projects(item).filter(type=project_type))
         else:
-            item.filtered_projects = get_projects(item).all()
+            setattr(item, 'filtered_projects', get_projects(item))
     context[context_key] = items
 
     return render(request, "website/dashboard/pages/projects.html", context)

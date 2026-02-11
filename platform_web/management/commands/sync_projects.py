@@ -10,7 +10,7 @@ from django.utils.text import slugify
 
 from platform_web.models.app.project.Project import Project
 from platform_web.models.app.project.Chapter import Chapter
-from platform_web.models.app.project.Part import Part
+from platform_web.models.app.project.Lesson import Lesson
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.app.project.Framework import Framework
 from platform_web.models.app.project.Skill import Skill
@@ -70,7 +70,7 @@ class Command(BaseCommand):
 
         # collect parts
         parts_data = []
-        for part in Part.objects.all():
+        for part in Lesson.objects.all():
             parts_data.append({
                 "uuid": str(part.uuid),
                 "title": part.title,
@@ -105,7 +105,7 @@ class Command(BaseCommand):
         # --- preload FK objects ---
         existing_projects = {p.uuid: p for p in Project.objects.all()}
         chapters = {c.uuid: c for c in Chapter.objects.all()}  # preloaded chapters
-        parts = {p.uuid: p for p in Part.objects.all()}  # preloaded parts
+        parts = {p.uuid: p for p in Lesson.objects.all()}  # preloaded parts
 
         courses = {c.uuid: c for c in Course.objects.all()}
         difficulties = {d.uuid: d for d in Difficulty.objects.all()}
@@ -267,7 +267,7 @@ class Command(BaseCommand):
                     )
                 )
 
-            part, created = Part.objects.update_or_create(
+            part, created = Lesson.objects.update_or_create(
                 uuid=dev_part["uuid"],
                 defaults={
                     "title": dev_part["title"],

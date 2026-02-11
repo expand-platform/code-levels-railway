@@ -2,14 +2,12 @@
   <aside class="col left">
     <i class="bi bi-list fs-5 bx bx-menu bx-sm"></i>
   </aside>
-  <aside class="col right justify-content-end d-flex align-items-center column-gap-3">
+  {% comment %} <aside class="col right justify-content-end d-flex align-items-center column-gap-3">
     <div></div>
     <input type="checkbox" class="checkbox" id="switch-mode" hidden />
     <label class="swith-lm" for="switch-mode">
-      {% comment %} <i class="bx bxs-moon"></i> {% endcomment %}
       <i class="bi bi-moon-stars"></i>
       <i class="bi bi-sun-fill"></i>
-      {% comment %} <i class="bx bx-sun"></i> {% endcomment %}
       <div class="ball"></div>
     </label>
     <div>
@@ -18,18 +16,18 @@
 
     <div class="profile-menu" id="profileMenu">
       <ul>
-        {% comment %} <li>
+        <li>
           <a href="#">My Profile ({{ user.username }})</a>
-        </li> {% endcomment %}
-        {% comment %} <li>
+        </li>
+        <li>
           <a href="#">Settings</a>
-        </li> {% endcomment %}
+        </li>
         <li>
           <a href="{% url 'account_logout' %} ">Log Out</a>
         </li>
       </ul>
     </div>
-  </aside>
+  </aside> {% endcomment %}
   {% comment %} <a href="#" class="nav-link">Categories</a> {% endcomment %}
   {% comment %} <form action="#">
     <div class="form-input">

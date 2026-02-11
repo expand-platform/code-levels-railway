@@ -2,11 +2,12 @@
     --project-detail-background: #f9f9f9;
     --project-detail-gray: #888;
     --project-detail-text-color: #333;
+    --project-detail-width: 850px;
 }
 
 /* Project Detail Page Styles */
 .project-details .container {
-    max-width: 800px;
+    max-width: var(--project-detail-width);
     margin: 0 auto;
     background: #fff;
     padding: 2rem;
@@ -117,12 +118,19 @@
     font-size: 1.4rem;
     color: #007bff;
 }
+
+/* Back Icon fix */
 .project-details .nav-icon.back-icon  {
     padding: 3px 2px 0 0;
 }
 
 .project-details .nav-icon.back-icon i {
     font-size: 1.7rem;
+}
+
+/* Delete Icon fix */
+.project-details .nav-icon.delete-icon {
+    padding-top: 10px;
 }
 
 .project-start {

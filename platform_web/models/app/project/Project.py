@@ -13,21 +13,29 @@ from platform_web.models.app.project.Course import Course
 
 User = get_user_model()
 
+TOPIC = "topic"
+PROJECT = "project"
+
+PROJECT_TYPE_CHOICES = [
+    (TOPIC, "Topic"),
+    (PROJECT, "Project"),
+]
+
+# ! Suggestions:
+# 1. Ability to add your own programming languages and frameworks
+# 2. Ability to select multiple courses (e.g., web app, mobile app, data science)
+# 3. Difficulty levels unified (e.g., beginner, intermediate, advanced)
+# 4. Add practice / mini-projects -> type
 
 class Project(models.Model):
-    TOPIC = "topic"
-    PROJECT = "project"
-
-    PROJECT_TYPE_CHOICES = [
-        (TOPIC, "Topic"),
-        (PROJECT, "Project"),
-    ]
-
     title = models.CharField(max_length=255)
-    order = models.PositiveIntegerField(default=0, help_text="Ordering for admin sorting")
+    
     language_order = models.PositiveIntegerField(default=0)
     course_order = models.PositiveIntegerField(default=0)
+    
     image = models.ImageField(upload_to="project_images/", blank=True, null=True)
+    # details_image = models.ImageField(upload_to="project_images/", blank=True, null=True)
+    
     type = models.CharField(
         max_length=20,
         choices=PROJECT_TYPE_CHOICES,
@@ -38,11 +46,11 @@ class Project(models.Model):
         Course, on_delete=models.CASCADE, related_name="projects", null=True, blank=True
     )
 
-    difficulty = models.ForeignKey(
-        Difficulty, on_delete=models.SET_NULL, null=True, blank=True
-    )
     programming_languages = models.ManyToManyField(
         ProgrammingLanguage, blank=True, help_text="Predefined programming languages"
+    )
+    difficulty = models.ForeignKey(
+        Difficulty, on_delete=models.SET_NULL, null=True, blank=True
     )
     framework = models.ManyToManyField(
         Framework,
@@ -64,6 +72,7 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    order = models.PositiveIntegerField(default=0, help_text="Ordering for admin sorting")
 
     class Meta:
         db_table = "projects"

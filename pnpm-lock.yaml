@@ -17,6 +17,9 @@ importers:
       jquery:
         specifier: ^4.0.0
         version: 4.0.0
+      sortablejs:
+        specifier: ^1.15.6
+        version: 1.15.6
 
 packages:
 
@@ -35,6 +38,9 @@ packages:
   jquery@4.0.0:
     resolution: {integrity: sha512-TXCHVR3Lb6TZdtw1l3RTLf8RBWVGexdxL6AC8/e0xZKEpBflBsjh9/8LXw+dkNFuOyW9B7iB3O1sP7hS0Kiacg==}
 
+  sortablejs@1.15.6:
+    resolution: {integrity: sha512-aNfiuwMEpfBM/CN6LY0ibyhxPfPbyFeBTYJKCvzkJ2GkUpazIt3H+QIPAMHwqQ7tMKaHz1Qj+rJJCqljnf4p3A==}
+
 snapshots:
 
   '@fortawesome/fontawesome-free@7.1.0': {}
@@ -46,3 +52,5 @@ snapshots:
       '@popperjs/core': 2.11.8
 
   jquery@4.0.0: {}
+
+  sortablejs@1.15.6: {}

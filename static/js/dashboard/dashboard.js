@@ -1,13 +1,13 @@
-import { loadColorScheme, saveColorScheme } from "../ui/colorScheme.js";
+// import { loadColorScheme, saveColorScheme } from "../ui/colorScheme.js";
 import { loadSidebarState } from "./parts/sidebar.js";
 import { saveToLocalStorage, loadFromLocalStorage } from "./../helpers/localStorage.js";
 
 const sideMenuLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
 const activeSideMenuItemKey = "activeSideMenuLinkIndex";
-const dashboardLinkText = "Dashboard";
+const dashboardLinkText = "Projects";
 
 function onLoad() {
-    loadColorScheme();
+    // loadColorScheme();
     loadSidebarState();
     setActiveSideMenuLink();
 }
@@ -54,13 +54,13 @@ function setActiveSideMenuLink() {
 // })
 
 // Dark Mode Switch
-const switchMode = document.getElementById('switch-mode');
+// const switchMode = document.getElementById('switch-mode');
 
-switchMode.onchange = () => {
-    console.log('- switchMode.checked -', switchMode.checked);
+// switchMode.onchange = () => {
+//     console.log('- switchMode.checked -', switchMode.checked);
 
-    saveColorScheme(switchMode.checked);
-}
+//     saveColorScheme(switchMode.checked);
+// }
 
 // Notification Menu Toggle
 // document.querySelector('.notification').addEventListener('click', function () {
@@ -69,18 +69,18 @@ switchMode.onchange = () => {
 // });
 
 // Profile Menu Toggle
-document.querySelector('.profile').addEventListener('click', function () {
-    document.querySelector('.profile-menu').classList.toggle('show');
+// document.querySelector('.profile').addEventListener('click', function () {
+//     document.querySelector('.profile-menu').classList.toggle('show');
     // document.querySelector('.notification-menu').classList.remove('show'); // Close notification menu if open
-});
+// });
 
 // Close menus if clicked outside
-window.addEventListener('click', function (e) {
-    if (!e.target.closest('.notification') && !e.target.closest('.profile')) {
+// window.addEventListener('click', function (e) {
+//     if (!e.target.closest('.notification') && !e.target.closest('.profile')) {
         // document.querySelector('.notification-menu').classList.remove('show');
-        document.querySelector('.profile-menu').classList.remove('show');
-    }
-});
+//         document.querySelector('.profile-menu').classList.remove('show');
+//     }
+// });
 
 // Menülerin açılıp kapanması için fonksiyon
 function toggleMenu(menuId) {

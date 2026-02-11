@@ -11,8 +11,9 @@
 {% endblock %}
 
 {% block extra_js %}
-  <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/parts/codepen.js' %}" defer type="module"></script>
+<script src="{% static 'js/libs/Sortable.min.js' %}"  defer type="module"></script>
+<script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
+<script src="{% static 'js/dashboard/projects.js' %}"  defer type="module"></script>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -49,7 +50,6 @@
   </section>
 
   <section class="projects">
-    {% comment %}! add an edit pen / delete icon for each project{% endcomment %}
     {% if filter_by == 'course' %}
       {% include 'website/dashboard/parts/projects_by_course.html' %}
     {% else %}

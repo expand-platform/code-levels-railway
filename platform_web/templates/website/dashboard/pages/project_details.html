@@ -12,8 +12,8 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'js/libs/Sortable.min.js' %}" type="module" defer></script>
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/parts/codepen.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/project_detail.js' %}" defer type="module"></script>
 {% endblock %}
 
@@ -32,25 +32,20 @@
         {% endif %}
       </div>
       <div class="project-tags">
-        {% if project.course %}
-          <span class="tag">{{ project.course.title }}</span>
-        {% endif %}
-        {% for fw in project.framework.all %}
-          <span class="tag">{{ fw.name }}</span>
-        {% endfor %}
-        <span class="tag">{{ project.get_type_display }}</span>
         {% for lang in project.programming_languages.all %}
           <span class="tag">{{ lang.name }}</span>
         {% endfor %}
+        {% for fw in project.framework.all %}
+          <span class="tag">{{ fw.name }}</span>
+        {% endfor %}
       </div>
       {% if project.image %}
-        <div class="thumbnail mb-2">
+        <div class="thumbnail mb-3">
           <img src="{{ project.image.url }}" alt="{{ project.title }} thumbnail" />
         </div>
       {% endif %}
 
       <section class="row justify-content-between align-items-center mb-2 px-1">
-        <p class="col text">Difficulty: {{ project.difficulty|default:'N/A' }}</p>
         <p class="col text-small text-end">
           <i class="fas fa-clock"></i> Updated: {{ project.updated_at|date:'M d, Y' }}
         </p>
@@ -79,18 +74,29 @@
 
         <section class="project-parts mb-5">
           <div class="d-flex align-items-center mb-3">
-            <h2 class="subtitle mb-0 me-2" style="color: #222; font-weight: 600;">Project Parts</h2>
-            <button id="toggle-parts-btn" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" onclick="togglePartsList()" title="Show/Hide Parts"><i id="toggle-parts-icon" class="bi bi-chevron-down"></i></button>
+            <h2 class="subtitle mb-0 me-2" style="color: #222; font-weight: 600;">Lessons</h2>
+            <button id="toggle-parts-btn" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" onclick="togglePartsList()" title="Show/Hide Lessons"><i id="toggle-parts-icon" class="bi bi-chevron-down"></i></button>
+            {% if user.is_staff %}
+              <button id="save-order-btn" class="btn btn-sm btn-success ms-3" style="display:none;">Save Order</button>
+            {% endif %}
           </div>
           {% if parts %}
-            <ol id="parts-list" class="list-group" style="background: #f9f9f9; border-radius: 8px; border: 1px solid #eee; transition: max-height 0.3s;">
-              {% for part in parts %}
-                <li class="list-group-item d-flex justify-content-between align-items-center" style="background: #fff; border: none; border-bottom: 1px solid #f0f0f0; color: #333;">
-                  <a href="{% url 'part_detail' slug=project.slug order=part.order %}" style="color: #007bff; text-decoration: none; font-weight: 500; padding-left: 10px;">{{ part.title }}</a>
-                  <span class="badge bg-light text-dark border" style="font-size: 0.95em;">#{{ part.order }}</span>
-                </li>
-              {% endfor %}
-            </ol>
+            <form id="reorder-form" method="post" style="margin:0;">
+              {% csrf_token %}
+              <ol id="parts-list" class="list-group" data-project-slug="{{ project.slug }}" style="background: #f9f9f9; border-radius: 8px; border: 1px solid #eee; transition: max-height 0.3s;">
+                {% for part in parts %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center part-item" data-id="{{ part.id }}" style="background: #fff; border: none; border-bottom: 1px solid #f0f0f0; color: #333;">
+                    <span class="d-flex align-items-center">
+                      {% if user.is_staff %}
+                        <span class="drag-handle me-2" style="cursor:move;"><i class="bi bi-list"></i></span>
+                      {% endif %}
+                      <a href="{% url 'lesson_details' slug=project.slug order=part.order %}" style="color: #007bff; text-decoration: none; font-weight: 500; padding-left: 10px;">{{ part.title }}</a>
+                    </span>
+                    <span class="badge bg-light text-dark border" style="font-size: 0.95em;">#{{ part.order }}</span>
+                  </li>
+                {% endfor %}
+              </ol>
+            </form>
           {% else %}
             <p class="text-muted">No parts for this project yet.</p>
           {% endif %}
@@ -98,7 +104,7 @@
 
         <div class="project-start mb-2">
           {% if parts %}
-            <a href="{% url 'part_detail' slug=project.slug order=parts.0.order %}" class="start-project-btn d-inline-block"><i class="bi bi-chevron-double-right d-inline-block pt-1"></i> Start the Project</a>
+            <a href="{% url 'lesson_details' slug=project.slug order=parts.0.order %}" class="start-project-btn d-inline-block"><i class="bi bi-chevron-double-right d-inline-block pt-1"></i> Start the Project</a>
           {% else %}
             <span class="text-muted">No parts available to start.</span>
           {% endif %}
@@ -136,8 +142,5 @@
       </script>
     </section>
 
-    {% comment %}Add the parts toggle here{% endcomment %}
-
-    {% comment %} <button class="toggle-stages" onclick="toggleStages()" aria-expanded="false" aria-controls="stages-list">Show/Hide Stages</button> {% endcomment %}
   </section>
 {% endblock %}

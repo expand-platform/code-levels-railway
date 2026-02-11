@@ -1,14 +1,20 @@
-
 import re
 from django.forms import SlugField
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+from platform_web.models.app.project.Lesson import Lesson
+import json
 
 from platform_web.models.app.project.Project import Project
 from platform_web.models.app.project.Chapter import Chapter
-from platform_web.models.app.project.Part import Part
+from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
 
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 def project_parts_view(request: HttpRequest, slug: str) -> HttpResponse:
     """
@@ -35,33 +41,10 @@ def project_parts_view(request: HttpRequest, slug: str) -> HttpResponse:
     )
 
 
-def part_detail_view(request: HttpRequest, slug: str, order: int) -> HttpResponse:
-    project = get_object_or_404(Project, slug=slug)
-    part = get_object_or_404(Part, project=project, order=order)
-    codepen_hash = ""
-    codepen_user = ""
-    if part.codepen_url:
-        # Example: https://codepen.io/ca-tt/pen/ExEENaZ
-        hash_match = re.search(r"/pen/([a-zA-Z0-9]+)", part.codepen_url)
-        user_match = re.search(r"codepen.io/([^/]+)/pen/", part.codepen_url)
-        if hash_match:
-            codepen_hash = hash_match.group(1)
-        if user_match:
-            codepen_user = user_match.group(1)
-    context = {
-        "part": part,
-        "lesson_number": part.order,
-        "lesson_title": part.title,
-        "lesson_description": part.description,
-        "codepen_hash": codepen_hash,
-        "codepen_user": codepen_user,
-    }
-    return render(request, "website/dashboard/pages/part.html", context)
-
-
 def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
     project = get_object_or_404(Project, slug=slug)
     start_url = None
+    
     # You may want to generate the start_url for the first part of the project
     # For now, just link to the project parts view as a placeholder
     if project:
@@ -70,19 +53,18 @@ def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
     context = {
         "project": project,
         "start_url": start_url,
-        "website_config": getattr(request, 'website_config', None),
         "parts": parts,
     }
     return render(request, "website/dashboard/pages/project_details.html", context)
 
 
-def part_detail_view(request: HttpRequest, slug: str, order: int) -> HttpResponse:
+def lesson_details_view(request: HttpRequest, slug: str, order: int) -> HttpResponse:
     """
     Article-style view for a single project part, with navigation and sidebar.
     """
     project = get_object_or_404(Project, slug=slug)
     parts = list(project.parts.all().order_by("order", "title"))
-    part = get_object_or_404(Part, project=project, order=order)
+    part = get_object_or_404(Lesson, project=project, order=order)
     # Find prev/next part
     prev_part = next_part = None
     for idx, p in enumerate(parts):
@@ -98,7 +80,57 @@ def part_detail_view(request: HttpRequest, slug: str, order: int) -> HttpRespons
         "parts": parts,
         "prev_part": prev_part,
         "next_part": next_part,
-        "website_config": getattr(request, 'website_config', None),
         "user": request.user,
     }
-    return render(request, "website/dashboard/pages/part_detail.html", context)
+    return render(request, "website/dashboard/pages/lesson_details.html", context)
+
+
+@require_POST
+@csrf_exempt
+def reorder_lessons_view(request, slug):
+    if not request.user.is_staff:
+        return HttpResponse(status=403)
+    try:
+        data = json.loads(request.body)
+        order_list = data.get('order', [])
+        for item in order_list:
+            lesson_id = item['id']
+            new_order = item['order']
+            Lesson.objects.filter(id=lesson_id, project__slug=slug).update(order=new_order)
+        return HttpResponse(json.dumps({'success': True}), content_type='application/json')
+    except Exception as e:
+        return HttpResponse(json.dumps({'success': False, 'error': str(e)}), content_type='application/json', status=400)
+
+
+@require_POST
+@csrf_exempt
+def reorder_projects_by_language_view(request, language_id):
+    if not request.user.is_staff:
+        return HttpResponse(status=403)
+    try:
+        data = json.loads(request.body)
+        order_list = data.get('order', [])
+        language = ProgrammingLanguage.objects.get(id=language_id)
+        for item in order_list:
+            project_id = item['id']
+            new_order = item['order']
+            Project.objects.filter(id=project_id, programming_languages=language).update(language_order=new_order)
+        return HttpResponse(json.dumps({'success': True}), content_type='application/json')
+    except Exception as e:
+        return HttpResponse(json.dumps({'success': False, 'error': str(e)}), content_type='application/json', status=400)
+
+@require_POST
+@csrf_exempt
+def reorder_projects_by_course_view(request, course_id):
+    if not request.user.is_staff:
+        return HttpResponse(status=403)
+    try:
+        data = json.loads(request.body)
+        order_list = data.get('order', [])
+        for item in order_list:
+            project_id = item['id']
+            new_order = item['order']
+            Project.objects.filter(id=project_id, course_id=course_id).update(course_order=new_order)
+        return HttpResponse(json.dumps({'success': True}), content_type='application/json')
+    except Exception as e:
+        return HttpResponse(json.dumps({'success': False, 'error': str(e)}), content_type='application/json', status=400)

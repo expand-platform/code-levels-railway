@@ -10,27 +10,27 @@
 {% endblock %}
 
 {% block content %}
-  {% comment %}add nav at the top right{% endcomment %}
-  <section class="hero">
-    {% include 'website/parts/layout/nav.html' %}
+  <section class="home">
+    <section class="hero">
+      {% include 'website/parts/layout/nav.html' %}
 
-    <video class="hero__video" autoplay muted loop playsinline preload="auto">
-      <source src="{% static 'media/video/hero-1.mp4' %}" type="video/mp4" />
-      <!-- fallback image -->
-    </video>
+      <video class="hero__video" autoplay muted loop playsinline preload="auto">
+        <source src="{% static 'media/video/hero-1.mp4' %}" type="video/mp4" />
+      </video>
 
-    <div class="hero__overlay"></div>
+      <div class="hero__overlay"></div>
 
-    <div class="hero__content">
-      <h1 class="title">Welcome to {{ website_config.site_name }}!</h1>
+      <div class="hero__content">
+        <h1 class="title">Welcome to {{ website_config.site_name }}!</h1>
 
-      <p class="text">{{ website_config.tagline }}</p>
+        <p class="subtitle mb-4">{{ website_config.tagline }}</p>
 
-      {% if user.is_authenticated %}
-        <a class="btn btn-primary" href="{% url 'dashboard' %}">Get started</a>
-      {% else %}
-        <a class="btn btn-primary" href="{% url 'account_login' %}">Get started</a>
-      {% endif %}
-    </div>
+        {% if user.is_authenticated %}
+          <a class="btn btn-primary button" href="{% url 'projects' %}">See projects</a>
+        {% else %}
+          <a class="btn btn-primary button" href="{% url 'account_login' %}">Explore topics</a>
+        {% endif %}
+      </div>
+    </section>
   </section>
 {% endblock %}

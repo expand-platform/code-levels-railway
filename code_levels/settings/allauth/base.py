@@ -36,5 +36,5 @@ ACCOUNT_FORMS = {
 # Django auth settings
 SITE_ID = 1
 LOGIN_URL = "/login/"
-LOGIN_REDIRECT_URL = "dashboard"
+LOGIN_REDIRECT_URL = "projects"
 LOGOUT_REDIRECT_URL = "home"

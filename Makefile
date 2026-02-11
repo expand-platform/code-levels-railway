@@ -105,10 +105,10 @@ activate-venv-prod:
 
 # frontend
 frontend-install:
-	npm install jquery bootstrap @fortawesome/fontawesome-free
+	npm install jquery bootstrap @fortawesome/fontawesome-free sortablejs
 
 frontend-copy:
-	cp node_modules/jquery/dist/jquery.min.js static/js/libs/ && cp node_modules/bootstrap/dist/css/bootstrap.min.css static/css/libs/ && cp node_modules/bootstrap/dist/css/bootstrap.min.css.map static/css/libs/ && cp -r node_modules/@fortawesome/fontawesome-free/webfonts static/ && cp node_modules/@fortawesome/fontawesome-free/css/all.min.css static/css/libs/ && cp node_modules/bootstrap/dist/js/bootstrap.min.js static/js/libs/
+	cp node_modules/jquery/dist/jquery.min.js static/js/libs/ && cp node_modules/bootstrap/dist/css/bootstrap.min.css static/css/libs/ && cp node_modules/bootstrap/dist/css/bootstrap.min.css.map static/css/libs/ && cp -r node_modules/@fortawesome/fontawesome-free/webfonts static/ && cp node_modules/@fortawesome/fontawesome-free/css/all.min.css static/css/libs/ && cp node_modules/bootstrap/dist/js/bootstrap.min.js static/js/libs/ && cp node_modules/sortablejs/Sortable.min.js static/js/libs/
 
 fix-webfonts:
 	sed -i 's|\.\./webfonts|../../webfonts|g' static/css/libs/all.min.css

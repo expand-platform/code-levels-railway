@@ -3,13 +3,13 @@ import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from platform_web.models.app.project.Part import Part
+from platform_web.models.app.project.Lesson import Lesson
 
 User = get_user_model()
 
 class Submission(models.Model):
     user = models.ForeignKey(User, related_name="submissions", on_delete=models.CASCADE)
-    part = models.ForeignKey(Part, related_name="submissions", on_delete=models.CASCADE)
+    part = models.ForeignKey(Lesson, related_name="submissions", on_delete=models.CASCADE)
     submitted_at = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     is_checked = models.BooleanField(default=False)

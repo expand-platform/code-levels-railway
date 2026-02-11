@@ -7,7 +7,7 @@ from nested_admin.nested import NestedTabularInline, NestedModelAdmin
 
 from platform_web.models.app.project.Course import Course
 from platform_web.models.app.project.Project import Project
-from platform_web.models.app.project.Part import Part
+from platform_web.models.app.project.Lesson import Lesson
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.app.project.Difficulty import Difficulty
 from platform_web.models.app.project.Stage import Stage
@@ -21,11 +21,6 @@ from platform_web.models.app.project.Chapter import Chapter
 class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
     list_display = ("title", "order")
     search_fields = ("title",)
-
-
-class SkillsAdmin(admin.ModelAdmin):
-    list_display = ("name", "order")
-    search_fields = ("name",)
 
 
 class ProgrammingLanguageAdmin(admin.ModelAdmin):
@@ -43,30 +38,19 @@ class FrameworkAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
-# Inline for Parts under Project
-class PartInline(SortableInlineAdminMixin, NestedTabularInline):
-    model = Part
+class LessonsInline(SortableInlineAdminMixin, NestedTabularInline):
+    model = Lesson
     extra = 1
     fields = ("title", "order", "description", "languages")
     autocomplete_fields = ["languages"]
     ordering = ["order"]
 
 
-# Inline for Parts under Chapter
-# class ChapterPartInline(SortableInlineAdminMixin, admin.TabularInline):
-#     model = Chapter.parts.through
-#     extra = 1
-#     verbose_name = "Part"
-#     verbose_name_plural = "Parts"
-#     autocomplete_fields = ["part"]
-
-
-class ChapterInline(SortableInlineAdminMixin, NestedTabularInline):
+class ChaptersInline(SortableInlineAdminMixin, NestedTabularInline):
     model = Chapter
     extra = 1
     fields = ("title", "order", "description")
     ordering = ["order"]
-    # inlines = [ChapterPartInline]
 
 
 class ProjectAdminForm(forms.ModelForm):
@@ -80,9 +64,10 @@ class ProjectAdminForm(forms.ModelForm):
 
 class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
     form = ProjectAdminForm
-    inlines = [ChapterInline, PartInline]
+    inlines = [ChaptersInline, LessonsInline]
     list_display = (
-        "order",
+        # "order",
+        "course_order",
         "title",
         "course",
         "type",
@@ -92,11 +77,10 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
         "chapter_count",
         "is_active",
         "language_order",
-        "course_order",
     )
     list_filter = ("difficulty", "programming_languages", "framework", "type", "course")
     search_fields = ("title", "description")
-    ordering = ["order"]
+    ordering = ("course_order", )
     readonly_fields = ("created_at", "updated_at")
 
     actions = ["publish_projects", "unpublish_projects"]
@@ -129,7 +113,6 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
 
 
 class ChapterAdmin(admin.ModelAdmin):  # type: ignore[misc]
-    # inlines = [ChapterPartInline]
     list_display = ("title", "project", "order", "part_count")
     list_filter = ("project",)
     search_fields = ("title",)
@@ -151,32 +134,43 @@ class ChapterAdmin(admin.ModelAdmin):  # type: ignore[misc]
                     from platform_web.models.app.project.Chapter import Chapter
 
                     chapter = Chapter.objects.get(pk=chapter_id)
-                    kwargs["queryset"] = Part.objects.filter(project=chapter.project)
+                    kwargs["queryset"] = Lesson.objects.filter(project=chapter.project)
                 except Exception:
                     pass
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
-class PartAdminForm(forms.ModelForm):
+class LessonAdminForm(forms.ModelForm):
     class Meta:
-        model = Part
+        model = Lesson
         fields = "__all__"
         widgets = {
             "description": SummernoteWidget(),
         }
 
 
-class PartAdmin(admin.ModelAdmin):
-    form = PartAdminForm
-    list_display = ("title", "order")
-    search_fields = ("title",)
-    ordering = ["order"]
+class LessonsAdmin(SortableAdminMixin, admin.ModelAdmin): # type: ignore[misc]
+    form = LessonAdminForm
+    list_display = ("order", "title", "type", "project")
+    search_fields = ("title", "project__title")
+    list_filter = ("project",)
+    ordering = ("order",)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.order_by("project", "order")
+
+    
+
+class SkillsAdmin(admin.ModelAdmin):
+    list_display = ("name", "order")
+    search_fields = ("name",)
 
 
 admin.site.register(Skill, SkillsAdmin)
 admin.site.register(Framework, FrameworkAdmin)
 admin.site.register(Project, ProjectAdmin)
-admin.site.register(Part, PartAdmin)
+admin.site.register(Lesson, LessonsAdmin)
 admin.site.register(ProgrammingLanguage, ProgrammingLanguageAdmin)
 admin.site.register(Difficulty)
 admin.site.register(Stage, StagesAdmin)

@@ -5,6 +5,24 @@
   --darker-purple: rgb(76, 24, 159);
   --soft-white: #e5e7eb;
   --dark-blue: #0f172a;
+
+  --text-black: #28292c;
+
+  --white: #F9F9F9;
+  --black: #28292c;
+  --dark: #342E37;
+
+  --blue: #3C91E6;
+  --light-blue: #CFE8FF;
+  
+  --grey: #eee;
+  --dark-grey: #AAAAAA;
+  
+  --red: #DB504A;
+  --orange: #FD7238;
+  --yellow: #FFCE26;
+  --light-yellow: #FFF2C6;
+  --light-orange: #FFE0D3;
 }
 
 

@@ -1,4 +1,4 @@
-<div class="project-card">
+<div class="project-card" data-id="{{ project.id }}">
   <a href="{% url 'project_details' slug=project.slug %}">
     <div class="project-inner">
       {% if project.image %}

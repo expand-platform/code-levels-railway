@@ -1,5 +1,19 @@
 @import url('/static/css/theme/colors.css');
 
+.home .title {
+
+}
+
+.home .subtitle {
+    font-size: 1.5rem;
+}
+
+.home .button {
+    background-color: var(--dark-purple);
+    outline: none;
+    border: 1px solid var(--dark-purple);
+}
+
 .hero {
     position: relative;
     width: 100%;
