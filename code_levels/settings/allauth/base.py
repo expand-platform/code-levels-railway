@@ -33,8 +33,9 @@ ACCOUNT_FORMS = {
     "socialaccount_signup": "platform_web.forms.custom_social_signup_form.CustomSocialSignupForm",
 }
 
-# Django auth settings
 SITE_ID = 1
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "projects"
 LOGOUT_REDIRECT_URL = "home"
+# Use custom social account adapter to autogenerate username
+SOCIALACCOUNT_ADAPTER = "platform_web.forms.custom_social_account_adapter.CustomSocialAccountAdapter"

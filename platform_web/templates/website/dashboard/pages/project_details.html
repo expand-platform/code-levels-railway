@@ -12,7 +12,9 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/libs/Sortable.min.js' %}" type="module" defer></script>
+  <script async src="https://public.codepenassets.com/embed/index.js" defer></script>
+  <script src="{% static 'js/libs/Sortable.min.js' %}" type="module" defer></script>
+  
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/project_detail.js' %}" defer type="module"></script>
 {% endblock %}
@@ -25,7 +27,9 @@
     <section class="container">
       <h1 class="title">{{ project.title }}</h1>
       <div class="text">
-        {% if project.course and project.course.projects %}
+        {% if project.course and project.course.projects.count == 1 %}
+          Project #1 in "{{ project.course.title }}"
+        {% elif project.course and project.course.projects %}
           Project #{{ project.course_order }} of {{ project.course.projects.count }} in "{{ project.course.title }}"
         {% else %}
           Project #{{ project.course_order }}
@@ -92,7 +96,7 @@
                       {% endif %}
                       <a href="{% url 'lesson_details' slug=project.slug order=part.order %}" style="color: #007bff; text-decoration: none; font-weight: 500; padding-left: 10px;">{{ part.title }}</a>
                     </span>
-                    <span class="badge bg-light text-dark border" style="font-size: 0.95em;">#{{ part.order }}</span>
+                    <span class="badge bg-light text-dark border" style="font-size: 0.95em;">#{{ forloop.counter }}</span>
                   </li>
                 {% endfor %}
               </ol>
@@ -141,6 +145,5 @@
         }
       </script>
     </section>
-
   </section>
 {% endblock %}

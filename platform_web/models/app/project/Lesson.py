@@ -10,6 +10,7 @@ TYPE_CHOICES = [
     ("theory", "Theory"),
     ("video", "Video"),
     ("exercise", "Exercise"),
+    ("task", "Task"),
     ("mini-project", "Mini-project"),
     ("project", "Project"),
 ]

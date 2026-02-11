@@ -28,6 +28,6 @@
 
 
 /* thin press animation */
-.btn:hover {
+.home .btn:hover {
     bottom: -1px;
 }

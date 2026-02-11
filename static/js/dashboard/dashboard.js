@@ -4,35 +4,36 @@ import { saveToLocalStorage, loadFromLocalStorage } from "./../helpers/localStor
 
 const sideMenuLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
 const activeSideMenuItemKey = "activeSideMenuLinkIndex";
-const dashboardLinkText = "Projects";
+const dashboardActiveLinkIndex = 1;
 
 function onLoad() {
-    // loadColorScheme();
-    loadSidebarState();
-    setActiveSideMenuLink();
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // loadColorScheme();
+        loadSidebarState();
+        setActiveSideMenuLink();
+    });
 }
 
 onLoad();
 
 sideMenuLinks.forEach((item, key) => {
     item.onclick = () => {
-        saveToLocalStorage(activeSideMenuItemKey, key);
+        // skip first link (home)
+        if (key != 0){
+            saveToLocalStorage(activeSideMenuItemKey, key);
+        }
     }
 });
 
 function setActiveSideMenuLink() {
-    const savedIndex = loadFromLocalStorage(activeSideMenuItemKey);
+    const savedIndex = parseInt(loadFromLocalStorage(activeSideMenuItemKey));
+    console.log('- savedIndex -', savedIndex);
 
-    if (savedIndex == null || savedIndex == undefined) {
-        sideMenuLinks.forEach((item) => {
-            if (item.innerText.trim() == dashboardLinkText) {
-                item.parentElement.classList.add('active');
-            }
-        })
+    if (isNaN(savedIndex)) {
+        savedIndex = dashboardActiveLinkIndex; // default to dashboard link if no saved index
     }
-    else {
-        sideMenuLinks[savedIndex].parentElement.classList.add('active');
-    }
+    sideMenuLinks[savedIndex].parentElement.classList.add('active');
 }
 
 
@@ -71,13 +72,13 @@ function setActiveSideMenuLink() {
 // Profile Menu Toggle
 // document.querySelector('.profile').addEventListener('click', function () {
 //     document.querySelector('.profile-menu').classList.toggle('show');
-    // document.querySelector('.notification-menu').classList.remove('show'); // Close notification menu if open
+// document.querySelector('.notification-menu').classList.remove('show'); // Close notification menu if open
 // });
 
 // Close menus if clicked outside
 // window.addEventListener('click', function (e) {
 //     if (!e.target.closest('.notification') && !e.target.closest('.profile')) {
-        // document.querySelector('.notification-menu').classList.remove('show');
+// document.querySelector('.notification-menu').classList.remove('show');
 //         document.querySelector('.profile-menu').classList.remove('show');
 //     }
 // });

@@ -26,21 +26,14 @@ PROJECT_TYPE_CHOICES = [
 # 2. Ability to select multiple courses (e.g., web app, mobile app, data science)
 # 3. Difficulty levels unified (e.g., beginner, intermediate, advanced)
 # 4. Add practice / mini-projects -> type
+#! 5. Add thumbnail for inner page
+# details_image = models.ImageField(upload_to="project_images/", blank=True, null=True)
+
 
 class Project(models.Model):
     title = models.CharField(max_length=255)
-    
-    language_order = models.PositiveIntegerField(default=0)
-    course_order = models.PositiveIntegerField(default=0)
-    
     image = models.ImageField(upload_to="project_images/", blank=True, null=True)
-    # details_image = models.ImageField(upload_to="project_images/", blank=True, null=True)
-    
-    type = models.CharField(
-        max_length=20,
-        choices=PROJECT_TYPE_CHOICES,
-        default=TOPIC,
-    )
+    type = models.CharField(max_length=20, choices=PROJECT_TYPE_CHOICES, default=TOPIC)
 
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="projects", null=True, blank=True
@@ -67,12 +60,16 @@ class Project(models.Model):
     stages = models.JSONField(default=list, blank=True, null=True)
 
     # Metadata
+    language_order = models.PositiveIntegerField(default=0)
+    course_order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-    order = models.PositiveIntegerField(default=0, help_text="Ordering for admin sorting")
+    order = models.PositiveIntegerField(
+        default=0, help_text="Ordering for admin sorting"
+    )
 
     class Meta:
         db_table = "projects"

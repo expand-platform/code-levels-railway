@@ -10,9 +10,12 @@
   <link rel="stylesheet" href="{% static 'css/dashboard/projects.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/project_detail.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/lesson_details.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" />
 {% endblock %}
 
 {% block extra_js %}
+  <script src="{% static 'js/libs/medium-zoom.min.js' %}" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js" defer></script>
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/project_detail.js' %}" defer type="module"></script>
   <script async src="https://public.codepenassets.com/embed/index.js" defer></script>
@@ -20,8 +23,6 @@
 
 {% block dashboard_content %}
   <section class="project-details lesson-details">
-    {% comment %} {% include 'website/dashboard/parts/lessons-sidebar.html' %} {% endcomment %}
-
     {# "<" arrow #}
     <div class="position-relative top-0 left-0 mb-3">
       <a href="{% url 'project_details' slug=project.slug %}" class="nav-icon back-icon btn btn-light shadow rounded-circle" title="Back to project details"><i class="bi bi-chevron-left"></i></a>
@@ -35,7 +36,12 @@
 
       {# lesson number #}
       <section class="lesson-number-wrapper mb-4">
-        <p title="Lesson number" class="lesson-number badge bg-light text-dark border m-0">{{ part.order }} of {{ project.parts.count }} in project</p>
+        {# here we need to display the lesson number from <span class="badge bg-light text-dark border" style="font-size: 0.95em;">#{{ forloop.counter }}</span> from project_details #}
+
+        <span title="Lesson number" class="lesson-number badge bg-light text-dark border m-0">#{{ lesson_number }} of {{ project.parts.count }} in project</span>
+        {% if part.type %}
+          <span title="Material type" class="lesson-number material-type badge bg-light text-dark border m-0">{{ part.type }}</span>
+        {% endif %}
       </section>
 
       <div class="row">
@@ -87,6 +93,8 @@
           </section>
         </main>
       </div>
+
+      {# ! Use url (not hardcoded) and check urls.py for patterns #}
 
       <!-- Admin action buttons: bottom right corner -->
       {% if user.is_staff %}

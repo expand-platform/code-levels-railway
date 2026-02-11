@@ -67,8 +67,10 @@ def lesson_details_view(request: HttpRequest, slug: str, order: int) -> HttpResp
     part = get_object_or_404(Lesson, project=project, order=order)
     # Find prev/next part
     prev_part = next_part = None
+    lesson_number = None
     for idx, p in enumerate(parts):
         if p.order == part.order:
+            lesson_number = idx + 1  # 1-based index for display
             if idx > 0:
                 prev_part = parts[idx-1]
             if idx < len(parts)-1:
@@ -80,6 +82,7 @@ def lesson_details_view(request: HttpRequest, slug: str, order: int) -> HttpResp
         "parts": parts,
         "prev_part": prev_part,
         "next_part": next_part,
+        "lesson_number": lesson_number,
         "user": request.user,
     }
     return render(request, "website/dashboard/pages/lesson_details.html", context)
