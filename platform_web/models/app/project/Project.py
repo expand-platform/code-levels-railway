@@ -34,7 +34,8 @@ class Project(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to="project_images/", blank=True, null=True)
     type = models.CharField(max_length=20, choices=PROJECT_TYPE_CHOICES, default=TOPIC)
-
+    codepen_url = models.URLField(blank=True, null=True)
+    
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="projects", null=True, blank=True
     )

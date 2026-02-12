@@ -1,0 +1,8 @@
+<div class="project-tags">
+  {% for lang in project.programming_languages.all %}
+    <span class="tag">{{ lang.name }}</span>
+  {% endfor %}
+  {% for fw in project.framework.all %}
+    <span class="tag">{{ fw.name }}</span>
+  {% endfor %}
+</div>

@@ -1,3 +1,18 @@
+function togglePartsNav() {
+  const nav = document.getElementById('parts-navigation')
+  const icon = document.getElementById('toggle-parts-nav-icon')
+  if (!nav) return
+  if (nav.style.display === 'none') {
+    nav.style.display = ''
+    icon.classList.remove('bi-chevron-right')
+    icon.classList.add('bi-chevron-left')
+  } else {
+    nav.style.display = 'none'
+    icon.classList.remove('bi-chevron-left')
+    icon.classList.add('bi-chevron-right')
+  }
+}
+
 // Project Detail Page JS
 function toggleStages() {
   const list = document.getElementById('stages-list');
@@ -12,6 +27,7 @@ function toggleStages() {
 // For each pre, add a copy button to copy the code content to clipboard
 document.addEventListener('DOMContentLoaded', (event) => {
   mediumZoom('.lesson-details .content img');
+  mediumZoom('.project-details img');
 
 
   document.querySelectorAll('pre').forEach((pre) => {

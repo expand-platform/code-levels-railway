@@ -1,0 +1,13 @@
+{% load codepen_tags %}
+
+{% if project.codepen_url %}
+  {% with url=project.codepen_url username=project.codepen_url|codepen_username hash=project.codepen_url|codepen_hash %}
+    {% if url|length > 0 %}
+      <section class="codepen-section mb-4">
+        <div class="codepen" data-height="500" data-theme-id="dark" data-default-tab="result" data-user="{{ username }}" data-slug-hash="{{ hash }}" style="height: 500px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 1px solid #ccc; margin: 1em 0; padding: 1em;">
+          <span>See the Pen <a href="{{ url }}">{{ project.title }}</a> by {{ username }} (<a href="https://codepen.io/{{ username }}">@{{ username }}</a>) on <a href="https://codepen.io">CodePen</a>.</span>
+        </div>
+      </section>
+    {% endif %}
+  {% endwith %}
+{% endif %}

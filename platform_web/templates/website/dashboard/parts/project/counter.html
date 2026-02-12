@@ -1,0 +1,23 @@
+<div class="counter text">
+  {% if project.course %}
+    {% if project.type == 'project' %}
+      {% if filtered_projects|length == 1 %}
+        Project #1 in "{{ project.course.title }}"
+      {% else %}
+        Project #{{ project.course_order }} of {{ filtered_projects|length }} in "{{ project.course.title }}"
+      {% endif %}
+    {% elif project.type == 'topic' %}
+      {% if filtered_topics|length == 1 %}
+        Topic #1 in "{{ project.course.title }}"
+      {% else %}
+        Topic #{% for t in filtered_topics %}
+          {% if t.pk == project.pk %}{{ forloop.counter }}{% endif %}
+        {% endfor %}of {{ filtered_topics|length }} in "{{ project.course.title }}"
+      {% endif %}
+    {% else %}
+      #{{ project.course_order }} in "{{ project.course.title }}"
+    {% endif %}
+  {% else %}
+    #{{ project.course_order }}
+  {% endif %}
+</div>
