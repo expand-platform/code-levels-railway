@@ -4,12 +4,19 @@ import { saveToLocalStorage, loadFromLocalStorage } from "./../helpers/localStor
 
 const sideMenuLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
 const activeSideMenuItemKey = "activeSideMenuLinkIndex";
-const dashboardActiveLinkIndex = 1;
+
+function getDefaultProjectsIndex() {
+    let defaultIndex = 0;
+    sideMenuLinks.forEach((link, idx) => {
+        if (link.textContent.trim() === 'Projects') {
+            defaultIndex = idx;
+        }
+    });
+    return defaultIndex;
+}
 
 function onLoad() {
     document.addEventListener('DOMContentLoaded', function () {
-
-        // loadColorScheme();
         loadSidebarState();
         setActiveSideMenuLink();
     });
@@ -19,19 +26,19 @@ onLoad();
 
 sideMenuLinks.forEach((item, key) => {
     item.onclick = () => {
-        // skip first link (home)
-        if (key != 0){
+        if (key != 0) {
             saveToLocalStorage(activeSideMenuItemKey, key);
         }
     }
 });
 
+
 function setActiveSideMenuLink() {
-    const savedIndex = parseInt(loadFromLocalStorage(activeSideMenuItemKey));
+    let savedIndex = parseInt(loadFromLocalStorage(activeSideMenuItemKey));
     console.log('- savedIndex -', savedIndex);
 
     if (isNaN(savedIndex)) {
-        savedIndex = dashboardActiveLinkIndex; // default to dashboard link if no saved index
+        savedIndex = getDefaultProjectsIndex(); // default to 'Projects' link if no saved index
     }
     sideMenuLinks[savedIndex].parentElement.classList.add('active');
 }

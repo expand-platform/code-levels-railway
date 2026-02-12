@@ -112,6 +112,8 @@
     min-width: calc(60px - ((4px + 6px) * 2));
     display: flex;
     justify-content: center;
+    padding: 1px 0 0 0;
+    margin: 0 -2px 0 0;
 }
 
 #sidebar .side-menu.bottom li:nth-last-of-type(-n+2) {

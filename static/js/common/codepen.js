@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // ! заняться бекапами БД!
+
     if (codepenParagraph && window.lessonCodepenUrl) {
         console.log('codepen working');
         let urlHash = "";

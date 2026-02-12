@@ -161,6 +161,9 @@ reset-railway-db:
 db-backup:
 	pg_dump --format=custom $(db) > backup/db/db_backup_$$(date +%Y-%m-%d_%H-%M-%S).dump -U postgres
 
+railway-db-backup:
+	pg_dump --no-owner --no-acl --format=custom --file=backup/db/railway/db_backup_$(date +%Y-%m-%d_%H-%M-%S).dump "postgresql://postgres:hMCEOScJpsyLMaszmwCjuUnCkPEGYMyT@postgres.railway.internal:5432/railway"
+
 media-backup:
 	tar -czf backup/media/media_backup_$$(date +%Y-%m-%d_%H-%M-%S).tar.gz media/
 
@@ -178,3 +181,12 @@ sync:
 # ngrok
 ngrok:
 	ngrok http 8000
+
+railway-db-dump:
+	apt update && apt install -y wget gnupg2 lsb-release && wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && apt update && apt install -y postgresql-client-16 awscli && pg_dump --no-owner --no-acl --format=custom --file=db_backup.dump "postgresql://postgres:hMCEOScJpsyLMaszmwCjuUnCkPEGYMyT@postgres.railway.internal:5432/railway" && aws s3 cp db_backup.dump s3://${R2_BUCKET_NAME}/backups/db/db_backup_$(date +%F_%H-%M).dump --endpoint-url ${R2_ENDPOINT}
+
+upload-backup:
+	aws s3 cp db_backup.dump s3://${R2_BUCKET_NAME}/backups/db/db_backup_$(date +%F_%H-%M).dump --endpoint-url ${R2_ENDPOINT}
+
+update-postgres:
+	apt update && apt install -y wget gnupg2 lsb-release && wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && apt update && apt install -y postgresql-client-16 awscli
