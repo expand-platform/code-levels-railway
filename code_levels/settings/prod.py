@@ -17,10 +17,8 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get("R2_BUCKET_NAME")
 AWS_S3_ENDPOINT_URL = os.environ.get("R2_ENDPOINT")
 AWS_S3_CUSTOM_DOMAIN = "pub-4ca7ec1159154d25b3558c36ee3d304d.r2.dev"
 
-# R2_ENDPOINT="https://f517ca26c68bac7e29f4077c9096c1ec.r2.cloudflarestorage.com"
 
 AWS_QUERYSTRING_AUTH = False
-# MEDIA_URL = "https://pub-4ca7ec1159154d25b3558c36ee3d304d.r2.dev/"
 
 STORAGES = {
     "default": {

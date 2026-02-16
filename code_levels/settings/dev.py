@@ -5,6 +5,8 @@ DEBUG = True
 
 MEDIA_URL = "/media/"
 
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 INSTALLED_APPS += [
     "django_browser_reload",
 ]

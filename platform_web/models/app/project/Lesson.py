@@ -14,16 +14,18 @@ TYPE_CHOICES = [
     ("project", "Project"),
 ]
 
-#! 1. Add Codepen url and make a shortcode parsing (onload page in JS) for it
 
 class Lesson(models.Model):
     project = models.ForeignKey(Project, related_name="parts", on_delete=models.CASCADE)
     
     title = models.CharField(max_length=255)
+    thumbnail = models.ImageField(upload_to="lesson_images/", blank=True, null=True)
+    
     description = models.TextField(blank=True)
     type = models.CharField(max_length=50, choices=TYPE_CHOICES, null=True, blank=True)
 
     codepen_url = models.URLField(blank=True, null=True)
+    youtube_url = models.URLField(blank=True, null=True)
 
     objectives = models.JSONField(
         default=list,

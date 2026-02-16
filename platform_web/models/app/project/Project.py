@@ -34,18 +34,20 @@ class Project(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to="project_images/", blank=True, null=True)
     type = models.CharField(max_length=20, choices=PROJECT_TYPE_CHOICES, default=TOPIC)
-    codepen_url = models.URLField(blank=True, null=True)
-    
+
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="projects", null=True, blank=True
     )
-
     programming_languages = models.ManyToManyField(
         ProgrammingLanguage, blank=True, help_text="Predefined programming languages"
     )
+
+    
     difficulty = models.ForeignKey(
         Difficulty, on_delete=models.SET_NULL, null=True, blank=True
     )
+    codepen_url = models.URLField(blank=True, null=True)
+    
     framework = models.ManyToManyField(
         Framework,
         blank=True,

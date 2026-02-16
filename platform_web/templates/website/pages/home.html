@@ -14,7 +14,7 @@
     <section class="hero">
       {% include 'website/parts/layout/nav.html' %}
 
-      <video class="hero__video" autoplay muted loop playsinline preload="auto">
+      <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="{% static 'media/video/hero-poster.png' %}">
         <source src="{% static 'media/video/hero-1.mp4' %}" type="video/mp4" />
       </video>
 

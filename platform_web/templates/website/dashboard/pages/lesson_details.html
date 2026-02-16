@@ -20,9 +20,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js" defer></script>
 
   <script>
+    window.lessonYoutubeUrl = "{{ part.youtube_url|default:'' }}"
     window.lessonCodepenUrl = "{{ part.codepen_url|default:'' }}"
   </script>
 
+  <script src="{% static 'js/common/youtube.js' %}" defer type="module"></script>
   <script src="{% static 'js/common/codepen.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
 {% endblock %}
