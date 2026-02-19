@@ -13,6 +13,21 @@ function togglePartsNav() {
   }
 }
 
+function togglePartsList() {
+  const list = document.getElementById('parts-list')
+  const icon = document.getElementById('toggle-parts-icon')
+  if (!list) return
+  if (list.style.display === 'none') {
+    list.style.display = ''
+    icon.classList.remove('bi-chevron-right')
+    icon.classList.add('bi-chevron-down')
+  } else {
+    list.style.display = 'none'
+    icon.classList.remove('bi-chevron-down')
+    icon.classList.add('bi-chevron-right')
+  }
+}
+
 // Project Detail Page JS
 function toggleStages() {
   const list = document.getElementById('stages-list');
@@ -23,36 +38,6 @@ function toggleStages() {
   }
 }
 
-
-// For each pre, add a copy button to copy the code content to clipboard
-document.addEventListener('DOMContentLoaded', (event) => {
-  mediumZoom('.lesson-details .content img');
-  mediumZoom('.project-details img');
-
-
-  document.querySelectorAll('pre').forEach((pre) => {
-    pre.classList.add('position-relative', 'p-1', 'overflow-hidden');
-    hljs.highlightElement(pre);
-
-    const copyBtn = document.createElement('button');
-    copyBtn.className = 'btn copy-btn position-absolute top-0 end-0 p-0 m-1';
-    copyBtn.innerHTML = '<i class="bi bi-clipboard text-black "></i>';
-    copyBtn.title = 'Copy code';
-    pre.appendChild(copyBtn);
-
-    copyBtn.addEventListener('click', () => {
-      const code = pre.innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        copyBtn.innerHTML = '<i class="bi bi-clipboard-check"></i>';
-        setTimeout(() => {
-          copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
-        }, 2000);
-      });
-    });
-  });
-  // document.querySelectorAll('pre').forEach((el) => {
-  // });
-});
 
 document.addEventListener('DOMContentLoaded', function () {
   const partsList = document.getElementById('parts-list');

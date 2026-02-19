@@ -67,12 +67,14 @@ class Project(models.Model):
     course_order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+   
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     order = models.PositiveIntegerField(
         default=0, help_text="Ordering for admin sorting"
     )
+   
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "projects"

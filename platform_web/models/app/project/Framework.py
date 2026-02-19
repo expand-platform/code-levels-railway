@@ -24,9 +24,9 @@ class Framework(models.Model):
         (FASTAPI, "FastAPI"),
     ]
 
-    name = models.CharField(max_length=20, choices=FRAMEWORK_CHOICES, unique=True)
+    name = models.CharField(max_length=20, unique=True)
     order = models.PositiveIntegerField(
-        default=0, help_text="Order for displaying frameworks (lower comes first)"
+        default=5, help_text="Order for displaying frameworks"
     )
     
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
@@ -37,4 +37,4 @@ class Framework(models.Model):
         ordering = ["order", "name"]
 
     def __str__(self):
-        return self.get_name_display()
+        return self.name

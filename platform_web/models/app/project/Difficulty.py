@@ -24,13 +24,14 @@ class Difficulty(models.Model):
         (LEVEL_HARD_DESCRIPTIVE, "Challenging"),
         (LEVEL_HARDCORE_DESCRIPTIVE, "For experts only"),
     ]
-    name = models.CharField(max_length=20, choices=LEVEL_CHOICES, unique=True)
+    name = models.CharField(max_length=20, unique=True)
 
+    order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
     class Meta:
         db_table = "difficulties"
-        ordering = ["name"]
+        ordering = ["order", "name"]
 
     def __str__(self):
-        return self.get_name_display()
+        return self.name

@@ -23,7 +23,8 @@
     window.lessonYoutubeUrl = "{{ part.youtube_url|default:'' }}"
     window.lessonCodepenUrl = "{{ part.codepen_url|default:'' }}"
   </script>
-
+  <script src="{% static 'js/common/zoomImage.js' %}" type="module" defer></script>
+  <script src="{% static 'js/common/highlight.js' %}" type="module" defer></script>
   <script src="{% static 'js/common/youtube.js' %}" defer type="module"></script>
   <script src="{% static 'js/common/codepen.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>

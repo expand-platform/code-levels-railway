@@ -2,20 +2,20 @@
   {% if project.course %}
     {% if project.type == 'project' %}
       {% if filtered_projects|length == 1 %}
-        Project #1 in "{{ project.course.title }}"
+        Project #1 in "{{ project.course.title }}" progression
       {% else %}
-        Project #{{ project.course_order }} of {{ filtered_projects|length }} in "{{ project.course.title }}"
+        Project #{{ project.course_order }} of {{ filtered_projects|length }} in "{{ project.course.title }}" progression
       {% endif %}
     {% elif project.type == 'topic' %}
       {% if filtered_topics|length == 1 %}
-        Topic #1 in "{{ project.course.title }}"
+        Topic #1 in "{{ project.course.title }}" progression
       {% else %}
         Topic #{% for t in filtered_topics %}
           {% if t.pk == project.pk %}{{ forloop.counter }}{% endif %}
-        {% endfor %}of {{ filtered_topics|length }} in "{{ project.course.title }}"
+        {% endfor %}of {{ filtered_topics|length }} in "{{ project.course.title }}" progression
       {% endif %}
     {% else %}
-      #{{ project.course_order }} in "{{ project.course.title }}"
+      #{{ project.course_order }} in "{{ project.course.title }}" progression
     {% endif %}
   {% else %}
     #{{ project.course_order }}

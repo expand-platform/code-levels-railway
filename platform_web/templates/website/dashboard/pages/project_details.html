@@ -18,10 +18,13 @@
   <script src="{% static 'js/libs/medium-zoom.min.js' %}" type="module" defer></script>
 
   <script>
-    window.projectCodepenUrl = "{{ project.codepen_url|default:'' }}";
+    window.projectCodepenUrl = "{{ project.codepen_url|default:'' }}"
   </script>
 
+  <script src="{% static 'js/common/zoomImage.js' %}" type="module" defer></script>
+  <script src="{% static 'js/common/highlight.js' %}" type="module" defer></script>
   <script type="module" src="{% static 'js/common/codepen.js' %}" defer></script>
+
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/project_detail.js' %}" defer type="module"></script>
 {% endblock %}
@@ -41,29 +44,33 @@
       {% include 'website/dashboard/parts/project/updated.html' %}
 
       <main class="content box">
-        <section class="description mb-4">
-          <h2 class="subtitle">In this project</h2>
-          <p>{{ project.description|safe }}</p>
-           
-          {# codepen #}
-          {% include 'website/dashboard/parts/project/codepen.html' %}
-        </section>
+        {% if project.description or project.codepen_url %}
+          <section class="description mb-4">
+            <h2 class="subtitle">In this project</h2>
+            <p>{{ project.description|safe }}</p>
 
-        <hr class="line mb-5" />
+            {# codepen #}
+            {% include 'website/dashboard/parts/project/codepen.html' %}
+          </section>
 
-        <section class="stages mb-4">
-          <h2 class="subtitle mb-3">Project Stages</h2>
-          <ol id="stages-list" class="stages-list">
-            {% for stage in project.stages %}
-              <li>{{ stage }}</li>
-            {% empty %}
-              <li>No stages defined.</li>
-            {% endfor %}
-          </ol>
-        </section>
+          <hr class="line mb-5" />
+        {% endif %}
 
-        <hr class="line mb-5" />
+        {% if project.stages %}
+          <section class="stages mb-4">
+            <h2 class="subtitle mb-3">Project Stages</h2>
+            <ol id="stages-list" class="stages-list">
+              {% for stage in project.stages %}
+                <li>{{ stage }}</li>
+              {% empty %}
+                <li>No stages defined.</li>
+              {% endfor %}
+            </ol>
+          </section>
+          <hr class="line mb-5" />
+        {% endif %}
 
+        {% if parts %}
         <section class="project-parts mb-5">
           <div class="d-flex align-items-center mb-3">
             <h2 class="subtitle mb-0 me-2" style="color: #222; font-weight: 600;">Lessons</h2>
@@ -72,6 +79,8 @@
               <button id="save-order-btn" class="btn btn-sm btn-success ms-3" style="display:none;">Save Order</button>
             {% endif %}
           </div>
+          {% endif %}
+
           {% if parts %}
             <form id="reorder-form" method="post" style="margin:0;">
               {% csrf_token %}
@@ -90,24 +99,24 @@
               </ol>
             </form>
           {% else %}
-            <p class="text-muted">No parts for this project yet.</p>
+            <p class="text-muted m-0">No lessons here, but we'll launch them soon.</p>
           {% endif %}
         </section>
 
-        <div class="project-start mb-2">
-          {% if parts %}
+        {% if parts %}
+          <div class="project-start mb-2">
             <a href="{% url 'lesson_details' slug=project.slug order=parts.0.order %}" class="start-project-btn d-inline-block">
               <i class="bi bi-chevron-double-right d-inline-block pt-1"></i>
               {% if project.type == 'Project' %}
                 <span>Start the Project</span>
               {% else %}
-                <span>Explore {{ project.title }}</span>
+                <span>Explore {{ project.title|truncatechars:60 }}</span>
               {% endif %}
             </a>
-          {% else %}
-            <span class="text-muted">No parts available to start.</span>
-          {% endif %}
-        </div>
+            {% else %}
+            <span class="text-muted m-0">No lessons available to start.</span>
+          </div>
+        {% endif %}
 
         <!-- Admin action buttons: bottom right corner -->
         {% if user.is_staff %}
@@ -122,28 +131,6 @@
           </div>
         {% endif %}
       </main>
-
-      <script>
-        function togglePartsList() {
-          const list = document.getElementById('parts-list')
-          const icon = document.getElementById('toggle-parts-icon')
-          if (!list) return
-          if (list.style.display === 'none') {
-            list.style.display = ''
-            icon.classList.remove('bi-chevron-right')
-            icon.classList.add('bi-chevron-down')
-          } else {
-            list.style.display = 'none'
-            icon.classList.remove('bi-chevron-down')
-            icon.classList.add('bi-chevron-right')
-          }
-        }
-      </script>
     </section>
   </section>
 {% endblock %}
-
-        <section class="project-codepen mb-4">
-          <h2 class="subtitle">Project Demo</h2>
-          <div id="project-codepen-placeholder"></div>
-        </section>

@@ -65,7 +65,7 @@ class Course(models.Model):
         (FULLSTACK, "Full Stack Web Development"),
     ]
 
-    title = models.CharField(max_length=255, choices=COURSE_CHOICES, unique=True)
+    title = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
     languages = models.ManyToManyField(
         ProgrammingLanguage, related_name="courses", blank=True
@@ -74,12 +74,9 @@ class Course(models.Model):
     
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
-
-
-
     class Meta:
         db_table = "courses"
         ordering = ["order", "title"]
 
     def __str__(self):
-        return self.get_title_display()
+        return self.title

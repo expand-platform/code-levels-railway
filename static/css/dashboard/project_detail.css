@@ -16,11 +16,25 @@
     color: black;
 }
 
-.project-details .box {
+.project-details .content {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     padding: 1.5rem;
+}
+
+.project-details .content ul,
+.project-details .content ul li {
+    list-style-type: disc;
+}
+
+.project-details .content ul {
+    padding: 0 0 0 2rem;
+}
+
+.project-details .content ol,
+.project-details .content ol li {
+    list-style-type: decimal;
 }
 
 .project-details .title,
@@ -120,7 +134,7 @@
 }
 
 /* Back Icon fix */
-.project-details .nav-icon.back-icon  {
+.project-details .nav-icon.back-icon {
     --icon-size: 2.5rem;
     padding: 2px 2px 0 0;
     width: var(--icon-size);

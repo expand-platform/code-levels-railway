@@ -19,7 +19,7 @@ from platform_web.models.app.project.Chapter import Chapter
 
 
 class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
-    list_display = ("title", "order")
+    list_display = ("order", "title")
     search_fields = ("title",)
 
 
@@ -29,11 +29,6 @@ class ProgrammingLanguageAdmin(admin.ModelAdmin):
 
 
 class StagesAdmin(admin.ModelAdmin):
-    list_display = ("name", "order")
-    search_fields = ("name",)
-
-
-class FrameworkAdmin(admin.ModelAdmin):
     list_display = ("name", "order")
     search_fields = ("name",)
 
@@ -71,16 +66,17 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
         "title",
         "course",
         "type",
-        "difficulty",
+        # "difficulty",
         "get_programming_languages",
-        "get_framework",
-        "chapter_count",
-        "is_active",
-        "language_order",
+        # "get_framework",
+        # "chapter_count",
+        # "is_active",
+        # "language_order",
+        "updated_at",
     )
     list_filter = ("difficulty", "programming_languages", "framework", "type", "course")
     search_fields = ("title", "description")
-    ordering = ("course_order", )
+    ordering = ("course_order",)
     readonly_fields = ("created_at", "updated_at")
 
     actions = ["publish_projects", "unpublish_projects"]
@@ -148,23 +144,33 @@ class LessonAdminForm(forms.ModelForm):
             "description": SummernoteWidget(),
         }
 
+
 #! Latest edited project appears first in the "Project" dropdown when editing a lesson in admin
 
-class LessonsAdmin(SortableAdminMixin, admin.ModelAdmin): # type: ignore[misc]
+
+class LessonsAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
     form = LessonAdminForm
-    list_display = ("order", "title", "type", "project")
+    list_display = ("order", "title", "type", "project", "last_edited")
     search_fields = ("title", "project__title")
     list_filter = ("project",)
     ordering = ("order",)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.order_by("project", "order")
+        return qs.order_by("order")
 
-    
 
 class SkillsAdmin(admin.ModelAdmin):
     list_display = ("name", "order")
+    search_fields = ("name",)
+
+
+class DifficultiesAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
+    list_display = ("order", "name")
+
+
+class FrameworkAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
+    list_display = ("order", "name")
     search_fields = ("name",)
 
 
@@ -173,7 +179,7 @@ admin.site.register(Framework, FrameworkAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Lesson, LessonsAdmin)
 admin.site.register(ProgrammingLanguage, ProgrammingLanguageAdmin)
-admin.site.register(Difficulty)
+admin.site.register(Difficulty, DifficultiesAdmin)
 admin.site.register(Stage, StagesAdmin)
 admin.site.register(Review)
 admin.site.register(Submission)

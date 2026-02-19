@@ -24,8 +24,8 @@ class Lesson(models.Model):
     description = models.TextField(blank=True)
     type = models.CharField(max_length=50, choices=TYPE_CHOICES, null=True, blank=True)
 
-    codepen_url = models.URLField(blank=True, null=True)
     youtube_url = models.URLField(blank=True, null=True)
+    codepen_url = models.URLField(blank=True, null=True)
 
     objectives = models.JSONField(
         default=list,
@@ -38,6 +38,9 @@ class Lesson(models.Model):
     
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    
+    last_edited = models.DateTimeField(auto_now=True)
+    
 
     class Meta:
         db_table = "project_parts"
