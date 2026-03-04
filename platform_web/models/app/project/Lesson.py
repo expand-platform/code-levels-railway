@@ -19,19 +19,22 @@ class Lesson(models.Model):
     project = models.ForeignKey(Project, related_name="parts", on_delete=models.CASCADE)
     
     title = models.CharField(max_length=255)
-    thumbnail = models.ImageField(upload_to="lesson_images/", blank=True, null=True)
-    
-    description = models.TextField(blank=True)
     type = models.CharField(max_length=50, choices=TYPE_CHOICES, null=True, blank=True)
-
+    
     youtube_url = models.URLField(blank=True, null=True)
     codepen_url = models.URLField(blank=True, null=True)
 
+    thumbnail = models.ImageField(upload_to="lesson_images/", blank=True, null=True)
+    
+    description = models.TextField(blank=True)
+    
     objectives = models.JSONField(
         default=list,
         blank=True,
         help_text="List of lesson objectives"
     )
+
+
     
     languages = models.ManyToManyField(ProgrammingLanguage, blank=True)
     chapter = models.ForeignKey('platform_web.Chapter', related_name='parts', on_delete=models.CASCADE, null=True, blank=True)

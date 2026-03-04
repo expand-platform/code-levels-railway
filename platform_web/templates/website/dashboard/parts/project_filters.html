@@ -1,5 +1,12 @@
 <div class="col row justify-content-end align-items-end">
-    <form method="get" class="projects-toggle-section col col-6 d-flex justify-content-end column-gap-3 mb-3" >
+    <form method="get" class="projects-toggle-section col d-flex justify-content-end column-gap-3 mb-3" >
+      <div class="d-flex column-gap-2 align-items-center me-3">
+        <span class="reset-button">Reset Filters</span>
+        <span id="search-icon" style="cursor:pointer; font-size:1.3em; color: black;">
+          <i class="bi bi-search"></i>
+        </span>
+        <input id="project-search-input" name="search" type="text" class="form-control ms-2" style="display:none; width:180px;" placeholder="Search projects..." value="{{ request.GET.search|default:'' }}">
+      </div>
       <div class="d-flex flex-column align-items-end">
         <select id="projects-toggle-select" name="filter" class="form-select" style="width: auto;" onchange="this.form.submit()">
           <option value="course" {% if filter_by == 'course' %} selected {% endif %}> By Course </option>
@@ -14,4 +21,41 @@
         </select>
       </div>
     </form>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        let searchIcon = document.getElementById('search-icon');
+        let searchInput = document.getElementById('project-search-input');
+        let resetButton = document.querySelector('.reset-button');
+
+        searchIcon.onclick = function() {
+          if (searchInput.style.display == 'none') {
+            searchInput.style.display = 'block';
+            resetButton.style.display = 'block';
+            searchIcon.style.display = 'none';
+            searchInput.focus();
+          } else {
+            searchInput.style.display = 'none';
+            searchIcon.style.display = 'block';
+          }
+        };
+
+        searchInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            searchInput.form.submit();
+          }
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            searchInput.style.display = 'none';
+            searchIcon.style.display = 'block';
+            resetButton.style.display = 'none';
+          }
+        });
+
+        resetButton.onclick = function() {
+          searchInput.value = '';
+          searchInput.form.submit();
+        };
+      });
+    </script>
   </div>

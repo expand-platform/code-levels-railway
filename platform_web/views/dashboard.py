@@ -8,7 +8,7 @@ from platform_web.models.app.project.Course import Course
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "website/dashboard/dashboard.html"
 
-
+    
 @login_required
 def projects_view(request):
     default_filter = "course"
@@ -16,8 +16,9 @@ def projects_view(request):
 
     filter_by = request.GET.get("filter", default_filter)
     project_type = request.GET.get("type", default_project_type)
+    search_query = request.GET.get("search", "").strip()
 
-    context = {"filter_by": filter_by, "project_type": project_type}
+    context = {"filter_by": filter_by, "project_type": project_type, "search": search_query}
     context_key = "courses"
 
     if filter_by == "course":
@@ -29,10 +30,12 @@ def projects_view(request):
         context_key = "languages"
 
     for item in items:
+        projects_qs = get_projects(item)
         if project_type != "all":
-            setattr(item, 'filtered_projects', get_projects(item).filter(type=project_type))
-        else:
-            setattr(item, 'filtered_projects', get_projects(item))
+            projects_qs = projects_qs.filter(type=project_type)
+        if search_query:
+            projects_qs = projects_qs.filter(title__icontains=search_query)
+        setattr(item, 'filtered_projects', projects_qs)
     context[context_key] = items
 
     return render(request, "website/dashboard/pages/projects.html", context)

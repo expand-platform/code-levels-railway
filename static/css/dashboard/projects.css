@@ -71,3 +71,11 @@
 .project-skills {
     font-size: .7rem;
 }
+
+.reset-button {
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: 500;
+    display: none;
+    color: rgb(202, 29, 29);
+}
