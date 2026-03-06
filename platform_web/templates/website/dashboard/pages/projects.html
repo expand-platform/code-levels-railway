@@ -14,13 +14,14 @@
 <script src="{% static 'js/libs/Sortable.min.js' %}"  defer type="module"></script>
 <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
 <script src="{% static 'js/dashboard/projects.js' %}"  defer type="module"></script>
+<script src="{% static 'js/dashboard/project_filters.js' %}"  defer type="module"></script>
 {% endblock %}
 
 {% block dashboard_content %}
   <!-- Plus button moved to bottom right -->
   {% if user.is_staff %}
     <div class="plus-button add-project" style="position: fixed; right: 36px; bottom: 36px; z-index: 1050; border-radius: 50%;">
-      <a href="/cp/platform_web/project/add/" target="_blank" class="btn d-flex align-items-center justify-content-center" style="border-radius: 50%; width: 60px; height: 60px; font-size: 2rem; background: #007bff; color: #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.12);" title="Add New Project"><i class="bi bi-plus"></i></a>
+      <a href="/cp/platform_web/project/add/" target="_blank" class="add-project-button btn d-flex align-items-center justify-content-center" title="Add New Project"><i class="bi bi-plus"></i></a>
     </div>
   {% endif %}
 

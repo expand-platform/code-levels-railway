@@ -1,81 +1,90 @@
 :root {
-    --project-card-width: 28%;
-    --project-card-height: 190px;
+  --project-card-width: 28%;
+  --project-card-height: 190px;
 }
 
 .language-block {
-    margin-bottom: 2.5rem;
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 1.5rem 1rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  margin-bottom: 2.5rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .language-block h2 {
-    margin-bottom: 1rem;
-    color: #2d3a4a;
+  margin-bottom: 1rem;
+  color: #2d3a4a;
 }
 
 .project-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
 }
 
-
 .project-card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
-    padding: 1rem;
-    width: var(--project-card-width);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: box-shadow 0.2s;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  padding: 1rem;
+  width: var(--project-card-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
 }
 
 .project-card:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .project-image {
-    width: 100%;
-    height: var(--project-card-height);
-    object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 0.75rem;
+  width: 100%;
+  height: var(--project-card-height);
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
 }
 
 .project-info h3 {
-    margin: 0.5rem 0 0.25rem 0;
-    font-size: 1.1rem;
-    color: #1a2233;
+  margin: 0.5rem 0 0.25rem 0;
+  font-size: 1.1rem;
+  color: #1a2233;
 }
 
 .project-info p {
-    font-size: 0.97rem;
-    color: #4a5568;
-    margin-bottom: 0.5rem;
+  font-size: 0.97rem;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
 }
 
 .project-difficulty {
-    display: inline-block;
-    background: #e2e8f0;
-    color: #2b6cb0;
-    font-size: 0.85rem;
-    padding: 0.2rem 0.7rem;
-    border-radius: 12px;
+  display: inline-block;
+  background: #e2e8f0;
+  color: #2b6cb0;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 12px;
 }
 
 .project-skills {
-    font-size: .7rem;
+  font-size: 0.7rem;
 }
 
 .reset-button {
-    font-size: 1.2rem;
-    cursor: pointer;
-    font-weight: 500;
-    display: none;
-    color: rgb(202, 29, 29);
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-weight: 500;
+  display: none;
+  color: rgb(202, 29, 29);
+}
+
+.add-project-button {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
+  background: #007bff;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
