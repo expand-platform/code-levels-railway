@@ -7,8 +7,8 @@ const dashboardNav = document.querySelector('.dashboard .dashboard-nav');
 
 const sidebarStateKey = 'isDashboardSidebarHidden';
 
+// false - visible, true - hidden, but save to localStorage as inversed value
 sidebarBurgerButton.addEventListener('click', function () {
-    // false - visible, true - hidden, but save to localStorage as inversed value
     let isSidebarHidden = sidebar.classList.contains('hide');
 
     if (isSidebarHidden) {
@@ -25,14 +25,10 @@ export function loadSidebarState() {
     let isSidebarHidden = loadFromLocalStorage(sidebarStateKey);
 
     if (isSidebarHidden) {
-        console.log('- if hidden -');
         displayElements(false);
     } else {
-        console.log('- else (visible) -');
         displayElements(true);
     }
-
-    console.log('- sidebar is set to:', isSidebarHidden);
 }
 
 function displayElements(show) {
@@ -47,15 +43,3 @@ function displayElements(show) {
         dashboardNav.classList.add('start-0', 'opened')
     }
 }
-
-// function adjustSidebar() {
-//     if (window.innerWidth <= 576) {
-//         displayElements(false);
-//     } else {
-//         displayElements(true);
-//     }
-// }
-
-// Sayfa yüklendiğinde ve pencere boyutu değiştiğinde sidebar durumunu ayarlama
-// window.addEventListener('load', adjustSidebar);
-// window.addEventListener('resize', adjustSidebar);

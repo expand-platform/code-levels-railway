@@ -16,7 +16,7 @@ urlpatterns = [
     path("project/<slug:slug>/lesson/<int:order>/", lesson_details_view, name="lesson_details"),
     
     # API
-    path("api/project/<slug:slug>/reorder_lessons/", reorder_lessons_view, name="reorder_lessons"),
-    path("api/language/<int:language_id>/reorder_projects/", reorder_projects_by_language_view, name="reorder_projects_by_language"),
-    path("api/course/<int:course_id>/reorder_projects/", reorder_projects_by_course_view, name="reorder_projects_by_course"),
+    # path("api/project/<slug:slug>/reorder_lessons/", reorder_lessons_view, name="reorder_lessons"),
+    # path("api/language/<int:language_id>/reorder_projects/", reorder_projects_by_language_view, name="reorder_projects_by_language"),
+    # path("api/course/<int:course_id>/reorder_projects/", reorder_projects_by_course_view, name="reorder_projects_by_course"),
 ]

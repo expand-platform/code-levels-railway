@@ -43,11 +43,12 @@ CSRF_TRUSTED_ORIGINS = [
     o.strip() for o in dotenv.csrf_trusted_origins.split(",")
 ]
 
-
+# cookies
 CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
-SESSION_COOKIE_SECURE = True
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True

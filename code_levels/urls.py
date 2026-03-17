@@ -5,11 +5,16 @@ from django.conf.urls.static import static
 from django.http import HttpResponse
 
 
+
 urlpatterns = [
+    path("api/", include("api.urls")),
+    
     path("", include("platform_web.urls")),
+    
     path("cp/", admin.site.urls),
     path("account/", include(("allauth.urls"))),
-    path("health/", lambda r: HttpResponse("OK"), name="health"),
+    
+    # path("health/", lambda r: HttpResponse("OK"), name="health"),
     path("summernote/", include("django_summernote.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
