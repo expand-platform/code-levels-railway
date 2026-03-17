@@ -5,7 +5,6 @@ import sys
 from os import environ
 from dotenv import load_dotenv
 
-# load_dotenv(".env.prod")
 load_dotenv(".env")
 
 def main():

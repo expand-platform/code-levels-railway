@@ -15,7 +15,7 @@ from platform_web.models.app.project.Skill import Skill
 from platform_web.models.app.project.Review import Review
 from platform_web.models.app.project.Submission import Submission
 from platform_web.models.app.project.Framework import Framework
-from platform_web.models.app.project.Chapter import Chapter
+# from platform_web.models.app.project.Chapter import Chapter
 
 
 class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
@@ -41,11 +41,11 @@ class LessonsInline(SortableInlineAdminMixin, NestedTabularInline):
     ordering = ["order"]
 
 
-class ChaptersInline(SortableInlineAdminMixin, NestedTabularInline):
-    model = Chapter
-    extra = 1
-    fields = ("title", "order", "description")
-    ordering = ["order"]
+# class ChaptersInline(SortableInlineAdminMixin, NestedTabularInline):
+#     model = Chapter
+#     extra = 1
+#     fields = ("title", "order", "description")
+#     ordering = ["order"]
 
 
 class ProjectAdminForm(forms.ModelForm):
@@ -59,7 +59,7 @@ class ProjectAdminForm(forms.ModelForm):
 
 class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
     form = ProjectAdminForm
-    inlines = [ChaptersInline, LessonsInline]
+    inlines = [LessonsInline]
     list_display = (
         # "order",
         "course_order",
@@ -93,10 +93,10 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
 
     unpublish_projects.short_description = "Unpublish selected projects"
 
-    def chapter_count(self, obj):
-        return obj.chapters.count()
+    # def chapter_count(self, obj):
+    #     return obj.chapters.count()
 
-    chapter_count.short_description = "Chapters"
+    # chapter_count.short_description = "Chapters"
 
     def get_programming_languages(self, obj):
         return ", ".join([pl.name for pl in obj.programming_languages.all()])
@@ -108,32 +108,32 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
     get_framework.short_description = "Frameworks"
 
 
-class ChapterAdmin(admin.ModelAdmin):  # type: ignore[misc]
-    list_display = ("title", "project", "order", "part_count")
-    list_filter = ("project",)
-    search_fields = ("title",)
-    ordering = ["project", "order"]
-    fields = ("title", "description", "order", "project")
+# class ChapterAdmin(admin.ModelAdmin):  # type: ignore[misc]
+#     list_display = ("title", "project", "order", "part_count")
+#     list_filter = ("project",)
+#     search_fields = ("title",)
+#     ordering = ["project", "order"]
+#     fields = ("title", "description", "order", "project")
 
-    def part_count(self, obj):
-        return obj.parts.count()
+#     def part_count(self, obj):
+#         return obj.parts.count()
 
-    part_count.short_description = "Parts"
+#     part_count.short_description = "Parts"
 
-    def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.name == "parts":
-            if request.resolver_match and request.resolver_match.kwargs.get(
-                "object_id"
-            ):
-                try:
-                    chapter_id = int(request.resolver_match.kwargs["object_id"])
-                    from platform_web.models.app.project.Chapter import Chapter
+#     def formfield_for_manytomany(self, db_field, request, **kwargs):
+#         if db_field.name == "parts":
+#             if request.resolver_match and request.resolver_match.kwargs.get(
+#                 "object_id"
+#             ):
+#                 try:
+#                     chapter_id = int(request.resolver_match.kwargs["object_id"])
+#                     from platform_web.models.app.project.Chapter import Chapter
 
-                    chapter = Chapter.objects.get(pk=chapter_id)
-                    kwargs["queryset"] = Lesson.objects.filter(project=chapter.project)
-                except Exception:
-                    pass
-        return super().formfield_for_manytomany(db_field, request, **kwargs)
+#                     chapter = Chapter.objects.get(pk=chapter_id)
+#                     kwargs["queryset"] = Lesson.objects.filter(project=chapter.project)
+#                 except Exception:
+#                     pass
+#         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
 class LessonAdminForm(forms.ModelForm):
@@ -183,5 +183,5 @@ admin.site.register(Difficulty, DifficultiesAdmin)
 admin.site.register(Stage, StagesAdmin)
 admin.site.register(Review)
 admin.site.register(Submission)
-admin.site.register(Chapter, ChapterAdmin)
+# admin.site.register(Chapter, ChapterAdmin)
 admin.site.register(Course, CourseAdmin)

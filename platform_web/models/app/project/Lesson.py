@@ -37,7 +37,7 @@ class Lesson(models.Model):
 
     
     languages = models.ManyToManyField(ProgrammingLanguage, blank=True)
-    chapter = models.ForeignKey('platform_web.Chapter', related_name='parts', on_delete=models.CASCADE, null=True, blank=True)
+    # chapter = models.ForeignKey('platform_web.Chapter', related_name='parts', on_delete=models.CASCADE, null=True, blank=True)
     
     order = models.PositiveIntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)

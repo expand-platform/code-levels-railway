@@ -3,26 +3,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
-from django.contrib.sitemaps.views import sitemap
 
-# from store.config.config import WebsiteSettings
-
-# handler404 = "platform_web.views.not_found_404"
-
-#! healthcheck path?
 
 urlpatterns = [
     path("", include("platform_web.urls")),
     path("cp/", admin.site.urls),
     path("account/", include(("allauth.urls"))),
     path("health/", lambda r: HttpResponse("OK"), name="health"),
-
-    # path(
-    #     "sitemap.xml",
-    #     sitemap,
-    #     {"sitemaps": sitemaps},
-    #     name="django.contrib.sitemaps.views.sitemap",
-    # ),
     path("summernote/", include("django_summernote.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
