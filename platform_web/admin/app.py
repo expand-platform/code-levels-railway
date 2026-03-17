@@ -10,12 +10,7 @@ from platform_web.models.app.project.Project import Project
 from platform_web.models.app.project.Lesson import Lesson
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.app.project.Difficulty import Difficulty
-# from platform_web.models.app.project.Stage import Stage
-# from platform_web.models.app.project.Skill import Skill
-# from platform_web.models.app.project.Review import Review
-# from platform_web.models.app.project.Submission import Submission
 from platform_web.models.app.project.Framework import Framework
-# from platform_web.models.app.project.Chapter import Chapter
 
 
 class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
@@ -41,13 +36,6 @@ class LessonsInline(SortableInlineAdminMixin, NestedTabularInline):
     ordering = ["order"]
 
 
-# class ChaptersInline(SortableInlineAdminMixin, NestedTabularInline):
-#     model = Chapter
-#     extra = 1
-#     fields = ("title", "order", "description")
-#     ordering = ["order"]
-
-
 class ProjectAdminForm(forms.ModelForm):
     class Meta:
         model = Project
@@ -66,12 +54,7 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
         "title",
         "course",
         "type",
-        # "difficulty",
         "get_programming_languages",
-        # "get_framework",
-        # "chapter_count",
-        # "is_active",
-        # "language_order",
         "updated_at",
     )
     list_filter = ("difficulty", "programming_languages", "framework", "type", "course")
@@ -93,11 +76,6 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
 
     unpublish_projects.short_description = "Unpublish selected projects"
 
-    # def chapter_count(self, obj):
-    #     return obj.chapters.count()
-
-    # chapter_count.short_description = "Chapters"
-
     def get_programming_languages(self, obj):
         return ", ".join([pl.name for pl in obj.programming_languages.all()])
 
@@ -108,34 +86,6 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
     get_framework.short_description = "Frameworks"
 
 
-# class ChapterAdmin(admin.ModelAdmin):  # type: ignore[misc]
-#     list_display = ("title", "project", "order", "part_count")
-#     list_filter = ("project",)
-#     search_fields = ("title",)
-#     ordering = ["project", "order"]
-#     fields = ("title", "description", "order", "project")
-
-#     def part_count(self, obj):
-#         return obj.parts.count()
-
-#     part_count.short_description = "Parts"
-
-#     def formfield_for_manytomany(self, db_field, request, **kwargs):
-#         if db_field.name == "parts":
-#             if request.resolver_match and request.resolver_match.kwargs.get(
-#                 "object_id"
-#             ):
-#                 try:
-#                     chapter_id = int(request.resolver_match.kwargs["object_id"])
-#                     from platform_web.models.app.project.Chapter import Chapter
-
-#                     chapter = Chapter.objects.get(pk=chapter_id)
-#                     kwargs["queryset"] = Lesson.objects.filter(project=chapter.project)
-#                 except Exception:
-#                     pass
-#         return super().formfield_for_manytomany(db_field, request, **kwargs)
-
-
 class LessonAdminForm(forms.ModelForm):
     class Meta:
         model = Lesson
@@ -144,8 +94,12 @@ class LessonAdminForm(forms.ModelForm):
             "description": SummernoteWidget(),
         }
 
-
-#! Latest edited project appears first in the "Project" dropdown when editing a lesson in admin
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.instance.pk:  # Only for new Lesson
+            latest_project = Project.objects.order_by('-id').first()
+            if latest_project:
+                self.fields['project'].initial = latest_project
 
 
 class LessonsAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
@@ -182,8 +136,3 @@ admin.site.register(Framework, FrameworkAdmin)
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Lesson, LessonsAdmin)
-# admin.site.register(Skill, SkillsAdmin)
-# admin.site.register(Stage, StagesAdmin)
-# admin.site.register(Review)
-# admin.site.register(Submission)
-# admin.site.register(Chapter, ChapterAdmin)
