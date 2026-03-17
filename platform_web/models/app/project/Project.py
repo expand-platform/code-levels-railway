@@ -6,8 +6,8 @@ from django.utils.text import slugify
 
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.app.project.Difficulty import Difficulty
-from platform_web.models.app.project.Stage import Stage
-from platform_web.models.app.project.Skill import Skill
+# from platform_web.models.app.project.Stage import Stage
+# from platform_web.models.app.project.Skill import Skill
 from platform_web.models.app.project.Framework import Framework
 from platform_web.models.app.project.Course import Course
 
@@ -54,8 +54,8 @@ class Project(models.Model):
         help_text="Predefined frameworks",
         verbose_name="Frameworks",
     )
-    skills = models.ManyToManyField(Skill, blank=True)
-    stages = models.ManyToManyField(Stage, blank=True)
+    # skills = models.ManyToManyField(Skill, blank=True)
+    # stages = models.ManyToManyField(Stage, blank=True)
 
     description = models.TextField(
         blank=True, help_text="Description for the Dashboard"

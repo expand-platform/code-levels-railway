@@ -6,17 +6,22 @@ from dotenv import load_dotenv
 from code_levels.settings.allauth.base import *
 from code_levels.settings.plugins.colored_logs import *
 from code_levels.settings.admin.jazzmin import *
+from code_levels.settings.drf import REST_FRAMEWORK, SIMPLE_JWT
+
+from code_levels.settings.config.Dotenv import dotenv
 
 
 load_dotenv(".env")
-# load_dotenv(".env.prod")
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "")
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
+SECRET_KEY = dotenv.django_secret_key
+ALLOWED_HOSTS = dotenv.allowed_hosts.split(",")
+
 
 JAZZMIN_SETTINGS = JAZZMIN_SETTINGS_DICT
+
 
 INSTALLED_APPS = [
     "jazzmin",
@@ -27,13 +32,16 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    # third-party
+    "rest_framework",
     # auth
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     # apps
-    "platform_web.apps.PlatformWeb",
+    "api.apps.ApiConfig",
+    "platform_web.apps.PlatformWebConfig",
     "nested_admin",
     "adminsortable2",
     "django_summernote",
@@ -86,11 +94,11 @@ WSGI_APPLICATION = "code_levels.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": environ.get("PGDATABASE"),
-        "USER": environ.get("PGUSER"),
-        "PASSWORD": environ.get("PGPASSWORD"),
-        "HOST": environ.get("PGHOST"),
-        "PORT": environ.get("PGPORT"),
+        "NAME": dotenv.pgdatabase,
+        "USER": dotenv.pguser,
+        "PASSWORD": dotenv.pgpassword,
+        "HOST": dotenv.pghost,
+        "PORT": dotenv.pgport,
     }
 }
 

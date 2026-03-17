@@ -10,10 +10,10 @@ from platform_web.models.app.project.Project import Project
 from platform_web.models.app.project.Lesson import Lesson
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.app.project.Difficulty import Difficulty
-from platform_web.models.app.project.Stage import Stage
-from platform_web.models.app.project.Skill import Skill
-from platform_web.models.app.project.Review import Review
-from platform_web.models.app.project.Submission import Submission
+# from platform_web.models.app.project.Stage import Stage
+# from platform_web.models.app.project.Skill import Skill
+# from platform_web.models.app.project.Review import Review
+# from platform_web.models.app.project.Submission import Submission
 from platform_web.models.app.project.Framework import Framework
 # from platform_web.models.app.project.Chapter import Chapter
 
@@ -174,14 +174,16 @@ class FrameworkAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc
     search_fields = ("name",)
 
 
-admin.site.register(Skill, SkillsAdmin)
+admin.site.register(Course, CourseAdmin)
+admin.site.register(Difficulty, DifficultiesAdmin)
+
+admin.site.register(ProgrammingLanguage, ProgrammingLanguageAdmin)
 admin.site.register(Framework, FrameworkAdmin)
+
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Lesson, LessonsAdmin)
-admin.site.register(ProgrammingLanguage, ProgrammingLanguageAdmin)
-admin.site.register(Difficulty, DifficultiesAdmin)
-admin.site.register(Stage, StagesAdmin)
-admin.site.register(Review)
-admin.site.register(Submission)
+# admin.site.register(Skill, SkillsAdmin)
+# admin.site.register(Stage, StagesAdmin)
+# admin.site.register(Review)
+# admin.site.register(Submission)
 # admin.site.register(Chapter, ChapterAdmin)
-admin.site.register(Course, CourseAdmin)
