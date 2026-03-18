@@ -2,12 +2,11 @@
 {% load static %}
 
 {% block extra_meta %}
-    <meta name="csrf-token" content="{{ csrf_token }}">
+  <meta name="csrf-token" content="{{ csrf_token }}" />
 {% endblock %}
 
-
 {% block title %}
-  Level {{ lesson_id }} | {{ website_config.site_name }}
+  Projects | {{ website_config.site_name }}
 {% endblock %}
 
 {% block extra_css %}
@@ -16,10 +15,10 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/libs/Sortable.min.js' %}"  defer type="module"></script>
-<script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
-<script src="{% static 'js/dashboard/projects.js' %}"  defer type="module"></script>
-<script src="{% static 'js/dashboard/project_filters.js' %}"  defer type="module"></script>
+  <script src="{% static 'js/libs/Sortable.min.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/projects.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/project_filters.js' %}" defer type="module"></script>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -33,7 +32,15 @@
   <section class="row align-items-end mb-2">
     <div class="col dashboard-title head-title d-flex align-items-center justify-content-between">
       <div class="left">
-        <h1>Projects</h1>
+        <h1>
+          {% if project_type == 'topic' %}
+            Topics
+          {% elif project_type == 'all' %}
+            All Projects & Topics
+          {% else %}
+            Projects
+          {% endif %}
+        </h1>
         <ul class="breadcrumb">
           <li>
             <a href="#">Dashboard</a>
@@ -43,15 +50,27 @@
           </li>
           <li>
             {% if user.is_staff %}
-              <a class="active" target="_blank" href="/cp/platform_web/project/">Projects</a>
+              <a class="active" target="_blank" href="/cp/platform_web/project/">
+                {% if project_type == 'topic' %}
+                  Topics
+                {% else %}
+                  Projects
+                {% endif %}
+              </a>
             {% else %}
-            <a class="active" href="#">Projects</a>
+              <a class="active" href="#">
+                {% if project_type == 'topic' %}
+                  Topics
+                {% else %}
+                  Projects
+                {% endif %}
+              </a>
             {% endif %}
           </li>
         </ul>
       </div>
     </div>
-    
+
     {# ! Display projects count near each section and near all projects page title #}
     {# ! Remember last chosen filter #}
     {# ! Add a visual dismissable tooltip (arrow with explanation for ability to switch type of projects) #}

@@ -1,14 +1,6 @@
 <section id="sidebar">
   <a href="#" class="brand ms-4"><span class="text">{{ website_config.site_name }}</span></a>
   <ul class="side-menu top">
-    {% if user.is_staff %}
-      <li class="">
-        <a href="{% url 'admin:index' %}">
-          <i class="bx bi bi-person-lock bx"></i>
-          <span class="text">Admin</span>
-        </a>
-      </li>
-    {% endif %}
     <li>
       <a href="{% url 'home' %}">
         <i class="bi bi-houses bx"></i>
@@ -27,15 +19,16 @@
         <span class="text">Projects</span>
       </a>
     </li>
-    {% comment %} <li>
-      <a href="{% url 'dashboard_map' %}">
-        <i class="bx bx-map-alt bx-sm"></i>
-        <span class="text">Map</span>
-      </a>
-    </li>
-    {% endcomment %}
   </ul>
   <ul class="side-menu bottom">
+    {% if user.is_staff %}
+      <li class="">
+        <a href="{% url 'admin:index' %}">
+          <i class="bx bi bi-person-lock bx"></i>
+          <span class="text">Admin</span>
+        </a>
+      </li>
+    {% endif %}
     <li>
       <a href="{% url 'logout' %}" class="logout">
         <i class="bx bi bi-box-arrow-left"></i>
