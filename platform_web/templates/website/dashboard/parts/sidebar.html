@@ -1,12 +1,14 @@
 <section id="sidebar">
   <a href="#" class="brand ms-4"><span class="text">{{ website_config.site_name }}</span></a>
   <ul class="side-menu top">
-    <li>
-      <a href="{% url 'home' %}">
-        <i class="bi bi-houses bx"></i>
-        <span class="text">Home</span>
-      </a>
-    </li>
+    {% if user.is_staff %}
+      <li class="">
+        <a href="{% url 'admin:index' %}">
+          <i class="bx bi bi-person-lock bx"></i>
+          <span class="text">Admin</span>
+        </a>
+      </li>
+    {% endif %}
     <li class="">
       <a href="{% url 'projects' %}?filter=course&type=topic">
         <i class="bx bi bi-list-nested"></i>
@@ -21,14 +23,12 @@
     </li>
   </ul>
   <ul class="side-menu bottom">
-    {% if user.is_staff %}
-      <li class="">
-        <a href="{% url 'admin:index' %}">
-          <i class="bx bi bi-person-lock bx"></i>
-          <span class="text">Admin</span>
-        </a>
-      </li>
-    {% endif %}
+    <li class="">
+      <a href="{% url 'settings' %}" class="settings-link">
+        <i class="bx bi bi-gear"></i>
+        <span class="text">Account</span>
+      </a>
+    </li>
     <li>
       <a href="{% url 'logout' %}" class="logout">
         <i class="bx bi bi-box-arrow-left"></i>

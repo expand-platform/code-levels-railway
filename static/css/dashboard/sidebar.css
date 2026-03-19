@@ -38,7 +38,7 @@
 
 #sidebar .side-menu {
     width: 100%;
-    margin-top: 48px;
+    margin-top: 1.5rem;
 }
 
 #sidebar .side-menu li {
@@ -116,14 +116,18 @@
     margin: 0 -2px 0 0;
 }
 
+#sidebar .side-menu.bottom li {
+    position: absolute;
+}
+
 #sidebar .side-menu.bottom li:nth-last-of-type(-n+2) {
     position: absolute;
-    bottom: 0;
+    bottom: 5px;
     left: 0;
     right: 0;
     text-align: center;
 }
 
 #sidebar .side-menu.bottom li:nth-last-of-type(2) {
-    bottom: 40px;
+    bottom: 50px;
 }

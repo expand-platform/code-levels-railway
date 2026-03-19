@@ -9,6 +9,7 @@ urlpatterns = [
     
     # Dashboard
     path("dashboard/projects/", projects_view, name="projects"),
+    path("dashboard/settings/", SettingsView.as_view(), name="settings"),
 
     # Project
     path("project/<slug:slug>/", project_details_view, name="project_details"),

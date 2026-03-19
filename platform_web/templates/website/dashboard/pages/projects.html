@@ -17,6 +17,7 @@
 {% block extra_js %}
   <script src="{% static 'js/libs/Sortable.min.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/projects.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/project_filters.js' %}" defer type="module"></script>
 {% endblock %}
@@ -49,23 +50,15 @@
             <i class="fs-6 bi bi-caret-right-fill"></i>
           </li>
           <li>
-            {% if user.is_staff %}
-              <a class="active" target="_blank" href="/cp/platform_web/project/">
-                {% if project_type == 'topic' %}
-                  Topics
-                {% else %}
-                  Projects
-                {% endif %}
-              </a>
-            {% else %}
-              <a class="active" href="#">
-                {% if project_type == 'topic' %}
-                  Topics
-                {% else %}
-                  Projects
-                {% endif %}
-              </a>
-            {% endif %}
+            <a class="active" href="#">
+              {% if project_type == 'topic' %}
+                Topics
+              {% elif project_type == 'all' %}
+                Projects & Topics
+              {% else %}
+                Projects
+              {% endif %}
+            </a>
           </li>
         </ul>
       </div>

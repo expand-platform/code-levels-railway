@@ -19,6 +19,14 @@ def projects_view(request):
     project_type = request.GET.get("type", default_project_type)
     search_query = request.GET.get("search", "").strip()
 
+    # Secure: restrict allowed values
+    allowed_filters = {"course", "language"}
+    allowed_project_types = {"project", "topic", "all"}
+    if filter_by not in allowed_filters:
+        filter_by = default_filter
+    if project_type not in allowed_project_types:
+        project_type = default_project_type
+
     context = {
         "filter_by": filter_by,
         "project_type": project_type,

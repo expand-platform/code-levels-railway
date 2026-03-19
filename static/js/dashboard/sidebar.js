@@ -1,4 +1,4 @@
-import { saveToLocalStorage, loadFromLocalStorage } from "./../../helpers/localStorage.js";
+import { saveToLocalStorage, loadFromLocalStorage } from "../helpers/localStorage.js";
 
 const sidebarBurgerButton = document.querySelector('.dashboard-nav .bx.bx-menu');
 const sidebar = document.getElementById('sidebar') || document.querySelector('.sidebar');
@@ -43,3 +43,29 @@ function displayElements(show) {
         dashboardNav.classList.add('start-0', 'opened')
     }
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const sideMenuLinks = document.querySelectorAll('#sidebar .side-menu li a');
+    let activeText = null;
+
+    if (window.location.href.includes("topic")) {
+        activeText = "Topics";
+    }
+
+    else if (window.location.href.includes("settings")) {
+        activeText = "Account";
+    }
+
+    else if (window.location.href.includes("projects")) {
+        activeText = "Projects";
+    }
+
+    if (activeText) {
+        sideMenuLinks.forEach(link => {
+            if (link.innerText.trim() === activeText) {
+                link.parentElement.classList.add("active");
+            }
+        });
+    }
+});
