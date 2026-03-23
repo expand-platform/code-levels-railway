@@ -4,7 +4,7 @@ from api.views import (
     ReorderProjectsByLanguageView,
     ReorderProjectsByCourseView,
 )
-from api.telegram_api import TelegramStartAPIView
+from api.telegram_api import ValidateTelegramTokenView, TelegramAccessLevelView
 
 
 urlpatterns = [
@@ -23,5 +23,6 @@ urlpatterns = [
         ReorderProjectsByCourseView.as_view(),
         name="reorder-projects-by-course",
     ),
-    path("telegram/connect/", TelegramStartAPIView.as_view(), name="telegram-connect"),
+    path("telegram/validate-token/", ValidateTelegramTokenView.as_view(), name="telegram-validate-token"),
+    path("telegram/access-level/", TelegramAccessLevelView.as_view(), name="telegram-access-level"),
 ]
