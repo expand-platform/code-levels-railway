@@ -178,6 +178,13 @@ extract-db:
 sync:
 	python manage.py sync_projects
 
+# translations
+lang:
+	python manage.py makemessages -l $(lang)
+
+compilelang:
+	python manage.py compilemessages
+
 # ngrok
 ngrok:
 	ngrok http 8000
@@ -190,3 +197,4 @@ upload-backup:
 
 update-postgres:
 	apt update && apt install -y wget gnupg2 lsb-release && wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && apt update && apt install -y postgresql-client-16 awscli
+

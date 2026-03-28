@@ -1,3 +1,5 @@
+{% load i18n %}
+
 {% if user.is_authenticated %}
   <nav class="nav justify-content-end p-3">
     <i class="fa-solid fa-bars pointer" data-bs-toggle="offcanvas" href="#navbar-menu" role="button" aria-controls="offcanvasExample"></i>
@@ -5,21 +7,21 @@
 
   <div class="offcanvas offcanvas-end" tabindex="-1" id="navbar-menu" aria-labelledby="navbar-menuLabel">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="navbar-menuLabel"><i class="fa-solid fa-person-running"></i>What's on your mind?</h5>
+      <h5 class="offcanvas-title" id="navbar-menuLabel"><i class="fa-solid fa-person-running"></i>{% trans "What's on your mind?" %}</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
       <ul class="list-group list-group-flush">
         {% if user.is_staff %}
           <li class="list-group-item">
-            <a class="nav-link" href="{% url 'admin:index' %}"><i class="fa-solid fa-lock"></i>Admin</a>
+            <a class="nav-link" href="{% url 'admin:index' %}"><i class="fa-solid fa-lock"></i>{% trans "Admin" %}</a>
           </li>
         {% endif %}
         <li class="list-group-item">
-          <a class="nav-link" href="{% url 'projects' %}"><i class="fa-regular fa-house"></i>Projects</a>
+          <a class="nav-link" href="{% url 'projects' %}"><i class="fa-regular fa-house"></i>{% trans "Projects" %}</a>
         </li>
         <li class="list-group-item">
-          <a class="nav-link" href="{% url 'account_logout' %}" title="Logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+          <a class="nav-link" href="{% url 'account_logout' %}" title="{% trans 'Logout' %}"><i class="fa-solid fa-right-from-bracket"></i>{% trans "Logout" %}</a>
         </li>
       </ul>
     </div>

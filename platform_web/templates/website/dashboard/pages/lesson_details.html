@@ -1,5 +1,6 @@
 {% extends 'website/dashboard/parts/layout.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
   {{ part.title }} | {{ website_config.site_name }}
@@ -45,7 +46,7 @@
 
       {# lesson number #}
       <section class="lesson-number-wrapper mb-4">
-        <span title="Lesson number" class="lesson-number badge bg-light text-dark border m-0">#{{ lesson_number }} of {{ project.parts.count }} in project</span>
+        <span title="{% trans 'Lesson number' %}" class="lesson-number badge bg-light text-dark border m-0">#{% trans 'Lesson' %} {{ lesson_number }} {% trans 'of' %} {{ project.parts.count }} {% trans 'in project' %}</span>
         {% if part.type %}
           <span title="Material type" class="lesson-number material-type badge bg-light text-dark border m-0">{{ part.type }}</span>
         {% endif %}
@@ -68,7 +69,7 @@
           {# objectives #}
           {% if part.objectives %}
             <section class="objectives mb-4">
-              <h2 class="subtitle">Objectives</h2>
+              <h2 class="subtitle">{% trans "Objectives" %}</h2>
               <ol class="list-group p-0">
                 {% for obj in part.objectives %}
                   <li class="list-group-item">
@@ -91,7 +92,7 @@
           <section class="row w-100 justify-content-between align-items-center mt-4">
             {% if prev_part %}
               <div class="col">
-                <a href="{% url 'lesson_details' slug=project.slug order=prev_part.order %}" class="btn btn-outline-primary"><i class="bi bi-chevron-left"></i> Previous</a>
+                <a href="{% url 'lesson_details' slug=project.slug order=prev_part.order %}" class="btn btn-outline-primary"><i class="bi bi-chevron-left"></i> {% trans "Previous" %}</a>
               </div>
             {% else %}
               <span></span>

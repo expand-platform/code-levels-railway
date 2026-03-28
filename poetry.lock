@@ -584,6 +584,22 @@ django = ">=4.2"
 tests = ["coverage"]
 
 [[package]]
+name = "django-modeltranslation"
+version = "0.20.2"
+description = "Translates Django models using a registration approach."
+optional = false
+python-versions = "<4,>=3.10"
+groups = ["main"]
+files = [
+    {file = "django_modeltranslation-0.20.2-py3-none-any.whl", hash = "sha256:964385c3cf3a584f564e995f2e9ff0e961d0297ef04ff51821ac529e12064290"},
+    {file = "django_modeltranslation-0.20.2.tar.gz", hash = "sha256:d687bdcae9305dcdc8d644b75f1d687f355073e82049f4b9c4ba0feb347a0980"},
+]
+
+[package.dependencies]
+django = ">=5.1"
+typing-extensions = ">=4.0.1"
+
+[[package]]
 name = "django-nested-admin"
 version = "4.1.6"
 description = "Django admin classes that allow for nested inlines"
@@ -1301,5 +1317,5 @@ brotli = ["brotli"]
 
 [metadata]
 lock-version = "2.1"
-python-versions = ">=3.13"
-content-hash = "a5c1566b0c71f35f875eb1c08d8578815a78285fdbadd77a01efe3701d8796f6"
+python-versions = ">=3.13,<4"
+content-hash = "57a1a137b9b1075d6f56f7071ddf970530f77c8d99eefaf0c1f3e18368b5b074"

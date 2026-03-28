@@ -101,7 +101,7 @@ body {
 
 #content main .head-title .left .breadcrumb li a {
     color: var(--dark-grey);
-    pointer-events: none;
+    /* pointer-events: none; */
 }
 
 #content main .head-title .left .breadcrumb li a.active {

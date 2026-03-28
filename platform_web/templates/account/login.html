@@ -1,9 +1,10 @@
 {% extends 'website/parts/layout/base.html' %}
 {% load static %}
 {% load socialaccount %}
+{% load i18n %}
 
 {% block title %}
-  Login | {{ website_config.site_name }}
+  {% trans "Login" %} | {{ website_config.site_name }}
 {% endblock %}
 
 {% block extra_css %}
@@ -28,10 +29,10 @@
             {% csrf_token %}
             {{ form.login }}
             {{ form.password }}
-            <button type="submit" id="login-button" class="mb-5">Login</button>
-            <a class="login-with-google-btn" href="{% provider_login_url 'google' %}">Sign in with Google</a>
+            <button type="submit" id="login-button" class="mb-5">{% trans "Login" %}</button>
+            <a class="login-with-google-btn" href="{% provider_login_url 'google' %}">{% trans "Sign in with Google" %}</a>
             <p class="help-text dont-have-account">
-              Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a>
+              {% trans "Don't have an account?" %} <a href="{% url 'account_signup' %}">{% trans "Sign up" %}</a>
             </p>
           </form>
         </section>

@@ -1,5 +1,6 @@
 {% extends 'website/parts/layout/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
   Home | {{ website_config.site_name }}
@@ -21,14 +22,14 @@
       <div class="hero__overlay"></div>
 
       <div class="hero__content">
-        <h1 class="title">Welcome to {{ website_config.site_name }}!</h1>
+        <h1 class="title">{% blocktrans with site_name=website_config.site_name %}Welcome to {{ site_name }}!{% endblocktrans %}</h1>
 
-        <p class="subtitle mb-4">{{ website_config.tagline }}</p>
+        <p class="subtitle mb-4">{% blocktrans with tagline=website_config.tagline %}{{ tagline }}{% endblocktrans %}</p>
 
         {% if user.is_authenticated %}
-          <a class="btn btn-primary button" href="{% url 'projects' %}">Dive into projects</a>
+          <a class="btn btn-primary button" href="{% url 'projects' %}">{% trans "Dive into projects" %}</a>
         {% else %}
-          <a class="btn btn-primary button" href="{% url 'account_login' %}">Explore topics</a>
+          <a class="btn btn-primary button" href="{% url 'account_login' %}">{% trans "Explore topics" %}</a>
         {% endif %}
       </div>
     </section>

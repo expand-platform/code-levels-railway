@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 from code_levels.settings.allauth.base import *
 from code_levels.settings.plugins.colored_logs import *
-from code_levels.settings.admin.jazzmin import *
+from code_levels.settings.admin.jazzmin import JAZZMIN_SETTINGS_DICT
 from code_levels.settings.drf import REST_FRAMEWORK, SIMPLE_JWT
 
 from code_levels.settings.config.Dotenv import dotenv
@@ -24,6 +24,7 @@ JAZZMIN_SETTINGS = JAZZMIN_SETTINGS_DICT
 
 
 INSTALLED_APPS = [
+    "modeltranslation",
     "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -51,12 +52,14 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # custom middleware
+    "platform_web.middleware.PreferredLanguageMiddleware",
     "platform_web.middleware.AdminStaffOnlyMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
@@ -119,10 +122,23 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+# i18n
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('ru', 'Russian'),
+]
+
 USE_I18N = True
+USE_L10N = True
 USE_TZ = True
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
 
 
 STATIC_URL = "static/"

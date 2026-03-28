@@ -10,4 +10,5 @@ class UserProfileAdmin(admin.ModelAdmin):
         "telegram_first_name",
         "telegram_connection_token",
         "is_token_verified",
+        "interface_language",
     )

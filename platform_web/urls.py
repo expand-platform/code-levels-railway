@@ -10,6 +10,7 @@ urlpatterns = [
     # Dashboard
     path("dashboard/projects/", projects_view, name="projects"),
     path("dashboard/settings/", SettingsView.as_view(), name="settings"),
+    path("set-language/", set_language_and_save, name="set_language_and_save"),
 
     # Project
     path("project/<slug:slug>/", project_details_view, name="project_details"),

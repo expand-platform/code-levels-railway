@@ -27,8 +27,8 @@
 }
 
 
-.dashboard-nav.opened .col.left {
-    left: 60px;
+.dashboard-nav.opened .row {
+    left: 30px;
 }
 
 .dashboard-nav a {
@@ -49,11 +49,11 @@
     color: var(--blue);
 }
 
-.dashboard-nav form {
+/* .dashboard-nav form {
     max-width: 400px;
     width: 100%;
     margin-right: auto;
-}
+} */
 
 .dashboard-nav form .form-input {
     display: flex;

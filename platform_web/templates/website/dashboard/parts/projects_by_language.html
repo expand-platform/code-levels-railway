@@ -1,5 +1,6 @@
 {# ! show material type (project / topic) #}
 {% load static %}
+{% load i18n %}
 
 {% if languages %}
   <div class="project-languages-section">
@@ -7,18 +8,18 @@
       <section class="language-block">
         <h2>{{ language.name }}</h2>
         {% if user.is_staff %}
-          <button id="save-grid-order-btn-{{ language.id }}" class="btn btn-sm btn-success mb-2" style="display:none;">Save Order</button>
+          <button id="save-grid-order-btn-{{ language.id }}" class="btn btn-sm btn-success mb-2" style="display:none;">{% trans "Save Order" %}</button>
         {% endif %}
         <div class="project-list projects-grid" id="projects-grid-{{ language.id }}" data-language-id="{{ language.id }}">
           {% for project in language.filtered_projects %}
               {% include 'website/dashboard/parts/project_card.html' %}
           {% empty %}
-            <p>No projects for this language yet.</p>
+            <p>{% trans "No projects for this language yet." %}</p>
           {% endfor %}
         </div>
       </section>
     {% empty %}
-      <p>No programming languages found.</p>
+      <p>{% trans "No programming languages found." %}</p>
     {% endfor %}
   </div>
 {% endif %}

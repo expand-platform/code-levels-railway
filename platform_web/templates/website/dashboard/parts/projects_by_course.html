@@ -1,5 +1,6 @@
-{# ! show material type (project / topic) #}
 {% load static %}
+{% load i18n %}
+{# ! show material type (project / topic) #}
 
 {% if courses %}
   <div class="project-languages-section">
@@ -7,18 +8,18 @@
       <section class="language-block">
         <h2>{{ course.title }}</h2>
         {% if user.is_staff %}
-          <button id="save-grid-order-btn-{{ course.id }}" class="btn btn-sm btn-success mb-2" style="display:none;">Save Order</button>
+          <button id="save-grid-order-btn-{{ course.id }}" class="btn btn-sm btn-success mb-2" style="display:none;">{% trans "Save Order" %}</button>
         {% endif %}
         <div class="project-list projects-grid" id="projects-grid-{{ course.id }}" data-course-id="{{ course.id }}">
           {% for project in course.filtered_projects %}
               {% include 'website/dashboard/parts/project_card.html' %}
           {% empty %}
-            <p>No projects for this course yet.</p>
+            <p>{% trans "No projects for this course yet." %}</p>
           {% endfor %}
         </div>
       </section>
     {% empty %}
-      <p>No courses found.</p>
+      <p>{% trans "No courses found." %}</p>
     {% endfor %}
   </div>
 {% endif %}

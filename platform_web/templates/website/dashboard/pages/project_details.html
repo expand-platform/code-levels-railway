@@ -1,6 +1,7 @@
 {% extends 'website/dashboard/parts/layout.html' %}
 {% load static %}
 {% load codepen_tags %}
+{% load i18n %}
 
 {% block title %}
   {{ project.title }} | {{ website_config.site_name }}
@@ -48,7 +49,7 @@
       <main class="content box">
         {% if project.description or project.codepen_url %}
           <section class="description mb-4">
-            <h2 class="subtitle">In this project</h2>
+            <h2 class="subtitle">{% trans "In this project" %}</h2>
             <p>{{ project.description|safe }}</p>
 
             {# codepen #}
@@ -60,12 +61,12 @@
 
         {% if project.stages %}
           <section class="stages mb-4">
-            <h2 class="subtitle mb-3">Project Stages</h2>
+            <h2 class="subtitle mb-3">{% trans "Project Stages" %}</h2>
             <ol id="stages-list" class="stages-list">
               {% for stage in project.stages %}
                 <li>{{ stage }}</li>
               {% empty %}
-                <li>No stages defined.</li>
+                <li>{% trans "No stages defined." %}</li>
               {% endfor %}
             </ol>
           </section>
@@ -75,10 +76,10 @@
         {% if parts %}
         <section class="project-parts mb-5">
           <div class="d-flex align-items-center mb-3">
-            <h2 class="subtitle mb-0 me-2" style="color: #222; font-weight: 600;">Lessons</h2>
+            <h2 class="subtitle mb-0 me-2" style="color: #222; font-weight: 600;">{% trans "Lessons" %}</h2>
             <button id="toggle-parts-btn" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" onclick="togglePartsList()" title="Show/Hide Lessons"><i id="toggle-parts-icon" class="bi bi-chevron-down"></i></button>
             {% if user.is_staff %}
-              <button id="save-order-btn" class="btn btn-sm btn-success ms-3" style="display:none;">Save Order</button>
+              <button id="save-order-btn" class="btn btn-sm btn-success ms-3" style="display:none;">{% trans "Save Order" %}</button>
             {% endif %}
           </div>
           {% endif %}

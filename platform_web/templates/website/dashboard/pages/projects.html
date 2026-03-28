@@ -1,5 +1,6 @@
 {% extends 'website/dashboard/parts/layout.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block extra_meta %}
   <meta name="csrf-token" content="{{ csrf_token }}" />
@@ -35,16 +36,16 @@
       <div class="left">
         <h1>
           {% if project_type == 'topic' %}
-            Topics
+            {% trans "Topics" %}
           {% elif project_type == 'all' %}
-            All Projects & Topics
+            {% trans "All Projects & Topics" %}
           {% else %}
-            Projects
+            {% trans "Projects" %}
           {% endif %}
         </h1>
         <ul class="breadcrumb">
           <li>
-            <a href="#">Dashboard</a>
+            <a href="{% url 'home' %}">{{ website_config.site_name }}</a>
           </li>
           <li>
             <i class="fs-6 bi bi-caret-right-fill"></i>
@@ -52,11 +53,11 @@
           <li>
             <a class="active" href="#">
               {% if project_type == 'topic' %}
-                Topics
+                {% trans "Topics" %}
               {% elif project_type == 'all' %}
-                Projects & Topics
+                {% trans "Projects & Topics" %}
               {% else %}
-                Projects
+                {% trans "Projects" %}
               {% endif %}
             </a>
           </li>

@@ -1,6 +1,7 @@
 {% extends 'website/parts/layout/base.html' %}
 {% load static %}
 {% load socialaccount %}
+{% load i18n %}
 
 {% block title %}
   Sign Up | {{ website_config.site_name }}
@@ -15,7 +16,7 @@
   <div class="wrapper">
     <div class="login-container">
       <section class="login-form">
-        <h2 class="subtitle">Create your account</h2>
+        <h2 class="subtitle">{% trans "Create your account" %}</h2>
 
         <section class="row justify-content-center">
           <form method="POST" action="">
@@ -33,10 +34,10 @@
                 {% endif %}
               </div>
             {% endfor %}
-            <button type="submit" id="login-button" class="mb-5">Sign Up</button>
-            <a class="login-with-google-btn" href="{% provider_login_url 'google' %}">Sign up with Google</a>
+            <button type="submit" id="login-button" class="mb-5">{% trans "Sign Up" %}</button>
+            <a class="login-with-google-btn" href="{% provider_login_url 'google' %}">{% trans "Sign up with Google" %}</a>
             <p class="help-text dont-have-account">
-              Already have an account? <a href="{% url 'account_login' %}">Login</a>
+              {% trans "Already have an account?" %} <a href="{% url 'account_login' %}">{% trans "Login" %}</a>
             </p>
           </form>
         </section>

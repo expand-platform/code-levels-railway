@@ -6,6 +6,10 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.utils.translation import activate, gettext as _
+
+from api.models import UserProfile
 
 
 class SettingsView(LoginRequiredMixin, View):
@@ -95,6 +99,22 @@ class SettingsView(LoginRequiredMixin, View):
                 messages.success(request, "Username updated successfully.")
         
         user_profile = getattr(request.user, "user_profile", None)
+        # language preference
+        language = request.POST.get("language", "").strip()
+        if language:
+            valid_codes = [code for code, name in getattr(settings, 'LANGUAGES', [])]
+            if language in valid_codes:
+                if user_profile is None:
+                    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+                user_profile.interface_language = language
+                user_profile.save(update_fields=["interface_language"])
+                # apply for current session
+                try:
+                    request.session[settings.LANGUAGE_COOKIE_NAME] = language
+                except Exception:
+                    pass
+                activate(language)
+                messages.success(request, _("Language preference saved."))
         
         return render(
             request,

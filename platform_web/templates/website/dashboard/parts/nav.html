@@ -1,55 +1,27 @@
-<nav class="dashboard-nav row justify-content-between">
-  <aside class="col left">
-    <i class="bi bi-list fs-5 bx bx-menu bx-sm"></i>
-  </aside>
-  {% comment %} <aside class="col right justify-content-end d-flex align-items-center column-gap-3">
-    <div></div>
-    <input type="checkbox" class="checkbox" id="switch-mode" hidden />
-    <label class="swith-lm" for="switch-mode">
-      <i class="bi bi-moon-stars"></i>
-      <i class="bi bi-sun-fill"></i>
-      <div class="ball"></div>
-    </label>
-    <div>
-      <a href="#" class="profile me-2" id="profileIcon"><img src="https://placehold.co/600x400/png" alt="Profile" /></a>
-    </div>
+{% load i18n %}
 
-    <div class="profile-menu" id="profileMenu">
-      <ul>
-        <li>
-          <a href="#">My Profile ({{ user.username }})</a>
-        </li>
-        <li>
-          <a href="#">Settings</a>
-        </li>
-        <li>
-          <a href="{% url 'account_logout' %} ">Log Out</a>
-        </li>
-      </ul>
-    </div>
-  </aside> {% endcomment %}
-  {% comment %} <a href="#" class="nav-link">Categories</a> {% endcomment %}
-  {% comment %} <form action="#">
-    <div class="form-input">
-      <input type="search" placeholder="Search..." />
-      <button type="submit" class="search-btn"><i class="bx bx-search"></i></button>
-    </div>
-  </form> {% endcomment %}
+<nav class="dashboard-nav">
+  <div class="container">
+    <div class="row justify-content-between position-relative">
+      {# left side #}
+      <aside class="col left">
+        <i class="bi bi-list fs-5 bx bx-menu bx-sm"></i>
+      </aside>
 
-  <!-- Notification Bell -->
-  {% comment %} <a href="#" class="notification" id="notificationIcon">
-    <i class="bx bxs-bell bx-tada-hover"></i>
-    <span class="num">8</span>
-  </a> {% endcomment %}
-  {% comment %} <div class="notification-menu" id="notificationMenu">
-    <ul>
-      <li>New message from John</li>
-      <li>Your order has been shipped</li>
-      <li>New comment on your post</li>
-      <li>Update available for your app</li>
-      <li>Reminder: Meeting at 3PM</li>
-    </ul>
-  </div> {% endcomment %}
-
-  <!-- Profile Menu -->
+      {# right side #}
+      <aside class="col right justify-content-end d-flex text-end align-items-center column-gap-3">
+        <form action="{% url 'set_language_and_save' %}" method="post">
+          {% csrf_token %}
+          <select name="language" onchange="this.form.submit()" class="language-switch form-select form-select-sm" style="width:auto;display:inline-block;">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% for lang_code, lang_name in LANGUAGES %}
+              <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>{{ lang_name }}</option>
+            {% endfor %}
+          </select>
+          <input type="hidden" name="next" value="{{ request.path }}" />
+        </form>
+      </aside>
+    </div>
+  </div>
 </nav>

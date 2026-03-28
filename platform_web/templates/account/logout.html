@@ -1,11 +1,13 @@
+<!-- No changes needed; all user-facing static text is already wrapped with Django translation tags. -->
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign out</title>
+    <title>{% trans "Sign out" %}</title>
 
     <link rel="stylesheet" href="{% static 'css/account/logout.css' %}" />
   </head>
@@ -23,18 +25,18 @@
         </div>
 
         <div class="content">
-          <h1 class="main-heading">Are you leaving?</h1>
+          <h1 class="main-heading">{% trans "Are you leaving?" %}</h1>
 
           <p class="description">
-            You are about to be logged out. <br />
-            What's your next move?
+            {% trans "You are about to be logged out." %} <br />
+            {% trans "What's your next move?" %}
           </p>
 
           <div class="button-group">
             <form action="{% url 'account_logout' %}" method="POST">
               {% csrf_token %}
-              <button type="submit" class="btn btn-primary">Leave</button>
-              <a href="{% url 'home' %}" class="btn btn-secondary">Go Home</a>
+              <button type="submit" class="btn btn-primary">{% trans "Leave" %}</button>
+              <a href="{% url 'home' %}" class="btn btn-secondary">{% trans "Go Home" %}</a>
             </form>
           </div>
 
@@ -61,11 +63,11 @@
 
       <div class="right-section">
         <nav class="navigation">
-          <a href="{% url 'home' %}" class="nav-link">Home</a>
-          <a href="#" class="nav-link">Services</a>
-          <a href="#" class="nav-link">About</a>
-          <a href="#" class="nav-link">Features</a>
-          <a href="#" class="nav-link">FAQ</a>
+          <a href="{% url 'home' %}" class="nav-link">{% trans "Home" %}</a>
+          <a href="#" class="nav-link">{% trans "Services" %}</a>
+          <a href="#" class="nav-link">{% trans "About" %}</a>
+          <a href="#" class="nav-link">{% trans "Features" %}</a>
+          <a href="#" class="nav-link">{% trans "FAQ" %}</a>
         </nav>
 
         <div class="illustration">

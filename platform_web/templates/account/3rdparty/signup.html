@@ -1,5 +1,6 @@
 {% extends 'website/parts/layout/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
   Complete Signup | {{ website_config.site_name }}
@@ -14,7 +15,7 @@
   <div class="wrapper">
     <div class="login-container">
       <section class="login-form">
-        <h2 class="subtitle">Complete Your Signup 123</h2>
+        <h2 class="subtitle">{% trans "Complete Your Signup" %}</h2>
         <section class="row justify-content-center">
           <form method="post" action="" class="form col-10">
             <div class="mb-3"></div>
@@ -30,7 +31,7 @@
                 {% endif %}
               </div>
             {% endfor %}
-            <button type="submit" id="login-button" class="mb-5">Finish Signup</button>
+            <button type="submit" id="login-button" class="mb-5">{% trans "Finish Signup" %}</button>
           </form>
         </section>
       </section>

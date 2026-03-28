@@ -10,6 +10,7 @@
     transition: .3s ease;
     overflow-x: hidden;
     scrollbar-width: none;
+    padding: .5rem 0 0 0;
 }
 
 #sidebar::--webkit-scrollbar {
@@ -23,9 +24,8 @@
 #sidebar .brand {
     font-size: 24px;
     font-weight: 700;
-    height: 56px;
-    display: flex;
-    align-items: center;
+    /* height: 56px; */
+    display: inline-block;
     color: var(--blue);
     background: var(--light);
 }

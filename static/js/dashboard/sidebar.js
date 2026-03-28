@@ -47,25 +47,36 @@ function displayElements(show) {
 
 document.addEventListener("DOMContentLoaded", function () {
     const sideMenuLinks = document.querySelectorAll('#sidebar .side-menu li a');
-    let activeText = null;
+    const pathname = window.location.pathname;
+    const search = window.location.search;
 
-    if (window.location.href.includes("topic")) {
-        activeText = "Topics";
+    // decide active route without relying on visible text (i18n-safe)
+    let activeRoute = null;
+    if (search.includes('type=topic') || search.includes('filter=course') || pathname.includes('/topic') || pathname.includes('/topics')) {
+        activeRoute = 'topics';
+    } else if (pathname.includes('/settings') || pathname.includes('/account')) {
+        activeRoute = 'settings';
+    } else if (pathname.includes('/projects')) {
+        activeRoute = 'projects';
+    } else if (pathname.includes('/admin')) {
+        activeRoute = 'admin';
     }
 
-    else if (window.location.href.includes("settings")) {
-        activeText = "Account";
-    }
+    sideMenuLinks.forEach(link => {
+        const route = link.dataset.route;
+        if (route && activeRoute) {
+            if (route === activeRoute) link.parentElement.classList.add('active');
+            return;
+        }
 
-    else if (window.location.href.includes("projects")) {
-        activeText = "Projects";
-    }
-
-    if (activeText) {
-        sideMenuLinks.forEach(link => {
-            if (link.innerText.trim() === activeText) {
-                link.parentElement.classList.add("active");
+        // fallback: match by href path
+        try {
+            const linkUrl = new URL(link.getAttribute('href'), window.location.origin);
+            if (linkUrl.pathname === pathname || pathname.startsWith(linkUrl.pathname)) {
+                link.parentElement.classList.add('active');
             }
-        });
-    }
+        } catch (e) {
+            // ignore invalid URLs
+        }
+    });
 });

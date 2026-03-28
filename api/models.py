@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 import uuid
 
@@ -15,6 +16,8 @@ class UserProfile(models.Model):
     telegram_first_name = models.CharField(max_length=150, null=True, blank=True)
     is_token_verified = models.BooleanField(default=False)
 
+    # preferred interface language (stores language code, e.g. 'en' or 'ru')
+    interface_language = models.CharField(max_length=10, choices=getattr(settings, 'LANGUAGES', []), blank=True, default="")
 
     def __str__(self):
         return f"Profile for {self.user.username} with telegram user ID {self.telegram_user_id} and telegram first name {self.telegram_first_name}"

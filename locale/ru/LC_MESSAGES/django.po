@@ -1,0 +1,330 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-27 15:50+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\platform_web\templates\account\3rdparty\signup.html:18
+msgid "Complete Your Signup"
+msgstr "Завершите регистрацию"
+
+#: .\platform_web\templates\account\3rdparty\signup.html:34
+msgid "Finish Signup"
+msgstr "Заверши регистрацию"
+
+#: .\platform_web\templates\account\login.html:7
+#: .\platform_web\templates\account\login.html:32
+#: .\platform_web\templates\account\signup.html:40
+msgid "Login"
+msgstr "Вход"
+
+#: .\platform_web\templates\account\login.html:33
+msgid "Sign in with Google"
+msgstr "Вход через Google"
+
+#: .\platform_web\templates\account\login.html:35
+msgid "Don't have an account?"
+msgstr "Нет аккаунта? Зарегистрируйтесь"
+
+#: .\platform_web\templates\account\login.html:35
+msgid "Sign up"
+msgstr "Регистрация"
+
+#: .\platform_web\templates\account\logout.html:10
+msgid "Sign out"
+msgstr "Выход"
+
+#: .\platform_web\templates\account\logout.html:28
+msgid "Are you leaving?"
+msgstr "Уходишь?"
+
+#: .\platform_web\templates\account\logout.html:31
+msgid "You are about to be logged out."
+msgstr "Ты собираешься выйти из системы."
+
+#: .\platform_web\templates\account\logout.html:32
+msgid "What's your next move?"
+msgstr "Что ты собираешься делать дальше?"
+
+#: .\platform_web\templates\account\logout.html:38
+msgid "Leave"
+msgstr "Выход"
+
+#: .\platform_web\templates\account\logout.html:39
+msgid "Go Home"
+msgstr "Главная"
+
+#: .\platform_web\templates\account\logout.html:66
+#: .\platform_web\templates\website\dashboard\dashboard.html:15
+msgid "Home"
+msgstr "Главная"
+
+#: .\platform_web\templates\account\logout.html:67
+msgid "Services"
+msgstr "Сервисы"
+
+#: .\platform_web\templates\account\logout.html:68
+msgid "About"
+msgstr "О нас"
+
+#: .\platform_web\templates\account\logout.html:69
+msgid "Features"
+msgstr "Функции"
+
+#: .\platform_web\templates\account\logout.html:70
+msgid "FAQ"
+msgstr "Часто задаваемые вопросы"
+
+#: .\platform_web\templates\account\signup.html:19
+msgid "Create your account"
+msgstr "Создайте аккаунт"
+
+#: .\platform_web\templates\account\signup.html:37
+msgid "Sign Up"
+msgstr "Регистрация"
+
+#: .\platform_web\templates\account\signup.html:38
+msgid "Sign up with Google"
+msgstr "Регистрация через Google"
+
+#: .\platform_web\templates\account\signup.html:40
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+#: .\platform_web\templates\website\dashboard\dashboard.html:6
+#: .\platform_web\templates\website\dashboard\dashboard.html:9
+#: .\platform_web\templates\website\dashboard\pages\settings.html:33
+msgid "Dashboard"
+msgstr "Кабинет"
+
+#: .\platform_web\templates\website\dashboard\dashboard.html:26
+msgid "New Order"
+msgstr "Новый заказ"
+
+#: .\platform_web\templates\website\dashboard\dashboard.html:33
+msgid "Visitors"
+msgstr "Посетители"
+
+#: .\platform_web\templates\website\dashboard\dashboard.html:40
+msgid "Total Sales"
+msgstr "Общие продажи"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:49
+msgid "Lesson number"
+msgstr "Номер урока"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:49
+msgid "Lesson"
+msgstr "Урок"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:49
+msgid "of"
+msgstr "из"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:49
+msgid "in project"
+msgstr "в проекте"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:72
+msgid "Objectives"
+msgstr "Цели"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:95
+msgid "Previous"
+msgstr "Предыдущий"
+
+#: .\platform_web\templates\website\dashboard\pages\map.html:5
+msgid "Learning map"
+msgstr "Карта проектов"
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:52
+msgid "In this project"
+msgstr "В этом проекте"
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:64
+msgid "Project Stages"
+msgstr "Этапы проекта"
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:69
+msgid "No stages defined."
+msgstr "Этапы не определены."
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:79
+msgid "Lessons"
+msgstr "Уроки"
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:82
+#: .\platform_web\templates\website\dashboard\parts\projects_by_course.html:11
+#: .\platform_web\templates\website\dashboard\parts\projects_by_language.html:11
+msgid "Save Order"
+msgstr "Сохранить"
+
+#: .\platform_web\templates\website\dashboard\pages\projects.html:39
+#: .\platform_web\templates\website\dashboard\pages\projects.html:56
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:25
+msgid "Topics"
+msgstr "Темы"
+
+#: .\platform_web\templates\website\dashboard\pages\projects.html:41
+msgid "All Projects & Topics"
+msgstr "Все проекты и темы"
+
+#: .\platform_web\templates\website\dashboard\pages\projects.html:43
+#: .\platform_web\templates\website\dashboard\pages\projects.html:60
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:31
+#: .\platform_web\templates\website\parts\layout\nav.html:21
+msgid "Projects"
+msgstr "Проекты"
+
+#: .\platform_web\templates\website\dashboard\pages\projects.html:58
+#, fuzzy
+#| msgid "All Projects & Topics"
+msgid "Projects & Topics"
+msgstr "Все проекты и темы"
+
+#: .\platform_web\templates\website\dashboard\pages\settings.html:30
+#: .\platform_web\templates\website\dashboard\pages\settings.html:40
+#: .\platform_web\templates\website\dashboard\pages\settings.html:42
+msgid "Settings"
+msgstr "Настройки"
+
+#: .\platform_web\templates\website\dashboard\pages\settings.html:58
+msgid "Close"
+msgstr "Закрыть"
+
+#: .\platform_web\templates\website\dashboard\pages\settings.html:64
+msgid "General"
+msgstr "Настроечки"
+
+#: .\platform_web\templates\website\dashboard\pages\settings.html:71
+msgid "Username"
+msgstr "Юзернейм"
+
+#: .\platform_web\templates\website\dashboard\pages\settings.html:72
+msgid "This will be your public display name."
+msgstr "Имя, которое ты видишь на сайте"
+
+#: .\platform_web\templates\website\dashboard\pages\settings.html:80
+msgid "Telegram Connection Token"
+msgstr "Токен для Telegram-бота"
+
+#: .\platform_web\templates\website\dashboard\pages\settings.html:81
+msgid "Use this token to connect your Telegram bot. Keep it secret."
+msgstr "Синхронизируй свой аккаунт на сайте с ботом в телеграме"
+
+#: .\platform_web\templates\website\dashboard\pages\settings.html:84
+msgid "Copied 👌"
+msgstr "Есть 👌"
+
+#: .\platform_web\templates\website\dashboard\pages\settings.html:119
+msgid "Save Changes"
+msgstr "Сохранить"
+
+#: .\platform_web\templates\website\dashboard\parts\lessons-sidebar.html:32
+msgid "No parts for this project yet."
+msgstr "Для этого проекта пока нет уроков."
+
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:6
+msgid "Reset Filters"
+msgstr "Сбросить фильтры"
+
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:10
+msgid "Search projects..."
+msgstr "Поиск проектов..."
+
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:14
+msgid "By Course"
+msgstr "По курсу"
+
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:15
+msgid "By Language"
+msgstr "По языку"
+
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:20
+msgid "All"
+msgstr "Все"
+
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:21
+msgid "Topic"
+msgstr "Тема"
+
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:22
+msgid "Project"
+msgstr "Проект"
+
+#: .\platform_web\templates\website\dashboard\parts\projects_by_course.html:17
+msgid "No projects for this course yet."
+msgstr "Для этого курса пока нет проектов."
+
+#: .\platform_web\templates\website\dashboard\parts\projects_by_course.html:22
+msgid "No courses found."
+msgstr "Курсы не найдены."
+
+#: .\platform_web\templates\website\dashboard\parts\projects_by_language.html:17
+msgid "No projects for this language yet."
+msgstr "Для этого языка пока нет проектов."
+
+#: .\platform_web\templates\website\dashboard\parts\projects_by_language.html:22
+msgid "No programming languages found."
+msgstr "Языки программирования не найдены."
+
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:18
+#: .\platform_web\templates\website\parts\layout\nav.html:17
+msgid "Admin"
+msgstr "Админка"
+
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:39
+msgid "Account"
+msgstr "Аккаунт"
+
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:45
+#: .\platform_web\templates\website\parts\layout\nav.html:24
+msgid "Logout"
+msgstr "Выйти"
+
+#: .\platform_web\templates\website\pages\home.html:25
+#, python-format
+msgid "Welcome to %(site_name)s!"
+msgstr "%(site_name)s ждал тебя"
+
+#: .\platform_web\templates\website\pages\home.html:27
+#, python-format
+msgid "%(tagline)s"
+msgstr "%(tagline)s"
+
+#: .\platform_web\templates\website\pages\home.html:30
+msgid "Dive into projects"
+msgstr "Взяться за дело"
+
+#: .\platform_web\templates\website\pages\home.html:32
+msgid "Explore topics"
+msgstr "Изучай темы"
+
+#: .\platform_web\templates\website\parts\layout\footer.html:2
+#, python-format
+msgid "Copyright belongs to %(website_config.site_name)s &copy; 2026"
+msgstr "Все права принадлежат %(website_config.site_name)s &copy; 2026"
+
+#: .\platform_web\templates\website\parts\layout\header.html:2
+msgid "Header"
+msgstr "Заголовок"
+
+#: .\platform_web\templates\website\parts\layout\nav.html:10
+msgid "What's on your mind?"
+msgstr "О чем вы думаете?"

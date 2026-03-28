@@ -1,38 +1,47 @@
+{% load i18n %}
+
 <section id="sidebar">
-  <a href="#" class="brand ms-4"><span class="text">{{ website_config.site_name }}</span></a>
+  <div class="row p-2">
+    <div class="logo col">
+      <a href="{% url 'home' %}" class="brand ms-4"><span class="text">{{ website_config.site_name }}</span></a>
+    </div>
+    <div class="col text-end">
+      {% comment %} <i class="bi bi-list fs-5 bx bx-menu bx-sm pointer"></i> {% endcomment %}
+    </div>
+  </div>
   <ul class="side-menu top">
     {% if user.is_staff %}
       <li class="">
-        <a href="{% url 'admin:index' %}">
+        <a href="{% url 'admin:index' %}" data-route="admin">
           <i class="bx bi bi-person-lock bx"></i>
-          <span class="text">Admin</span>
+          <span class="text">{% trans 'Admin' %}</span>
         </a>
       </li>
     {% endif %}
     <li class="">
-      <a href="{% url 'projects' %}?filter=course&type=topic">
+      <a href="{% url 'projects' %}?filter=course&type=topic" data-route="topics">
         <i class="bx bi bi-list-nested"></i>
-        <span class="text">Topics</span>
+        <span class="text">{% trans 'Topics' %}</span>
       </a>
     </li>
     <li class="">
-      <a href="{% url 'projects' %}">
+      <a href="{% url 'projects' %}" data-route="projects">
         <i class="bx bi bi-braces"></i>
-        <span class="text">Projects</span>
+        <span class="text">{% trans 'Projects' %}</span>
       </a>
     </li>
   </ul>
   <ul class="side-menu bottom">
     <li class="">
-      <a href="{% url 'settings' %}" class="settings-link">
+      <a href="{% url 'settings' %}" class="settings-link" data-route="settings">
         <i class="bx bi bi-gear"></i>
-        <span class="text">Account</span>
+        <span class="text">{% trans 'Account' %}</span>
       </a>
     </li>
     <li>
-      <a href="{% url 'logout' %}" class="logout">
+      <a href="{% url 'logout' %}" class="logout" data-route="logout">
         <i class="bx bi bi-box-arrow-left"></i>
-        <span class="text">Logout</span>
+        <span class="text">{% trans 'Logout' %}</span>
       </a>
     </li>
   </ul>
