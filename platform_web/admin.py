@@ -82,7 +82,7 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
         "get_programming_languages",
         "updated_at",
     )
-    list_filter = ("difficulty", "programming_languages", "framework", "type", "course")
+    list_filter = ("type", "course", "language")
     search_fields = ("title", "description")
     ordering = ("course_order",)
     readonly_fields = ("uuid", "created_at", "updated_at")

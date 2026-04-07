@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-28 10:49+0200\n"
+"POT-Creation-Date: 2026-04-07 11:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,8 +55,8 @@ msgid "Mini-project"
 msgstr "в проекте"
 
 #: .\platform_web\models\app\project\Lesson.py:15
-#: .\platform_web\models\app\project\Project.py:22
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:22
+#: .\platform_web\models\app\project\Project.py:18
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:23
 msgid "Project"
 msgstr "Проект"
 
@@ -64,30 +64,34 @@ msgstr "Проект"
 msgid "List of lesson objectives"
 msgstr "Цели урока"
 
-#: .\platform_web\models\app\project\Project.py:21
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:21
+#: .\platform_web\models\app\project\Project.py:17
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:22
 msgid "Topic"
 msgstr "Тема"
 
-#: .\platform_web\models\app\project\Project.py:43
+#: .\platform_web\models\app\project\Project.py:19
+msgid "Guide"
+msgstr "Гайды"
+
+#: .\platform_web\models\app\project\Project.py:39
 #, fuzzy
 #| msgid "No programming languages found."
 msgid "Predefined programming languages"
 msgstr "Языки программирования не найдены."
 
-#: .\platform_web\models\app\project\Project.py:55
-msgid "Predefined frameworks"
-msgstr "Предопределенные фреймворки"
-
-#: .\platform_web\models\app\project\Project.py:56
-msgid "Frameworks"
-msgstr "Фреймворки"
-
-#: .\platform_web\models\app\project\Project.py:62
+#: .\platform_web\models\app\project\Project.py:47
 msgid "Description for the Dashboard"
 msgstr "Описание для кабинета"
 
-#: .\platform_web\models\app\project\Project.py:74
+#: .\platform_web\models\app\project\Project.py:54
+msgid "Predefined frameworks"
+msgstr "Предопределенные фреймворки"
+
+#: .\platform_web\models\app\project\Project.py:55
+msgid "Frameworks"
+msgstr "Фреймворки"
+
+#: .\platform_web\models\app\project\Project.py:66
 msgid "Ordering for admin sorting"
 msgstr "Порядок сортировки в админке"
 
@@ -244,23 +248,23 @@ msgstr "Предыдущий"
 msgid "Learning map"
 msgstr "Карта проектов"
 
-#: .\platform_web\templates\website\dashboard\pages\project_details.html:52
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:56
 msgid "In this project"
 msgstr "В этом проекте"
 
-#: .\platform_web\templates\website\dashboard\pages\project_details.html:64
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:68
 msgid "Project Stages"
 msgstr "Этапы проекта"
 
-#: .\platform_web\templates\website\dashboard\pages\project_details.html:69
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:73
 msgid "No stages defined."
 msgstr "Этапы не определены."
 
-#: .\platform_web\templates\website\dashboard\pages\project_details.html:79
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:83
 msgid "Lessons"
 msgstr "Уроки"
 
-#: .\platform_web\templates\website\dashboard\pages\project_details.html:82
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:86
 #: .\platform_web\templates\website\dashboard\parts\projects_by_course.html:11
 #: .\platform_web\templates\website\dashboard\parts\projects_by_language.html:11
 msgid "Save Order"
@@ -328,8 +332,8 @@ msgid "Language"
 msgstr "Язык сайта"
 
 #: .\platform_web\templates\website\dashboard\pages\settings.html:95
-msgid "Choose your preferred language for the interface."
-msgstr "Язык, на котором показывается сайт"
+msgid "Preferred language for the interface and projects."
+msgstr "Язык, на котором показываются сайт и проекты"
 
 #: .\platform_web\templates\website\dashboard\pages\settings.html:122
 msgid "Save Changes"
@@ -347,23 +351,19 @@ msgstr "Сбросить фильтры"
 msgid "Search projects..."
 msgstr "Поиск проектов..."
 
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:14
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:15
 msgid "By Course"
 msgstr "По курсу"
 
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:15
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:16
 msgid "By Language"
 msgstr "По языку"
 
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:20
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:21
 msgid "All"
 msgstr "Все"
 
-#: .\platform_web\templates\website\dashboard\parts\projects_by_course.html:17
-msgid "No projects for this course yet."
-msgstr "Для этого курса пока нет проектов."
-
-#: .\platform_web\templates\website\dashboard\parts\projects_by_course.html:22
+#: .\platform_web\templates\website\dashboard\parts\projects_by_course.html:21
 msgid "No courses found."
 msgstr "Курсы не найдены."
 
@@ -469,3 +469,6 @@ msgstr "Юзернейм успешно обновлён!"
 #: .\platform_web\views\dashboard.py:120
 msgid "Language preference saved."
 msgstr "Язык интерфейса обновлён!"
+
+#~ msgid "No projects for this course yet."
+#~ msgstr "Для этого курса пока нет проектов."

@@ -8,6 +8,8 @@ from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.utils.translation import activate, get_supported_language_variant
 from django.utils.http import url_has_allowed_host_and_scheme
+from urllib.parse import urlsplit, urlunsplit
+import re
 
 
 
@@ -68,6 +70,16 @@ def set_language_and_save(request):
     # validate next URL
     if not url_has_allowed_host_and_scheme(url=next_url, allowed_hosts={request.get_host()}, require_https=request.is_secure()):
         next_url = "/"
+
+    # Keep dashboard/project URLs in sync with selected interface language.
+    split = urlsplit(next_url)
+    path = split.path or "/"
+    # If user is on generic projects page, always redirect to language-scoped list.
+    if re.match(r"^/dashboard/projects/?$", path):
+        path = f"/dashboard/projects/{lang_code}/"
+    path = re.sub(r"^/dashboard/projects/(en|ru)(/|$)", f"/dashboard/projects/{lang_code}\\2", path)
+    path = re.sub(r"^/(en|ru)/projects(/|$)", f"/{lang_code}/projects\\2", path)
+    next_url = urlunsplit((split.scheme, split.netloc, path, split.query, split.fragment))
 
     response = redirect(next_url)
     response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)

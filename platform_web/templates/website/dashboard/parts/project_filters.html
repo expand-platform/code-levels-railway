@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="col row justify-content-end align-items-end">
+<div class="col col-9 row justify-content-end align-items-end">
     <form method="get" class="projects-toggle-section col d-flex justify-content-end column-gap-3 mb-3" >
       <div class="d-flex column-gap-2 align-items-center me-3">
         <span class="reset-button">{% trans "Reset Filters" %}</span>
@@ -9,6 +9,7 @@
         </span>
         <input id="project-search-input" name="search" type="text" class="form-control ms-2" style="display:none; width:180px;" placeholder="{% trans 'Search projects...' %}" value="{{ request.GET.search|default:'' }}">
       </div>
+      
       <div class="d-flex flex-column align-items-end">
         <select id="projects-toggle-select" name="filter" class="form-select" style="width: auto;" onchange="this.form.submit()">
           <option value="course" {% if filter_by == 'course' %} selected {% endif %}>{% trans 'By Course' %}</option>

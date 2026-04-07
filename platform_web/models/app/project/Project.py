@@ -9,6 +9,47 @@ from platform_web.models.app.project.Difficulty import Difficulty
 from platform_web.models.app.project.Framework import Framework
 from platform_web.models.app.project.Course import Course
 
+
+RU_TO_LATIN_MAP = {
+    "а": "a",
+    "б": "b",
+    "в": "v",
+    "г": "g",
+    "д": "d",
+    "е": "e",
+    "ё": "yo",
+    "ж": "zh",
+    "з": "z",
+    "и": "i",
+    "й": "y",
+    "к": "k",
+    "л": "l",
+    "м": "m",
+    "н": "n",
+    "о": "o",
+    "п": "p",
+    "р": "r",
+    "с": "s",
+    "т": "t",
+    "у": "u",
+    "ф": "f",
+    "х": "h",
+    "ц": "ts",
+    "ч": "ch",
+    "ш": "sh",
+    "щ": "sch",
+    "ъ": "",
+    "ы": "y",
+    "ь": "",
+    "э": "e",
+    "ю": "yu",
+    "я": "ya",
+}
+
+
+def transliterate_ru_to_latin(value: str) -> str:
+    return "".join(RU_TO_LATIN_MAP.get(char, char) for char in value.lower())
+
 TOPIC = "topic"
 PROJECT = "project"
 GUIDE = "guide"
@@ -30,7 +71,7 @@ class Project(models.Model):
     image = models.ImageField(upload_to="project_images/", blank=True, null=True)
     
     type = models.CharField(max_length=20, choices=PROJECT_TYPE_CHOICES, default=TOPIC)
-    language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES, blank=True, null=True)
+    language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES, blank=True, null=True, default="en")
     
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="projects", null=True, blank=True
@@ -77,8 +118,20 @@ class Project(models.Model):
 
     def save(self, *args, **kwargs):
         title = self.title
-        if self._state.adding and not self.slug and title:
-            self.slug = slugify(str(title))
+        if not self.slug and title:
+            transliterated_title = transliterate_ru_to_latin(str(title))
+            base_slug = slugify(transliterated_title)
+            if not base_slug:
+                base_slug = slugify(str(title))
+            if not base_slug:
+                base_slug = f"project-{str(self.uuid)[:8]}"
+
+            slug = base_slug
+            counter = 1
+            while Project.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         super().save(*args, **kwargs)
 
     def __str__(self):

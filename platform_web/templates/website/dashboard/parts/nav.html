@@ -14,12 +14,12 @@
           {% csrf_token %}
           <select name="language" onchange="this.form.submit()" class="language-switch form-select form-select-sm" style="width:auto;display:inline-block;">
             {% get_current_language as LANGUAGE_CODE %}
-            {% get_available_languages as LANGUAGES %}
-            {% for lang_code, lang_name in LANGUAGES %}
-              <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>{{ lang_name }}</option>
-            {% endfor %}
+            {% with active_lang=current_lang|default:LANGUAGE_CODE|slice:":2" %}
+              <option value="en" {% if active_lang == 'en' %}selected{% endif %}>EN</option>
+              <option value="ru" {% if active_lang == 'ru' %}selected{% endif %}>RU</option>
+            {% endwith %}
           </select>
-          <input type="hidden" name="next" value="{{ request.path }}" />
+          <input type="hidden" name="next" value="{{ request.get_full_path }}" />
         </form>
       </aside>
     </div>

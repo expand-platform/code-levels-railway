@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
+from django.conf import settings
 
 from platform_web.models.app.project.Course import Course
 from platform_web.models.app.project.Lesson import Lesson
@@ -11,7 +12,7 @@ from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLangu
 
 
 @login_required
-def projects_view(request):
+def projects_view(request, lang=None):
     default_filter = "course"
     default_project_type = "project"
 
@@ -27,10 +28,20 @@ def projects_view(request):
     if project_type not in allowed_project_types:
         project_type = default_project_type
 
+    # Validate lang against allowed values only
+    allowed_langs = {"en", "ru"}
+    if lang not in allowed_langs:
+        request_lang = (getattr(request, "LANGUAGE_CODE", "") or "").split("-")[0]
+        default_lang = (getattr(settings, "LANGUAGE_CODE", "en") or "en").split("-")[0]
+        lang = request_lang if request_lang in allowed_langs else default_lang
+        if lang not in allowed_langs:
+            lang = "en"
+
     context = {
         "filter_by": filter_by,
         "project_type": project_type,
         "search": search_query,
+        "current_lang": lang,
     }
     context_key = "courses"
 
@@ -54,24 +65,29 @@ def projects_view(request):
             projects_qs = projects_qs.filter(type=project_type)
         if search_query:
             projects_qs = projects_qs.filter(title__icontains=search_query)
+        projects_qs = projects_qs.filter(language=lang)
         setattr(item, "filtered_projects", projects_qs)
     context[context_key] = items
 
     return render(request, "website/dashboard/pages/projects.html", context)
 
 
-def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
-    project = get_object_or_404(Project, slug=slug)
+def project_details_view(request: HttpRequest, lang: str, slug: str) -> HttpResponse:
+    allowed_langs = {"en", "ru"}
+    if lang not in allowed_langs:
+        lang = "en"
+
+    project = get_object_or_404(Project, slug=slug, language=lang)
     start_url = None
     if project:
-        start_url = f"/project/{project.slug}/parts/"
+        start_url = f"/{lang}/projects/{project.slug}/parts/"
     parts = project.parts.all().order_by("order", "title")
 
     # Filter projects and topics for this course
     filtered_projects = []
     filtered_topics = []
     if project.course:
-        all_course_projects = project.course.projects.all().order_by("order", "title")
+        all_course_projects = project.course.projects.filter(language=lang).order_by("order", "title")
         filtered_projects = [
             p for p in all_course_projects if getattr(p, "type", None) == "project"
         ]
@@ -85,15 +101,20 @@ def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
         "parts": parts,
         "filtered_projects": filtered_projects,
         "filtered_topics": filtered_topics,
+        "current_lang": lang,
     }
     return render(request, "website/dashboard/pages/project_details.html", context)
 
 
-def lesson_details_view(request: HttpRequest, slug: str, order: int) -> HttpResponse:
+def lesson_details_view(request: HttpRequest, lang: str, slug: str, order: int) -> HttpResponse:
     """
     Article-style view for a single project part, with navigation and sidebar.
     """
-    project = get_object_or_404(Project, slug=slug)
+    allowed_langs = {"en", "ru"}
+    if lang not in allowed_langs:
+        lang = "en"
+
+    project = get_object_or_404(Project, slug=slug, language=lang)
     parts = list(project.parts.all().order_by("order", "title"))
     part = get_object_or_404(Lesson, project=project, order=order)
     # Find prev/next part
@@ -115,5 +136,6 @@ def lesson_details_view(request: HttpRequest, slug: str, order: int) -> HttpResp
         "next_part": next_part,
         "lesson_number": lesson_number,
         "user": request.user,
+        "current_lang": lang,
     }
     return render(request, "website/dashboard/pages/lesson_details.html", context)

@@ -37,7 +37,7 @@
     <section class="container position-relative">
       {# < #}
       <div class="back-to-project-wrapper position-absolute mb-3">
-        <a href="{% url 'project_details' slug=project.slug %}" class="nav-icon back-icon btn btn-light shadow rounded-circle" title="Back to project details"><i class="bi bi-chevron-left"></i></a>
+        <a href="{% url 'project_details' lang=current_lang slug=project.slug %}" class="nav-icon back-icon btn btn-light shadow rounded-circle" title="Back to project details"><i class="bi bi-chevron-left"></i></a>
       </div>
       {# title #}
       <div class="d-flex flex-wrap align-items-center mb-3">
@@ -92,7 +92,7 @@
           <section class="row w-100 justify-content-between align-items-center mt-4">
             {% if prev_part %}
               <div class="col">
-                <a href="{% url 'lesson_details' slug=project.slug order=prev_part.order %}" class="btn btn-outline-primary"><i class="bi bi-chevron-left"></i> {% trans "Previous" %}</a>
+                <a href="{% url 'lesson_details' lang=current_lang slug=project.slug order=prev_part.order %}" class="btn btn-outline-primary"><i class="bi bi-chevron-left"></i> {% trans "Previous" %}</a>
               </div>
             {% else %}
               <span></span>
@@ -100,11 +100,15 @@
 
             {% if next_part %}
               <div class="col text-end">
-                <a href="{% url 'lesson_details' slug=project.slug order=next_part.order %}" class="btn btn-outline-primary">Next <i class="bi bi-chevron-right"></i></a>
+                <a href="{% url 'lesson_details' lang=current_lang slug=project.slug order=next_part.order %}" class="btn btn-outline-primary">Next <i class="bi bi-chevron-right"></i></a>
               </div>
             {% else %}
               <div class="col text-end">
-                <a href="{% url 'projects' %}" class="btn btn-success">Finish Project <i class="bi bi-flag-checkered"></i></a>
+                {% if current_lang %}
+                  <a href="{% url 'projects_by_lang' current_lang %}" class="btn btn-success">Finish Project <i class="bi bi-flag-checkered"></i></a>
+                {% else %}
+                  <a href="{% url 'projects' %}" class="btn btn-success">Finish Project <i class="bi bi-flag-checkered"></i></a>
+                {% endif %}
               </div>
             {% endif %}
           </section>
