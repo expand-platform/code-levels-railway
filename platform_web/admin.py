@@ -16,6 +16,7 @@ from platform_web.models.app.project.Framework import Framework
 
 from platform_web.models.base import WebsiteConfig
 from platform_web.models.base import SocialMediaLink
+from platform_web.models.base import Changelog
 
 
 # inlines
@@ -36,6 +37,13 @@ class WebsiteConfigAdmin(admin.ModelAdmin):
 
 admin.site.register(WebsiteConfig, WebsiteConfigAdmin)
 admin.site.register(SocialMediaLink)
+
+
+@admin.register(Changelog)
+class WebsiteVersionAdmin(admin.ModelAdmin):
+    list_display = ("version", "title", "released_at")
+    search_fields = ("version", "title")
+    readonly_fields = ("released_at",)
 
 
 class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]

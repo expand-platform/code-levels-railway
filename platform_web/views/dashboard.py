@@ -10,6 +10,7 @@ from django.conf import settings
 from django.utils.translation import activate, gettext as _
 
 from api.models.UserProfile import UserProfile
+from platform_web.models.base import Changelog
 
 
 class SettingsView(LoginRequiredMixin, View):
@@ -127,3 +128,11 @@ class SettingsView(LoginRequiredMixin, View):
                 "user": request.user,
             },
         )
+
+
+class WebsiteChangelogView(LoginRequiredMixin, View):
+    template_name = "website/dashboard/pages/changelog.html"
+
+    def get(self, request):
+        versions = Changelog.objects.all()
+        return render(request, self.template_name, {"versions": versions})

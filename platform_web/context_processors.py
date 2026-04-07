@@ -1,5 +1,6 @@
 from platform_web.models.base.social_media_link import SocialMediaLink
 from platform_web.models.base.website_config import WebsiteConfig
+from platform_web.models.base import Changelog
 from django.http import HttpRequest
 from platform_web.config.web_config import WebsiteSettings
 from django.utils.translation import gettext_lazy as _
@@ -14,7 +15,9 @@ def website_config(request: HttpRequest) -> dict:
     # Переводим tagline перед передачей в шаблон
     website_config.tagline = _(website_config.tagline)
     social_media_links = SocialMediaLink.objects.all()
+    changelog = Changelog.objects.order_by('-released_at').first()
     return {
         WebsiteSettings.website_config: website_config,
         WebsiteSettings.social_media_links: social_media_links,
+        WebsiteSettings.changelog: changelog,
     }

@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
 from django.conf import settings
@@ -11,12 +10,12 @@ from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLangu
 
 
 
-@login_required
-def projects_view(request, lang=None):
+def _render_projects_page(request, lang=None, page_mode="projects"):
     default_filter = "course"
     default_project_type = "project"
     default_video_filter = "all"
     max_search_length = 100
+    is_courses_page = page_mode == "courses"
 
     filter_by = request.GET.get("filter", default_filter).strip().lower()
     project_type = request.GET.get("type", default_project_type).strip().lower()
@@ -34,6 +33,8 @@ def projects_view(request, lang=None):
         project_type = default_project_type
     if is_video_course not in allowed_video_filters:
         is_video_course = default_video_filter
+    if is_courses_page:
+        is_video_course = "true"
 
     # Validate lang against allowed values only
     allowed_langs = {"en", "ru"}
@@ -45,6 +46,7 @@ def projects_view(request, lang=None):
             lang = "en"
 
     context = {
+        "page_mode": page_mode,
         "filter_by": filter_by,
         "project_type": project_type,
         "is_video_course": is_video_course,
@@ -82,6 +84,16 @@ def projects_view(request, lang=None):
     context[context_key] = items
 
     return render(request, "website/dashboard/pages/projects.html", context)
+
+
+@login_required
+def projects_view(request, lang=None):
+    return _render_projects_page(request, lang=lang, page_mode="projects")
+
+
+@login_required
+def courses_view(request, lang=None):
+    return _render_projects_page(request, lang=lang, page_mode="courses")
 
 
 def project_details_view(request: HttpRequest, lang: str, slug: str) -> HttpResponse:

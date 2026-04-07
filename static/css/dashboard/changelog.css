@@ -1,0 +1,11 @@
+@import url("../theme/colors.css");
+
+.changelog .subtitle {
+    color: var(--text-black);
+}
+
+.changelog .version-changes,
+.changelog .version-changes li {
+    color: var(--text-black);
+    list-style-type: disc;   
+}

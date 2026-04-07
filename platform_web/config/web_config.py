@@ -13,3 +13,4 @@ class WebsiteSettings:
     admin_url: str = "cp/"
     admin_url_redirect: str = "/"
     social_media_links: str = "social_media_links"
+    changelog: str = "changelog"

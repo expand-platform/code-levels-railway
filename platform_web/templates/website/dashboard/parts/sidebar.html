@@ -4,6 +4,10 @@
   <div class="row p-2">
     <div class="logo col">
       <a href="{% url 'home' %}" class="brand ms-4"><span class="text">{{ website_config.site_name }}</span></a>
+      {# version #}
+      {% comment %} <p>
+        <a href="{% url 'changelog' %}"><span class="text-black">v. {{ changelog.version|default:'0.0.0' }}</span></a>
+      </p> {% endcomment %}
     </div>
     <div class="col text-end">
       {% comment %} <i class="bi bi-list fs-5 bx bx-menu bx-sm pointer"></i> {% endcomment %}
@@ -31,7 +35,7 @@
       </a>
     </li>
     <li class="">
-      <a href="{% url 'projects' %}?filter=course&type=project&is_video_course=true" data-route="courses">
+      <a href="{% url 'courses' %}" data-route="courses">
         <i class="bx bi bi-play-btn"></i>
         <span class="text">{% trans 'Courses' %}</span>
       </a>

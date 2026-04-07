@@ -1,0 +1,66 @@
+{% extends 'website/dashboard/parts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Website Versions' %}| {{ website_config.site_name }}
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/dashboard/changelog.css' %}" />
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
+{% endblock %}
+
+{% block dashboard_content %}
+  <div class="changelog">
+    <section class="row align-items-end mb-2">
+      <div class="col dashboard-title head-title d-flex align-items-center justify-content-between">
+        <div class="left">
+          <h1>{% trans "What's new on CodeLevels?" %}</h1>
+          <ul class="breadcrumb">
+            <li>
+              <a href="#">{% trans 'Dashboard' %}</a>
+            </li>
+            <li>
+              <i class="fs-6 bi bi-caret-right-fill"></i>
+            </li>
+            <li>
+              <a class="active" href="{% url 'changelog' %}">{% trans 'Changelog' %}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="version-list">
+      {% if versions %}
+        {% for v in versions %}
+          <div class="box mb-3">
+            <div class="version-header d-flex align-items-center gap-3 mb-3">
+              <span class="badge bg-primary fs-6 font-monospace">v{{ v.version }}</span>
+              <h2 class="subtitle h5 mb-0">{{ v.title }}</h2>
+              <small class="text-muted ms-auto">{{ v.released_at|date:'N j, Y' }}</small>
+            </div>
+            <ul class="version-changes ps-3 mb-0">
+              {% for change in v.get_changes_as_list %}
+                <li>{{ change }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="box text-center text-muted py-5">
+          <i class="bi bi-journal-x fs-1 d-block mb-3"></i>
+          <p>
+            {% trans 'No changelog entries published yet.' %}
+          </p>
+        </div>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

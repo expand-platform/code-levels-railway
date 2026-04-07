@@ -11,7 +11,10 @@ urlpatterns = [
     # Dashboard
     path("dashboard/projects/", projects_view, name="projects"),
     path("dashboard/projects/<str:lang>/", projects_view, name="projects_by_lang"),
+    path("dashboard/courses/", courses_view, name="courses"),
+    path("dashboard/courses/<str:lang>/", courses_view, name="courses_by_lang"),
     path("dashboard/settings/", SettingsView.as_view(), name="settings"),
+    path("changelog/", WebsiteChangelogView.as_view(), name="changelog"),
 
     # Project
     path("<str:lang>/projects/<slug:slug>/", project_details_view, name="project_details"),
