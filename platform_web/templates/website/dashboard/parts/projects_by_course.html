@@ -10,7 +10,7 @@
         {% if user.is_staff %}
           <button id="save-grid-order-btn-{{ course.id }}" class="btn btn-sm btn-success mb-2" style="display:none;">{% trans "Save Order" %}</button>
         {% endif %}
-        <div class="project-list projects-grid" id="projects-grid-{{ course.id }}" data-course-id="{{ course.id }}">
+        <div class="project-list projects-grid row gap-3 px-3" id="projects-grid-{{ course.id }}" data-course-id="{{ course.id }}">
           {% for project in course.filtered_projects %}
               {% include 'website/dashboard/parts/project_card.html' %}
           {% endfor %}

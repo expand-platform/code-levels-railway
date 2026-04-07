@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block extra_css %}
+  {% comment %} <link rel="stylesheet" href="{% static 'css/common.css' %}" /> {% endcomment %}
   <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/projects.css' %}" />
 {% endblock %}
@@ -32,15 +33,17 @@
   {% endif %}
 
   <section class="row align-items-end mb-2">
-    <div class="col col-3 dashboard-title head-title d-flex align-items-center justify-content-between">
+    <div class="col col-md-3 flex-basis-100-smo dashboard-title head-title d-flex align-items-center justify-content-between mb-3 mb-md-0">
       <div class="left">
         <h1>
-          {% if project_type == 'topic' %}
-            {% trans "Topics" %}
+          {% if is_video_course == 'true' %}
+            {% trans 'Courses' %}
+          {% elif project_type == 'topic' %}
+            {% trans 'Topics' %}
           {% elif project_type == 'all' %}
-            {% trans "All Projects & Topics" %}
+            {% trans 'All Projects & Topics' %}
           {% else %}
-            {% trans "Projects" %}
+            {% trans 'Projects' %}
           {% endif %}
         </h1>
         <ul class="breadcrumb">
@@ -52,12 +55,14 @@
           </li>
           <li>
             <a class="active" href="#">
-              {% if project_type == 'topic' %}
-                {% trans "Topics" %}
+              {% if is_video_course == 'true' %}
+                {% trans 'Courses' %}
+              {% elif project_type == 'topic' %}
+                {% trans 'Topics' %}
               {% elif project_type == 'all' %}
-                {% trans "Projects & Topics" %}
+                {% trans 'Projects & Topics' %}
               {% else %}
-                {% trans "Projects" %}
+                {% trans 'Projects' %}
               {% endif %}
             </a>
           </li>

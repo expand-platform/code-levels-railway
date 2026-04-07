@@ -15,18 +15,25 @@ from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLangu
 def projects_view(request, lang=None):
     default_filter = "course"
     default_project_type = "project"
+    default_video_filter = "all"
+    max_search_length = 100
 
-    filter_by = request.GET.get("filter", default_filter)
-    project_type = request.GET.get("type", default_project_type)
-    search_query = request.GET.get("search", "").strip()
+    filter_by = request.GET.get("filter", default_filter).strip().lower()
+    project_type = request.GET.get("type", default_project_type).strip().lower()
+    is_video_course = request.GET.get("is_video_course", default_video_filter).strip().lower()
+    search_query = request.GET.get("search", "").strip()[:max_search_length]
 
     # Secure: restrict allowed values
     allowed_filters = {"course", "language"}
     allowed_project_types = {"project", "topic", "all"}
+    allowed_video_filters = {"all", "true", "false"}
+    
     if filter_by not in allowed_filters:
         filter_by = default_filter
     if project_type not in allowed_project_types:
         project_type = default_project_type
+    if is_video_course not in allowed_video_filters:
+        is_video_course = default_video_filter
 
     # Validate lang against allowed values only
     allowed_langs = {"en", "ru"}
@@ -40,6 +47,7 @@ def projects_view(request, lang=None):
     context = {
         "filter_by": filter_by,
         "project_type": project_type,
+        "is_video_course": is_video_course,
         "search": search_query,
         "current_lang": lang,
     }
@@ -63,6 +71,10 @@ def projects_view(request, lang=None):
         projects_qs = get_projects(item)
         if project_type != "all":
             projects_qs = projects_qs.filter(type=project_type)
+        if is_video_course == "true":
+            projects_qs = projects_qs.filter(is_video_course=True)
+        elif is_video_course == "false":
+            projects_qs = projects_qs.filter(is_video_course=False)
         if search_query:
             projects_qs = projects_qs.filter(title__icontains=search_query)
         projects_qs = projects_qs.filter(language=lang)

@@ -30,6 +30,12 @@
         <span class="text">{% trans 'Projects' %}</span>
       </a>
     </li>
+    <li class="">
+      <a href="{% url 'projects' %}?filter=course&type=project&is_video_course=true" data-route="courses">
+        <i class="bx bi bi-play-btn"></i>
+        <span class="text">{% trans 'Courses' %}</span>
+      </a>
+    </li>
   </ul>
   <ul class="side-menu bottom">
     <li class="">

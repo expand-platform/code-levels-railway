@@ -10,7 +10,7 @@
         {% if user.is_staff %}
           <button id="save-grid-order-btn-{{ language.id }}" class="btn btn-sm btn-success mb-2" style="display:none;">{% trans "Save Order" %}</button>
         {% endif %}
-        <div class="project-list projects-grid" id="projects-grid-{{ language.id }}" data-language-id="{{ language.id }}">
+        <div class="project-list projects-grid row gap-3 px-3" id="projects-grid-{{ language.id }}" data-language-id="{{ language.id }}">
           {% for project in language.filtered_projects %}
               {% include 'website/dashboard/parts/project_card.html' %}
           {% empty %}

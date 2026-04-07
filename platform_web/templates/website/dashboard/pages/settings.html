@@ -37,7 +37,7 @@
           </li>
           <li>
             {% if user.is_staff %}
-              <a class="active" target="_blank" href="/cp/platform_web/project/">{% trans "Settings" %}</a>
+              <a class="active" target="_blank" href="{% url 'settings' %}">{% trans "Settings" %}</a>
             {% else %}
               <a class="active" href="#">{% trans "Settings" %}</a>
             {% endif %}
@@ -97,7 +97,7 @@
               <div class="setting-item-action">
                 {% get_current_language as CURRENT_LANG %}
                 {% get_available_languages as LANGUAGES %}
-                <select id="language" name="language" class="select-input form-select">
+                <select id="language" name="language" class="select-input form-select w-100">
                   {% for lang_code, lang_name in LANGUAGES %}
                     <option value="{{ lang_code }}" {% if user_profile and user_profile.interface_language == lang_code %}selected{% elif not user_profile and lang_code == CURRENT_LANG %}selected{% endif %}>{{ lang_name }}</option>
                   {% endfor %}

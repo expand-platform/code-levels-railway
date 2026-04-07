@@ -119,6 +119,7 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
             {
                 "fields": (
                     "is_active",
+                    "is_video_course",
                     "language_order",
                     "course_order",
                     "order",

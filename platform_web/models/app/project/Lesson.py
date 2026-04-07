@@ -3,7 +3,9 @@ import uuid
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-from platform_web.models.app.project.Project import Project, transliterate_ru_to_latin
+from platform_web.models.app.project.Project import Project
+
+from platform_web.data.transliteration import transliterate_ru_to_latin
 
 
 TYPE_CHOICES = [

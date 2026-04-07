@@ -13,6 +13,8 @@
     padding: .5rem 0 0 0;
 }
 
+
+
 #sidebar::--webkit-scrollbar {
     display: none;
 }
@@ -130,4 +132,14 @@
 
 #sidebar .side-menu.bottom li:nth-last-of-type(2) {
     bottom: 50px;
+}
+
+@media screen and (max-width: 768px) {
+    #sidebar {
+        width: 100%;
+    }
+
+    #sidebar .side-menu li a{
+        font-size: 1.2rem;
+    }
 }

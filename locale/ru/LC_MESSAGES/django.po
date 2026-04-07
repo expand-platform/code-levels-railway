@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-07 11:59+0300\n"
+"POT-Creation-Date: 2026-04-07 14:49+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,66 +32,66 @@ msgstr "Иначе зачем я готовил для тебя этот сай�
 msgid "Order for displaying frameworks"
 msgstr "В каком порядке показывать фреймворки"
 
-#: .\platform_web\models\app\project\Lesson.py:10
+#: .\platform_web\models\app\project\Lesson.py:12
 msgid "Theory"
 msgstr "Теория"
 
-#: .\platform_web\models\app\project\Lesson.py:11
+#: .\platform_web\models\app\project\Lesson.py:13
 msgid "Video"
 msgstr "Видео"
 
-#: .\platform_web\models\app\project\Lesson.py:12
+#: .\platform_web\models\app\project\Lesson.py:14
 msgid "Exercise"
 msgstr "Упражнение"
 
-#: .\platform_web\models\app\project\Lesson.py:13
+#: .\platform_web\models\app\project\Lesson.py:15
 msgid "Task"
 msgstr "Задача"
 
-#: .\platform_web\models\app\project\Lesson.py:14
+#: .\platform_web\models\app\project\Lesson.py:16
 #, fuzzy
 #| msgid "in project"
 msgid "Mini-project"
 msgstr "в проекте"
 
-#: .\platform_web\models\app\project\Lesson.py:15
-#: .\platform_web\models\app\project\Project.py:18
+#: .\platform_web\models\app\project\Lesson.py:17
+#: .\platform_web\models\app\project\Project.py:23
 #: .\platform_web\templates\website\dashboard\parts\project_filters.html:23
 msgid "Project"
 msgstr "Проект"
 
-#: .\platform_web\models\app\project\Lesson.py:33
+#: .\platform_web\models\app\project\Lesson.py:35
 msgid "List of lesson objectives"
 msgstr "Цели урока"
 
-#: .\platform_web\models\app\project\Project.py:17
+#: .\platform_web\models\app\project\Project.py:22
 #: .\platform_web\templates\website\dashboard\parts\project_filters.html:22
 msgid "Topic"
 msgstr "Тема"
 
-#: .\platform_web\models\app\project\Project.py:19
+#: .\platform_web\models\app\project\Project.py:24
 msgid "Guide"
 msgstr "Гайды"
 
-#: .\platform_web\models\app\project\Project.py:39
+#: .\platform_web\models\app\project\Project.py:44
 #, fuzzy
 #| msgid "No programming languages found."
 msgid "Predefined programming languages"
 msgstr "Языки программирования не найдены."
 
-#: .\platform_web\models\app\project\Project.py:47
+#: .\platform_web\models\app\project\Project.py:52
 msgid "Description for the Dashboard"
 msgstr "Описание для кабинета"
 
-#: .\platform_web\models\app\project\Project.py:54
+#: .\platform_web\models\app\project\Project.py:59
 msgid "Predefined frameworks"
 msgstr "Предопределенные фреймворки"
 
-#: .\platform_web\models\app\project\Project.py:55
+#: .\platform_web\models\app\project\Project.py:60
 msgid "Frameworks"
 msgstr "Фреймворки"
 
-#: .\platform_web\models\app\project\Project.py:66
+#: .\platform_web\models\app\project\Project.py:72
 msgid "Ordering for admin sorting"
 msgstr "Порядок сортировки в админке"
 
@@ -270,24 +270,30 @@ msgstr "Уроки"
 msgid "Save Order"
 msgstr "Сохранить"
 
-#: .\platform_web\templates\website\dashboard\pages\projects.html:39
-#: .\platform_web\templates\website\dashboard\pages\projects.html:56
+#: .\platform_web\templates\website\dashboard\pages\projects.html:41
+#: .\platform_web\templates\website\dashboard\pages\projects.html:60
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:37
+msgid "Courses"
+msgstr "Видео-курсы"
+
+#: .\platform_web\templates\website\dashboard\pages\projects.html:43
+#: .\platform_web\templates\website\dashboard\pages\projects.html:62
 #: .\platform_web\templates\website\dashboard\parts\sidebar.html:25
 msgid "Topics"
 msgstr "Темы"
 
-#: .\platform_web\templates\website\dashboard\pages\projects.html:41
+#: .\platform_web\templates\website\dashboard\pages\projects.html:45
 msgid "All Projects & Topics"
 msgstr "Все проекты и темы"
 
-#: .\platform_web\templates\website\dashboard\pages\projects.html:43
-#: .\platform_web\templates\website\dashboard\pages\projects.html:60
+#: .\platform_web\templates\website\dashboard\pages\projects.html:47
+#: .\platform_web\templates\website\dashboard\pages\projects.html:66
 #: .\platform_web\templates\website\dashboard\parts\sidebar.html:31
 #: .\platform_web\templates\website\parts\layout\nav.html:21
 msgid "Projects"
 msgstr "Проекты"
 
-#: .\platform_web\templates\website\dashboard\pages\projects.html:58
+#: .\platform_web\templates\website\dashboard\pages\projects.html:64
 #, fuzzy
 #| msgid "All Projects & Topics"
 msgid "Projects & Topics"
@@ -380,11 +386,11 @@ msgstr "Языки программирования не найдены."
 msgid "Admin"
 msgstr "Админка"
 
-#: .\platform_web\templates\website\dashboard\parts\sidebar.html:39
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:45
 msgid "Account"
 msgstr "Аккаунт"
 
-#: .\platform_web\templates\website\dashboard\parts\sidebar.html:45
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:51
 #: .\platform_web\templates\website\parts\layout\nav.html:24
 msgid "Logout"
 msgstr "Выйти"

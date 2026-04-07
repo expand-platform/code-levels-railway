@@ -62,8 +62,22 @@ body {
     left: 60px;
 }
 
+@media screen and (max-width: 768px) {
+    #sidebar.hide~#content {
+        width: 100%;
+        left: 0;
+    }
+}
+
+
 .dashboard-content {
     padding: 5rem 2rem;
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-content {
+        padding: 5rem 0;
+    }
 }
 
 .dashboard .box {
@@ -364,10 +378,6 @@ body {
     #content nav .notification-menu,
     #content nav .profile-menu {
         width: 180px;
-    }
-
-    #sidebar {
-        width: 200px;
     }
 
     #content {
