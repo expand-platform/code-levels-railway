@@ -3,7 +3,7 @@ import uuid
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-from platform_web.models.app.project.Project import Project
+from platform_web.models.app.project.Project import Project, transliterate_ru_to_latin
 
 
 TYPE_CHOICES = [
@@ -49,8 +49,20 @@ class Lesson(models.Model):
         ordering = ["order"]
 
     def save(self, *args, **kwargs):
-        if self._state.adding and not self.slug and self.title:
-            self.slug = slugify(str(self.title))
+        if not self.slug and self.title:
+            transliterated_title = transliterate_ru_to_latin(str(self.title))
+            base_slug = slugify(transliterated_title)
+            if not base_slug:
+                base_slug = slugify(str(self.title))
+            if not base_slug:
+                base_slug = f"lesson-{str(self.uuid)[:8]}"
+
+            slug = base_slug
+            counter = 1
+            while Lesson.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
         super().save(*args, **kwargs)
 
     def __str__(self):
