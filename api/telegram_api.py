@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import AccessToken
 
-from api.models import UserProfile
+from api.models.UserProfile import UserProfile
 
 
 class TelegramAccessLevelView(APIView):

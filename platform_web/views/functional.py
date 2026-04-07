@@ -49,7 +49,7 @@ def set_language_and_save(request):
     user = getattr(request, "user", None)
     if user and user.is_authenticated:
         try:
-            from api.models import UserProfile
+            from api.models.UserProfile import UserProfile
 
             profile, created = UserProfile.objects.get_or_create(user=user)
             profile.interface_language = lang_code

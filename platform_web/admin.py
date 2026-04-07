@@ -1,16 +1,41 @@
 from django.contrib import admin
+from django.http import HttpRequest
 from django_summernote.widgets import SummernoteWidget
 from django import forms
 
 from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
 from nested_admin.nested import NestedTabularInline, NestedModelAdmin
 
+from platform_web.config.web_config import WebsiteConfigScheme
 from platform_web.models.app.project.Course import Course
 from platform_web.models.app.project.Project import Project
 from platform_web.models.app.project.Lesson import Lesson
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.app.project.Difficulty import Difficulty
 from platform_web.models.app.project.Framework import Framework
+
+from platform_web.models.base import WebsiteConfig
+from platform_web.models.base import SocialMediaLink
+
+
+# inlines
+class InlineSocialMediaLink(admin.TabularInline):
+    model = SocialMediaLink
+    extra = 1
+
+
+class WebsiteConfigAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in WebsiteConfig._meta.fields]
+    list_display_links = (WebsiteConfigScheme.id, WebsiteConfigScheme.site_name)
+    inlines = [InlineSocialMediaLink]
+
+    # Only allow add if no config exists
+    def has_add_permission(self, request: HttpRequest):
+        return not WebsiteConfig.objects.exists()
+
+
+admin.site.register(WebsiteConfig, WebsiteConfigAdmin)
+admin.site.register(SocialMediaLink)
 
 
 class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
@@ -31,8 +56,7 @@ class StagesAdmin(admin.ModelAdmin):
 class LessonsInline(SortableInlineAdminMixin, NestedTabularInline):
     model = Lesson
     extra = 1
-    fields = ("title", "order", "description", "languages")
-    autocomplete_fields = ["languages"]
+    fields = ("title", "order", "description")
     ordering = ["order"]
 
 
@@ -48,6 +72,7 @@ class ProjectAdminForm(forms.ModelForm):
 class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
     form = ProjectAdminForm
     inlines = [LessonsInline]
+    changeform_format = "horizontal_tabs"
     list_display = (
         # "order",
         "course_order",
@@ -60,7 +85,51 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
     list_filter = ("difficulty", "programming_languages", "framework", "type", "course")
     search_fields = ("title", "description")
     ordering = ("course_order",)
-    readonly_fields = ("created_at", "updated_at")
+    readonly_fields = ("uuid", "created_at", "updated_at")
+    fieldsets = (
+        (
+            "General",
+            {
+                "fields": (
+                    "title",
+                    "image",
+                    "type",
+                    "language",
+                    "course",
+                    "programming_languages",
+                    "difficulty",
+                    "framework",
+                    "codepen_url",
+                    "description",
+                    "stages",
+                )
+            },
+        ),
+        (
+            "SEO",
+            {
+                "fields": (
+                    "seo_title",
+                    "seo_description",
+                )
+            },
+        ),
+        (
+            "Settings",
+            {
+                "fields": (
+                    "is_active",
+                    "language_order",
+                    "course_order",
+                    "order",
+                    "slug",
+                    "uuid",
+                    "created_at",
+                    "updated_at",
+                )
+            },
+        ),
+    )
 
     actions = ["publish_projects", "unpublish_projects"]
 
@@ -97,17 +166,56 @@ class LessonAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if not self.instance.pk:  # Only for new Lesson
-            latest_project = Project.objects.order_by('-id').first()
+            latest_project = Project.objects.order_by("-id").first()
             if latest_project:
-                self.fields['project'].initial = latest_project
+                self.fields["project"].initial = latest_project
 
 
 class LessonsAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
     form = LessonAdminForm
+    changeform_format = "horizontal_tabs"
     list_display = ("order", "title", "type", "project", "last_edited")
     search_fields = ("title", "project__title")
     list_filter = ("project",)
     ordering = ("order",)
+    readonly_fields = ("last_edited", "uuid")
+    fieldsets = (
+        (
+            "General",
+            {
+                "fields": (
+                    "project",
+                    "title",
+                    "type",
+                    "thumbnail",
+                    "youtube_url",
+                    "codepen_url",
+                    "description",
+                    "objectives",
+                )
+            },
+        ),
+        (
+            "SEO",
+            {
+                "fields": (
+                    "seo_title",
+                    "seo_description",
+                )
+            },
+        ),
+        (
+            "Settings",
+            {
+                "fields": (
+                    "order",
+                    "slug",
+                    "uuid",
+                    "last_edited",
+                )
+            },
+        ),
+    )
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Framework(models.Model):
@@ -26,7 +27,7 @@ class Framework(models.Model):
 
     name = models.CharField(max_length=20, unique=True)
     order = models.PositiveIntegerField(
-        default=5, help_text="Order for displaying frameworks"
+        default=5, help_text=_("Order for displaying frameworks")
     )
     
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)

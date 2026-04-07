@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from os import environ
 from dotenv import load_dotenv
 
 from code_levels.settings.allauth.base import *
@@ -122,14 +121,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 # i18n
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 
 LANGUAGES = [
-    ('en', 'English'),
-    ('ru', 'Russian'),
+    ("en", "English"),
+    ("ru", "Russian"),
 ]
 
 USE_I18N = True

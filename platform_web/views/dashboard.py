@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.utils.translation import activate, gettext as _
 
-from api.models import UserProfile
+from api.models.UserProfile import UserProfile
 
 
 class SettingsView(LoginRequiredMixin, View):
@@ -45,58 +45,61 @@ class SettingsView(LoginRequiredMixin, View):
             if username.lower() in reserved_usernames:
                 messages.error(
                     request,
-                    "This username is reserved, sorry :( Please choose another.",
+                    _("This username is reserved, sorry :( Please choose another."),
                 )
             elif not re.match(username_pattern, username):
                 messages.error(
                     request,
-                    "Username must contain only letters, numbers, and underscores.",
+                    _("Username must contain only letters, numbers, and underscores."),
                 )
             elif username.isdigit():
                 messages.error(
                     request,
-                    "Username cannot be numbers only.",
+                    _("Username cannot be numbers only."),
                 )
             elif re.search(invisible_pattern, username):
                 messages.error(
                     request,
-                    "Username cannot contain invisible characters.",
+                    _("Username cannot contain invisible characters."),
                 )
             elif re.search(html_entity_pattern, username):
                 messages.error(
                     request,
-                    "Username cannot contain HTML entities.",
+                    _("Username cannot contain HTML entities."),
                 )
             elif re.search(unicode_escape_pattern, username):
                 messages.error(
                     request,
-                    "Username cannot contain unicode escape sequences.",
+                    _("Username cannot contain unicode escape sequences."),
                 )
             elif username.startswith("_") or username.endswith("_"):
                 messages.error(
                     request,
-                    "Username cannot start or end with an underscore.",
+                    _("Username cannot start or end with an underscore."),
                 )
             elif "__" in username:
                 messages.error(
                     request,
-                    "Username cannot contain consecutive underscores.",
+                    _("Username cannot contain consecutive underscores."),
                 )
             elif not (min_length <= len(username) <= max_length):
                 messages.error(
                     request,
-                    f"Username must be {min_length}-{max_length} characters long.",
+                    _(
+                        "Username must be %(min_length)d-%(max_length)d characters long."
+                    )
+                    % {"min_length": min_length, "max_length": max_length},
                 )
             elif (
                 User.objects.filter(username=username)
                 .exclude(pk=request.user.pk)
                 .exists()
             ):
-                messages.error(request, "Username already taken.")
+                messages.error(request, _("Username already taken."))
             else:
                 request.user.username = username
                 request.user.save()
-                messages.success(request, "Username updated successfully.")
+                messages.success(request, _("Username updated successfully."))
         
         user_profile = getattr(request.user, "user_profile", None)
         # language preference

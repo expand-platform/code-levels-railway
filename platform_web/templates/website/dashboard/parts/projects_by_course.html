@@ -1,10 +1,10 @@
 {% load static %}
 {% load i18n %}
-{# ! show material type (project / topic) #}
 
 {% if courses %}
   <div class="project-languages-section">
     {% for course in courses %}
+      {% if course.filtered_projects %}
       <section class="language-block">
         <h2>{{ course.title }}</h2>
         {% if user.is_staff %}
@@ -13,11 +13,10 @@
         <div class="project-list projects-grid" id="projects-grid-{{ course.id }}" data-course-id="{{ course.id }}">
           {% for project in course.filtered_projects %}
               {% include 'website/dashboard/parts/project_card.html' %}
-          {% empty %}
-            <p>{% trans "No projects for this course yet." %}</p>
           {% endfor %}
         </div>
       </section>
+      {% endif %}
     {% empty %}
       <p>{% trans "No courses found." %}</p>
     {% endfor %}

@@ -4,4 +4,5 @@ JAZZMIN_SETTINGS_DICT = {
         {"name": "Projects", "url": "projects"},
     ],
     "custom_css": "css/admin/jazzmin.css",
+    "custom_js": "js/admin/jazzmin.js"
 }

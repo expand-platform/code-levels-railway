@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 
 # ? stored website data like site name, tagline, support email, etc.
@@ -8,7 +9,7 @@ class WebsiteConfig(models.Model):
     tagline = models.CharField(max_length=255, default="Gadgets that love you")
 
     def __str__(self):
-        return "Website Configuration"
+        return str(_("Website Configuration"))
 
     class Meta:
         verbose_name = "Website Configuration"
@@ -17,5 +18,5 @@ class WebsiteConfig(models.Model):
     # ? only one instance editing allowed
     def save(self, *args, **kwargs):
         if not self.pk and WebsiteConfig.objects.exists():
-            raise ValidationError("There can be only one WebConfig instance")
+            raise ValidationError(_("There can be only one WebConfig instance"))
         return super().save(*args, **kwargs)

@@ -1,7 +1,7 @@
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from django.utils.text import slugify
 
-from api.models import UserProfile
+from api.models.UserProfile import UserProfile
 
 
 class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):

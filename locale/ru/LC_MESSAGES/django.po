@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-27 15:50+0200\n"
+"POT-Creation-Date: 2026-03-28 10:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,13 +20,104 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
+#: .\platform_web\context_processors.py:7
+msgid "CodeLevels"
+msgstr "CodeLevels"
+
+#: .\platform_web\context_processors.py:8
+msgid "Your step-by-step coding journey"
+msgstr "Иначе зачем я готовил для тебя этот сайт?"
+
+#: .\platform_web\models\app\project\Framework.py:30
+msgid "Order for displaying frameworks"
+msgstr "В каком порядке показывать фреймворки"
+
+#: .\platform_web\models\app\project\Lesson.py:10
+msgid "Theory"
+msgstr "Теория"
+
+#: .\platform_web\models\app\project\Lesson.py:11
+msgid "Video"
+msgstr "Видео"
+
+#: .\platform_web\models\app\project\Lesson.py:12
+msgid "Exercise"
+msgstr "Упражнение"
+
+#: .\platform_web\models\app\project\Lesson.py:13
+msgid "Task"
+msgstr "Задача"
+
+#: .\platform_web\models\app\project\Lesson.py:14
+#, fuzzy
+#| msgid "in project"
+msgid "Mini-project"
+msgstr "в проекте"
+
+#: .\platform_web\models\app\project\Lesson.py:15
+#: .\platform_web\models\app\project\Project.py:22
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:22
+msgid "Project"
+msgstr "Проект"
+
+#: .\platform_web\models\app\project\Lesson.py:33
+msgid "List of lesson objectives"
+msgstr "Цели урока"
+
+#: .\platform_web\models\app\project\Project.py:21
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:21
+msgid "Topic"
+msgstr "Тема"
+
+#: .\platform_web\models\app\project\Project.py:43
+#, fuzzy
+#| msgid "No programming languages found."
+msgid "Predefined programming languages"
+msgstr "Языки программирования не найдены."
+
+#: .\platform_web\models\app\project\Project.py:55
+msgid "Predefined frameworks"
+msgstr "Предопределенные фреймворки"
+
+#: .\platform_web\models\app\project\Project.py:56
+msgid "Frameworks"
+msgstr "Фреймворки"
+
+#: .\platform_web\models\app\project\Project.py:62
+msgid "Description for the Dashboard"
+msgstr "Описание для кабинета"
+
+#: .\platform_web\models\app\project\Project.py:74
+msgid "Ordering for admin sorting"
+msgstr "Порядок сортировки в админке"
+
+#: .\platform_web\models\base\social_media_link.py:9
+msgid "telegram"
+msgstr "телеграм"
+
+#: .\platform_web\models\base\social_media_link.py:17
+msgid "Social Media Link"
+msgstr "Ссылка на социальную сеть"
+
+#: .\platform_web\models\base\social_media_link.py:18
+msgid "Social Media Links"
+msgstr "Ссылки на социальные сети"
+
+#: .\platform_web\models\base\website_config.py:12
+msgid "Website Configuration"
+msgstr "Настройки сайта"
+
+#: .\platform_web\models\base\website_config.py:21
+msgid "There can be only one WebConfig instance"
+msgstr "Увы, но у тебя может быть только одна конфигурация сайта"
+
 #: .\platform_web\templates\account\3rdparty\signup.html:18
 msgid "Complete Your Signup"
-msgstr "Завершите регистрацию"
+msgstr "Заверши свою регистрацию"
 
 #: .\platform_web\templates\account\3rdparty\signup.html:34
 msgid "Finish Signup"
-msgstr "Заверши регистрацию"
+msgstr "Заверши свою регистрацию"
 
 #: .\platform_web\templates\account\login.html:7
 #: .\platform_web\templates\account\login.html:32
@@ -40,7 +131,7 @@ msgstr "Вход через Google"
 
 #: .\platform_web\templates\account\login.html:35
 msgid "Don't have an account?"
-msgstr "Нет аккаунта? Зарегистрируйтесь"
+msgstr "Нет аккаунта? Сейчас создадим!"
 
 #: .\platform_web\templates\account\login.html:35
 msgid "Sign up"
@@ -232,7 +323,15 @@ msgstr "Синхронизируй свой аккаунт на сайте с б
 msgid "Copied 👌"
 msgstr "Есть 👌"
 
-#: .\platform_web\templates\website\dashboard\pages\settings.html:119
+#: .\platform_web\templates\website\dashboard\pages\settings.html:93
+msgid "Language"
+msgstr "Язык сайта"
+
+#: .\platform_web\templates\website\dashboard\pages\settings.html:95
+msgid "Choose your preferred language for the interface."
+msgstr "Язык, на котором показывается сайт"
+
+#: .\platform_web\templates\website\dashboard\pages\settings.html:122
 msgid "Save Changes"
 msgstr "Сохранить"
 
@@ -259,14 +358,6 @@ msgstr "По языку"
 #: .\platform_web\templates\website\dashboard\parts\project_filters.html:20
 msgid "All"
 msgstr "Все"
-
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:21
-msgid "Topic"
-msgstr "Тема"
-
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:22
-msgid "Project"
-msgstr "Проект"
 
 #: .\platform_web\templates\website\dashboard\parts\projects_by_course.html:17
 msgid "No projects for this course yet."
@@ -328,3 +419,53 @@ msgstr "Заголовок"
 #: .\platform_web\templates\website\parts\layout\nav.html:10
 msgid "What's on your mind?"
 msgstr "О чем вы думаете?"
+
+#: .\platform_web\views\dashboard.py:48
+msgid "This username is reserved, sorry :( Please choose another."
+msgstr "Извини, но юзернейм уже занят. Придумай что-то другое"
+
+#: .\platform_web\views\dashboard.py:53
+msgid "Username must contain only letters, numbers, and underscores."
+msgstr "В юзернейме разрешены только буквы, цифры и подчеркивания."
+
+#: .\platform_web\views\dashboard.py:58
+msgid "Username cannot be numbers only."
+msgstr "Юзернейм не может состоять только из цифр, прости"
+
+#: .\platform_web\views\dashboard.py:63
+msgid "Username cannot contain invisible characters."
+msgstr "Не используй невидимые символы, это не есть хорошо"
+
+#: .\platform_web\views\dashboard.py:68
+msgid "Username cannot contain HTML entities."
+msgstr "Не используй HTML в юзернейме, это не есть хорошо"
+
+#: .\platform_web\views\dashboard.py:73
+msgid "Username cannot contain unicode escape sequences."
+msgstr "Не используй unicode escape sequences в юзернейме, это не есть хорошо"
+
+#: .\platform_web\views\dashboard.py:78
+msgid "Username cannot start or end with an underscore."
+msgstr "Юзернейм не может начинаться или заканчиваться с подчеркивания."
+
+#: .\platform_web\views\dashboard.py:83
+msgid "Username cannot contain consecutive underscores."
+msgstr "Нельзя использовать идущие подряд подчеркивания."
+
+#: .\platform_web\views\dashboard.py:89
+#, python-format
+msgid "Username must be %(min_length)d-%(max_length)d characters long."
+msgstr ""
+"Длина юзернейма должна быть от %(min_length)d до %(max_length)d символов."
+
+#: .\platform_web\views\dashboard.py:98
+msgid "Username already taken."
+msgstr "Юзернейм уже занят, прости"
+
+#: .\platform_web\views\dashboard.py:102
+msgid "Username updated successfully."
+msgstr "Юзернейм успешно обновлён!"
+
+#: .\platform_web\views\dashboard.py:120
+msgid "Language preference saved."
+msgstr "Язык интерфейса обновлён!"
