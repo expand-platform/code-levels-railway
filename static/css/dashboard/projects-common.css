@@ -1,4 +1,12 @@
+pre {
+  margin: 0 0 1.5rem 0;
+}
+
 .back-to-project-wrapper {
   top: 15px;
   left: -100px;
+}
+
+.project-details h2, .lesson-details h2 {
+  margin: 1rem 0 2rem 0;
 }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-07 14:49+0300\n"
+"POT-Creation-Date: 2026-04-08 13:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,11 +20,11 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\platform_web\context_processors.py:7
+#: .\platform_web\context_processors.py:8
 msgid "CodeLevels"
 msgstr "CodeLevels"
 
-#: .\platform_web\context_processors.py:8
+#: .\platform_web\context_processors.py:9
 msgid "Your step-by-step coding journey"
 msgstr "Иначе зачем я готовил для тебя этот сайт?"
 
@@ -49,14 +49,12 @@ msgid "Task"
 msgstr "Задача"
 
 #: .\platform_web\models\app\project\Lesson.py:16
-#, fuzzy
-#| msgid "in project"
 msgid "Mini-project"
-msgstr "в проекте"
+msgstr "Мини-проект"
 
 #: .\platform_web\models\app\project\Lesson.py:17
 #: .\platform_web\models\app\project\Project.py:23
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:23
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:26
 msgid "Project"
 msgstr "Проект"
 
@@ -65,7 +63,7 @@ msgid "List of lesson objectives"
 msgstr "Цели урока"
 
 #: .\platform_web\models\app\project\Project.py:22
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:22
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:25
 msgid "Topic"
 msgstr "Тема"
 
@@ -94,6 +92,18 @@ msgstr "Фреймворки"
 #: .\platform_web\models\app\project\Project.py:72
 msgid "Ordering for admin sorting"
 msgstr "Порядок сортировки в админке"
+
+#: .\platform_web\models\base\Changelog.py:17
+msgid "Format: major.minor.patch (e.g. 1.4.46)"
+msgstr "Формат: основной.минор.патч (например, 1.4.46)"
+
+#: .\platform_web\models\base\Changelog.py:21
+msgid "Bulleted list of changes. Each line is a separate bullet."
+msgstr "Маркированный список изменений. Каждая строка — отдельный пункт."
+
+#: .\platform_web\models\base\Changelog.py:36
+msgid "Version must be in format major.minor.patch (e.g. 1.4.46)"
+msgstr "Версия должна быть в формате основной.минор.патч (например, 1.4.46)"
 
 #: .\platform_web\models\base\social_media_link.py:9
 msgid "telegram"
@@ -204,6 +214,7 @@ msgstr "Уже есть аккаунт?"
 
 #: .\platform_web\templates\website\dashboard\dashboard.html:6
 #: .\platform_web\templates\website\dashboard\dashboard.html:9
+#: .\platform_web\templates\website\dashboard\pages\changelog.html:27
 #: .\platform_web\templates\website\dashboard\pages\settings.html:33
 msgid "Dashboard"
 msgstr "Кабинет"
@@ -220,65 +231,144 @@ msgstr "Посетители"
 msgid "Total Sales"
 msgstr "Общие продажи"
 
-#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:49
+#: .\platform_web\templates\website\dashboard\pages\changelog.html:6
+msgid "Website Versions"
+msgstr "Версии сайта"
+
+#: .\platform_web\templates\website\dashboard\pages\changelog.html:24
+msgid "What's new on CodeLevels?"
+msgstr "Что нового на CodeLevels?"
+
+#: .\platform_web\templates\website\dashboard\pages\changelog.html:33
+msgid "Changelog"
+msgstr "Что нового на сайте?"
+
+#: .\platform_web\templates\website\dashboard\pages\changelog.html:60
+msgid "No changelog entries published yet."
+msgstr "Записи о нововведениях ещё не опубликованы."
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:44
+msgid "Back to project details"
+msgstr "Назад к деталям проекта"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:54
 msgid "Lesson number"
 msgstr "Номер урока"
 
-#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:49
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:55
 msgid "Lesson"
 msgstr "Урок"
 
-#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:49
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:55
 msgid "of"
 msgstr "из"
 
-#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:49
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:57
+msgid "in topic"
+msgstr "в теме"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:59
+msgid "in guide"
+msgstr "в гайде"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:61
 msgid "in project"
 msgstr "в проекте"
 
-#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:72
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:65
+msgid "Material type"
+msgstr "Тип материала"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:96
 msgid "Objectives"
 msgstr "Цели"
 
-#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:95
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:119
 msgid "Previous"
 msgstr "Предыдущий"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:127
+msgid "Next"
+msgstr "Следующий урок"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:132
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:134
+msgid "Finish Project"
+msgstr "Завершить проект"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:145
+msgid "Edit Lesson"
+msgstr "Редактировать урок"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:146
+msgid "Are you sure you want to delete this lesson?"
+msgstr "Ты уверен, что хочешь удалить этот урок?"
+
+#: .\platform_web\templates\website\dashboard\pages\lesson_details.html:148
+msgid "Delete Lesson"
+msgstr "Удалить урок"
 
 #: .\platform_web\templates\website\dashboard\pages\map.html:5
 msgid "Learning map"
 msgstr "Карта проектов"
 
-#: .\platform_web\templates\website\dashboard\pages\project_details.html:56
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:42
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:44
+msgid "Back to projects"
+msgstr "Вернуться к проектам"
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:57
 msgid "In this project"
 msgstr "В этом проекте"
 
-#: .\platform_web\templates\website\dashboard\pages\project_details.html:68
-msgid "Project Stages"
-msgstr "Этапы проекта"
-
-#: .\platform_web\templates\website\dashboard\pages\project_details.html:73
-msgid "No stages defined."
-msgstr "Этапы не определены."
-
-#: .\platform_web\templates\website\dashboard\pages\project_details.html:83
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:85
 msgid "Lessons"
 msgstr "Уроки"
 
 #: .\platform_web\templates\website\dashboard\pages\project_details.html:86
+msgid "Show/Hide Lessons"
+msgstr "Показать/Скрыть уроки"
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:88
 #: .\platform_web\templates\website\dashboard\parts\projects_by_course.html:11
 #: .\platform_web\templates\website\dashboard\parts\projects_by_language.html:11
 msgid "Save Order"
 msgstr "Сохранить"
 
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:111
+msgid "No lessons here, but we'll launch them soon."
+msgstr "Тут ещё нет уроков, но мы их скоро запустим."
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:120
+msgid "Start the Project"
+msgstr "Начать проект"
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:122
+#, python-format
+msgid "Explore %(project_title)s"
+msgstr "Исследовать %(project_title)s"
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:132
+msgid "Edit Project"
+msgstr "Редактировать проект"
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:134
+msgid "Are you sure you want to delete this project?"
+msgstr "Ты уверен, что хочешь удалить этот проект?"
+
+#: .\platform_web\templates\website\dashboard\pages\project_details.html:136
+msgid "Delete Project"
+msgstr "Удалить проект"
+
 #: .\platform_web\templates\website\dashboard\pages\projects.html:41
 #: .\platform_web\templates\website\dashboard\pages\projects.html:60
-#: .\platform_web\templates\website\dashboard\parts\sidebar.html:37
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:42
 msgid "Courses"
 msgstr "Видео-курсы"
 
 #: .\platform_web\templates\website\dashboard\pages\projects.html:43
 #: .\platform_web\templates\website\dashboard\pages\projects.html:62
-#: .\platform_web\templates\website\dashboard\parts\sidebar.html:25
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:30
 msgid "Topics"
 msgstr "Темы"
 
@@ -288,16 +378,14 @@ msgstr "Все проекты и темы"
 
 #: .\platform_web\templates\website\dashboard\pages\projects.html:47
 #: .\platform_web\templates\website\dashboard\pages\projects.html:66
-#: .\platform_web\templates\website\dashboard\parts\sidebar.html:31
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:36
 #: .\platform_web\templates\website\parts\layout\nav.html:21
 msgid "Projects"
 msgstr "Проекты"
 
 #: .\platform_web\templates\website\dashboard\pages\projects.html:64
-#, fuzzy
-#| msgid "All Projects & Topics"
 msgid "Projects & Topics"
-msgstr "Все проекты и темы"
+msgstr "Проекты и темы"
 
 #: .\platform_web\templates\website\dashboard\pages\settings.html:30
 #: .\platform_web\templates\website\dashboard\pages\settings.html:40
@@ -349,23 +437,56 @@ msgstr "Сохранить"
 msgid "No parts for this project yet."
 msgstr "Для этого проекта пока нет уроков."
 
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:6
+#: .\platform_web\templates\website\dashboard\parts\project\counter.html:7
+#, python-format
+msgid "Project #1 in \"%(course_title)s\" progression"
+msgstr "Проект #1 в прогрессии \"%(course_title)s\""
+
+#: .\platform_web\templates\website\dashboard\parts\project\counter.html:9
+#, python-format
+msgid "Project #%(order)s of %(total)s in \"%(course_title)s\" progression"
+msgstr "Проект #%(order)s из %(total)s в прогрессии \"%(course_title)s\""
+
+#: .\platform_web\templates\website\dashboard\parts\project\counter.html:13
+#, python-format
+msgid "Topic #1 in \"%(course_title)s\" progression"
+msgstr "Тема #1 в прогрессии \"%(course_title)s\""
+
+#: .\platform_web\templates\website\dashboard\parts\project\counter.html:15
+msgid "Topic #"
+msgstr "Тема #"
+
+#: .\platform_web\templates\website\dashboard\parts\project\counter.html:17
+#, python-format
+msgid " of %(total)s in \"%(course_title)s\" progression"
+msgstr " из %(total)s в прогрессии \"%(course_title)s\""
+
+#: .\platform_web\templates\website\dashboard\parts\project\counter.html:20
+#, python-format
+msgid "#%(order)s in \"%(course_title)s\" progression"
+msgstr "#%(order)s в прогрессии \"%(course_title)s\""
+
+#: .\platform_web\templates\website\dashboard\parts\project\updated.html:5
+msgid "Updated:"
+msgstr "Обновлено:"
+
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:9
 msgid "Reset Filters"
 msgstr "Сбросить фильтры"
 
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:10
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:13
 msgid "Search projects..."
 msgstr "Поиск проектов..."
 
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:15
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:18
 msgid "By Course"
 msgstr "По курсу"
 
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:16
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:19
 msgid "By Language"
 msgstr "По языку"
 
-#: .\platform_web\templates\website\dashboard\parts\project_filters.html:21
+#: .\platform_web\templates\website\dashboard\parts\project_filters.html:24
 msgid "All"
 msgstr "Все"
 
@@ -381,16 +502,16 @@ msgstr "Для этого языка пока нет проектов."
 msgid "No programming languages found."
 msgstr "Языки программирования не найдены."
 
-#: .\platform_web\templates\website\dashboard\parts\sidebar.html:18
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:23
 #: .\platform_web\templates\website\parts\layout\nav.html:17
 msgid "Admin"
 msgstr "Админка"
 
-#: .\platform_web\templates\website\dashboard\parts\sidebar.html:45
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:50
 msgid "Account"
 msgstr "Аккаунт"
 
-#: .\platform_web\templates\website\dashboard\parts\sidebar.html:51
+#: .\platform_web\templates\website\dashboard\parts\sidebar.html:56
 #: .\platform_web\templates\website\parts\layout\nav.html:24
 msgid "Logout"
 msgstr "Выйти"
@@ -426,55 +547,61 @@ msgstr "Заголовок"
 msgid "What's on your mind?"
 msgstr "О чем вы думаете?"
 
-#: .\platform_web\views\dashboard.py:48
+#: .\platform_web\views\dashboard.py:49
 msgid "This username is reserved, sorry :( Please choose another."
 msgstr "Извини, но юзернейм уже занят. Придумай что-то другое"
 
-#: .\platform_web\views\dashboard.py:53
+#: .\platform_web\views\dashboard.py:54
 msgid "Username must contain only letters, numbers, and underscores."
 msgstr "В юзернейме разрешены только буквы, цифры и подчеркивания."
 
-#: .\platform_web\views\dashboard.py:58
+#: .\platform_web\views\dashboard.py:59
 msgid "Username cannot be numbers only."
 msgstr "Юзернейм не может состоять только из цифр, прости"
 
-#: .\platform_web\views\dashboard.py:63
+#: .\platform_web\views\dashboard.py:64
 msgid "Username cannot contain invisible characters."
 msgstr "Не используй невидимые символы, это не есть хорошо"
 
-#: .\platform_web\views\dashboard.py:68
+#: .\platform_web\views\dashboard.py:69
 msgid "Username cannot contain HTML entities."
 msgstr "Не используй HTML в юзернейме, это не есть хорошо"
 
-#: .\platform_web\views\dashboard.py:73
+#: .\platform_web\views\dashboard.py:74
 msgid "Username cannot contain unicode escape sequences."
 msgstr "Не используй unicode escape sequences в юзернейме, это не есть хорошо"
 
-#: .\platform_web\views\dashboard.py:78
+#: .\platform_web\views\dashboard.py:79
 msgid "Username cannot start or end with an underscore."
 msgstr "Юзернейм не может начинаться или заканчиваться с подчеркивания."
 
-#: .\platform_web\views\dashboard.py:83
+#: .\platform_web\views\dashboard.py:84
 msgid "Username cannot contain consecutive underscores."
 msgstr "Нельзя использовать идущие подряд подчеркивания."
 
-#: .\platform_web\views\dashboard.py:89
+#: .\platform_web\views\dashboard.py:90
 #, python-format
 msgid "Username must be %(min_length)d-%(max_length)d characters long."
 msgstr ""
 "Длина юзернейма должна быть от %(min_length)d до %(max_length)d символов."
 
-#: .\platform_web\views\dashboard.py:98
+#: .\platform_web\views\dashboard.py:99
 msgid "Username already taken."
 msgstr "Юзернейм уже занят, прости"
 
-#: .\platform_web\views\dashboard.py:102
+#: .\platform_web\views\dashboard.py:103
 msgid "Username updated successfully."
 msgstr "Юзернейм успешно обновлён!"
 
-#: .\platform_web\views\dashboard.py:120
+#: .\platform_web\views\dashboard.py:121
 msgid "Language preference saved."
 msgstr "Язык интерфейса обновлён!"
+
+#~ msgid "Project Stages"
+#~ msgstr "Этапы проекта"
+
+#~ msgid "No stages defined."
+#~ msgstr "Этапы не определены."
 
 #~ msgid "No projects for this course yet."
 #~ msgstr "Для этого курса пока нет проектов."

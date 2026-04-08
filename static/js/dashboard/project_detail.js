@@ -19,12 +19,16 @@ function togglePartsList() {
   if (!list) return
   if (list.style.display === 'none') {
     list.style.display = ''
-    icon.classList.remove('bi-chevron-right')
-    icon.classList.add('bi-chevron-down')
+    if (icon) {
+      icon.classList.remove('bi-chevron-right')
+      icon.classList.add('bi-chevron-down')
+    }
   } else {
     list.style.display = 'none'
-    icon.classList.remove('bi-chevron-down')
-    icon.classList.add('bi-chevron-right')
+    if (icon) {
+      icon.classList.remove('bi-chevron-down')
+      icon.classList.add('bi-chevron-right')
+    }
   }
 }
 
@@ -37,6 +41,14 @@ function toggleStages() {
     list.style.display = 'none';
   }
 }
+
+// Delegate click handling so toggle works even if the button is re-rendered later.
+document.addEventListener('click', function (event) {
+  const toggleBtn = event.target.closest('#toggle-parts-btn');
+  if (!toggleBtn) return;
+  event.preventDefault();
+  togglePartsList();
+});
 
 
 document.addEventListener('DOMContentLoaded', function () {

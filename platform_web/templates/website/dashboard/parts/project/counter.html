@@ -1,21 +1,23 @@
+{% load i18n %}
+
 <div class="counter text">
   {% if project.course %}
     {% if project.type == 'project' %}
       {% if filtered_projects|length == 1 %}
-        Project #1 in "{{ project.course.title }}" progression
+        {% blocktranslate with course_title=project.course.title %}Project #1 in "{{ course_title }}" progression{% endblocktranslate %}
       {% else %}
-        Project #{{ project.course_order }} of {{ filtered_projects|length }} in "{{ project.course.title }}" progression
+        {% blocktranslate with order=project.course_order total=filtered_projects|length course_title=project.course.title %}Project #{{ order }} of {{ total }} in "{{ course_title }}" progression{% endblocktranslate %}
       {% endif %}
     {% elif project.type == 'topic' %}
       {% if filtered_topics|length == 1 %}
-        Topic #1 in "{{ project.course.title }}" progression
+        {% blocktranslate with course_title=project.course.title %}Topic #1 in "{{ course_title }}" progression{% endblocktranslate %}
       {% else %}
-        Topic #{% for t in filtered_topics %}
+        {% trans "Topic #" %}{% for t in filtered_topics %}
           {% if t.pk == project.pk %}{{ forloop.counter }}{% endif %}
-        {% endfor %}of {{ filtered_topics|length }} in "{{ project.course.title }}" progression
+        {% endfor %}{% blocktranslate with total=filtered_topics|length course_title=project.course.title %} of {{ total }} in "{{ course_title }}" progression{% endblocktranslate %}
       {% endif %}
     {% else %}
-      #{{ project.course_order }} in "{{ project.course.title }}" progression
+      {% blocktranslate with order=project.course_order course_title=project.course.title %}#{{ order }} in "{{ course_title }}" progression{% endblocktranslate %}
     {% endif %}
   {% else %}
     #{{ project.course_order }}

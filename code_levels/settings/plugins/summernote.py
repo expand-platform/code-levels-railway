@@ -1,4 +1,4 @@
-SUMMERNOTE_THEME = "bs4"
+SUMMERNOTE_THEME = "bs3"
 
 SUMMERNOTE_CONFIG = {
     "css": (
