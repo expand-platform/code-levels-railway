@@ -2,6 +2,7 @@
 {% load static %}
 {% load i18n %}
 {% load youtube_tags %}
+{% load html_tags %}
 
 {% block title %}
   {{ part.title }} | {{ website_config.site_name }}
@@ -95,7 +96,7 @@
             <section class="objectives mb-4">
               <h2 class="subtitle">{% trans 'Objectives' %}</h2>
               <ol class="list-group p-0">
-                {% for obj in part.objectives %}
+                {% for obj in part.objectives|li_items %}
                   <li class="list-group-item">
                     <div class="row align-items-center">
                       <div class="col col-md-10">

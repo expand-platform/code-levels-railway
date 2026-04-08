@@ -31,8 +31,8 @@ class Lesson(models.Model):
     codepen_url = models.URLField(blank=True, null=True)
     
     description=models.TextField(blank=True)
-    objectives=models.JSONField(
-        default=list, blank=True, help_text=_("List of lesson objectives")
+    objectives=models.TextField(
+        blank=True, default="", help_text=_("List of lesson objectives")
     )
 
     order = models.PositiveIntegerField(default=0)

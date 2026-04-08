@@ -101,9 +101,9 @@
     font-size: 1rem;
 }
 
-.stages-list,
-.stages-list li {
-    list-style-type: decimal;
+.stages-list ul,
+.stages-list ul li {
+    list-style-type: disc;
 }
 
 .stages-list {

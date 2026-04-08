@@ -74,6 +74,7 @@ class ProjectAdminForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             "description": SummernoteWidget(),
+            "stages": SummernoteWidget(),
         }
 
 
@@ -170,6 +171,7 @@ class LessonAdminForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             "description": SummernoteWidget(),
+            "objectives": SummernoteWidget(),
         }
 
     def __init__(self, *args, **kwargs):

@@ -64,19 +64,13 @@
           <hr class="line mb-5" />
         {% endif %}
 
-        {% comment %} {% if project.stages %}
+         {% if project.stages %}
           <section class="stages mb-4">
             <h2 class="subtitle mb-3">{% trans "Project Stages" %}</h2>
-            <ol id="stages-list" class="stages-list">
-              {% for stage in project.stages %}
-                <li>{{ stage }}</li>
-              {% empty %}
-                <li>{% trans "No stages defined." %}</li>
-              {% endfor %}
-            </ol>
+            <div id="stages-list" class="stages-list">{{ project.stages|safe }}</div>
           </section>
           <hr class="line mb-5" />
-        {% endif %} {% endcomment %}
+        {% endif %}
 
         {% if parts %}
         <section class="project-parts mb-5">

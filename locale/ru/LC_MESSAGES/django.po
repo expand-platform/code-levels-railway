@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 13:23+0300\n"
+"POT-Creation-Date: 2026-04-08 13:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -343,11 +343,6 @@ msgstr "Тут ещё нет уроков, но мы их скоро запус�
 msgid "Start the Project"
 msgstr "Начать проект"
 
-#: .\platform_web\templates\website\dashboard\pages\project_details.html:122
-#, python-format
-msgid "Explore %(project_title)s"
-msgstr "Исследовать %(project_title)s"
-
 #: .\platform_web\templates\website\dashboard\pages\project_details.html:132
 msgid "Edit Project"
 msgstr "Редактировать проект"
@@ -596,6 +591,10 @@ msgstr "Юзернейм успешно обновлён!"
 #: .\platform_web\views\dashboard.py:121
 msgid "Language preference saved."
 msgstr "Язык интерфейса обновлён!"
+
+#, python-format
+#~ msgid "Explore %(project_title)s"
+#~ msgstr "Начать %(project_title)s"
 
 #~ msgid "Project Stages"
 #~ msgstr "Этапы проекта"

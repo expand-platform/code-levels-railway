@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='changelog',
             name='version',
-            field=models.CharField(help_text='Format: major.minor.patch (e.g. 1.4.46)', max_length=20, unique=True, validators=[platform_web.models.base.Changelog.validate_version]),
+            field=models.CharField(help_text='Format: major.minor.patch (e.g. 1.4.46)', max_length=20, unique=True),
         ),
     ]
