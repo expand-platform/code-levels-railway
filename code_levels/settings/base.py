@@ -9,6 +9,9 @@ from code_levels.settings.drf import REST_FRAMEWORK, SIMPLE_JWT
 
 from code_levels.settings.config.Dotenv import dotenv
 
+# plugins
+from code_levels.settings.plugins.summernote import SUMMERNOTE_THEME, SUMMERNOTE_CONFIG
+
 
 load_dotenv(".env")
 

@@ -82,9 +82,9 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
     inlines = [LessonsInline]
     changeform_format = "horizontal_tabs"
     list_display = (
-        # "order",
         "course_order",
         "title",
+        "language",
         "course",
         "type",
         "get_programming_languages",
