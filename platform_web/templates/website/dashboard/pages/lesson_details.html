@@ -99,11 +99,11 @@
                 {% for obj in part.objectives|li_items %}
                   <li class="list-group-item">
                     <div class="row align-items-center">
-                      <div class="col col-md-10">
+                      <div class="col col-md-9">
                         <input type="checkbox" class="me-2 cursor-pointer" id="objective-{{ forloop.counter }}" />
                         <label for="objective-{{ forloop.counter }}" class="cursor-pointer mb-0">{{ obj }}</label>
                       </div>
-                      <div class="col col-md-2 text-end">
+                      <div class="col col-md-3 text-end">
                         <span class="badge bg-light text-dark border me-3">#{{ forloop.counter }}</span>
                       </div>
                     </div>

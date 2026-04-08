@@ -1,8 +1,5 @@
 @import url('../theme/colors.css');
 
-:root {
-    /* --lesson-card-width: #f9f9f9; */
-}
 
 .lesson-details div {
     white-space: normal;

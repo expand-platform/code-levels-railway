@@ -7,6 +7,16 @@ pre {
   left: -100px;
 }
 
-.project-details h2, .lesson-details h2 {
+.project-details h2,
+.lesson-details h2 {
   margin: 1rem 0 2rem 0;
+}
+
+.project-details h2.subtitle,
+.lesson-details h2.subtitle {
+  margin: 0 0 1.5rem 0;
+}
+
+.objectives label {
+  display: inline;
 }
