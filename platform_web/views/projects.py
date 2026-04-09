@@ -8,6 +8,8 @@ from platform_web.models.app.project.Lesson import Lesson
 from platform_web.models.app.project.Project import Project
 from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
 
+def map_view(request):
+    return render(request, "website/dashboard/pages/map.html", {})
 
 
 def _render_projects_page(request, lang=None, page_mode="projects"):

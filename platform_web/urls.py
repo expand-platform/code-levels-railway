@@ -19,4 +19,8 @@ urlpatterns = [
     # Project
     path("<str:lang>/projects/<slug:slug>/", project_details_view, name="project_details"),
     path("<str:lang>/projects/<slug:slug>/lesson/<int:order>/", lesson_details_view, name="lesson_details"),
+    
+    # Test
+    path("dashboard/map/", map_view, name="map"),
+    
 ]

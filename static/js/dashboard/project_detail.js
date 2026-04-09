@@ -42,12 +42,38 @@ function toggleStages() {
   }
 }
 
+function toggleStagesList() {
+  const list = document.getElementById('stages-timeline')
+  const icon = document.getElementById('toggle-stages-icon')
+  if (!list) return
+  if (list.style.display === 'none') {
+    list.style.display = ''
+    if (icon) {
+      icon.classList.remove('bi-chevron-right')
+      icon.classList.add('bi-chevron-down')
+    }
+  } else {
+    list.style.display = 'none'
+    if (icon) {
+      icon.classList.remove('bi-chevron-down')
+      icon.classList.add('bi-chevron-right')
+    }
+  }
+}
+
 // Delegate click handling so toggle works even if the button is re-rendered later.
 document.addEventListener('click', function (event) {
   const toggleBtn = event.target.closest('#toggle-parts-btn');
   if (!toggleBtn) return;
   event.preventDefault();
   togglePartsList();
+});
+
+document.addEventListener('click', function (event) {
+  const toggleBtn = event.target.closest('#toggle-stages-btn')
+  if (!toggleBtn) return
+  event.preventDefault()
+  toggleStagesList()
 });
 
 

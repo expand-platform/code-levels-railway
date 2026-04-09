@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="{% static 'css/dashboard/projects.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/project_detail.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/projects-common.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/dashboard/timeline.css' %}" />
 {% endblock %}
 
 {% block extra_js %}
@@ -30,11 +31,11 @@
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/project_detail.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/timeline.js' %}" defer></script>
 {% endblock %}
 
 {% block dashboard_content %}
   <section class="project-details">
-    
     <section class="container position-relative">
       {# < #}
       <div class="back-to-project-wrapper position-absolute mb-3">
@@ -51,10 +52,10 @@
       {% include 'website/dashboard/parts/project/thumbnail.html' %}
       {% include 'website/dashboard/parts/project/updated.html' %}
 
-      <main class="content box">
+      <div class="content box">
         {% if project.description or project.codepen_url %}
           <section class="description mb-4">
-            <h2 class="subtitle">{% trans "In this project" %}</h2>
+            <h2 class="subtitle">{% trans 'In this project' %}</h2>
             <p>{{ project.description|safe }}</p>
 
             {# codepen #}
@@ -64,26 +65,28 @@
           <hr class="line mb-5" />
         {% endif %}
 
-         {% comment %} {% if project.stages %}
-          <section class="stages mb-4">
-            <h2 class="subtitle mb-3">{% trans "Project Stages" %}</h2>
-            <div id="stages-list" class="stages-list">{{ project.stages|safe }}</div>
+        {% if project.stages %}
+          <section class="stages mb-5">
+            <div class="d-flex align-items-center">
+              <h2 class="subtitle mb-0 me-2">{% trans 'Project Stages' %}</h2>
+              <button id="toggle-stages-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Stages' %}"><i id="toggle-stages-icon" class="bi bi-chevron-down"></i></button>
+            </div>
+            <div id="stages-timeline">
+              {% include 'website/dashboard/parts/project/timeline.html' %}
+            </div>
           </section>
-          <hr class="line mb-5" />
-        {% endif %} {% endcomment %}
+        {% endif %}
 
         {% if parts %}
-        <section class="project-parts mb-5">
-          <div class="d-flex align-items-center mb-3">
-            <h2 class="subtitle mb-0 me-2" style="color: #222; font-weight: 600;">{% trans "Lessons" %}</h2>
-            <button id="toggle-parts-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Lessons' %}"><i id="toggle-parts-icon" class="bi bi-chevron-down"></i></button>
-            {% if user.is_staff %}
-              <button id="save-order-btn" class="btn btn-sm btn-success ms-3" style="display:none;">{% trans "Save Order" %}</button>
-            {% endif %}
-          </div>
-          {% endif %}
+          <section class="project-parts mb-5">
+            <div class="d-flex align-items-center mb-3">
+              <h2 class="subtitle mb-0 me-2" style="color: #222; font-weight: 600;">{% trans 'Lessons' %}</h2>
+              <button id="toggle-parts-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Lessons' %}"><i id="toggle-parts-icon" class="bi bi-chevron-down"></i></button>
+              {% if user.is_staff %}
+                <button id="save-order-btn" class="btn btn-sm btn-success ms-3" style="display:none;">{% trans 'Save Order' %}</button>
+              {% endif %}
+            </div>
 
-          {% if parts %}
             <form id="reorder-form" method="post" style="margin:0;">
               {% csrf_token %}
               <ol id="parts-list" class="list-group" data-project-slug="{{ project.slug }}" style="background: #f9f9f9; border-radius: 8px; border: 1px solid #eee; transition: max-height 0.3s;">
@@ -100,16 +103,18 @@
                 {% endfor %}
               </ol>
             </form>
-          {% else %}
-            <p class="text-muted m-0">{% trans "No lessons here, but we'll launch them soon." %}</p>
-          {% endif %}
-        </section>
+          </section>
+        {% else %}
+          <p class="text-muted m-0">
+            {% trans "No lessons here, but we'll launch them soon." %}
+          </p>
+        {% endif %}
 
         {% if parts %}
           <div class="project-start mb-2">
             <a href="{% url 'lesson_details' lang=current_lang slug=project.slug order=parts.0.order %}" class="start-project-btn d-inline-block">
               <i class="bi bi-chevron-double-right d-inline-block pt-1"></i>
-                <span>{{ project.title|truncatechars:65 }}</span>
+              <span>{{ project.title|truncatechars:65 }}</span>
             </a>
           </div>
         {% endif %}
@@ -126,7 +131,7 @@
             </form>
           </div>
         {% endif %}
-      </main>
+      </div>
     </section>
   </section>
 {% endblock %}
