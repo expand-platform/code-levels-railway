@@ -16,9 +16,13 @@
     transition: .25s ease-in-out;
 }
 
-.dashboard-nav.opened {
-    padding: .5rem 2rem;
+
+@media screen and (min-width: 768px) {
+    .dashboard-nav.opened {
+        padding: .5rem 2rem;
+    }
 }
+
 
 .dashboard-nav .col.left {
     position: relative;

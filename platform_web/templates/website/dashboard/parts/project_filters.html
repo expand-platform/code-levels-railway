@@ -1,16 +1,16 @@
 {% load i18n %}
 
 <div class="col col-md-9 flex-basis-100-smo d-flex justify-content-end align-items-end">
-    <form method="get" class="projects-toggle-section col d-flex flex-wrap justify-content-md-end column-gap-3 mb-3" >
+    <form method="get" class="projects-toggle-section col d-flex flex-wrap justify-content-md-end align-items-center column-gap-3 mb-3" >
       {% if page_mode == 'courses' %}
         <input type="hidden" name="is_video_course" value="true">
       {% endif %}
-      <div class="d-md-flex flex-basis-100-smo text-center text-md-start column-gap-2 align-items-center justify-content-center justify-content-md-start mb-3 me-md-3">
-        <span class="reset-button mb-2 m-md-0">{% trans "Reset Filters" %}</span>
+      <div class="d-md-flex flex-basis-100-smo text-center text-md-start column-gap-2 align-items-center justify-content-center justify-content-md-start mb-3 m-md-0 me-md-3">
+        <span class="reset-button mb-2 m-md-0 w-100">{% trans "Reset Filters" %}</span>
         <span id="search-icon" style="cursor:pointer; font-size:1.3em; color: black;">
           <i class="bi bi-search"></i>
         </span>
-        <input id="project-search-input" name="search" type="text" class="form-control ms-2 w-100" style="display:none; width:180px;" placeholder="{% trans 'Search projects...' %}" value="{{ search|default:'' }}">
+        <input id="project-search-input" name="search" type="text" class="form-control ms-md-2 w-100" style="display:none; width:180px;" placeholder="{% trans 'Search projects...' %}" value="{{ search|default:'' }}">
       </div>
       
       <div class="d-flex flex-basis-100-smo text-center text-md-start flex-column align-items-end mb-2 m-md-0">

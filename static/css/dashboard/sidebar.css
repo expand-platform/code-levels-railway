@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 220px;
+    width: 0;
     height: 100%;
     background: var(--light);
     z-index: 1;
@@ -10,9 +10,17 @@
     transition: .3s ease;
     overflow-x: hidden;
     scrollbar-width: none;
-    padding: .5rem 0 0 0;
+    font-size: 1.2rem;
+    padding: 3rem 0 0 0;
 }
 
+@media screen and (min-width: 768px) {
+    #sidebar {
+        width: 220px;
+        font-size: 1.1rem;
+        padding: .5rem 0 0 0;
+    }
+}
 
 
 #sidebar::--webkit-scrollbar {
@@ -22,6 +30,18 @@
 #sidebar.hide {
     width: 0;
 }
+
+/* mobile */
+#sidebar.visible {
+    width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    #sidebar.visible {
+        width: 220px;
+    }
+}
+
 
 #sidebar .brand {
     font-size: 24px;
@@ -132,14 +152,4 @@
 
 #sidebar .side-menu.bottom li:nth-last-of-type(2) {
     bottom: 50px;
-}
-
-@media screen and (max-width: 768px) {
-    #sidebar {
-        width: 100%;
-    }
-
-    #sidebar .side-menu li a{
-        font-size: 1.2rem;
-    }
 }

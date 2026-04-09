@@ -71,9 +71,9 @@
         {% endif %}
 
         {% if project.stages %}
-          <section class="stages mb-5">
-            <div class="d-flex align-items-center">
-              <h2 class="subtitle mb-0 me-2">{% trans 'Project Stages' %}</h2>
+          <section class="stages mb-4">
+            <div class="d-flex align-items-center mb-4 mb-md-0">
+              <h2 class="subtitle m-0 mb-md-0 me-2">{% trans 'Project Stages' %}</h2>
               <button id="toggle-stages-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Stages' %}"><i id="toggle-stages-icon" class="bi bi-chevron-down"></i></button>
             </div>
             <div id="stages-timeline">
@@ -96,14 +96,14 @@
               {% csrf_token %}
               <ol id="parts-list" class="list-group" data-project-slug="{{ project.slug }}" style="background: #f9f9f9; border-radius: 8px; border: 1px solid #eee; transition: max-height 0.3s;">
                 {% for part in parts %}
-                  <li class="list-group-item d-flex justify-content-between align-items-center part-item" data-id="{{ part.id }}" style="background: #fff; border: none; border-bottom: 1px solid #f0f0f0; color: #333;">
-                    <span class="d-flex align-items-center">
+                  <li class="part-item list-group-item d-flex flex-column flex-md-row row-gap-2 justify-content-between" data-id="{{ part.id }}" style="background: #fff; border: none; border-bottom: 1px solid #f0f0f0; color: #333;">
+                    <span class="d-md-flex align-items-center">
                       {% if user.is_staff %}
                         <span class="drag-handle me-2" style="cursor:move;"><i class="bi bi-list"></i></span>
                       {% endif %}
-                      <a href="{% url 'lesson_details' lang=current_lang slug=project.slug order=part.order %}" style="color: #007bff; text-decoration: none; font-weight: 500; padding-left: 10px;">{{ part.title }}</a>
+                      <a class="list-group-link" href="{% url 'lesson_details' lang=current_lang slug=project.slug order=part.order %}"><span class="d-md-none me-2 me-md-0">#{{ forloop.counter }}.</span>{{ part.title }}</a>
                     </span>
-                    <span class="badge bg-light text-dark border" style="font-size: 0.95em;">#{{ forloop.counter }}</span>
+                    <span class="badge d-none d-md-block bg-light text-dark border" style="font-size: 0.95em; max-width: 25%">#{{ forloop.counter }}</span>
                   </li>
                 {% endfor %}
               </ol>

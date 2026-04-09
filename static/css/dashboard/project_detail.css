@@ -10,17 +10,37 @@
     max-width: var(--project-detail-width);
     margin: 0 auto;
     background: #fff;
-    padding: 2rem;
+    padding: 1.25rem;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
     color: black;
 }
 
-.project-details .content {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    padding: 1.5rem;
+@media screen and (min-width: 768px) {
+    .project-details .container {
+        padding: 2rem;
+    }
+}
+
+
+.project-details .content,
+.dashboard .box {
+    padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+
+    .project-details .content,
+    .dashboard .box {
+        background: #fff;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+}
+
+#description-content {
+    font-size: 1.15rem;
 }
 
 .project-details .content ul,
@@ -35,6 +55,7 @@
 .project-details .content ol,
 .project-details .content ol li {
     list-style-type: decimal;
+    font-size: 1.1rem;
 }
 
 .project-details .title,
@@ -154,6 +175,20 @@
     text-align: center;
     margin-top: 2rem;
 }
+
+.list-group-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    padding-left: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .list-group-link {
+        padding-left: 10px;
+    }
+}
+
 
 .start-project-btn {
     background: #2d8cff;

@@ -1,52 +1,34 @@
-import { saveToLocalStorage, loadFromLocalStorage } from "../helpers/localStorage.js";
-
 const sidebarBurgerButton = document.querySelector('.dashboard-nav .bx.bx-menu');
 const sidebar = document.getElementById('sidebar') || document.querySelector('.sidebar');
 const logo = document.querySelector('#sidebar .brand .text');
 const dashboardNav = document.querySelector('.dashboard .dashboard-nav');
 
-const sidebarStateKey = 'isDashboardSidebarHidden';
 
-// false - visible, true - hidden, but save to localStorage as inversed value
-sidebarBurgerButton.addEventListener('click', function () {
-    let isSidebarHidden = sidebar.classList.contains('hide');
+sidebarBurgerButton.onclick = function () {
+    let isHidden = sidebar.clientWidth == 0;
 
-    if (isSidebarHidden) {
-        displayElements(true);
+    if (window.innerWidth <= 768) {
+        if (isHidden) {
+            sidebar.classList.add('visible');
+            dashboardNav.classList.remove('start-0', 'opened');
+        }
+        else {
+            sidebar.classList.remove('visible');
+            dashboardNav.classList.add('start-0', 'opened');
+        }
     }
     else {
-        displayElements(false);
+        if (isHidden) {
+            sidebar.classList.remove('hide');
+            dashboardNav.classList.remove('start-0', 'opened');
+        }
+        else {
+            sidebar.classList.add('hide');
+            dashboardNav.classList.add('start-0', 'opened');
+        }
     }
 
-    saveToLocalStorage(sidebarStateKey, !isSidebarHidden);
-});
-
-export function loadSidebarState() {
-    let isSidebarHidden = loadFromLocalStorage(sidebarStateKey);
-
-    if (isSidebarHidden) {
-        displayElements(false);
-    } else {
-        displayElements(true);
-    }
-}
-
-function displayElements(show) {
-    if (show) {
-        sidebar.classList.remove('hide');
-        logo.classList.remove('visually-hidden');
-        dashboardNav.classList.remove('start-0', 'opened')
-    }
-    else {
-        sidebar.classList.add('hide');
-        logo.classList.add('visually-hidden');
-        dashboardNav.classList.add('start-0', 'opened')
-    }
-}
-
-if (window.innerWidth <= 768) {
-    displayElements(false);
-}
+};
 
 
 document.addEventListener("DOMContentLoaded", function () {

@@ -2,8 +2,15 @@
 	/* border: 1px solid #e6e6e6; */
 	border-radius: 12px;
 	background: #fff;
-	padding: 16px;
+	padding: 0;
 }
+
+@media screen and (min-width: 768px) {
+	.simple-timeline {
+		padding: 24px;
+	}
+}
+
 
 .simple-timeline__header {
 	display: flex;
@@ -15,7 +22,7 @@
 	flex: 1;
 	display: flex;
 	align-items: center;
-    justify-content: center;
+	justify-content: center;
 	gap: 20px;
 	overflow-x: auto;
 	padding: 6px 2px;
@@ -64,7 +71,7 @@
 }
 
 .simple-timeline__content {
-    text-align: center;
+	text-align: center;
 	margin-top: .5rem;
 	border-top: 1px solid #f0f0f0;
 	padding-top: 14px;
@@ -72,22 +79,13 @@
 
 .simple-timeline__title {
 	margin: 0 0 8px;
-	font-size: 20px;
 	color: #222;
+	font-size: 1.3rem;
 }
 
 .simple-timeline__text {
 	margin: 0;
 	color: #666;
 	line-height: 1.55;
-}
-
-@media (max-width: 768px) {
-	.simple-timeline {
-		padding: 12px;
-	}
-
-	.simple-timeline__title {
-		font-size: 18px;
-	}
+	font-size: 1.15rem;
 }

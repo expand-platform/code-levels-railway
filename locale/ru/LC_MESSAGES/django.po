@@ -542,7 +542,7 @@ msgstr "Заголовок"
 
 #: .\platform_web\templates\website\parts\layout\nav.html:10
 msgid "What's on your mind?"
-msgstr "О чем вы думаете?"
+msgstr "Куда идём?"
 
 #: .\platform_web\views\dashboard.py:49
 msgid "This username is reserved, sorry :( Please choose another."
