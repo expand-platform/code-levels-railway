@@ -55,11 +55,16 @@
       <div class="content box">
         {% if project.description or project.codepen_url %}
           <section class="description mb-4">
-            <h2 class="subtitle">{% trans 'In this project' %}</h2>
-            <p>{{ project.description|safe }}</p>
+            <div class="d-flex align-items-center mb-3">
+              <h2 class="subtitle mb-0 me-2">{% trans 'In this project' %}</h2>
+              <button id="toggle-description-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Description' %}"><i id="toggle-description-icon" class="bi bi-chevron-down"></i></button>
+            </div>
+            <div id="description-content">
+              <p>{{ project.description|safe }}</p>
 
-            {# codepen #}
-            {% include 'website/dashboard/parts/project/codepen.html' %}
+              {# codepen #}
+              {% include 'website/dashboard/parts/project/codepen.html' %}
+            </div>
           </section>
 
           <hr class="line mb-5" />

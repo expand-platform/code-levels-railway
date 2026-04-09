@@ -50,7 +50,7 @@
 		if (!match) return { headline: clean, body: '' }
 
 		return {
-			headline: normalize(match[1]),
+			headline: normalize(match[1]).replace(/\.$/, ''),
 			body: normalize(match[2]),
 		}
 	}

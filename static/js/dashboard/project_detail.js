@@ -61,6 +61,25 @@ function toggleStagesList() {
   }
 }
 
+function toggleDescriptionSection() {
+  const content = document.getElementById('description-content')
+  const icon = document.getElementById('toggle-description-icon')
+  if (!content) return
+  if (content.style.display === 'none') {
+    content.style.display = ''
+    if (icon) {
+      icon.classList.remove('bi-chevron-right')
+      icon.classList.add('bi-chevron-down')
+    }
+  } else {
+    content.style.display = 'none'
+    if (icon) {
+      icon.classList.remove('bi-chevron-down')
+      icon.classList.add('bi-chevron-right')
+    }
+  }
+}
+
 // Delegate click handling so toggle works even if the button is re-rendered later.
 document.addEventListener('click', function (event) {
   const toggleBtn = event.target.closest('#toggle-parts-btn');
@@ -74,6 +93,13 @@ document.addEventListener('click', function (event) {
   if (!toggleBtn) return
   event.preventDefault()
   toggleStagesList()
+});
+
+document.addEventListener('click', function (event) {
+  const toggleBtn = event.target.closest('#toggle-description-btn')
+  if (!toggleBtn) return
+  event.preventDefault()
+  toggleDescriptionSection()
 });
 
 
