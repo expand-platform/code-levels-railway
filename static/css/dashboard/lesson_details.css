@@ -78,3 +78,21 @@
     color: var(--black);
     border-color: var(--dark-grey);
 }
+
+.prev-button,
+.next-button {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+
+    .prev-button,
+    .next-button {
+        width: auto;
+        min-width: 110px;
+    }
+}
+
+.next-button {
+    letter-spacing: .05rem;
+}

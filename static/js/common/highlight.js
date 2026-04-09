@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     document.querySelectorAll('pre').forEach((pre) => {
-        pre.classList.add('position-relative', 'p-1', 'overflow-hidden');
+        pre.classList.add('position-relative', 'p-1');
         hljs.highlightElement(pre);
 
         const copyBtn = document.createElement('button');
