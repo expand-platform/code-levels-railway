@@ -3,6 +3,7 @@ const CodepenActiveTabs = "result";
 
 document.addEventListener('DOMContentLoaded', function () {
     const content = document.querySelector('.lesson-details .content');
+    const serverRenderedCodepen = content?.querySelector('.codepen-wrapper .codepen');
     let codepenParagraph = null;
 
     if (content) {
@@ -14,9 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ! заняться бекапами БД!
+    
 
-    if (codepenParagraph && window.lessonCodepenUrl) {
+    if (!serverRenderedCodepen && codepenParagraph && window.lessonCodepenUrl) {
         console.log('codepen working');
         let urlHash = "";
         let title = "";

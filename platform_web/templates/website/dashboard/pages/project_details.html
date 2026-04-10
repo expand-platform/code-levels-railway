@@ -20,13 +20,8 @@
   <script src="{% static 'js/libs/Sortable.min.js' %}" type="module" defer></script>
   <script src="{% static 'js/libs/medium-zoom.min.js' %}" type="module" defer></script>
 
-  <script>
-    window.projectCodepenUrl = "{{ project.codepen_url|default:'' }}"
-  </script>
-
   <script src="{% static 'js/common/zoomImage.js' %}" type="module" defer></script>
   <script src="{% static 'js/common/highlight.js' %}" type="module" defer></script>
-  <script type="module" src="{% static 'js/common/codepen.js' %}" defer></script>
 
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
@@ -52,8 +47,12 @@
       {% include 'website/dashboard/parts/project/thumbnail.html' %}
       {% include 'website/dashboard/parts/project/updated.html' %}
 
+      {% if project.codepen_url %}
+        {% include 'website/dashboard/parts/project/codepen.html' %}
+      {% endif %}
+
       <div class="content box">
-        {% if project.description or project.codepen_url %}
+        {% if project.description %}
           <section class="description mb-4">
             <div class="d-flex align-items-center mb-3">
               <h2 class="subtitle mb-0 me-2">{% trans 'In this project' %}</h2>
@@ -61,9 +60,6 @@
             </div>
             <div id="description-content">
               <p>{{ project.description|safe }}</p>
-
-              {# codepen #}
-              {% include 'website/dashboard/parts/project/codepen.html' %}
             </div>
           </section>
 

@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load youtube_tags %}
 {% load html_tags %}
+{% load codepen_tags %}
 
 {% block title %}
   {{ part.title }} | {{ website_config.site_name }}
@@ -24,12 +25,9 @@
   <script src="{% static 'js/libs/medium-zoom.min.js' %}" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js" defer></script>
 
-  <script>
-    window.lessonCodepenUrl = "{{ part.codepen_url|default:'' }}"
-  </script>
+
   <script src="{% static 'js/common/zoomImage.js' %}" type="module" defer></script>
   <script src="{% static 'js/common/highlight.js' %}" type="module" defer></script>
-  <script src="{% static 'js/common/codepen.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/lesson_detail.js' %}" defer type="module"></script>
@@ -81,10 +79,25 @@
           <img src="{{ part.thumbnail.url }}" alt="Thumbnail for {{ part.title }}" class="img-fluid rounded" />
         </section>
       {% endif %}
+      <section class="codepen-wrapper">
+        {% if part.codepen_url %}
+          {% with url=part.codepen_url username=part.codepen_url|codepen_username hash=part.codepen_url|codepen_hash %}
+            {% if url|length > 0 %}
+              <section class="codepen-section mb-4">
+                <div class="codepen" data-height="500" data-theme-id="dark" data-default-tab="result" data-user="{{ username }}" data-slug-hash="{{ hash }}" style="height: 500px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 1px solid #ccc; margin: 1em 0; padding: 1em;">
+                  <span>See the Pen <a href="{{ url }}">{{ part.title }}</a> by {{ username }} (<a href="https://codepen.io/{{ username }}">@{{ username }}</a>) on <a href="https://codepen.io">CodePen</a>.</span>
+                </div>
+              </section>
+            {% endif %}
+          {% endwith %}
+        {% endif %}
+      </section>
 
       <div class="row px-3">
         {# description #}
         <main class="content box">
+
+
           <section class="description mb-4">
             <div>{{ part.description|safe }}</div>
           </section>
