@@ -1,4 +1,4 @@
-# Plan
+# TODO
 
-1. Transfer the project ✅
-2. Practice tool: start making UI / basics
+1. Add search by pressing ctrl - p / ctrl - k
+
