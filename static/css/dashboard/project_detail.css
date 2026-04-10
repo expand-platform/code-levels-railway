@@ -34,13 +34,15 @@
         background: #fff;
         border-radius: 12px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    }
-    .dashboard .box {
         padding: 1.5rem;
     }
-    .lesson-details .box {
+    /* .lesson-details .box {
         padding: 0;
-    }
+    } */
+}
+
+.lesson-details .description {
+    font-size: 1.1rem;
 }
 
 #description-content {
