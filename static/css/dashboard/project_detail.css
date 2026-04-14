@@ -29,6 +29,7 @@
 }
 
 @media screen and (min-width: 768px) {
+
     .project-details .content,
     .dashboard .box {
         background: #fff;
@@ -36,9 +37,6 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         padding: 1.5rem;
     }
-    /* .lesson-details .box {
-        padding: 0;
-    } */
 }
 
 .lesson-details .description {
@@ -194,7 +192,6 @@
         padding-left: 10px;
     }
 }
-
 
 .start-project-btn {
     background: #2d8cff;

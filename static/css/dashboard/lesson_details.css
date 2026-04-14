@@ -12,7 +12,6 @@
 }
 
 
-
 .lesson-details .content h2,
 .lesson-details .content h3 {
     margin: 0 0 1rem 0;
@@ -28,7 +27,8 @@
 }
 
 .lesson-details .content h2,
-.lesson-details .content h3 {
+.lesson-details .content h3,
+.lesson-details .content h4 {
     color: var(--text-black);
 }
 
