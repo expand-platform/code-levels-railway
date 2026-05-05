@@ -12,14 +12,13 @@ from code_levels.settings.config.Dotenv import dotenv
 # plugins
 from code_levels.settings.plugins.summernote import SUMMERNOTE_THEME, SUMMERNOTE_CONFIG
 
-
 load_dotenv(".env")
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = dotenv.django_secret_key
-ALLOWED_HOSTS = dotenv.allowed_hosts.split(",")
+ALLOWED_HOSTS = [host.strip() for host in dotenv.allowed_hosts.split(",") if host.strip()]
 
 
 JAZZMIN_SETTINGS = JAZZMIN_SETTINGS_DICT

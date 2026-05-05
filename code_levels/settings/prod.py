@@ -1,10 +1,16 @@
 import os
+from django.core.exceptions import ImproperlyConfigured
 from code_levels.settings.base import *
 from code_levels.settings.allauth.prod import *
 
 from code_levels.settings.config.Dotenv import dotenv
 
 DEBUG = False
+
+if not ALLOWED_HOSTS or "*" in ALLOWED_HOSTS:
+    raise ImproperlyConfigured(
+        "Production requires explicit ALLOWED_HOSTS without wildcard '*'."
+    )
 
 INSTALLED_APPS += [
     "storages",

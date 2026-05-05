@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Dotenv:
-    allowed_hosts = getenv("ALLOWED_HOSTS", "*")
+    allowed_hosts = getenv("ALLOWED_HOSTS", "localhost,127.0.0.1")
     csrf_trusted_origins = getenv("CSRF_TRUSTED_ORIGINS", "http://localhost,http://127.0.0.1")
     django_secret_key = getenv("DJANGO_SECRET_KEY", "")
     django_settings_module = getenv("DJANGO_SETTINGS_MODULE", "code_levels.settings.dev")
