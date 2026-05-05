@@ -1,11 +1,9 @@
 import uuid
 
 from django.db import models
-from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from platform_web.mixins.SeoSlugMixin import SeoSlugMixin
 from platform_web.models.app.project.Project import Project
-
-from platform_web.data.transliteration import transliterate_ru_to_latin
 
 
 TYPE_CHOICES = [
@@ -19,7 +17,7 @@ TYPE_CHOICES = [
 
 
 
-class Lesson(models.Model):
+class Lesson(SeoSlugMixin, models.Model):
     project = models.ForeignKey(Project, related_name="parts", on_delete=models.CASCADE)
     
     title=models.CharField(max_length=255)
@@ -49,24 +47,25 @@ class Lesson(models.Model):
     class Meta:
         db_table = "project_parts"
         ordering = ["order"]
-
-    def save(self, *args, **kwargs):
-        if not self.slug and self.title:
-            transliterated_title = transliterate_ru_to_latin(str(self.title))
-            base_slug = slugify(transliterated_title)
-            if not base_slug:
-                base_slug = slugify(str(self.title))
-            if not base_slug:
-                base_slug = f"lesson-{str(self.uuid)[:8]}"
-
-            slug = base_slug
-            counter = 1
-            while Lesson.objects.filter(slug=slug).exclude(pk=self.pk).exists():
-                slug = f"{base_slug}-{counter}"
-                counter += 1
-            self.slug = slug
-        super().save(*args, **kwargs)
-
+        
     def __str__(self):
         title = self.title
         return str(title) if title else f"Lesson {self.pk}"
+
+    # def save(self, *args, **kwargs):
+    #     if not self.pk:
+    #         self.fill_seo_on_creation()
+        
+    #     if not self.slug and self.title:
+    #         self.slug = SlugService.generate_unique_slug(
+    #             self.title, Lesson, exclude_pk=self.pk, fallback_prefix="lesson"
+    #         )
+    #     super().save(*args, **kwargs)
+        
+    # def fill_seo_on_creation(self):
+    #     if not self.seo_title:
+    #         self.seo_title = SeoService.generate_initial_seo_title(self.title)
+    #     if not self.seo_description:
+    #         self.seo_description = SeoService.generate_initial_seo_description(self.title)
+
+ 
