@@ -69,8 +69,8 @@
 
 		points.forEach((point, pointIndex) => {
 			point.classList.toggle('is-active', pointIndex === activeIndex)
-			point.setAttribute('aria-selected', pointIndex === activeIndex ? 'true' : 'false')
-			point.tabIndex = pointIndex === activeIndex ? 0 : -1
+			// point.setAttribute('aria-selected', pointIndex === activeIndex ? 'true' : 'false')
+			// point.tabIndex = pointIndex === activeIndex ? 0 : -1
 		})
 
 		const current = stages[activeIndex]
@@ -82,7 +82,12 @@
 
 		const currentPoint = points[activeIndex]
 		if (currentPoint) {
-			currentPoint.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' })
+			const targetLeft =
+				currentPoint.offsetLeft - (track.clientWidth - currentPoint.offsetWidth) / 2
+			const maxLeft = Math.max(0, track.scrollWidth - track.clientWidth)
+			const safeLeft = Math.max(0, Math.min(targetLeft, maxLeft))
+
+			track.scrollTo({ left: safeLeft, behavior: 'smooth' })
 		}
 	}
 

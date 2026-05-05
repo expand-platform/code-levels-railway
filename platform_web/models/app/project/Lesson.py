@@ -23,7 +23,7 @@ class Lesson(models.Model):
     project = models.ForeignKey(Project, related_name="parts", on_delete=models.CASCADE)
     
     title=models.CharField(max_length=255)
-    type = models.CharField(max_length=50, choices=TYPE_CHOICES, null=True, blank=True)
+    type = models.CharField(max_length=50, choices=TYPE_CHOICES, default="theory", blank=True)
 
     thumbnail = models.ImageField(upload_to="lesson_images/", blank=True, null=True)
 
