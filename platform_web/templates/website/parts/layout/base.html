@@ -41,6 +41,17 @@
     {% block extra_js %}
 
     {% endblock %}
+
+    {% if not debug %}
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S210487ECS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-S210487ECS');
+    </script>
+    {% endif %}
   </head>
   <body>
     {% block layout %}

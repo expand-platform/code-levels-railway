@@ -1,4 +1,3 @@
-import os
 from django.core.exceptions import ImproperlyConfigured
 from code_levels.settings.base import *
 from code_levels.settings.allauth.prod import *
