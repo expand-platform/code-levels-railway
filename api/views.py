@@ -2,10 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
-from platform_web.models.app.project.Project import Project
-from platform_web.models.app.project.Lesson import Lesson
-from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
-from platform_web.models.app.project.Course import Course
+from platform_web.models.project.Project import Project
+from platform_web.models.project.Lesson import Lesson
+from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
+from platform_web.models.project.Course import Course
 
 
 class ReorderLessonsView(APIView):
@@ -32,27 +32,27 @@ class ReorderLessonsView(APIView):
         return Response({"success": True})
 
 
-class ReorderProjectsByLanguageView(APIView):
-    permission_classes = [IsAdminUser]
+# class ReorderProjectsByLanguageView(APIView):
+#     permission_classes = [IsAdminUser]
 
-    def post(self, request, language_id):
-        order_data = request.data.get("order", [])
-        try:
-            language = ProgrammingLanguage.objects.get(id=language_id)
-        except ProgrammingLanguage.DoesNotExist:
-            return Response(
-                {"success": False, "error": "Language not found."},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+#     def post(self, request, language_id):
+#         order_data = request.data.get("order", [])
+#         try:
+#             language = ProgrammingLanguage.objects.get(id=language_id)
+#         except ProgrammingLanguage.DoesNotExist:
+#             return Response(
+#                 {"success": False, "error": "Language not found."},
+#                 status=status.HTTP_404_NOT_FOUND,
+#             )
 
-        for item in order_data:
-            project_id = item.get("id")
-            project_order = item.get("order")
-            Project.objects.filter(id=project_id, programming_languages=language).update(
-                language_order=project_order
-            )
+#         for item in order_data:
+#             project_id = item.get("id")
+#             project_order = item.get("order")
+#             Project.objects.filter(id=project_id, programming_languages=language).update(
+#                 language_order=project_order
+#             )
 
-        return Response({"success": True})
+#         return Response({"success": True})
 
 
 class ReorderProjectsByCourseView(APIView):

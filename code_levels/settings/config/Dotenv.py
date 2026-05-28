@@ -16,6 +16,7 @@ class Dotenv:
     pguser = getenv("PGUSER", "")
     port = getenv("PORT", "8000")
     drf_secret_key = getenv("DRF_SECRET_KEY", "")
+    redis_url = getenv("REDIS_URL", "")
     
     aws_access_key_id = getenv("R2_ACCESS_KEY_ID", "")
     aws_secret_access_key = getenv("R2_SECRET_ACCESS_KEY", "")

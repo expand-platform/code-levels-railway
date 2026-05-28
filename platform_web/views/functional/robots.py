@@ -1,18 +1,8 @@
-from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 from django.urls import reverse
 
 
-class HomeView(TemplateView):
-    template_name = "website/pages/home.html"
-
-
-class DashboardView(LoginRequiredMixin, TemplateView):
-    template_name = "website/dashboard/dashboard.html"
-
-
-def robots_txt(request):
+def robots_txt(request: HttpRequest) -> HttpResponse:
     sitemap_url = request.build_absolute_uri(
         reverse("django.contrib.sitemaps.views.sitemap")
     )

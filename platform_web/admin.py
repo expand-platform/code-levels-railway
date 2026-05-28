@@ -7,12 +7,12 @@ from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
 from nested_admin.nested import NestedTabularInline, NestedModelAdmin
 
 from platform_web.config.web_config import WebsiteConfigScheme
-from platform_web.models.app.project.Course import Course
-from platform_web.models.app.project.Project import Project
-from platform_web.models.app.project.Lesson import Lesson
-from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
-from platform_web.models.app.project.Difficulty import Difficulty
-from platform_web.models.app.project.Framework import Framework
+from platform_web.models.project.Course import Course
+from platform_web.models.project.Project import Project
+from platform_web.models.project.Lesson import Lesson
+from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
+from platform_web.models.project.Difficulty import Difficulty
+from platform_web.models.project.Framework import Framework
 
 from platform_web.models.base import WebsiteConfig
 from platform_web.models.base import SocialMediaLink
@@ -85,13 +85,12 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
     list_display = (
         "course_order",
         "title",
-        "language",
         "course",
         "type",
         "get_programming_languages",
         "updated_at",
     )
-    list_filter = ("type", "course", "language")
+    list_filter = ("type", "course")
     search_fields = ("title", "description")
     ordering = ("course_order",)
     readonly_fields = ("uuid", "created_at", "updated_at")
@@ -103,7 +102,6 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
                     "title",
                     "image",
                     "type",
-                    "language",
                     "course",
                     "programming_languages",
                     "difficulty",

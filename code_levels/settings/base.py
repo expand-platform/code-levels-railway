@@ -25,7 +25,6 @@ JAZZMIN_SETTINGS = JAZZMIN_SETTINGS_DICT
 
 
 INSTALLED_APPS = [
-    "modeltranslation",
     "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -47,20 +46,19 @@ INSTALLED_APPS = [
     "nested_admin",
     "adminsortable2",
     "django_summernote",
+    "django_rq",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # custom middleware
-    "platform_web.middleware.PreferredLanguageMiddleware",
     "platform_web.middleware.AdminStaffOnlyMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
@@ -109,6 +107,27 @@ DATABASES = {
     }
 }
 
+RQ_QUEUES = {
+    "default": {
+        "URL": dotenv.redis_url or "redis://localhost:6379/0",
+    }
+}
+
+if dotenv.redis_url:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": dotenv.redis_url,
+        }
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "code-levels-local-cache",
+        }
+    }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -126,23 +145,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# i18n
+# Single primary language only.
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 
-LANGUAGES = [
-    ("en", "English"),
-    ("ru", "Russian"),
-]
+LANGUAGES = [("en", "English")]
 
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-LOCALE_PATHS = [
-    BASE_DIR / "locale",
-]
-
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]

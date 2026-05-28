@@ -34,7 +34,7 @@ ACCOUNT_FORMS = {
 }
 
 SITE_ID = 1
-LOGIN_URL = "/login/"
+LOGIN_URL = "/account/login/"
 LOGIN_REDIRECT_URL = "projects"
 LOGOUT_REDIRECT_URL = "home"
 # Use custom social account adapter to autogenerate username

@@ -1,5 +1,33 @@
-from platform_web.views.static import *
-from platform_web.views.functional import *
-from platform_web.views.projects import *
-from platform_web.views.dashboard import *
+from .Home import HomeView
+from .Dashboard import DashboardView
+from .Settings import SettingsView
+from .Changelog import WebsiteChangelogView
+from .Projects import (
+	map_view,
+	projects_view,
+	courses_view,
+	project_details_view,
+	lesson_details_view,
+)
+from .auth.logout import CustomLogoutView, LogoutView, logout_then_login
+from .functional.robots import robots_txt
+from .NotFound import NotFoundPreview, NotFoundView, not_found_404
 
+__all__ = [
+	"HomeView",
+	"DashboardView",
+	"SettingsView",
+	"WebsiteChangelogView",
+	"map_view",
+	"projects_view",
+	"courses_view",
+	"project_details_view",
+	"lesson_details_view",
+	"CustomLogoutView",
+	"LogoutView",
+	"logout_then_login",
+	"robots_txt",
+	"NotFoundPreview",
+	"NotFoundView",
+	"not_found_404",
+]

@@ -27,10 +27,13 @@
               <div class="alert alert-danger">{{ form.non_field_errors }}</div>
             {% endif %}
             {% csrf_token %}
+            {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
             {{ form.login }}
             {{ form.password }}
             <button type="submit" id="login-button" class="mb-5">{% trans "Login" %}</button>
-            <a class="login-with-google-btn" href="{% provider_login_url 'google' %}">{% trans "Sign in with Google" %}</a>
+            <a class="login-with-google-btn" href="{% provider_login_url 'google' process='login' next=redirect_field_value %}">{% trans "Sign in with Google" %}</a>
             <p class="help-text dont-have-account">
               {% trans "Don't have an account?" %} <a href="{% url 'account_signup' %}">{% trans "Sign up" %}</a>
             </p>

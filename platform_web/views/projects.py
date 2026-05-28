@@ -1,18 +1,17 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
-from django.conf import settings
 
-from platform_web.models.app.project.Course import Course
-from platform_web.models.app.project.Lesson import Lesson
-from platform_web.models.app.project.Project import Project
-from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
+from platform_web.models.project.Course import Course
+from platform_web.models.project.Lesson import Lesson
+from platform_web.models.project.Project import Project
+from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 
 def map_view(request):
     return render(request, "website/dashboard/pages/map.html", {})
 
 
-def _render_projects_page(request, lang=None, page_mode="projects"):
+def _render_projects_page(request, page_mode="projects"):
     default_filter = "course"
     default_project_type = "project"
     default_video_filter = "all"
@@ -38,22 +37,12 @@ def _render_projects_page(request, lang=None, page_mode="projects"):
     if is_courses_page:
         is_video_course = "true"
 
-    # Validate lang against allowed values only
-    allowed_langs = {"en", "ru"}
-    if lang not in allowed_langs:
-        request_lang = (getattr(request, "LANGUAGE_CODE", "") or "").split("-")[0]
-        default_lang = (getattr(settings, "LANGUAGE_CODE", "en") or "en").split("-")[0]
-        lang = request_lang if request_lang in allowed_langs else default_lang
-        if lang not in allowed_langs:
-            lang = "en"
-
     context = {
         "page_mode": page_mode,
         "filter_by": filter_by,
         "project_type": project_type,
         "is_video_course": is_video_course,
         "search": search_query,
-        "current_lang": lang,
     }
     context_key = "courses"
 
@@ -81,39 +70,34 @@ def _render_projects_page(request, lang=None, page_mode="projects"):
             projects_qs = projects_qs.filter(is_video_course=False)
         if search_query:
             projects_qs = projects_qs.filter(title__icontains=search_query)
-        projects_qs = projects_qs.filter(language=lang)
         setattr(item, "filtered_projects", projects_qs)
     context[context_key] = items
 
     return render(request, "website/dashboard/pages/projects.html", context)
 
 
-@login_required
-def projects_view(request, lang=None):
-    return _render_projects_page(request, lang=lang, page_mode="projects")
+def projects_view(request):
+    return _render_projects_page(request, page_mode="projects")
 
 
-@login_required
-def courses_view(request, lang=None):
-    return _render_projects_page(request, lang=lang, page_mode="courses")
+def courses_view(request):
+    return _render_projects_page(request, page_mode="courses")
 
 
-def project_details_view(request: HttpRequest, lang: str, slug: str) -> HttpResponse:
-    allowed_langs = {"en", "ru"}
-    if lang not in allowed_langs:
-        lang = "en"
-
-    project = get_object_or_404(Project, slug=slug, language=lang)
+def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
+    project = get_object_or_404(Project, slug=slug)
     start_url = None
     if project:
-        start_url = f"/{lang}/projects/{project.slug}/parts/"
-    parts = project.parts.all().order_by("order", "title")
+        start_url = f"/projects/{project.slug}/parts/"
+    parts = Lesson.objects.filter(project=project).order_by("order", "title")
 
     # Filter projects and topics for this course
     filtered_projects = []
     filtered_topics = []
     if project.course:
-        all_course_projects = project.course.projects.filter(language=lang).order_by("order", "title")
+        all_course_projects = Project.objects.filter(course=project.course).order_by(
+            "order", "title"
+        )
         filtered_projects = [
             p for p in all_course_projects if getattr(p, "type", None) == "project"
         ]
@@ -127,21 +111,16 @@ def project_details_view(request: HttpRequest, lang: str, slug: str) -> HttpResp
         "parts": parts,
         "filtered_projects": filtered_projects,
         "filtered_topics": filtered_topics,
-        "current_lang": lang,
     }
     return render(request, "website/dashboard/pages/project_details.html", context)
 
 
-def lesson_details_view(request: HttpRequest, lang: str, slug: str, order: int) -> HttpResponse:
+def lesson_details_view(request: HttpRequest, slug: str, order: int) -> HttpResponse:
     """
     Article-style view for a single project part, with navigation and sidebar.
     """
-    allowed_langs = {"en", "ru"}
-    if lang not in allowed_langs:
-        lang = "en"
-
-    project = get_object_or_404(Project, slug=slug, language=lang)
-    parts = list(project.parts.all().order_by("order", "title"))
+    project = get_object_or_404(Project, slug=slug)
+    parts = list(Lesson.objects.filter(project=project).order_by("order", "title"))
     part = get_object_or_404(Lesson, project=project, order=order)
     # Find prev/next part
     prev_part = next_part = None
@@ -162,6 +141,5 @@ def lesson_details_view(request: HttpRequest, lang: str, slug: str, order: int) 
         "next_part": next_part,
         "lesson_number": lesson_number,
         "user": request.user,
-        "current_lang": lang,
     }
     return render(request, "website/dashboard/pages/lesson_details.html", context)

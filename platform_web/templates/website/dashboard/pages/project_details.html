@@ -4,7 +4,15 @@
 {% load i18n %}
 
 {% block title %}
-  {{ project.title }} | {{ website_config.site_name }}
+  {{ project.seo_title|default:project.title }} | {{ website_config.site_name }}
+{% endblock %}
+
+{% block extra_meta %}
+  {% if project.seo_description %}
+    <meta name="description" content="{{ project.seo_description|striptags|truncatechars:160 }}" />
+  {% elif project.description %}
+    <meta name="description" content="{{ project.description|striptags|truncatechars:160 }}" />
+  {% endif %}
 {% endblock %}
 
 {% block extra_css %}
@@ -34,11 +42,7 @@
     <section class="container position-relative">
       {# < #}
       <div class="back-to-project-wrapper position-absolute mb-3">
-        {% if current_lang %}
-          <a href="{% url 'projects_by_lang' current_lang %}" class="nav-icon back-icon btn btn-light shadow rounded-circle" title="{% trans 'Back to projects' %}"><i class="bi bi-chevron-left"></i></a>
-        {% else %}
-          <a href="{% url 'projects' %}" class="nav-icon back-icon btn btn-light shadow rounded-circle" title="{% trans 'Back to projects' %}"><i class="bi bi-chevron-left"></i></a>
-        {% endif %}
+        <a href="{% url 'projects' %}" class="nav-icon back-icon btn btn-light shadow rounded-circle" title="{% trans 'Back to projects' %}"><i class="bi bi-chevron-left"></i></a>
       </div>
       <h1 class="title">{{ project.title }}</h1>
 
@@ -97,7 +101,7 @@
                       {% if user.is_staff %}
                         <span class="drag-handle me-2" style="cursor:move;"><i class="bi bi-list"></i></span>
                       {% endif %}
-                      <a class="list-group-link" href="{% url 'lesson_details' lang=current_lang slug=project.slug order=part.order %}"><span class="d-md-none me-2 me-md-0">#{{ forloop.counter }}.</span>{{ part.title }}</a>
+                      <a class="list-group-link" href="{% url 'lesson_details' slug=project.slug order=part.order %}"><span class="d-md-none me-2 me-md-0">#{{ forloop.counter }}.</span>{{ part.title }}</a>
                     </span>
                     <span class="badge d-none d-md-block bg-light text-dark border" style="font-size: 0.95em; max-width: 25%">#{{ forloop.counter }}</span>
                   </li>
@@ -113,7 +117,7 @@
 
         {% if parts %}
           <div class="project-start mb-2">
-            <a href="{% url 'lesson_details' lang=current_lang slug=project.slug order=parts.0.order %}" class="start-project-btn d-inline-block">
+            <a href="{% url 'lesson_details' slug=project.slug order=parts.0.order %}" class="start-project-btn d-inline-block">
               <i class="bi bi-chevron-double-right d-inline-block pt-1"></i>
               <span>{{ project.title|truncatechars:65 }}</span>
             </a>

@@ -1,8 +1,9 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
+from typing import cast
 
-from platform_web.models.app.project.Lesson import Lesson
-from platform_web.models.app.project.Project import Project
+from platform_web.models.project.Lesson import Lesson
+from platform_web.models.project.Project import Project
 
 
 class StaticViewSitemap(Sitemap):
@@ -12,8 +13,8 @@ class StaticViewSitemap(Sitemap):
     def items(self):
         return ["home"]
 
-    def location(self, item):
-        return reverse(item)
+    def location(self, obj):
+        return reverse(cast(str, obj))
 
 
 class ProjectSitemap(Sitemap):
@@ -31,8 +32,8 @@ class ProjectSitemap(Sitemap):
         return obj.updated_at
 
     def location(self, obj):
-        lang = obj.language if obj.language in {"en", "ru"} else "en"
-        return reverse("project_details", kwargs={"lang": lang, "slug": obj.slug})
+        project = cast(Project, obj)
+        return reverse("project_details", kwargs={"slug": project.slug})
 
 
 class LessonSitemap(Sitemap):
@@ -51,10 +52,10 @@ class LessonSitemap(Sitemap):
         return obj.last_edited
 
     def location(self, obj):
-        project_lang = obj.project.language if obj.project.language in {"en", "ru"} else "en"
+        lesson = cast(Lesson, obj)
         return reverse(
             "lesson_details",
-            kwargs={"lang": project_lang, "slug": obj.project.slug, "order": obj.order},
+            kwargs={"slug": lesson.project.slug, "order": lesson.order},
         )
 
 

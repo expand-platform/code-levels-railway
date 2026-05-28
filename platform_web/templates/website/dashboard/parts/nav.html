@@ -1,5 +1,3 @@
-{% load i18n %}
-
 <nav class="dashboard-nav">
   <div class="container">
     <div class="row justify-content-between position-relative">
@@ -10,17 +8,6 @@
 
       {# right side #}
       <aside class="col right justify-content-end d-flex text-end align-items-center column-gap-3">
-        <form action="{% url 'set_language_and_save' %}" method="post">
-          {% csrf_token %}
-          <select name="language" onchange="this.form.submit()" class="language-switch form-select form-select-sm" style="width:auto;display:inline-block;">
-            {% get_current_language as LANGUAGE_CODE %}
-            {% with active_lang=current_lang|default:LANGUAGE_CODE|slice:":2" %}
-              <option value="en" {% if active_lang == 'en' %}selected{% endif %}>EN</option>
-              <option value="ru" {% if active_lang == 'ru' %}selected{% endif %}>RU</option>
-            {% endwith %}
-          </select>
-          <input type="hidden" name="next" value="{{ request.get_full_path }}" />
-        </form>
       </aside>
     </div>
   </div>

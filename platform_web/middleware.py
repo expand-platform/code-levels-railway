@@ -1,40 +1,39 @@
-from django.shortcuts import redirect
 from django.http import HttpResponseForbidden
 from django.conf import settings
-from django.utils.translation import activate
+from django.contrib.auth.views import redirect_to_login
 
 
-class PreferredLanguageMiddleware:
-    """
-    If a logged-in user has a preferred language set on their profile,
-    apply it for the current session and activate translations for the
-    request. This keeps the UI language consistent with user settings.
-    """
+# class PreferredLanguageMiddleware:
+#     """
+#     If a logged-in user has a preferred language set on their profile,
+#     apply it for the current session and activate translations for the
+#     request. This keeps the UI language consistent with user settings.
+#     """
 
-    def __init__(self, get_response):
-        self.get_response = get_response
+#     def __init__(self, get_response):
+#         self.get_response = get_response
 
-    def __call__(self, request):
-        path = request.path
+#     def __call__(self, request):
+#         path = request.path
 
-        # Always allow static & media
-        if path.startswith("/static/") or path.startswith("/media/"):
-            return self.get_response(request)
+#         # Always allow static & media
+#         if path.startswith("/static/") or path.startswith("/media/"):
+#             return self.get_response(request)
 
-        user = getattr(request, 'user', None)
-        if user and user.is_authenticated:
-            profile = getattr(user, 'user_profile', None)
-            if profile and getattr(profile, 'interface_language', None):
-                lang = profile.interface_language
-                try:
-                    request.session[settings.LANGUAGE_COOKIE_NAME] = lang
-                except Exception:
-                    # session may not be available in some contexts
-                    pass
-                activate(lang)
-                request.LANGUAGE_CODE = lang
+#         user = getattr(request, 'user', None)
+#         if user and user.is_authenticated:
+#             profile = getattr(user, 'user_profile', None)
+#             if profile and getattr(profile, 'interface_language', None):
+#                 lang = profile.interface_language
+#                 try:
+#                     request.session[settings.LANGUAGE_COOKIE_NAME] = lang
+#                 except Exception:
+#                     # session may not be available in some contexts
+#                     pass
+#                 activate(lang)
+#                 request.LANGUAGE_CODE = lang
 
-        return self.get_response(request)
+#         return self.get_response(request)
 
 class AdminStaffOnlyMiddleware:
     """
@@ -56,7 +55,7 @@ class AdminStaffOnlyMiddleware:
             user = request.user
 
             if not user.is_authenticated:
-                return redirect(f"/accounts/login/?next={path}")
+                return redirect_to_login(path, settings.LOGIN_URL)
 
             if not user.is_staff:
                 return HttpResponseForbidden("Forbidden")

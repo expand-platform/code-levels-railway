@@ -1,7 +1,7 @@
 import uuid
 
 from django.db import models
-from platform_web.models.app.project.ProgrammingLanguage import ProgrammingLanguage
+from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 
 
 class Course(models.Model):

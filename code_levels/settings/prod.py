@@ -25,7 +25,6 @@ AWS_S3_ENDPOINT_URL = dotenv.aws_s3_endpoint_url
 
 AWS_S3_CUSTOM_DOMAIN = "pub-4ca7ec1159154d25b3558c36ee3d304d.r2.dev"
 
-
 AWS_QUERYSTRING_AUTH = False
 
 STORAGES = {

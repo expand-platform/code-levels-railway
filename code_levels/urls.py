@@ -9,7 +9,6 @@ from platform_web.views import robots_txt
 
 
 urlpatterns = [
-    path('i18n/', include('django.conf.urls.i18n')),
     path("api/", include("api.urls")),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
     path("robots.txt", robots_txt, name="robots_txt"),
@@ -21,6 +20,7 @@ urlpatterns = [
     
     path("summernote/", include("django_summernote.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
+    path("django-rq/", include("django_rq.urls")),
 ]
 
 # ? development
