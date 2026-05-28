@@ -7,35 +7,40 @@ from platform_web.models.project.Lesson import Lesson
 from platform_web.models.project.Project import Project
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 
-def map_view(request):
-    return render(request, "website/dashboard/pages/map.html", {})
+DEFAULT_FILTER = "course"
+DEFAULT_PROJECT_TYPE = "project"
+DEFAULT_VIDEO_FILTER = "all"
+MAX_SEARCH_LENGTH = 100
 
-
-def _render_projects_page(request, page_mode="projects"):
-    default_filter = "course"
-    default_project_type = "project"
-    default_video_filter = "all"
-    max_search_length = 100
-    is_courses_page = page_mode == "courses"
-
-    filter_by = request.GET.get("filter", default_filter).strip().lower()
-    project_type = request.GET.get("type", default_project_type).strip().lower()
-    is_video_course = request.GET.get("is_video_course", default_video_filter).strip().lower()
-    search_query = request.GET.get("search", "").strip()[:max_search_length]
-
-    # Secure: restrict allowed values
+def correct_get_filters(filter_by, project_type, is_video_course, is_courses_page=False):
     allowed_filters = {"course", "language"}
     allowed_project_types = {"project", "topic", "all"}
     allowed_video_filters = {"all", "true", "false"}
     
     if filter_by not in allowed_filters:
-        filter_by = default_filter
+        filter_by = DEFAULT_FILTER
     if project_type not in allowed_project_types:
-        project_type = default_project_type
+        project_type = DEFAULT_PROJECT_TYPE
     if is_video_course not in allowed_video_filters:
-        is_video_course = default_video_filter
+        is_video_course = DEFAULT_VIDEO_FILTER
     if is_courses_page:
         is_video_course = "true"
+        
+    return filter_by, project_type, is_video_course
+    
+
+def _render_projects_page(request, page_mode="projects"):
+    IS_COURSES_PAGE = page_mode == "courses"
+
+    filter_by = request.GET.get("filter", DEFAULT_FILTER).strip().lower()
+    project_type = request.GET.get("type", DEFAULT_PROJECT_TYPE).strip().lower()
+    is_video_course = request.GET.get("is_video_course", DEFAULT_VIDEO_FILTER).strip().lower()
+    search_query = request.GET.get("search", "").strip()[:MAX_SEARCH_LENGTH]
+
+    # Secure: restrict allowed values
+    filter_by, project_type, is_video_course = correct_get_filters(
+        filter_by, project_type, is_video_course, is_courses_page=IS_COURSES_PAGE
+    )
 
     context = {
         "page_mode": page_mode,
@@ -60,8 +65,9 @@ def _render_projects_page(request, page_mode="projects"):
         )
         context_key = "languages"
 
+    visible_items = []
     for item in items:
-        projects_qs = get_projects(item)
+        projects_qs = get_projects(item).filter(is_active=True)
         if project_type != "all":
             projects_qs = projects_qs.filter(type=project_type)
         if is_video_course == "true":
@@ -70,8 +76,14 @@ def _render_projects_page(request, page_mode="projects"):
             projects_qs = projects_qs.filter(is_video_course=False)
         if search_query:
             projects_qs = projects_qs.filter(title__icontains=search_query)
+
+        # In language mode, hide blocks that have no matching projects.
+        if context_key == "languages" and not projects_qs.exists():
+            continue
+
         setattr(item, "filtered_projects", projects_qs)
-    context[context_key] = items
+        visible_items.append(item)
+    context[context_key] = visible_items
 
     return render(request, "website/dashboard/pages/projects.html", context)
 
@@ -85,7 +97,7 @@ def courses_view(request):
 
 
 def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
-    project = get_object_or_404(Project, slug=slug)
+    project = get_object_or_404(Project, slug=slug, is_active=True)
     start_url = None
     if project:
         start_url = f"/projects/{project.slug}/parts/"
@@ -95,9 +107,9 @@ def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
     filtered_projects = []
     filtered_topics = []
     if project.course:
-        all_course_projects = Project.objects.filter(course=project.course).order_by(
-            "order", "title"
-        )
+        all_course_projects = Project.objects.filter(
+            course=project.course, is_active=True
+        ).order_by("order", "title")
         filtered_projects = [
             p for p in all_course_projects if getattr(p, "type", None) == "project"
         ]
@@ -119,7 +131,7 @@ def lesson_details_view(request: HttpRequest, slug: str, order: int) -> HttpResp
     """
     Article-style view for a single project part, with navigation and sidebar.
     """
-    project = get_object_or_404(Project, slug=slug)
+    project = get_object_or_404(Project, slug=slug, is_active=True)
     parts = list(Lesson.objects.filter(project=project).order_by("order", "title"))
     part = get_object_or_404(Lesson, project=project, order=order)
     # Find prev/next part

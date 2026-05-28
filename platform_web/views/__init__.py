@@ -3,7 +3,6 @@ from .Dashboard import DashboardView
 from .Settings import SettingsView
 from .Changelog import WebsiteChangelogView
 from .Projects import (
-	map_view,
 	projects_view,
 	courses_view,
 	project_details_view,
@@ -18,7 +17,6 @@ __all__ = [
 	"DashboardView",
 	"SettingsView",
 	"WebsiteChangelogView",
-	"map_view",
 	"projects_view",
 	"courses_view",
 	"project_details_view",
