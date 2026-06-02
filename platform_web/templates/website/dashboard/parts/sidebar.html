@@ -20,9 +20,9 @@
     {% endif %}
     <li class="has-submenu" data-submenu="topics">
       <div class="menu-row">
-        <a href="{% url 'projects' %}?filter=language&type=topic" data-route="topics" class="main-link" data-bs-toggle="collapse" data-bs-target="#topicsSidebarCollapse" aria-expanded="false" aria-controls="topicsSidebarCollapse" aria-label="{% trans 'Toggle Topics languages' %}">
-          <i class="bx bi bi-list-nested"></i>
-          <span class="text">{% trans 'Topics' %}</span>
+        <a href="{% url 'projects' %}?filter=language&type=topic" data-route="topics" class="main-link" data-bs-toggle="collapse" data-bs-target="#topicsSidebarCollapse" aria-expanded="false" aria-controls="topicsSidebarCollapse" aria-label="{% trans 'Toggle Practice languages' %}">
+          <i class="bx bi bi-bar-chart-steps"></i>
+          <span class="text">{% trans 'Practice' %}</span>
         </a>
       </div>
       {% if sidebar_topic_languages %}
@@ -40,12 +40,12 @@
         {% include 'website/dashboard/parts/sidebar/projects-list.html' %}
       {% endif %}
     </li>
-    <li class="">
+    {% comment %} <li class="">
       <a href="{% url 'courses' %}" data-route="courses">
         <i class="bx bi bi-play-btn"></i>
         <span class="text">{% trans 'Courses' %}</span>
       </a>
-    </li>
+    </li> {% endcomment %}
   </ul>
   <ul class="side-menu bottom">
     <li class="">

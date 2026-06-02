@@ -4,14 +4,18 @@ document.addEventListener('DOMContentLoaded', function () {
     let resetButton = document.querySelector('.reset-button');
 
     searchIcon.onclick = function () {
-        if (searchInput.style.display == 'none') {
-            searchInput.style.display = 'block';
-            resetButton.style.display = 'block';
-            searchIcon.style.display = 'none';
+        console.log('search icon clicked');
+        if (!searchIcon.classList.contains('hidden')) {
+            console.log('showing search input');
+            searchInput.classList.remove('hidden');
+            resetButton.classList.remove('hidden');
+            searchIcon.classList.add('hidden');
             searchInput.focus();
         } else {
-            searchInput.style.display = 'none';
-            searchIcon.style.display = 'block';
+            console.log('hiding search input');
+            searchInput.classList.add('hidden');
+            searchIcon.classList.remove('hidden');
+            resetButton.classList.add('hidden');
         }
     };
 
@@ -22,9 +26,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (e.key === 'Escape') {
             e.preventDefault();
-            searchInput.style.display = 'none';
-            searchIcon.style.display = 'block';
-            resetButton.style.display = 'none';
+            searchInput.classList.add('hidden');
+            searchIcon.classList.remove('hidden');
+            resetButton.classList.add('hidden');
         }
     });
 
@@ -36,14 +40,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Close input when clicking outside
     document.addEventListener('mousedown', function (e) {
         if (
-            searchInput.style.display === 'block' &&
+            !searchInput.classList.contains('hidden') &&
             !searchInput.contains(e.target) &&
             !searchIcon.contains(e.target) &&
             !resetButton.contains(e.target)
         ) {
-            searchInput.style.display = 'none';
-            searchIcon.style.display = 'block';
-            resetButton.style.display = 'none';
+            searchInput.classList.add('hidden');
+            searchIcon.classList.remove('hidden');
+            resetButton.classList.add('hidden');
         }
     });
 });
