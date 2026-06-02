@@ -11,7 +11,7 @@
 
     {% for course in sidebar_project_courses %}
       <li>
-        <a href="{% url 'projects' %}?filter=course&type=project&course={{ course.id }}" data-route="projects">
+        <a href="{% url 'projects_by_course' course.id %}" data-route="projects">
           <i class="bi bi-journal-code text-black"></i>
           <span class="text-black clipped-text">{{ course.title }}</span>
         </a>

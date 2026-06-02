@@ -7,49 +7,39 @@ from platform_web.models.project.Lesson import Lesson
 from platform_web.models.project.Project import Project
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 
-DEFAULT_FILTER = "course"
-DEFAULT_PROJECT_TYPE = "project"
-DEFAULT_VIDEO_FILTER = "all"
 MAX_SEARCH_LENGTH = 100
 
-def correct_get_filters(filter_by, project_type, is_video_course, is_courses_page=False):
-    allowed_filters = {"course", "language"}
-    allowed_project_types = {"project", "topic", "all"}
-    allowed_video_filters = {"all", "true", "false"}
-    
-    if filter_by not in allowed_filters:
-        filter_by = DEFAULT_FILTER
-    if project_type not in allowed_project_types:
-        project_type = DEFAULT_PROJECT_TYPE
-    if is_video_course not in allowed_video_filters:
-        is_video_course = DEFAULT_VIDEO_FILTER
-    if is_courses_page:
-        is_video_course = "true"
-        
-    return filter_by, project_type, is_video_course
-    
+MODE_SETTINGS = {
+    "projects": {
+        "filter_by": "course",
+        "project_type": "project",
+        "is_video_course": "false",
+    },
+    "topics": {
+        "filter_by": "language",
+        "project_type": "topic",
+        "is_video_course": "false",
+    },
+    "courses": {
+        "filter_by": "course",
+        "project_type": "project",
+        "is_video_course": "true",
+    },
+}
 
-def _render_projects_page(request, page_mode="projects"):
-    IS_COURSES_PAGE = page_mode == "courses"
 
-    filter_by = request.GET.get("filter", DEFAULT_FILTER).strip().lower()
-    project_type = request.GET.get("type", DEFAULT_PROJECT_TYPE).strip().lower()
-    is_video_course = request.GET.get("is_video_course", DEFAULT_VIDEO_FILTER).strip().lower()
+def _render_projects_page(
+    request,
+    page_mode="projects",
+    selected_course_id=None,
+    selected_language_id=None,
+):
+    mode_settings = MODE_SETTINGS.get(page_mode, MODE_SETTINGS["projects"])
+
+    filter_by = mode_settings["filter_by"]
+    project_type = mode_settings["project_type"]
+    is_video_course = mode_settings["is_video_course"]
     search_query = request.GET.get("search", "").strip()[:MAX_SEARCH_LENGTH]
-    selected_course_raw = request.GET.get("course", "").strip()
-    selected_course_id = None
-    if selected_course_raw.isdigit():
-        selected_course_id = int(selected_course_raw)
-
-    selected_language_raw = request.GET.get("language", "").strip()
-    selected_language_id = None
-    if selected_language_raw.isdigit():
-        selected_language_id = int(selected_language_raw)
-
-    # Secure: restrict allowed values
-    filter_by, project_type, is_video_course = correct_get_filters(
-        filter_by, project_type, is_video_course, is_courses_page=IS_COURSES_PAGE
-    )
 
     context = {
         "page_mode": page_mode,
@@ -110,8 +100,36 @@ def projects_view(request):
     return _render_projects_page(request, page_mode="projects")
 
 
+def projects_by_course_view(request, course_id: int):
+    return _render_projects_page(
+        request,
+        page_mode="projects",
+        selected_course_id=course_id,
+    )
+
+
+def topics_view(request):
+    return _render_projects_page(request, page_mode="topics")
+
+
+def topics_by_language_view(request, language_id: int):
+    return _render_projects_page(
+        request,
+        page_mode="topics",
+        selected_language_id=language_id,
+    )
+
+
 def courses_view(request):
     return _render_projects_page(request, page_mode="courses")
+
+
+def courses_by_course_view(request, course_id: int):
+    return _render_projects_page(
+        request,
+        page_mode="courses",
+        selected_course_id=course_id,
+    )
 
 
 def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:

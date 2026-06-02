@@ -4,7 +4,11 @@ from .Settings import SettingsView
 from .Changelog import WebsiteChangelogView
 from .Projects import (
 	projects_view,
+	projects_by_course_view,
+	topics_view,
+	topics_by_language_view,
 	courses_view,
+	courses_by_course_view,
 	project_details_view,
 	lesson_details_view,
 )
@@ -18,7 +22,11 @@ __all__ = [
 	"SettingsView",
 	"WebsiteChangelogView",
 	"projects_view",
+	"projects_by_course_view",
+	"topics_view",
+	"topics_by_language_view",
 	"courses_view",
+	"courses_by_course_view",
 	"project_details_view",
 	"lesson_details_view",
 	"CustomLogoutView",

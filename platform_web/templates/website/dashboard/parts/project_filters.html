@@ -2,15 +2,6 @@
 
 <div class="col col-md-9 flex-basis-100-smo d-flex justify-content-end align-items-end">
   <form method="get" class="projects-toggle-section col d-flex flex-wrap justify-content-md-end align-items-center column-gap-3 mb-3">
-    {% if page_mode == 'courses' %}
-      <input type="hidden" name="is_video_course" value="true" />
-    {% endif %}
-    {% if selected_course_id %}
-      <input type="hidden" name="course" value="{{ selected_course_id }}" />
-    {% endif %}
-    {% if selected_language_id %}
-      <input type="hidden" name="language" value="{{ selected_language_id }}" />
-    {% endif %}
     <div class="d-md-flex flex-basis-100-smo text-center text-md-start column-gap-2 align-items-center justify-content-center justify-content-md-start mb-3 m-md-0 me-md-3">
       <span class="reset-button mb-2 m-md-0 w-100 hidden">{% trans 'Reset Filters' %}</span>
       <span id="search-icon"><i class="bi bi-search"></i></span>

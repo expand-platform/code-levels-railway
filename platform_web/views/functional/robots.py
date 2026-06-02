@@ -12,7 +12,11 @@ def robots_txt(request: HttpRequest) -> HttpResponse:
             "Allow: /",
             "Disallow: /cp/",
             "Disallow: /account/",
-            "Disallow: /dashboard/",
+            "Disallow: /projects/",
+            "Disallow: /project/",
+            "Disallow: /topics/",
+            "Disallow: /courses/",
+            "Disallow: /settings/",
             f"Sitemap: {sitemap_url}",
         ]
     )

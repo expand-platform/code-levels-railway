@@ -3,14 +3,14 @@
 <div id="topicsSidebarCollapse" class="collapse submenu-collapse">
   <ul class="submenu">
     <li>
-      <a href="{% url 'projects' %}?filter=language&type=topic" data-route="topics">
+      <a href="{% url 'topics' %}" data-route="topics">
         <i class="bi bi-journal-code text-black"></i>
         <span class="text-black clipped-text">{% trans 'All languages' %}</span>
       </a>
     </li>
     {% for language in sidebar_topic_languages %}
       <li>
-        <a href="{% url 'projects' %}?filter=language&type=topic&language={{ language.id }}" data-route="topics">
+        <a href="{% url 'topics_by_language' language.id %}" data-route="topics">
           <i class="bi bi-journal-code text-black"></i>
           <span class="text-black clipped-text">{{ language.name }}</span>
         </a>
