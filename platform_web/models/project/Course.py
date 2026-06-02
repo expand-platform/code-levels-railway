@@ -7,6 +7,7 @@ from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 class Course(models.Model):
     title = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     
     languages = models.ManyToManyField(
         ProgrammingLanguage, related_name="courses", blank=True

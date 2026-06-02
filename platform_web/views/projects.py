@@ -100,11 +100,12 @@ def projects_view(request):
     return _render_projects_page(request, page_mode="projects")
 
 
-def projects_by_course_view(request, course_id: int):
+def projects_by_course_view(request, course_slug: str):
+    course = get_object_or_404(Course, slug=course_slug)
     return _render_projects_page(
         request,
         page_mode="projects",
-        selected_course_id=course_id,
+        selected_course_id=course.pk,
     )
 
 
@@ -112,11 +113,12 @@ def topics_view(request):
     return _render_projects_page(request, page_mode="topics")
 
 
-def topics_by_language_view(request, language_id: int):
+def topics_by_language_view(request, language_slug: str):
+    language = get_object_or_404(ProgrammingLanguage, slug=language_slug)
     return _render_projects_page(
         request,
         page_mode="topics",
-        selected_language_id=language_id,
+        selected_language_id=language.pk,
     )
 
 

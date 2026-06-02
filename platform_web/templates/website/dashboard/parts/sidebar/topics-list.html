@@ -10,7 +10,7 @@
     </li>
     {% for language in sidebar_topic_languages %}
       <li>
-        <a href="{% url 'topics_by_language' language.id %}" data-route="topics">
+        <a href="{% url 'topics_by_language' language.slug %}" data-route="topics">
           <i class="bi bi-journal-code text-black"></i>
           <span class="text-black clipped-text">{{ language.name }}</span>
         </a>
