@@ -3,6 +3,17 @@ const sidebar = document.getElementById('sidebar') || document.querySelector('.s
 const logo = document.querySelector('#sidebar .brand .text');
 const dashboardNav = document.querySelector('.dashboard .dashboard-nav');
 
+function addScrollbarToSubmenus() {
+    const submenus = document.querySelectorAll('#sidebar .side-menu .submenu');
+
+    submenus.forEach(submenu => {
+        if (submenu.scrollHeight > 300) {
+            submenu.style.maxHeight = '300px';
+            submenu.style.overflowY = 'auto';
+        }
+    })
+}
+
 
 sidebarBurgerButton.onclick = function () {
     let isHidden = sidebar.clientWidth == 0;
@@ -69,3 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+window.onload = () => {
+    addScrollbarToSubmenus();
+}

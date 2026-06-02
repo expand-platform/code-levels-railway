@@ -79,31 +79,23 @@
     position: relative;
 }
 
-
-#sidebar .side-menu .submenu li.active::after {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 70px;
-    height: 50px;
-    border-radius: 20%;
-    bottom: -15px;
-    right: -50px;
-    background: var(--grey);
-    z-index: 1;
-}
-
 #sidebar .side-menu li a {
     width: 100%;
     height: 100%;
     background: var(--light);
     display: flex;
     align-items: center;
-    border-radius: 48px;
+    /* border-radius: 48px; */
     font-size: 16px;
     color: var(--dark);
     white-space: nowrap;
     overflow-x: hidden;
+}
+
+.clipped-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #sidebar .side-menu li.has-submenu .menu-row {
