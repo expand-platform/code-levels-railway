@@ -6,7 +6,7 @@
   --soft-white: #e5e7eb;
   --dark-blue: #0f172a;
 
-  --text-black: #28292c;
+  --text-black: #342E37;
 
   --white: #F9F9F9;
   --black: #28292c;
@@ -23,8 +23,56 @@
   --yellow: #FFCE26;
   --light-yellow: #FFF2C6;
   --light-orange: #FFE0D3;
+
+
+  /* ===== Base ===== */
+  --bg-main: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f1f5f9;
+
+  /* ===== Text ===== */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  /* ===== Brand ===== */
+  --color-primary: #2563eb;
+  /* blue */
+  --color-primary-hover: #1d4ed8;
+  --color-accent: #f59e0b;
+  /* amber */
+
+  /* ===== States ===== */
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
+  --color-info: #0284c7;
+
+  /* ===== Borders & Dividers ===== */
+  --border-default: #e2e8f0;
+  --border-muted: #cbd5f5;
+
+  /* ===== Code ===== */
+  --code-bg: #020617;
+  --code-text: #e5e7eb;
+  --code-keyword: #2563eb;
+  --code-string: #16a34a;
+  --code-number: #d97706;
+  --code-comment: #64748b;
+
+  /* ===== Shadows ===== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.12);
+
+  /* ===== Focus ===== */
+  --focus-ring: 0 0 0 2px rgba(37, 99, 235, 0.5);
 }
 
+
+.text-black {
+  color: var(--text-black);
+}
 
 :root[data-theme="dark"] {
   /* ===== Base ===== */
@@ -79,49 +127,4 @@
 
   /* ===== Focus ===== */
   --focus-ring: 0 0 0 2px rgba(59, 130, 246, 0.6);
-}
-
-:root[data-theme="light"] {
-  /* ===== Base ===== */
-  --bg-main: #f8fafc;
-  --bg-surface: #ffffff;
-  --bg-elevated: #f1f5f9;
-
-  /* ===== Text ===== */
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-  --text-inverse: #ffffff;
-
-  /* ===== Brand ===== */
-  --color-primary: #2563eb;
-  /* blue */
-  --color-primary-hover: #1d4ed8;
-  --color-accent: #f59e0b;
-  /* amber */
-
-  /* ===== States ===== */
-  --color-success: #16a34a;
-  --color-warning: #d97706;
-  --color-danger: #dc2626;
-  --color-info: #0284c7;
-
-  /* ===== Borders & Dividers ===== */
-  --border-default: #e2e8f0;
-  --border-muted: #cbd5f5;
-
-  /* ===== Code ===== */
-  --code-bg: #020617;
-  --code-text: #e5e7eb;
-  --code-keyword: #2563eb;
-  --code-string: #16a34a;
-  --code-number: #d97706;
-  --code-comment: #64748b;
-
-  /* ===== Shadows ===== */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.12);
-
-  /* ===== Focus ===== */
-  --focus-ring: 0 0 0 2px rgba(37, 99, 235, 0.5);
 }

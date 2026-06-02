@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (search.includes('is_video_course=true') || search.includes('is_video_course')) {
         activeRoute = 'courses';
     }
-    else if (search.includes('type=topic') || search.includes('filter=course') || pathname.includes('/topic') || pathname.includes('/topics')) {
+    else if (search.includes('type=topic') || pathname.includes('/topic') || pathname.includes('/topics')) {
         activeRoute = 'topics';
     } else if (pathname.includes('/settings') || pathname.includes('/account')) {
         activeRoute = 'settings';

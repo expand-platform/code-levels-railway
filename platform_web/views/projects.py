@@ -36,6 +36,15 @@ def _render_projects_page(request, page_mode="projects"):
     project_type = request.GET.get("type", DEFAULT_PROJECT_TYPE).strip().lower()
     is_video_course = request.GET.get("is_video_course", DEFAULT_VIDEO_FILTER).strip().lower()
     search_query = request.GET.get("search", "").strip()[:MAX_SEARCH_LENGTH]
+    selected_course_raw = request.GET.get("course", "").strip()
+    selected_course_id = None
+    if selected_course_raw.isdigit():
+        selected_course_id = int(selected_course_raw)
+
+    selected_language_raw = request.GET.get("language", "").strip()
+    selected_language_id = None
+    if selected_language_raw.isdigit():
+        selected_language_id = int(selected_language_raw)
 
     # Secure: restrict allowed values
     filter_by, project_type, is_video_course = correct_get_filters(
@@ -48,18 +57,26 @@ def _render_projects_page(request, page_mode="projects"):
         "project_type": project_type,
         "is_video_course": is_video_course,
         "search": search_query,
+        "selected_course_id": selected_course_id,
+        "selected_language_id": selected_language_id,
     }
+    
     context_key = "courses"
 
     if filter_by == "course":
         items = Course.objects.prefetch_related("projects").order_by("order", "title")
+        if selected_course_id is not None:
+            items = items.filter(id=selected_course_id)
         get_projects = lambda item: item.projects.order_by(
             "course_order", "order", "-updated_at", "title"
         )
+    # filter by language
     else:
         items = ProgrammingLanguage.objects.prefetch_related("project_set").order_by(
             "order", "name"
         )
+        if selected_language_id is not None:
+            items = items.filter(id=selected_language_id)
         get_projects = lambda item: item.project_set.order_by(
             "language_order", "order", "-updated_at", "title"
         )
@@ -68,6 +85,7 @@ def _render_projects_page(request, page_mode="projects"):
     visible_items = []
     for item in items:
         projects_qs = get_projects(item).filter(is_active=True)
+        
         if project_type != "all":
             projects_qs = projects_qs.filter(type=project_type)
         if is_video_course == "true":

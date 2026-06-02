@@ -4,10 +4,6 @@
   <div class="row p-2">
     <div class="logo col">
       <a href="{% url 'home' %}" class="brand ms-4"><span class="text">{{ website_config.site_name }}</span></a>
-      {# version #}
-      {% comment %} <p>
-        <a href="{% url 'changelog' %}"><span class="text-black">v. {{ changelog.version|default:'0.0.0' }}</span></a>
-      </p> {% endcomment %}
     </div>
     <div class="col text-end">
       {% comment %} <i class="bi bi-list fs-5 bx bx-menu bx-sm pointer"></i> {% endcomment %}
@@ -22,17 +18,74 @@
         </a>
       </li>
     {% endif %}
-    <li class="">
-      <a href="{% url 'projects' %}?filter=course&type=topic" data-route="topics">
-        <i class="bx bi bi-list-nested"></i>
-        <span class="text">{% trans 'Topics' %}</span>
-      </a>
+    <li class="has-submenu" data-submenu="topics">
+      <div class="menu-row">
+        <a href="{% url 'projects' %}?filter=language&type=topic" data-route="topics" class="main-link" data-bs-toggle="collapse"
+          data-bs-target="#topicsSidebarCollapse"
+          aria-expanded="false"
+          aria-controls="topicsSidebarCollapse"
+          aria-label="{% trans 'Toggle Topics languages' %}">
+          <i class="bx bi bi-list-nested"></i>
+          <span class="text">{% trans 'Topics' %}</span>
+        </a>
+      </div>
+      {% if sidebar_topic_languages %}
+        <div id="topicsSidebarCollapse" class="collapse submenu-collapse">
+          <ul class="submenu">
+            <li>
+              <a href="{% url 'projects' %}?filter=language&type=topic" data-route="topics">
+                <i class="bi bi-journal-code text-black"></i>
+                <span class="text-black">{% trans 'All languages' %}</span>
+              </a>
+            </li>
+
+            {% for language in sidebar_topic_languages %}
+              <li>
+                <a href="{% url 'projects' %}?filter=language&type=topic&language={{ language.id }}" data-route="topics">
+                  <i class="bi bi-journal-code text-black"></i>
+                  <span class="text-black">{{ language.name }}</span>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
     </li>
-    <li class="">
-      <a href="{% url 'projects' %}" data-route="projects">
-        <i class="bx bi bi-braces"></i>
-        <span class="text">{% trans 'Projects' %}</span>
-      </a>
+    <li class="has-submenu" data-submenu="projects">
+      <div class="menu-row">
+        <a href="{% url 'projects' %}" data-route="projects" class="main-link" data-bs-toggle="collapse"
+          data-bs-target="#projectsSidebarCollapse"
+          aria-expanded="false"
+          aria-controls="projectsSidebarCollapse"
+          aria-label="{% trans 'Toggle Projects courses' %}">
+          <i class="bx bi bi-braces"></i>
+          <span class="text">{% trans 'Projects' %}</span>
+        </a>
+      </div>
+      {% if sidebar_project_courses %}
+        <div
+          id="projectsSidebarCollapse"
+          class="collapse submenu-collapse"
+        >
+          <ul class="submenu">
+            <li>
+              <a href="{% url 'projects' %}" data-route="projects">
+                <i class="bi bi-journal-code text-black"></i>
+                <span class="text-black">{% trans 'All courses' %}</span>
+              </a>
+            </li>
+            
+            {% for course in sidebar_project_courses %}
+              <li>
+                <a href="{% url 'projects' %}?filter=course&type=project&course={{ course.id }}" data-route="projects">
+                  <i class="bi bi-journal-code text-black"></i>
+                  <span class="text-black">{{ course.title }}</span>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
     </li>
     <li class="">
       <a href="{% url 'courses' %}" data-route="courses">

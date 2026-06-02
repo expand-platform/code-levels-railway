@@ -5,6 +5,12 @@
       {% if page_mode == 'courses' %}
         <input type="hidden" name="is_video_course" value="true">
       {% endif %}
+      {% if selected_course_id %}
+        <input type="hidden" name="course" value="{{ selected_course_id }}">
+      {% endif %}
+      {% if selected_language_id %}
+        <input type="hidden" name="language" value="{{ selected_language_id }}">
+      {% endif %}
       <div class="d-md-flex flex-basis-100-smo text-center text-md-start column-gap-2 align-items-center justify-content-center justify-content-md-start mb-3 m-md-0 me-md-3">
         <span class="reset-button mb-2 m-md-0 w-100">{% trans "Reset Filters" %}</span>
         <span id="search-icon" style="cursor:pointer; font-size:1.3em; color: black;">
