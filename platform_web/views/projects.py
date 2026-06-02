@@ -165,13 +165,13 @@ def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
     return render(request, "website/dashboard/pages/project_details.html", context)
 
 
-def lesson_details_view(request: HttpRequest, slug: str, order: int) -> HttpResponse:
+def lesson_details_view(request: HttpRequest, slug: str, part_slug: str) -> HttpResponse:
     """
     Article-style view for a single project part, with navigation and sidebar.
     """
     project = get_object_or_404(Project, slug=slug, is_active=True)
     parts = list(Lesson.objects.filter(project=project).order_by("order", "title"))
-    part = get_object_or_404(Lesson, project=project, order=order)
+    part = get_object_or_404(Lesson, project=project, slug=part_slug)
     # Find prev/next part
     prev_part = next_part = None
     lesson_number = None

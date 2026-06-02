@@ -33,5 +33,5 @@ urlpatterns = [
     
     # Project views
     path("projects/<slug:slug>/", project_details_view, name="project_details"),
-    path("projects/<slug:slug>/lesson/<int:order>/", lesson_details_view, name="lesson_details"),
+    path("projects/<slug:slug>/<slug:part_slug>/", lesson_details_view, name="lesson_details"),
 ]
