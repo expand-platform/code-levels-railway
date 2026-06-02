@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block title %}
-{% comment %} ! Сделать гибкий заголовок в зависимости от типа проекта {% endcomment %}
   Projects | {{ website_config.site_name }}
 {% endblock %}
 
@@ -70,10 +69,6 @@
         </ul>
       </div>
     </div>
-
-    {# ! Display projects count near each section and near all projects page title #}
-    {# ! Remember last chosen filter #}
-    {# ! Add a visual dismissable tooltip (arrow with explanation for ability to switch type of projects) #}
 
     {% include 'website/dashboard/parts/project_filters.html' %}
   </section>

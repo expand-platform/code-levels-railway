@@ -1,0 +1,21 @@
+{% load i18n %}
+
+<div id="projectsSidebarCollapse" class="collapse submenu-collapse">
+  <ul class="submenu">
+    <li>
+      <a href="{% url 'projects' %}" data-route="projects">
+        <i class="bi bi-journal-code text-black"></i>
+        <span class="text-black">{% trans 'All courses' %}</span>
+      </a>
+    </li>
+
+    {% for course in sidebar_project_courses %}
+      <li>
+        <a href="{% url 'projects' %}?filter=course&type=project&course={{ course.id }}" data-route="projects">
+          <i class="bi bi-journal-code text-black"></i>
+          <span class="text-black">{{ course.title }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
