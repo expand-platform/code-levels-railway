@@ -3,43 +3,48 @@ const sidebar = document.getElementById('sidebar') || document.querySelector('.s
 const logo = document.querySelector('#sidebar .brand .text');
 const dashboardNav = document.querySelector('.dashboard .dashboard-nav');
 
+const SUBMENU_MAX_HEIGHT = 300;
+
 function addScrollbarToSubmenus() {
     const submenus = document.querySelectorAll('#sidebar .side-menu .submenu');
 
     submenus.forEach(submenu => {
-        if (submenu.scrollHeight > 300) {
-            submenu.style.maxHeight = '300px';
+        if (submenu.scrollHeight > SUBMENU_MAX_HEIGHT) {
+            submenu.style.maxHeight = `${SUBMENU_MAX_HEIGHT}px`;
             submenu.style.overflowY = 'auto';
+            submenu.style.scrollbarWidth = 'thin';
         }
-    })
+    });
 }
 
 
-sidebarBurgerButton.onclick = function () {
-    let isHidden = sidebar.clientWidth == 0;
+if (sidebarBurgerButton && sidebar && dashboardNav) {
+    sidebarBurgerButton.onclick = function () {
+        let isHidden = sidebar.clientWidth == 0;
 
-    if (window.innerWidth <= 768) {
-        if (isHidden) {
-            sidebar.classList.add('visible');
-            dashboardNav.classList.remove('start-0', 'opened');
+        if (window.innerWidth <= 768) {
+            if (isHidden) {
+                sidebar.classList.add('visible');
+                dashboardNav.classList.remove('start-0', 'opened');
+            }
+            else {
+                sidebar.classList.remove('visible');
+                dashboardNav.classList.add('start-0', 'opened');
+            }
         }
         else {
-            sidebar.classList.remove('visible');
-            dashboardNav.classList.add('start-0', 'opened');
+            if (isHidden) {
+                sidebar.classList.remove('hide');
+                dashboardNav.classList.remove('start-0', 'opened');
+            }
+            else {
+                sidebar.classList.add('hide');
+                dashboardNav.classList.add('start-0', 'opened');
+            }
         }
-    }
-    else {
-        if (isHidden) {
-            sidebar.classList.remove('hide');
-            dashboardNav.classList.remove('start-0', 'opened');
-        }
-        else {
-            sidebar.classList.add('hide');
-            dashboardNav.classList.add('start-0', 'opened');
-        }
-    }
 
-};
+    };
+}
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -81,6 +86,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-window.onload = () => {
+document.addEventListener("DOMContentLoaded", function () {
     addScrollbarToSubmenus();
-}
+});
+
+document.addEventListener('shown.bs.collapse', function (event) {
+    if (event.target && event.target.matches('#sidebar .submenu-collapse')) {
+        addScrollbarToSubmenus();
+    }
+});
+
+window.addEventListener('resize', addScrollbarToSubmenus);
