@@ -3,7 +3,7 @@ const sidebar = document.getElementById('sidebar') || document.querySelector('.s
 const logo = document.querySelector('#sidebar .brand .text');
 const dashboardNav = document.querySelector('.dashboard .dashboard-nav');
 
-const SUBMENU_MAX_HEIGHT = 300;
+const SUBMENU_MAX_HEIGHT = 450;
 
 function addScrollbarToSubmenus() {
     const submenus = document.querySelectorAll('#sidebar .side-menu .submenu');

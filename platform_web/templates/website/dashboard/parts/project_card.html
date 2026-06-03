@@ -1,7 +1,7 @@
 <div class="project-card" data-id="{{ project.id }}">
   {% if project.slug %}
   <a href="{% url 'project_details' slug=project.slug %}">
-    <div class="project-inner">
+    <div class="project-inner w-100">
       {% if project.image %}
         <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" />
       {% endif %}
@@ -19,7 +19,7 @@
     </div>
   </a>
   {% else %}
-  <div class="project-inner">
+  <div class="project-inner w-100">
     {% if project.image %}
       <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" />
     {% endif %}
