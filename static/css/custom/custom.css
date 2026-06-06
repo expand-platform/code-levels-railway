@@ -7,5 +7,6 @@
 @import url('/static/css/custom/offcanvas.css');
 @import url('/static/css/custom/flex.css');
 
-
+/* libraries */
+@import url('/static/css/custom/medium-zoom.css');
 
