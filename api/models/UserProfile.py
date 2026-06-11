@@ -1,7 +1,9 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import User
 
-import uuid
+from platform_web.models.user.Subscription import Subscription
 
 
 class UserProfile(models.Model):
@@ -16,9 +18,13 @@ class UserProfile(models.Model):
     is_token_verified = models.BooleanField(default=False)
 
     wakatime_api_key = models.CharField(max_length=255, blank=True, null=True)
+    
+    subscription = models.OneToOneField(
+        Subscription, on_delete=models.CASCADE, related_name="user_subscription", null=True, blank=True
+    )
 
     def __str__(self):
-        return f"Profile for {self.user.username} with telegram user ID {self.telegram_user_id} and telegram first name {self.telegram_first_name}"
+        return f"{self.user.username} with telegram ID {self.telegram_user_id} and tg first name {self.telegram_first_name}"
     
     def update_telegram_info(self, telegram_user_id, telegram_first_name):
         self.telegram_user_id = telegram_user_id

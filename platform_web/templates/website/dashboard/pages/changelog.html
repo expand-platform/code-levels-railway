@@ -6,12 +6,12 @@
   {% trans 'Website Versions' %}| {{ website_config.site_name }}
 {% endblock %}
 
-{% block extra_css %}
+{% block css %}
   <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/changelog.css' %}" />
 {% endblock %}
 
-{% block extra_js %}
+{% block js %}
   <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
 {% endblock %}

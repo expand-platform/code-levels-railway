@@ -37,9 +37,6 @@ class Project(SeoSlugMixin, models.Model):
     image = models.ImageField(upload_to="project_images/", blank=True, null=True)
 
     type = models.CharField(max_length=20, choices=PROJECT_TYPE_CHOICES, default=TOPIC)
-    # language = models.CharField(
-    #     max_length=50, choices=LANGUAGE_CHOICES, blank=True, null=True, default="ru"
-    # )
 
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="projects", null=True, blank=True

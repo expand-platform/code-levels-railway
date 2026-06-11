@@ -2,26 +2,12 @@
 {% load static %}
 {% load i18n %}
 
-{% block extra_meta %}
+{% block meta %}
   <meta name="csrf-token" content="{{ csrf_token }}" />
 {% endblock %}
 
 {% block title %}
   Projects | {{ website_config.site_name }}
-{% endblock %}
-
-{% block extra_css %}
-  {% comment %} <link rel="stylesheet" href="{% static 'css/common.css' %}" /> {% endcomment %}
-  <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/dashboard/projects.css' %}" />
-{% endblock %}
-
-{% block extra_js %}
-  <script src="{% static 'js/libs/Sortable.min.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/projects.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/project_filters.js' %}" defer type="module"></script>
 {% endblock %}
 
 {% block dashboard_content %}

@@ -1,0 +1,32 @@
+@import "./theme-colors.css";
+
+.nav a,
+.nav i {
+  color: var(--soft-blue);
+}
+
+i.home-burger {
+  color: var(--burger-line);
+}
+
+.switch-label {
+  background-color: var(--soft-white);
+}
+
+.bxs-moon {
+  color: var(--yellow);
+}
+
+.bx-sun {
+  color: var(--orange);
+  animation: shakeOn .7s;
+}
+
+.switch-label .ball {
+  background-color: var(--soft-blue);
+}
+
+.project-difficulty {
+  background: var(--label-grey);
+  color: var(--black-grey);
+}

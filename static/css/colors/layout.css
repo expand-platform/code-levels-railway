@@ -1,0 +1,18 @@
+@import "./theme-colors.css";
+
+#sidebar {
+  background: var(--sidebar-bg);
+}
+
+.dashboard-nav {
+  background: var(--sidebar-bg);
+}
+
+.project-card {
+  background: var(--white);
+  box-shadow: 0 1px 4px var(--card-shadow);
+}
+
+.project-card:hover {
+  box-shadow: 0 4px 16px var(--card-shadow-hover);
+}

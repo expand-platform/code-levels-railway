@@ -1,6 +1,6 @@
 .simple-timeline {
 	border-radius: 12px;
-	background: #fff;
+	background: var(--white);
 	padding: 0;
 	max-width: 100%;
 	overflow-x: hidden;
@@ -61,7 +61,7 @@
 
 .simple-timeline__nav {
 	border: 1px solid #d0d0d0;
-	background: #fff;
+	background: var(--white);
 	color: #333;
 	border-radius: 8px;
 	padding: 6px 10px;

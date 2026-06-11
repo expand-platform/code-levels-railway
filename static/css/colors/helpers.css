@@ -1,0 +1,9 @@
+@import "./theme-colors.css";
+
+.text-black {
+    color: var(--black-grey);
+}
+
+.text-grey {
+    color: var(--text-grey);
+}

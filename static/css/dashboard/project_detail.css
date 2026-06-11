@@ -9,11 +9,8 @@
 .project-details .container {
     max-width: var(--project-detail-width);
     margin: 0 auto;
-    background: #fff;
     padding: 1.25rem;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-    color: black;
 }
 
 @media screen and (min-width: 768px) {
@@ -29,12 +26,9 @@
 }
 
 @media screen and (min-width: 768px) {
-
     .project-details .content,
     .dashboard .box {
-        background: #fff;
         border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         padding: 1.5rem;
     }
 }
@@ -62,10 +56,7 @@
     font-size: 1.1rem;
 }
 
-.project-details .title,
-.project-details .subtitle {
-    color: var(--project-detail-text-color);
-}
+
 
 .project-details .title {
     font-size: 2.2rem;
@@ -155,7 +146,7 @@
 
 .project-details .nav-icon i {
     font-size: 1.4rem;
-    color: #007bff;
+    color: var(--blue);
 }
 
 /* Back Icon fix */
@@ -181,7 +172,7 @@
 }
 
 .list-group-link {
-    color: #007bff;
+    color: var(--blue);
     text-decoration: none;
     font-weight: 500;
     padding-left: 0;

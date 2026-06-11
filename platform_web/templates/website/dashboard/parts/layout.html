@@ -5,12 +5,19 @@
   Dashboard | {{ website_config.site_name }}
 {% endblock %}
 
-{% block extra_css %}
+{% block css %}
   <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/dashboard/projects.css' %}" />
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap" />
 {% endblock %}
 
-{% block extra_js %}
-  <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
+{% block js %}
+  <script src="{% static 'js/libs/Sortable.min.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/projects.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/project_filters.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/theme_switch.js' %}" defer type="module"></script>
 {% endblock %}
 
 {% block layout %}

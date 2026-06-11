@@ -9,7 +9,7 @@
   {{ part.seo_title|default:part.title }} | {{ website_config.site_name }}
 {% endblock %}
 
-{% block extra_meta %}
+{% block meta %}
   {% if part.seo_description %}
     <meta name="description" content="{{ part.seo_description|striptags|truncatechars:160 }}" />
   {% elif part.description %}
@@ -20,9 +20,6 @@
 {% block extra_css %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" />
 
-  <link rel="stylesheet" href="{% static 'css/common.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/dashboard/projects.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/project_detail.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/lesson_details.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/projects-common.css' %}" />
@@ -33,11 +30,8 @@
   <script src="{% static 'js/libs/medium-zoom.min.js' %}" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js" defer></script>
 
-
   <script src="{% static 'js/common/zoomImage.js' %}" type="module" defer></script>
   <script src="{% static 'js/common/highlight.js' %}" type="module" defer></script>
-  <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/lesson_detail.js' %}" defer type="module"></script>
   <script></script>
 {% endblock %}
@@ -104,8 +98,6 @@
       <div class="row px-3">
         {# description #}
         <main class="content box">
-
-
           <section class="description mb-4">
             <div>{{ part.description|safe }}</div>
           </section>

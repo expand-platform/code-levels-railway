@@ -1,0 +1,18 @@
+@import "./theme-colors.css";
+
+/* PROJECT DETAILS */
+.project-details .container {
+    background: var(--white);
+    box-shadow: 0 2px 8px var(--card-shadow);
+    color: var(--black);
+}
+
+.project-details .content,
+.dashboard .box {
+    background: var(--white);
+    box-shadow: 0 2px 8px var(--card-shadow);
+}
+
+.project-details .box .subtitle {
+    color: var(--text-black);
+}

@@ -1,10 +1,11 @@
+@import "../colors/theme-colors.css";
+
 .dashboard .dashboard-nav.hide {
     height: 0;
     opacity: 0;
 }
 
 .dashboard-nav {
-    background: var(--light);
     padding: .5rem 1rem;
     display: flex;
     align-items: center;
@@ -50,12 +51,12 @@
 }
 
 .dashboard-nav a {
-    color: var(--dark);
+    color: var(--black);
 }
 
 .dashboard-nav .bx.bx-menu {
     cursor: pointer;
-    color: var(--dark);
+    color: var(--black);
 }
 
 .dashboard-nav .nav-link {
@@ -83,7 +84,7 @@
     border-radius: 36px 0 0 36px;
     outline: none;
     width: 100%;
-    color: var(--dark);
+    color: var(--black);
 }
 
 .dashboard-nav form .form-input button {
@@ -93,7 +94,7 @@
     justify-content: center;
     align-items: center;
     background: var(--blue);
-    color: var(--light);
+    color: var(--white);
     font-size: 18px;
     border: none;
     outline: none;
@@ -113,9 +114,9 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 2px solid var(--light);
+    border: 2px solid var(--white);
     background: var(--red);
-    color: var(--light);
+    color: var(--white);
     font-weight: 700;
     font-size: 12px;
     display: flex;
@@ -129,7 +130,7 @@
     position: absolute;
     top: 56px;
     right: 0;
-    background: var(--light);
+    background: var(--white);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
     width: 250px;
@@ -148,28 +149,20 @@
 .dashboard-nav .notification-menu li {
     padding: 10px;
     border-bottom: 1px solid var(--grey);
-    color: var(--dark);
+    color: var(--black);
 }
 
 .dashboard-nav .notification-menu li:hover {
     background-color: var(--light-blue);
-    color: var(--dark);
+    color: var(--black);
 }
 
 .dashboard-nav .notification-menu li:hover a {
     background-color: var(--dark-grey);
-    color: var(--light);
+    color: var(--white);
 }
 
-body.dark .dashboard-nav .notification-menu li:hover {
-    background-color: var(--light-blue);
-    color: var(--light);
-}
 
-body.dark .dashboard-nav .notification-menu li a {
-    background-color: var(--dark-grey);
-    color: var(--light);
-}
 
 .dashboard-nav .profile img {
     width: 36px;
@@ -183,7 +176,7 @@ body.dark .dashboard-nav .notification-menu li a {
     position: absolute;
     top: 56px;
     right: 0;
-    background: var(--light);
+    background: var(--white);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
     width: 200px;
@@ -204,24 +197,18 @@ body.dark .dashboard-nav .notification-menu li a {
 
 .dashboard-nav .profile-menu li:hover {
     background-color: var(--light-blue);
-    color: var(--dark);
+    color: var(--black);
 }
 
 .dashboard-nav .profile-menu li a {
-    color: var(--dark);
+    color: var(--black);
     font-size: 16px;
 }
 
-body.dark .dashboard-nav .profile-menu li:hover a {
-    color: var(--light);
-}
 
-body.dark .dashboard-nav .profile-menu li a {
-    color: var(--dark);
-}
 
 .dashboard-nav .profile-menu li:hover a {
-    color: var(--dark);
+    color: var(--black);
 }
 
 /* Active State for Menus */

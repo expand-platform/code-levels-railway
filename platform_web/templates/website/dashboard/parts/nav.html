@@ -1,13 +1,15 @@
 <nav class="dashboard-nav">
   <div class="container">
     <div class="row justify-content-between position-relative">
-      {# left side #}
+      {# left #}
       <aside class="col left">
+        {# burger icon #}
         <i class="bi bi-list fs-5 bx bx-menu bx-sm"></i>
       </aside>
 
-      {# right side #}
+      {# right #}
       <aside class="col right justify-content-end d-flex text-end align-items-center column-gap-3">
+        {% include 'website/dashboard/parts/theme-switch.html' %}
       </aside>
     </div>
   </div>

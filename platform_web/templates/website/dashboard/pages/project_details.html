@@ -7,7 +7,7 @@
   {{ project.seo_title|default:project.title }} | {{ website_config.site_name }}
 {% endblock %}
 
-{% block extra_meta %}
+{% block meta %}
   {% if project.seo_description %}
     <meta name="description" content="{{ project.seo_description|striptags|truncatechars:160 }}" />
   {% elif project.description %}
@@ -16,8 +16,6 @@
 {% endblock %}
 
 {% block extra_css %}
-  <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/dashboard/projects.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/project_detail.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/projects-common.css' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard/timeline.css' %}" />
@@ -25,14 +23,11 @@
 
 {% block extra_js %}
   <script async src="https://public.codepenassets.com/embed/index.js" defer></script>
-  <script src="{% static 'js/libs/Sortable.min.js' %}" type="module" defer></script>
   <script src="{% static 'js/libs/medium-zoom.min.js' %}" type="module" defer></script>
 
   <script src="{% static 'js/common/zoomImage.js' %}" type="module" defer></script>
   <script src="{% static 'js/common/highlight.js' %}" type="module" defer></script>
 
-  <script src="{% static 'js/dashboard/dashboard.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/project_detail.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/timeline.js' %}" defer></script>
 {% endblock %}
@@ -85,7 +80,7 @@
         {% if parts %}
           <section class="project-parts mb-5">
             <div class="d-flex align-items-center mb-3">
-              <h2 class="subtitle mb-0 me-2" style="color: #222; font-weight: 600;">{% trans 'Lessons' %}</h2>
+              <h2 class="subtitle mb-0 me-2">{% trans 'Lessons' %}</h2>
               <button id="toggle-parts-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Lessons' %}"><i id="toggle-parts-icon" class="bi bi-chevron-down"></i></button>
               {% if user.is_staff %}
                 <button id="save-order-btn" class="btn btn-sm btn-success ms-3" style="display:none;">{% trans 'Save Order' %}</button>
@@ -96,7 +91,7 @@
               {% csrf_token %}
               <ol id="parts-list" class="list-group" data-project-slug="{{ project.slug }}" style="background: #f9f9f9; border-radius: 8px; border: 1px solid #eee; transition: max-height 0.3s;">
                 {% for part in parts %}
-                  <li class="part-item list-group-item d-flex flex-column flex-md-row row-gap-2 justify-content-between align-items-md-center" data-id="{{ part.id }}" style="background: #fff; border: none; border-bottom: 1px solid #f0f0f0; color: #333;">
+                  <li class="part-item list-group-item d-flex flex-column flex-md-row row-gap-2 justify-content-between align-items-md-center" data-id="{{ part.id }}" style="background: var(--white); border: none; border-bottom: 1px solid #f0f0f0; color: #333;">
                     <span class="d-md-flex align-items-center">
                       {% if user.is_staff %}
                         <span class="drag-handle me-2" style="cursor:move;"><i class="bi bi-list"></i></span>
@@ -111,7 +106,7 @@
             </form>
           </section>
         {% else %}
-          <p class="text-muted m-0">
+          <p class="no-content text-grey m-0">
             {% trans "No lessons here, but we'll launch them soon." %}
           </p>
         {% endif %}

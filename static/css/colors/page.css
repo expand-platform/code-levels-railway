@@ -1,0 +1,6 @@
+@import "./theme-colors.css";
+
+body {
+  background-color: var(--white-grey);
+  color: var(--black-grey);
+}
