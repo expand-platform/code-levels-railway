@@ -1,9 +1,8 @@
 .settings {
-  color: var(--text-black);
   max-width: 900px;
   margin: 2rem auto;
-  background-color: #ffffff !important;
   padding: 1rem;
+  border-radius: 8px;
 }
 
 .settings .settings-section-title {
@@ -58,10 +57,8 @@
 .setting-item-label {
   font-size: 1rem;
   font-weight: 500;
-  /* background-color: #fff; */
-  color: #1f2937;
+  color: var(--text-black);
   display: block;
-  /* To allow margin */
 }
 
 .setting-item-description {
@@ -78,18 +75,8 @@
 .setting-item-action .text-input {
   font-size: 0.95rem;
   padding: 0.5rem 0.75rem;
-  border: 1px solid #d1d5db;
   border-radius: 8px;
   width: 200px;
-}
-
-.setting-item-action .text-input {
-  background-color: #ffffff;
-  color: var(--text-black);
-}
-
-.setting-item-action .text-input:focus {
-  color: var(--dark-purple);
 }
 
 .setting-item-action .text-input.token-field {
@@ -97,10 +84,6 @@
   cursor: pointer;
 }
 
-.setting-item-action .text-input.token-field:hover {
-  color: var(--dark-purple);
-  border-color: var(--dark-purple);
-}
 
 .bi-clipboard {
   font-size: 1.2rem;

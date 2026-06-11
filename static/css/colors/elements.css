@@ -27,6 +27,6 @@ i.home-burger {
 }
 
 .project-difficulty {
-  background: var(--label-grey);
-  color: var(--black-grey);
+  color: var(--projects-difficulty-color);
+  outline: 1px solid var(--projects-difficulty-outline);
 }

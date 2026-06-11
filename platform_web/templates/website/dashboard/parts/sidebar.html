@@ -18,17 +18,7 @@
         </a>
       </li>
     {% endif %}
-    {% comment %} <li class="has-submenu" data-submenu="topics">
-      <div class="menu-row">
-        <a href="{% url 'topics' %}" data-route="topics" class="main-link" data-bs-toggle="collapse" data-bs-target="#topicsSidebarCollapse" aria-expanded="false" aria-controls="topicsSidebarCollapse" aria-label="{% trans 'Toggle Practice languages' %}">
-          <i class="bx bi bi-bar-chart-steps"></i>
-          <span class="text">{% trans 'Practice' %}</span>
-        </a>
-      </div>
-      {% if sidebar_topic_languages %}
-        {% include 'website/dashboard/parts/sidebar/topics-list.html' %}
-      {% endif %}
-    </li> {% endcomment %}
+
     <li class="has-submenu" data-submenu="projects">
       <div class="menu-row">
         <a href="{% url 'projects' %}" data-route="projects" class="main-link" data-bs-toggle="collapse" data-bs-target="#projectsSidebarCollapse" aria-expanded="false" aria-controls="projectsSidebarCollapse" aria-label="{% trans 'Toggle Projects courses' %}">
@@ -40,12 +30,6 @@
         {% include 'website/dashboard/parts/sidebar/projects-list.html' %}
       {% endif %}
     </li>
-    {% comment %} <li class="">
-      <a href="{% url 'courses' %}" data-route="courses">
-        <i class="bx bi bi-play-btn"></i>
-        <span class="text">{% trans 'Courses' %}</span>
-      </a>
-    </li> {% endcomment %}
   </ul>
   <ul class="side-menu bottom">
     <li class="">

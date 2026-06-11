@@ -19,9 +19,9 @@ class UserProfile(models.Model):
 
     wakatime_api_key = models.CharField(max_length=255, blank=True, null=True)
     
-    subscription = models.OneToOneField(
-        Subscription, on_delete=models.CASCADE, related_name="user_subscription", null=True, blank=True
-    )
+    # subscription = models.OneToOneField(
+    #     Subscription, on_delete=models.CASCADE, related_name="user_subscription", null=True, blank=True
+    # )
 
     def __str__(self):
         return f"{self.user.username} with telegram ID {self.telegram_user_id} and tg first name {self.telegram_first_name}"

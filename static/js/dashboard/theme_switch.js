@@ -7,9 +7,20 @@ window.addEventListener('DOMContentLoaded', () => {
     switchMode.checked = theme === 'dark';
 })
 
-switchMode.onchange = () => {
+window.onkeydown = (event) => enableKeyboardShortcut(event);
+
+function enableKeyboardShortcut(event) {
+    if (event.which === 81 && (event.ctrlKey && event.shiftKey)) {
+        switchMode.checked = !switchMode.checked;
+        switchTheme();
+    }
+}
+
+function switchTheme() {
     let themeColor = switchMode.checked ? 'dark' : 'light';
 
     document.documentElement.dataset.theme = themeColor;
     localStorage.setItem('theme', themeColor);
 }
+
+switchMode.onchange = switchTheme;

@@ -1,18 +1,16 @@
 <div class="project-card" data-id="{{ project.id }}">
   {% if project.slug %}
-    <a href="{% url 'project_details' slug=project.slug %}">
-      <div class="project-inner w-100">
-        {% if project.image %}
-          <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" />
+    <div class="project-inner w-100 h-100 d-flex flex-column">
+      {% if project.image %}
+        <a href="{% url 'project_details' slug=project.slug %}"><img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" /></a>
+      {% endif %}
+      <div class="project-info flex-grow-1 d-flex flex-column justify-content-between">
+        <h3 class="mb-4"><a href="{% url 'project_details' slug=project.slug %}" style="color: var(--blue);">{{ project.title }}</a></h3>
+        {% if project.difficulty %}
+          <span class="project-difficulty mb-3">{{ project.difficulty }}</span>
         {% endif %}
-        <div class="project-info">
-          <h3 class="mb-3"><a href="{% url 'project_details' slug=project.slug %}" style="text-decoration: underline; color: var(--blue);">{{ project.title }}</a></h3>
-          {% if project.difficulty %}
-            <span class="project-difficulty mb-3">{{ project.difficulty }}</span>
-          {% endif %}
-        </div>
       </div>
-    </a>
+    </div>
   {% else %}
     <div class="project-inner w-100">
       {% if project.image %}
@@ -20,7 +18,7 @@
       {% endif %}
       <div class="project-info">
         {{ project }}
-        <h3 class="mb-3"><span style="text-decoration: underline; color: #6c757d;">{{ project.title }}</span></h3>
+        <h3 class="mb-3"><span style="color: #6c757d;">{{ project.title }}</span></h3>
         {% if project.difficulty %}
           <span class="project-difficulty mb-3">{{ project.difficulty }}</span>
         {% endif %}

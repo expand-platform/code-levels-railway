@@ -17,7 +17,7 @@
   {% endif %}
 {% endblock %}
 
-{% block extra_css %}
+{% block page_css %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" />
 
   <link rel="stylesheet" href="{% static 'css/dashboard/project_detail.css' %}" />
@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="{% static 'css/dashboard/projects-common.css' %}" />
 {% endblock %}
 
-{% block extra_js %}
+{% block page_js %}
   <script async src="https://public.codepenassets.com/embed/index.js" defer></script>
   <script src="{% static 'js/libs/medium-zoom.min.js' %}" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js" defer></script>

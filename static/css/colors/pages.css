@@ -16,3 +16,32 @@
 .project-details .box .subtitle {
     color: var(--text-black);
 }
+
+/* SETTINGS PAGE */
+.settings {
+    color: var(--text-black);
+    background-color: var(--settings-bg) !important;
+    box-shadow: 0 2px 8px var(--settings-box-shadow) !important;
+}
+
+.setting-item-action .text-input {
+    border: 1px solid #d1d5db;
+    background-color: var(--white);
+    color: var(--text-black);
+
+    &:hover {
+        border-color: var(--dark-purple);
+        color: var(--dark-purple);
+    }
+
+    &:focus,
+    &:focus-visible {
+        color: var(--settings-input-outline);
+        outline: var(--settings-input-outline) auto 1px;
+    }
+
+    &.token-field:hover {
+        color: var(--dark-purple);
+        border-color: var(--dark-purple);
+    }
+}

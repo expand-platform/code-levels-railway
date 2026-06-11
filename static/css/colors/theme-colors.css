@@ -27,6 +27,14 @@
     --orange: #FD7238;
     --light-orange: #FFE0D3;
 
+    /* pages */
+    --settings-bg: var(--white);
+    --settings-box-shadow: rgba(0, 0, 0, 0.12);
+    --settings-input-outline: var(--dark-purple);
+
+    --projects-difficulty-color: #28292c;
+    --projects-difficulty-outline: var(--black-grey);
+
     /* layout */
     --sidebar-bg: var(--white);
 
@@ -39,6 +47,8 @@
     /* texts */
     --text-black: var(--black);
     --text-grey: #888;
+
+
 }
 
 :root[data-theme="dark"] {
@@ -63,6 +73,14 @@
     --light-yellow: #FFF2C6;
     --orange: #FD7238;
     --light-orange: #FFE0D3;
+
+    /* pages */
+    --settings-bg: var(--sidebar-bg);
+    --settings-box-shadow: rgba(100, 100, 100, 0.8);
+    --settings-input-outline: var(--dark-purple);
+
+    --projects-difficulty-color: #bebebe;
+    --projects-difficulty-outline: rgb(193, 193, 193);
 
     /* layout in dark mode */
     --sidebar-bg: #0f0f21;
