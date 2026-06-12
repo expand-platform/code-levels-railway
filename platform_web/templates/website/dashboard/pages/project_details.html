@@ -89,9 +89,9 @@
 
             <form id="reorder-form" method="post" style="margin:0;">
               {% csrf_token %}
-              <ol id="parts-list" class="list-group" data-project-slug="{{ project.slug }}" style="background: #f9f9f9; border-radius: 8px; border: 1px solid #eee; transition: max-height 0.3s;">
+              <ol id="parts-list" class="list-group" data-project-slug="{{ project.slug }}">
                 {% for part in parts %}
-                  <li class="part-item list-group-item d-flex flex-column flex-md-row row-gap-2 justify-content-between align-items-md-center" data-id="{{ part.id }}" style="background: var(--white); border: none; border-bottom: 1px solid #f0f0f0; color: #333;">
+                  <li class="part-item list-group-item d-flex flex-column flex-md-row row-gap-2 justify-content-between align-items-md-center" data-id="{{ part.id }}">
                     <span class="d-md-flex align-items-center">
                       {% if user.is_staff %}
                         <span class="drag-handle me-2" style="cursor:move;"><i class="bi bi-list"></i></span>

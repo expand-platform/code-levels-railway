@@ -94,7 +94,22 @@
 #search-icon {
   cursor: pointer;
   font-size: 1.3em;
-  color: black;
+  color: var(--black);
+}
+
+/* parts */
+#parts-list {
+  background: var(--white);
+  transition: max-height 0.3s;
+  border-radius: 0;
+  border: none;
+}
+
+.part-item {
+  background: var(--white);
+  border: none;
+  border-bottom: 1px solid var(--light-grey);
+  color: #333;
 }
 
 @media screen and (max-width: 768px) {
