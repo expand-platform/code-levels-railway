@@ -1,25 +1,53 @@
-from django.http import HttpResponseForbidden
+from typing import Callable, Optional
+
+from django.http import HttpResponseForbidden, HttpRequest, HttpResponse
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 
+from api.models.UserProfile import UserProfile
+from platform_web.models.user.PaidPlan import PaidPlan
 
-# middleware.py
-# from .permissions import get_entitlements
 
-# class PlanMiddleware:
-#     def __init__(self, get_response):
-#         self.get_response = get_response  # Django passes this in, it's the next middleware or view
+class PaidPlanOnlyMiddleware:
+    def __init__(
+        self,
+        get_response: Callable[[HttpRequest], HttpResponse],
+        access_level_required: int = 1,
+    ):
+        self.get_response = get_response
+        self.access_level_required = access_level_required
 
-#     def __call__(self, request):
-#         if request.user.is_authenticated:
-#             request.entitlements = get_entitlements(request.user)
-#             request.plan = request.entitlements['plan_name']
-#         else:
-#             request.entitlements = None
-#             request.plan = 'anonymous'
+    def __call__(self, request: HttpRequest) -> HttpResponse:
+        user = request.user
 
-#         response = self.get_response(request)  # pass to next layer
-#         return response
+        if user.is_authenticated:
+            user_profile: Optional[UserProfile] = getattr(user, "user_profile", None)
+            paid_plan: Optional[PaidPlan] = getattr(user_profile, "paid_plan", None)
+
+            if paid_plan is None or paid_plan.access_level < self.access_level_required:
+                return HttpResponseForbidden(
+                    "Upgrade to a paid plan to access this resource."
+                )
+
+        return self.get_response(request)
+
+
+def paid_plan_only_middleware(
+    get_response: Callable[[HttpRequest], HttpResponse],
+) -> PaidPlanOnlyMiddleware:
+    return PaidPlanOnlyMiddleware(get_response, access_level_required=1)
+
+
+def pro_plan_only_middleware(
+    get_response: Callable[[HttpRequest], HttpResponse],
+) -> PaidPlanOnlyMiddleware:
+    return PaidPlanOnlyMiddleware(get_response, access_level_required=2)
+
+
+def pro_plus_plan_only_middleware(
+    get_response: Callable[[HttpRequest], HttpResponse],
+) -> PaidPlanOnlyMiddleware:
+    return PaidPlanOnlyMiddleware(get_response, access_level_required=3)
 
 
 class AdminStaffOnlyMiddleware:
@@ -48,37 +76,3 @@ class AdminStaffOnlyMiddleware:
                 return HttpResponseForbidden("Forbidden")
 
         return self.get_response(request)
-
-
-
-# class PreferredLanguageMiddleware:
-#     """
-#     If a logged-in user has a preferred language set on their profile,
-#     apply it for the current session and activate translations for the
-#     request. This keeps the UI language consistent with user settings.
-#     """
-
-#     def __init__(self, get_response):
-#         self.get_response = get_response
-
-#     def __call__(self, request):
-#         path = request.path
-
-#         # Always allow static & media
-#         if path.startswith("/static/") or path.startswith("/media/"):
-#             return self.get_response(request)
-
-#         user = getattr(request, 'user', None)
-#         if user and user.is_authenticated:
-#             profile = getattr(user, 'user_profile', None)
-#             if profile and getattr(profile, 'interface_language', None):
-#                 lang = profile.interface_language
-#                 try:
-#                     request.session[settings.LANGUAGE_COOKIE_NAME] = lang
-#                 except Exception:
-#                     # session may not be available in some contexts
-#                     pass
-#                 activate(lang)
-#                 request.LANGUAGE_CODE = lang
-
-#         return self.get_response(request)

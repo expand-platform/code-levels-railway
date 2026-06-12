@@ -1,21 +1,23 @@
+# Account page -> PaidPlans management + WakaTime + other cool features
+
 # ! WakaTime!
 
 # User Plans
 
-# 1. Models:
+# 1. Models: ✅
 - Subscription (general info: name, subscription_level, related user and plan, status, etc) ✅
-- PlanUsage (included limits, usage, etc)
-- UsageRecord (maybe) (to track usage of each feature, if needed).
+- PlanUsage (included limits, usage, etc) ❌
+- UsageRecord (maybe) (to track usage of each feature, if needed). ❌
 
-# 2. Middleware
-- SubscriptionMiddleware to check user subscription status and enforce limits. 
-- helpers like get_user_plan(user), allowed_features(user), can_use_feature(user), check_limit(feature) / check_limits(all) 
+# 2. Middleware ✅
+- SubscriptionMiddleware to check user subscription status and enforce limits. ✅
+- helpers like get_user_plan(user), allowed_features(user), can_use_feature(user), check_limit(feature) / check_limits(all) ✅
 
-# 3. Decorators (maybe, like an addition for middleware)
-- @subscription_required(feature) to check if user can access a feature before view execution.
+# 3. Decorators (maybe, like an addition for middleware) ✅
+- @subscription_required(feature) to check if user can access a feature before view execution. ✅
 
-# 4. Admin panel
-- Manage subscription titles, levels, change levels for users and con  trol usage.
+# 4. Admin panel ✅
+- Manage subscription titles, levels, change levels for users and con  trol usage. ✅
 
 # 5. API endpoints
 - View user subscription status, usage, and limits.

@@ -18,7 +18,9 @@ load_dotenv(".env")
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = dotenv.django_secret_key
-ALLOWED_HOSTS = [host.strip() for host in dotenv.allowed_hosts.split(",") if host.strip()]
+ALLOWED_HOSTS = [
+    host.strip() for host in dotenv.allowed_hosts.split(",") if host.strip()
+]
 
 
 JAZZMIN_SETTINGS = JAZZMIN_SETTINGS_DICT
@@ -58,7 +60,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # custom middleware
+    # admin needed middleware
     "platform_web.middleware.AdminStaffOnlyMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]

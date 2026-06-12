@@ -7,6 +7,9 @@ from platform_web.models.project.Lesson import Lesson
 from platform_web.models.project.Project import Project
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 
+from platform_web.decorators import paid_plans_only
+
+
 MAX_SEARCH_LENGTH = 100
 
 MODE_SETTINGS = {
@@ -107,7 +110,6 @@ def projects_by_course_view(request, course_slug: str):
         page_mode="projects",
         selected_course_id=course.pk,
     )
-
 
 def topics_view(request):
     return _render_projects_page(request, page_mode="topics")
