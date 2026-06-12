@@ -1,7 +1,9 @@
+# ! WakaTime!
+
 # User Plans
 
 # 1. Models:
-- Subscription (general info: name, subscription_level, related user and plan, status, etc)
+- Subscription (general info: name, subscription_level, related user and plan, status, etc) ✅
 - PlanUsage (included limits, usage, etc)
 - UsageRecord (maybe) (to track usage of each feature, if needed).
 

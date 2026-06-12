@@ -18,6 +18,8 @@ from platform_web.models.base import WebsiteConfig
 from platform_web.models.base import SocialMediaLink
 from platform_web.models.base import Changelog
 
+from platform_web.models.user.PaidPlan import PaidPlan
+
 
 # inlines
 class InlineSocialMediaLink(admin.TabularInline):
@@ -145,13 +147,13 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
         updated = queryset.update(is_active=True)
         self.message_user(request, f"{updated} project(s) published.")
 
-    publish_projects.short_description = "Publish selected projects"
+    publish_projects.short_description = "Publish selected projects"  # type: ignore[attr-defined]
 
     def unpublish_projects(self, request, queryset):
         updated = queryset.update(is_active=False)
         self.message_user(request, f"{updated} project(s) unpublished.")
 
-    unpublish_projects.short_description = "Unpublish selected projects"
+    unpublish_projects.short_description = "Unpublish selected projects"  # type: ignore[attr-defined]
 
     def get_programming_languages(self, obj):
         return ", ".join([pl.name for pl in obj.programming_languages.all()])
@@ -159,8 +161,8 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
     def get_framework(self, obj):
         return ", ".join([fw.name for fw in obj.framework.all()])
 
-    get_programming_languages.short_description = "Languages"
-    get_framework.short_description = "Frameworks"
+    get_programming_languages.short_description = "Languages"  # type: ignore[attr-defined]
+    get_framework.short_description = "Frameworks"  # type: ignore[attr-defined]
 
 
 class LessonAdminForm(forms.ModelForm):
@@ -240,6 +242,10 @@ class DifficultiesAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[m
     list_display = ("order", "name")
 
 
+class PaidPlansAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
+    list_display = ("ui_order", "title", "name", "access_level", "price")
+
+
 class FrameworkAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
     list_display = ("order", "name")
     search_fields = ("name",)
@@ -253,3 +259,5 @@ admin.site.register(Framework, FrameworkAdmin)
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Lesson, LessonsAdmin)
+
+admin.site.register(PaidPlan, PaidPlansAdmin)

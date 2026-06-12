@@ -3,6 +3,54 @@ from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 
 
+# middleware.py
+# from .permissions import get_entitlements
+
+# class PlanMiddleware:
+#     def __init__(self, get_response):
+#         self.get_response = get_response  # Django passes this in, it's the next middleware or view
+
+#     def __call__(self, request):
+#         if request.user.is_authenticated:
+#             request.entitlements = get_entitlements(request.user)
+#             request.plan = request.entitlements['plan_name']
+#         else:
+#             request.entitlements = None
+#             request.plan = 'anonymous'
+
+#         response = self.get_response(request)  # pass to next layer
+#         return response
+
+
+class AdminStaffOnlyMiddleware:
+    """
+    Restrict /cp/ access to authenticated staff users only.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        path = request.path
+
+        # Always allow static & media
+        if path.startswith("/static/") or path.startswith("/media/"):
+            return self.get_response(request)
+
+        # Restrict control panel
+        if path.startswith("/cp/"):
+            user = request.user
+
+            if not user.is_authenticated:
+                return redirect_to_login(path, settings.LOGIN_URL)
+
+            if not user.is_staff:
+                return HttpResponseForbidden("Forbidden")
+
+        return self.get_response(request)
+
+
+
 # class PreferredLanguageMiddleware:
 #     """
 #     If a logged-in user has a preferred language set on their profile,
@@ -34,30 +82,3 @@ from django.contrib.auth.views import redirect_to_login
 #                 request.LANGUAGE_CODE = lang
 
 #         return self.get_response(request)
-
-class AdminStaffOnlyMiddleware:
-    """
-    Restrict /cp/ access to authenticated staff users only.
-    """
-
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        path = request.path
-
-        # Always allow static & media
-        if path.startswith("/static/") or path.startswith("/media/"):
-            return self.get_response(request)
-
-        # Restrict control panel
-        if path.startswith("/cp/"):
-            user = request.user
-
-            if not user.is_authenticated:
-                return redirect_to_login(path, settings.LOGIN_URL)
-
-            if not user.is_staff:
-                return HttpResponseForbidden("Forbidden")
-
-        return self.get_response(request)
