@@ -61,10 +61,10 @@
     padding: 2rem;
 
     .title {
-        color: var(--light-gray);
+        color: var(--light-grey);
     }
 
     .subtitle {
-        color: var(--light-gray);
+        color: var(--light-grey);
     }
 }

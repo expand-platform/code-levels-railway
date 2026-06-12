@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block title %}
-  {% trans "Login" %} | {{ website_config.site_name }}
+  {% trans 'Login' %}| {{ website_config.site_name }}
 {% endblock %}
 
 {% block css %}
@@ -17,26 +17,36 @@
     <div class="login-container">
       <section class="login-form">
         <h2 class="subtitle">{{ website_config.site_name }}</h2>
-        <h4 class="fw-light mb-3">{{ website_config.tagline }}</h4>
+        <h4 class="fw-light mb-3">Sign in to use all of our superpowers</h4>
 
         {# form #}
-        <section class="row justify-content-center">
-          <form method="POST" action="{% url 'account_login' %}" class="form col-10">
-            <div class="mb-3"></div>
-            {% if form.non_field_errors %}
-              <div class="alert alert-danger">{{ form.non_field_errors }}</div>
-            {% endif %}
-            {% csrf_token %}
-            {% if redirect_field_value %}
-              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-            {% endif %}
-            {{ form.login }}
-            {{ form.password }}
-            <button type="submit" id="login-button" class="mb-5">{% trans "Login" %}</button>
-            <a class="login-with-google-btn" href="{% provider_login_url 'google' process='login' next=redirect_field_value %}">{% trans "Sign in with Google" %}</a>
-            <p class="help-text dont-have-account">
-              {% trans "Don't have an account?" %} <a href="{% url 'account_signup' %}">{% trans "Sign up" %}</a>
-            </p>
+        <section class="d-flex justify-content-center">
+          <form method="POST" action="{% url 'account_login' %}" class="form col-10 py-2 w-100">
+            <div class="d-flex gap-3">
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-keyboard me-2"></i> Type manually</button>
+              {# Google button #}
+              <a class="login-with-google-btn" href="{% provider_login_url 'google' process='login' next=redirect_field_value %}">{% trans 'Sign in with Google' %}</a>
+            </div>
+
+            <div class="collapse py-3" id="collapseExample">
+              {% csrf_token %}
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+              {% endif %}
+              {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+              {% endif %}
+              {{ form.login }}
+              {{ form.password }}
+
+              {# Submit #}
+              <button type="submit" id="login-button" class="mb-3">{% trans 'Login' %}</button>
+
+              {# Dont' have account? #}
+              <p class="help-text dont-have-account">
+                {% trans "Don't have an account?" %} <a href="{% url 'account_signup' %}">{% trans 'Sign up' %}</a>
+              </p>
+            </div>
           </form>
         </section>
       </section>

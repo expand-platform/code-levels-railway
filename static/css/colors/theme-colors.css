@@ -3,11 +3,12 @@
     --white: #F9F9F9;
     --white-grey: #eee;
     --soft-white: #e5e7eb;
-    --light-gray: #d1d5db;
+    --light-grey: #d1d5db;
 
     --black: #28292c;
     --black-grey: #342E37;
     --soft-black: #393e47;
+    --dark-blue-grey: #111827;
 
     --grey: #bebebe;
     --light-grey: #ccc;
@@ -39,8 +40,8 @@
     --sidebar-bg: var(--white);
 
     /* elements */
-    --label-grey: var(--light-gray);
-    --burger-line: var(--light-gray);
+    --label-grey: var(--light-grey);
+    --burger-line: var(--light-grey);
     --card-shadow: rgba(0, 0, 0, 0.07);
     --card-shadow-hover: rgba(0, 0, 0, 0.12);
 
@@ -55,7 +56,7 @@
     --white: #0C0C1E;
     --white-grey: #0C0C1E;
     --soft-white: #1a2233;
-    --light-gray: #4a5568;
+    --light-grey: #4a5568;
 
     --grey: #0C0C1E;
     --dark-grey: #aaa;
@@ -86,8 +87,8 @@
     --sidebar-bg: #0f0f21;
 
     /* elements in dark mode */
-    --burger-line: var(--light-gray);
-    --label-grey: var(--light-gray);
+    --burger-line: var(--light-grey);
+    --label-grey: var(--light-grey);
     --card-shadow: rgba(100, 100, 100, 0.222);
     --card-shadow-hover: rgba(164, 164, 164, 0.222);
 
