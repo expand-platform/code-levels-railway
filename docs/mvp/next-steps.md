@@ -1,3 +1,16 @@
+- add eye icon on password field on login and signup pages to show/hide password
+- somehow combine login and signup pages
+- workouts (topics) + include workouts on the project page
+
+- fix project numeration (in some projects still present the error)
+
+- add random hash / timestamps to uploaded images
+
+# User features
+- show workouts and topics amongst projects (like a switch or toggle or checkbox near the course name)
+- one project can be in multiple courses (web security / desktop, web / security etc)
+- make some course extra (like an addition to existing course) like advanced JS/React/Vue course with it's own projects and topics
+
 # Account page -> PaidPlans management + WakaTime + other cool features
 
 # ! WakaTime!

@@ -1,4 +1,4 @@
-const sidebarBurgerButton = document.querySelector('.dashboard-nav .bx.bx-menu');
+const sidebarBurgerButton = document.querySelector('.dashboard-nav .bi.bi-list');
 const sidebar = document.getElementById('sidebar') || document.querySelector('.sidebar');
 const logo = document.querySelector('#sidebar .brand .text');
 const dashboardNav = document.querySelector('.dashboard .dashboard-nav');
