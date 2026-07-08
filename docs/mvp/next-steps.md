@@ -1,4 +1,5 @@
-- check SEO settings, improve robots.txt and sitemap.xml
+- add a subdomain
+- add a learning skills map with projects / workouts
 
 - add eye icon on password field on login and signup pages to show/hide password
 - somehow combine login and signup pages

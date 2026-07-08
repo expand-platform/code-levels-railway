@@ -32,29 +32,6 @@ class ReorderLessonsView(APIView):
         return Response({"success": True})
 
 
-# class ReorderProjectsByLanguageView(APIView):
-#     permission_classes = [IsAdminUser]
-
-#     def post(self, request, language_id):
-#         order_data = request.data.get("order", [])
-#         try:
-#             language = ProgrammingLanguage.objects.get(id=language_id)
-#         except ProgrammingLanguage.DoesNotExist:
-#             return Response(
-#                 {"success": False, "error": "Language not found."},
-#                 status=status.HTTP_404_NOT_FOUND,
-#             )
-
-#         for item in order_data:
-#             project_id = item.get("id")
-#             project_order = item.get("order")
-#             Project.objects.filter(id=project_id, programming_languages=language).update(
-#                 language_order=project_order
-#             )
-
-#         return Response({"success": True})
-
-
 class ReorderProjectsByCourseView(APIView):
     permission_classes = [IsAdminUser]
 

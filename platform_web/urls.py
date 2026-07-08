@@ -1,8 +1,16 @@
 from django.urls import path
 from platform_web.views import *
+from django.shortcuts import redirect
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
+    
+    # download
+    path(
+        "desktop-app/",
+        lambda request: redirect("https://github.com/Ca-tt/codelevels-app/releases"),
+        name="desktop_app",
+    ),
     
     # Account
     path("settings/", SettingsView.as_view(), name="settings"),

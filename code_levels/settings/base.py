@@ -78,6 +78,7 @@ TEMPLATES = [
             BASE_DIR / "templates",
             BASE_DIR / "platform_web" / "templates",
             BASE_DIR / "platform_web" / "templates" / "account",
+            BASE_DIR / "landing" / "templates" / "landing",
         ],
         "APP_DIRS": True,
         "OPTIONS": {

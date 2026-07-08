@@ -61,25 +61,29 @@ class AdminStaffOnlyMiddleware:
 
     def __call__(self, request: HttpRequest):
         path = request.path
-
+       
         # Always allow static & media
         if path.startswith("/static/") or path.startswith("/media/"):
             return self.get_response(request)
-
+       
+        
         admin_route = normalize_admin_url_path(WebsiteSettings.admin_url)
         admin_path = f"/{admin_route.lstrip('/')}" if admin_route else ""
+        
+        is_admin_route = admin_path and path.startswith(admin_path)
+
+        if is_admin_route:
+            user = request.user
+            
+            if not user.is_authenticated:
+                return redirect_to_login(path, settings.LOGIN_URL)
+            
+            if not user.is_staff:
+                return HttpResponseForbidden("Forbidden")
 
         response = self.get_response(request)
 
-        # Add noindex header for admin routes and restrict access to staff users.
-        if admin_path and path.startswith(admin_path):
+        if is_admin_route:
             response["X-Robots-Tag"] = "noindex, nofollow, noarchive"
-
-            user = request.user
-            if not user.is_authenticated:
-                return redirect_to_login(path, settings.LOGIN_URL)
-
-            if not user.is_staff:
-                return HttpResponseForbidden("Forbidden")
 
         return response

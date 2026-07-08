@@ -33,17 +33,25 @@
   </ul>
   <ul class="side-menu bottom">
     <li class="">
+      <a href="{% url 'desktop_app' %}" class="settings-link" data-route="desktop_app">
+        <i class="bx bi bi-windows"></i>
+        <span class="text">{% trans 'Desktop App' %}</span>
+      </a>
+    </li>
+    <li class="">
       <a href="{% url 'settings' %}" class="settings-link" data-route="settings">
         <i class="bx bi bi-gear"></i>
         <span class="text">{% trans 'Account' %}</span>
       </a>
     </li>
-    <li>
-      <a href="{% url 'logout' %}" class="logout" data-route="logout">
-        <i class="bx bi bi-box-arrow-left"></i>
-        <span class="text">{% trans 'Logout' %}</span>
-      </a>
-    </li>
+    {% if user.is_authenticated %}
+      <li>
+        <a href="{% url 'logout' %}" class="logout" data-route="logout">
+          <i class="bx bi bi-box-arrow-left"></i>
+          <span class="text">{% trans 'Logout' %}</span>
+        </a>
+      </li>
+    {% endif %}
   </ul>
 </section>
 <!-- SIDEBAR -->

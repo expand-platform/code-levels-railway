@@ -1,0 +1,10 @@
+@import url('./../colors/theme-colors.css');
+
+.button.no-bg {
+    background-color: transparent;
+}
+
+.button.hover-purple:hover {
+    background-color: var(--dark-purple) !important;
+    color: var(--white) !important;
+}

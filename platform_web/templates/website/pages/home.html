@@ -26,10 +26,12 @@
         <h1 class="title">{% blocktrans with site_name=website_config.site_name %}{{ site_name }} waiting for you!{% endblocktrans %}</h1>
 
         <p class="subtitle mb-4">
-          {% trans 'Coding projects, challenges, and topics for any stack' %}
+          {% trans 'Frontend, backend, desktop, and data science projects' %}
         </p>
-
-        <a class="btn btn-primary button" href="{% url 'projects' %}">{% trans 'Dive into projects' %}</a>
+        <div>
+          <a class="btn btn-primary button no-bg hover-purple me-3" href="{% url 'landing' %}">{% trans 'Hire a mentor' %}</a>
+          <a class="btn btn-primary button" href="{% url 'projects' %}">{% trans 'Discover projects' %}</a>
+        </div>
       </div>
     </section>
   </section>
