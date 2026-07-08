@@ -1,4 +1,4 @@
-@import url('/static/css/colors/theme.css');
+@import url('/static/css/colors/theme-colors.css');
 
 .home .subtitle {
     font-size: 1.5rem;
@@ -44,8 +44,8 @@
 .hero__overlay {
     position: absolute;
     inset: 0;
-    background: var(--bg-surface, #111827);
-    opacity: 0.6;
+    background: var(--black, #111827);
+    opacity: 0.7;
     z-index: 2;
 }
 

@@ -23,7 +23,7 @@
                   <span style="font-weight: 500;">{{ p.title }}</span>
                 {% else %}
                   <span># {{ p.order }}</span>
-                  <a href="{% url 'lesson_details' slug=project.slug order=p.order %}" style="color: var(--blue); text-decoration: none;">{{ p.title }}</a>
+                  <a href="{% url 'lesson_details' slug=project.slug part_slug=p.slug %}" style="color: var(--blue); text-decoration: none;">{{ p.title }}</a>
                 {% endif %}
               </li>
             {% endfor %}

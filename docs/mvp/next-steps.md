@@ -1,3 +1,5 @@
+- check SEO settings, improve robots.txt and sitemap.xml
+
 - add eye icon on password field on login and signup pages to show/hide password
 - somehow combine login and signup pages
 - workouts (topics) + include workouts on the project page

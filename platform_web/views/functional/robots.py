@@ -10,12 +10,7 @@ def robots_txt(request: HttpRequest) -> HttpResponse:
         [
             "User-agent: *",
             "Allow: /",
-            "Disallow: /cp/",
             "Disallow: /account/",
-            "Disallow: /projects/",
-            "Disallow: /project/",
-            "Disallow: /topics/",
-            "Disallow: /courses/",
             "Disallow: /settings/",
             f"Sitemap: {sitemap_url}",
         ]

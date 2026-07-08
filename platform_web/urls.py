@@ -11,7 +11,6 @@ urlpatterns = [
     # Projects, topics, courses
     path("projects/", projects_view, name="projects"),
     path("topics/", topics_view, name="topics"),
-    path("courses/", courses_view, name="courses"),
     
     # sort by project / language
     path(

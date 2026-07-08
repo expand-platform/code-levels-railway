@@ -1,11 +1,19 @@
 from dataclasses import dataclass
 
+
+def normalize_admin_url_path(admin_url: str) -> str:
+    cleaned = str(admin_url or "").strip()
+    if not cleaned:
+        return ""
+    return cleaned.rstrip("/") + "/"
+
+
 @dataclass
 class WebsiteConfigScheme:
     id: str = "id"
     site_name: str = "site_name"
     tagline: str = "tagline"
-    
+
 
 @dataclass
 class WebsiteSettings:

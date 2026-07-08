@@ -55,7 +55,7 @@ class LessonSitemap(Sitemap):
         lesson = cast(Lesson, obj)
         return reverse(
             "lesson_details",
-            kwargs={"slug": lesson.project.slug, "order": lesson.order},
+            kwargs={"slug": lesson.project.slug, "part_slug": lesson.slug},
         )
 
 

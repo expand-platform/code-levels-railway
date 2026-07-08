@@ -14,7 +14,7 @@
   <!-- Plus button moved to bottom right -->
   {% if user.is_staff %}
     <div class="plus-button add-project" style="position: fixed; right: 36px; bottom: 36px; z-index: 1050; border-radius: 50%;">
-      <a href="/cp/platform_web/project/add/" target="_blank" class="add-project-button btn d-flex align-items-center justify-content-center" title="Add New Project"><i class="bi bi-plus"></i></a>
+      <a href="{% url 'admin:platform_web_project_add' %}" target="_blank" class="add-project-button btn d-flex align-items-center justify-content-center" title="Add New Project"><i class="bi bi-plus"></i></a>
     </div>
   {% endif %}
 
