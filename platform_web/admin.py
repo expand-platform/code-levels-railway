@@ -7,6 +7,8 @@ from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
 from nested_admin.nested import NestedTabularInline, NestedModelAdmin
 
 from platform_web.config.web_config import WebsiteConfigScheme
+from platform_web.models.blog.BlogPost import BlogPost
+
 from platform_web.models.project.Course import Course
 from platform_web.models.project.Project import Project
 from platform_web.models.project.Lesson import Lesson
@@ -251,11 +253,73 @@ class FrameworkAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc
     search_fields = ("name",)
 
 
+class BlogPostAdminForm(forms.ModelForm):
+    class Meta:
+        model = BlogPost
+        fields = "__all__"
+        widgets = {
+            "content": SummernoteWidget(),
+        }
+
+
+class BlogPostsAdmin(admin.ModelAdmin):
+    form = BlogPostAdminForm
+    list_display = ("title", "is_published", "is_featured", "published_at", "updated_at")
+    list_filter = ("is_published", "is_featured", "created_at", "published_at")
+    search_fields = ("title", "content", "excerpt")
+    readonly_fields = ("uuid", "created_at", "updated_at", "excerpt")
+    ordering = ("-published_at",)
+    fieldsets = (
+        (
+            "General",
+            {
+                "fields": (
+                    "title",
+                    "featured_image",
+                    "content",
+                    "is_published",
+                )
+            },
+        ),
+        (
+            "SEO",
+            {
+                "fields": (
+                    "excerpt",
+                    "seo_title",
+                    "seo_description",
+                )
+            },
+        ),
+        (
+            "Publishing",
+            {
+                "fields": (
+                    "is_featured",
+                    "published_at",
+                )
+            },
+        ),
+        (
+            "Meta",
+            {
+                "fields": (
+                    "slug",
+                    "uuid",
+                    "created_at",
+                    "updated_at",
+                )
+            },
+        ),
+    )
+
+
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Difficulty, DifficultiesAdmin)
 
 admin.site.register(ProgrammingLanguage, ProgrammingLanguageAdmin)
 admin.site.register(Framework, FrameworkAdmin)
+admin.site.register(BlogPost, BlogPostsAdmin)
 
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Lesson, LessonsAdmin)

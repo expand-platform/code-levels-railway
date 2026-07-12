@@ -1,4 +1,4 @@
-- add a subdomain
+- improve home -> make it a landing page
 - add a learning skills map with projects / workouts
 
 - add eye icon on password field on login and signup pages to show/hide password

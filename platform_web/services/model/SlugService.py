@@ -1,12 +1,14 @@
 from django.utils.text import slugify
 from platform_web.data.transliteration import transliterate_ru_to_latin
 
+from django.db.models import Model
+
 import uuid
 
 
 class SlugService:
     @staticmethod
-    def generate_unique_slug(title: str, model_class, exclude_pk=None, fallback_prefix: str = "item") -> str:
+    def generate_unique_slug(title: str, model_class: Model, exclude_pk: int = None, fallback_prefix: str = "item") -> str:
         transliterated = transliterate_ru_to_latin(str(title))
         base_slug = slugify(transliterated) or slugify(str(title))
 
@@ -16,6 +18,7 @@ class SlugService:
         slug = base_slug
         counter = 1
         qs = model_class.objects.filter(slug=slug)
+        
         if exclude_pk is not None:
             qs = qs.exclude(pk=exclude_pk)
 

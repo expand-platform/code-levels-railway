@@ -1,0 +1,174 @@
+{% extends 'website/dashboard/parts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {{ blog_post.seo_title|default:blog_post.title }} | {{ website_config.site_name }}
+{% endblock %}
+
+{% block meta %}
+  {% if blog_post.seo_description %}
+    <meta name="description" content="{{ blog_post.seo_description|striptags|truncatechars:160 }}" />
+  {% elif blog_post.excerpt %}
+    <meta name="description" content="{{ blog_post.excerpt|striptags|truncatechars:160 }}" />
+  {% endif %}
+  {% if blog_post.featured_image %}
+    <meta property="og:image" content="{{ request.build_absolute_uri }}{{ blog_post.featured_image.url }}" />
+  {% endif %}
+{% endblock %}
+
+{% block page_css %}
+  <style>
+    .blog-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 3rem 1rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .blog-featured-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin: 2rem 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .blog-content {
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .blog-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .blog-content h2,
+    .blog-content h3,
+    .blog-content h4 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .blog-meta-info {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    .blog-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .breadcrumb-blog {
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .blog-content img,
+    .blog-content iframe {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    .back-to-blog {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    .back-to-blog:hover {
+      color: #764ba2;
+    }
+  </style>
+{% endblock %}
+
+{% block dashboard_content %}
+  <!-- Back to Blog Link -->
+  <a href="{% url 'blog' %}" class="back-to-blog">
+    <i class="bi bi-arrow-left"></i>
+    {% trans 'Back to Blog' %}
+  </a>
+
+  <!-- Blog Header -->
+  <div class="blog-header">
+    <div class="container">
+      <h1 class="mb-3">{{ blog_post.title }}</h1>
+      
+      <div class="blog-meta-info">
+        <div class="blog-meta-item">
+          <i class="bi bi-calendar-event"></i>
+          <time datetime="{{ blog_post.published_at|date:'c' }}">
+            {{ blog_post.published_at|date:'DATE_FORMAT' }}
+          </time>
+        </div>
+        
+        <div class="blog-meta-item">
+          <i class="bi bi-clock-history"></i>
+          <span>{{ blog_post.updated_at|date:'SHORT_DATE_FORMAT' }}</span>
+        </div>
+        
+        {% if blog_post.is_featured %}
+          <span class="badge bg-warning text-dark">{% trans 'Featured' %}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Image -->
+  {% if blog_post.featured_image %}
+    <img 
+      src="{{ blog_post.featured_image.url }}" 
+      alt="{{ blog_post.title }}"
+      class="blog-featured-image"
+    >
+  {% endif %}
+
+  <!-- Blog Content -->
+  <article class="blog-content">
+    {{ blog_post.content|safe }}
+  </article>
+
+  <!-- Post Metadata Footer -->
+  <footer class="blog-footer mt-5 pt-4 border-top">
+    <div class="row">
+      <div class="col-md-8">
+        <p class="text-muted small mb-0">
+          <i class="bi bi-info-circle"></i>
+          {% blocktrans %}This article was last updated on {{ updated_at|date:'DATE_FORMAT' }}.{% endblocktrans %}
+        </p>
+      </div>
+      {% if user.is_staff %}
+        <div class="col-md-4 text-md-end">
+          <a 
+            href="{% url 'admin:platform_web_blogpost_change' blog_post.pk %}" 
+            target="_blank"
+            class="btn btn-sm btn-outline-primary"
+          >
+            <i class="bi bi-pencil"></i>
+            {% trans 'Edit Post' %}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </footer>
+
+  <!-- Back to Blog Link (Bottom) -->
+  <div class="mt-5 text-center">
+    <a href="{% url 'blog' %}" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left"></i>
+      {% trans 'Back to All Posts' %}
+    </a>
+  </div>
+{% endblock %}

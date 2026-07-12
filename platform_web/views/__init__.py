@@ -15,6 +15,8 @@ from .Projects import (
 from .auth.logout import CustomLogoutView, LogoutView, logout_then_login
 from .functional.robots import robots_txt
 from .NotFound import NotFoundPreview, NotFoundView, not_found_404
+from .BlogView import BlogView, BlogDetailView
+
 
 __all__ = [
 	"HomeView",
@@ -36,4 +38,6 @@ __all__ = [
 	"NotFoundPreview",
 	"NotFoundView",
 	"not_found_404",
+	"BlogView",
+	"BlogDetailView",
 ]
