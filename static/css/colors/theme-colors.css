@@ -33,9 +33,6 @@
     --settings-box-shadow: rgba(0, 0, 0, 0.12);
     --settings-input-outline: var(--dark-purple);
 
-    --projects-difficulty-color: #28292c;
-    --projects-difficulty-outline: var(--black-grey);
-
     /* layout */
     --sidebar-bg: var(--white);
 
@@ -49,7 +46,17 @@
     --text-black: var(--black);
     --text-grey: #888;
 
+    /* badges */
+    --badge-workout-color: var(--dark-purple);
+    --badge-workout-bg: color-mix(in srgb, var(--light-purple) 22%, var(--white));
+    --badge-workout-border: var(--light-purple);
 
+    /* difficulty (card borders) */
+    --difficulty-easy: #22c55e70;
+    --difficulty-medium: #ffcc26a0;
+    --difficulty-hard: #db4f4a81;
+    --difficulty-insane: #5c1010bc;
+    --difficulty-unknown: var(--dark-grey);
 }
 
 :root[data-theme="dark"] {
@@ -68,6 +75,7 @@
     --soft-blue: #3C91E6;
 
     --dark-purple: rgba(101, 26, 222, 0.8);
+    --light-purple: rgb(164, 125, 226);
 
     --red: #DB504A;
     --yellow: #FFCE26;
@@ -79,9 +87,6 @@
     --settings-bg: var(--sidebar-bg);
     --settings-box-shadow: rgba(100, 100, 100, 0.8);
     --settings-input-outline: var(--dark-purple);
-
-    --projects-difficulty-color: #bebebe;
-    --projects-difficulty-outline: rgb(193, 193, 193);
 
     /* layout in dark mode */
     --sidebar-bg: #0f0f21;
@@ -95,4 +100,16 @@
     /* texts in dark mode */
     --text-black: #e5e7eb;
     --text-grey: #888;
+
+    /* badges */
+    --badge-workout-color: var(--light-purple);
+    --badge-workout-bg: color-mix(in srgb, var(--light-purple) 18%, var(--soft-white));
+    --badge-workout-border: var(--light-purple);
+
+    /* difficulty (card borders) */
+    --difficulty-easy: #4ade80;
+    --difficulty-medium: var(--yellow);
+    --difficulty-hard: var(--red);
+    --difficulty-insane: #991b1b;
+    --difficulty-unknown: var(--dark-grey);
 }

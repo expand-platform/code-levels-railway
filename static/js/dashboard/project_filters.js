@@ -1,53 +1,63 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let searchIcon = document.getElementById('search-icon');
-    let searchInput = document.getElementById('project-search-input');
-    let resetButton = document.querySelector('.reset-button');
+  const searchIcon = document.getElementById('search-icon');
+  const searchInput = document.getElementById('project-search-input');
+  const resetButton = document.querySelector('.reset-button');
+  const showWorkoutsToggle = document.getElementById('show-workouts-toggle');
+  const workoutsSwitchLabel = document.querySelector('.workouts-switch-label');
+  const filterForm = document.querySelector('.projects-filters-form');
 
-    searchIcon.onclick = function () {
-        console.log('search icon clicked');
-        if (!searchIcon.classList.contains('hidden')) {
-            console.log('showing search input');
-            searchInput.classList.remove('hidden');
-            resetButton.classList.remove('hidden');
-            searchIcon.classList.add('hidden');
-            searchInput.focus();
-        } else {
-            console.log('hiding search input');
-            searchInput.classList.add('hidden');
-            searchIcon.classList.remove('hidden');
-            resetButton.classList.add('hidden');
-        }
-    };
+  if (!searchIcon || !searchInput || !resetButton) {
+    return;
+  }
 
-    searchInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            searchInput.form.submit();
-        }
-        if (e.key === 'Escape') {
-            e.preventDefault();
-            searchInput.classList.add('hidden');
-            searchIcon.classList.remove('hidden');
-            resetButton.classList.add('hidden');
-        }
+  function setSearchOpen(isOpen) {
+    searchInput.classList.toggle('hidden', !isOpen);
+    resetButton.classList.toggle('hidden', !isOpen);
+    searchIcon.classList.toggle('hidden', isOpen);
+  }
+
+  searchIcon.addEventListener('click', function () {
+    const opening = searchIcon.classList.contains('hidden') === false;
+    setSearchOpen(opening);
+    if (opening) {
+      searchInput.focus();
+    }
+  });
+
+  searchInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      searchInput.form.submit();
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setSearchOpen(false);
+    }
+  });
+
+  resetButton.addEventListener('click', function () {
+    searchInput.value = '';
+    searchInput.form.submit();
+  });
+
+  if (showWorkoutsToggle && filterForm) {
+    showWorkoutsToggle.addEventListener('change', function () {
+      filterForm.submit();
     });
+  }
 
-    resetButton.onclick = function () {
-        searchInput.value = '';
-        searchInput.form.submit();
-    };
-
-    // Close input when clicking outside
-    document.addEventListener('mousedown', function (e) {
-        if (
-            !searchInput.classList.contains('hidden') &&
-            !searchInput.contains(e.target) &&
-            !searchIcon.contains(e.target) &&
-            !resetButton.contains(e.target)
-        ) {
-            searchInput.classList.add('hidden');
-            searchIcon.classList.remove('hidden');
-            resetButton.classList.add('hidden');
-        }
-    });
+  document.addEventListener('mousedown', function (e) {
+    if (searchInput.classList.contains('hidden')) {
+      return;
+    }
+    const clickedInsideSearch =
+      searchInput.contains(e.target) ||
+      searchIcon.contains(e.target) ||
+      resetButton.contains(e.target) ||
+      (showWorkoutsToggle && showWorkoutsToggle.contains(e.target)) ||
+      (workoutsSwitchLabel && workoutsSwitchLabel.contains(e.target));
+    if (!clickedInsideSearch) {
+      setSearchOpen(false);
+    }
+  });
 });

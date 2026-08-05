@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<div class="workouts-switch">
+  <input type="checkbox" class="checkbox" id="show-workouts-toggle" name="show_workouts" value="1"{% if show_workouts %} checked{% endif %} hidden />
+  <label class="switch-label workouts-switch-label mb-0" for="show-workouts-toggle" title="{% trans 'Show workouts' %}" aria-label="{% trans 'Show workouts' %}">
+    <span class="switch-icon" aria-hidden="true">💪</span>
+    <span class="switch-icon" aria-hidden="true">⚡</span>
+    <div class="ball"></div>
+  </label>
+</div>

@@ -12,11 +12,13 @@ from platform_web.models.project.Course import Course
 
 TOPIC = "topic"
 PROJECT = "project"
+WORKOUT = "workout"
 GUIDE = "guide"
 
 PROJECT_TYPE_CHOICES = [
     (TOPIC, _("Topic")),
     (PROJECT, _("Project")),
+    (WORKOUT, _("Workout")),
     (GUIDE, _("Guide")),
 ]
 

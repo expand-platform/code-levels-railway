@@ -25,8 +25,3 @@ i.home-burger {
 .switch-label .ball {
   background-color: var(--soft-blue);
 }
-
-.project-difficulty {
-  color: var(--projects-difficulty-color);
-  outline: 1px solid var(--projects-difficulty-outline);
-}

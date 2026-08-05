@@ -1,0 +1,72 @@
+@import "../colors/theme-colors.css";
+
+:root {
+  --project-card-width-desktop: 28%;
+  --project-card-width-mobile: 100%;
+  --project-card-height: 190px;
+}
+
+.project-card {
+  background: var(--white);
+  box-shadow: 0 1px 4px var(--card-shadow);
+  border-radius: 8px;
+  padding: 1.25rem;
+  width: var(--project-card-width-desktop);
+  transition: box-shadow 0.2s, border-color 0.2s;
+  margin: 0 0 1.5rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+.project-card:hover {
+  box-shadow: 0 4px 16px var(--card-shadow-hover);
+}
+
+.project-card--difficulty-easy {
+  border-color: var(--difficulty-easy);
+}
+
+.project-card--difficulty-medium {
+  border-color: var(--difficulty-medium);
+}
+
+.project-card--difficulty-hard {
+  border-color: var(--difficulty-hard);
+}
+
+.project-card--difficulty-insane {
+  border-color: var(--difficulty-insane);
+}
+
+.project-card--difficulty-unknown {
+  border-color: var(--difficulty-unknown);
+}
+
+.project-card--workout {
+  border-color: var(--light-purple);
+}
+
+.project-image {
+  width: 100%;
+  height: var(--project-card-height);
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.project-info h3 {
+  margin: 0.5rem 0 0.25rem 0;
+  font-size: 1.1rem;
+  color: var(--black);
+}
+
+@media screen and (min-width: 768px) {
+  .project-card {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .project-card {
+    width: var(--project-card-width-mobile);
+  }
+}

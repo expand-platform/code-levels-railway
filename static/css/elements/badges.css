@@ -1,0 +1,29 @@
+@import "../colors/theme-colors.css";
+
+.project-type-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.project-type-badge--workout {
+  color: var(--badge-workout-color);
+  background: var(--badge-workout-bg);
+  border-color: var(--badge-workout-border);
+}
+
+.project-card-meta {
+  margin-bottom: 1rem;
+}
+
+.project-card-meta .project-type-badge {
+  margin-bottom: 0;
+}

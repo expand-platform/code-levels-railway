@@ -1,13 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
+from django.utils.translation import gettext as _
 
 from platform_web.models.project.Course import Course
 from platform_web.models.project.Lesson import Lesson
-from platform_web.models.project.Project import Project
+from platform_web.models.project.Project import Project, PROJECT, TOPIC, WORKOUT
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
-
-from platform_web.decorators import paid_plans_only
 
 
 MAX_SEARCH_LENGTH = 100
@@ -31,6 +29,46 @@ MODE_SETTINGS = {
 }
 
 
+def _list_page_titles(page_mode, project_type):
+    """Return (page_title, breadcrumb_label) for the projects list page."""
+    if page_mode == "courses":
+        label = _("Courses")
+        return label, label
+    if project_type == "topic":
+        label = _("Topics")
+        return label, label
+    if project_type == "all":
+        return _("All Projects & Topics"), _("Projects & Topics")
+    label = _("Projects")
+    return label, label
+
+
+def _apply_list_filters(
+    projects_qs,
+    *,
+    page_mode,
+    project_type,
+    is_video_course,
+    search_query,
+    show_workouts,
+):
+    if page_mode == "projects" and show_workouts:
+        projects_qs = projects_qs.filter(type__in=[PROJECT, WORKOUT])
+    elif project_type != "all":
+        projects_qs = projects_qs.filter(type=project_type)
+
+    if is_video_course == "true":
+        projects_qs = projects_qs.filter(is_video_course=True)
+    elif is_video_course == "false":
+        projects_qs = projects_qs.filter(is_video_course=False)
+
+    if search_query:
+        # Search always targets projects only (workouts toggle is off while searching).
+        projects_qs = projects_qs.filter(title__icontains=search_query, type=PROJECT)
+
+    return projects_qs
+
+
 def _render_projects_page(
     request,
     page_mode="projects",
@@ -43,6 +81,14 @@ def _render_projects_page(
     project_type = mode_settings["project_type"]
     is_video_course = mode_settings["is_video_course"]
     search_query = request.GET.get("search", "").strip()[:MAX_SEARCH_LENGTH]
+    show_workouts = (
+        page_mode == "projects"
+        and not search_query
+        and request.GET.get("show_workouts") == "1"
+    )
+    # On projects list, reorder only when workouts are shown (mixed grid).
+    can_reorder_projects = page_mode != "projects" or show_workouts
+    page_title, breadcrumb_label = _list_page_titles(page_mode, project_type)
 
     context = {
         "page_mode": page_mode,
@@ -50,45 +96,50 @@ def _render_projects_page(
         "project_type": project_type,
         "is_video_course": is_video_course,
         "search": search_query,
+        "show_workouts": show_workouts,
+        "can_reorder_projects": can_reorder_projects,
+        "page_title": page_title,
+        "breadcrumb_label": breadcrumb_label,
         "selected_course_id": selected_course_id,
         "selected_language_id": selected_language_id,
     }
-    
+
     context_key = "courses"
 
     if filter_by == "course":
         items = Course.objects.prefetch_related("projects").order_by("order", "title")
         if selected_course_id is not None:
             items = items.filter(id=selected_course_id)
-        get_projects = lambda item: item.projects.order_by(
-            "course_order", "order", "-updated_at", "title"
-        )
-    # filter by language
+
+        def get_projects(item):
+            return item.projects.select_related("difficulty").order_by(
+                "course_order", "order", "-updated_at", "title"
+            )
     else:
         items = ProgrammingLanguage.objects.prefetch_related("project_set").order_by(
             "order", "name"
         )
         if selected_language_id is not None:
             items = items.filter(id=selected_language_id)
-        get_projects = lambda item: item.project_set.order_by(
-            "language_order", "order", "-updated_at", "title"
-        )
+
+        def get_projects(item):
+            return item.project_set.select_related("difficulty").order_by(
+                "language_order", "order", "-updated_at", "title"
+            )
+
         context_key = "languages"
 
     visible_items = []
     for item in items:
-        projects_qs = get_projects(item).filter(is_active=True)
-        
-        if project_type != "all":
-            projects_qs = projects_qs.filter(type=project_type)
-        if is_video_course == "true":
-            projects_qs = projects_qs.filter(is_video_course=True)
-        elif is_video_course == "false":
-            projects_qs = projects_qs.filter(is_video_course=False)
-        if search_query:
-            projects_qs = projects_qs.filter(title__icontains=search_query)
+        projects_qs = _apply_list_filters(
+            get_projects(item).filter(is_active=True),
+            page_mode=page_mode,
+            project_type=project_type,
+            is_video_course=is_video_course,
+            search_query=search_query,
+            show_workouts=show_workouts,
+        )
 
-        # In language mode, hide blocks that have no matching projects.
         if context_key == "languages" and not projects_qs.exists():
             continue
 
@@ -110,6 +161,7 @@ def projects_by_course_view(request, course_slug: str):
         page_mode="projects",
         selected_course_id=course.pk,
     )
+
 
 def topics_view(request):
     return _render_projects_page(request, page_mode="topics")
@@ -138,24 +190,17 @@ def courses_by_course_view(request, course_id: int):
 
 def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
     project = get_object_or_404(Project, slug=slug, is_active=True)
-    start_url = None
-    if project:
-        start_url = f"/projects/{project.slug}/parts/"
+    start_url = f"/projects/{project.slug}/parts/"
     parts = Lesson.objects.filter(project=project).order_by("order", "title")
 
-    # Filter projects and topics for this course
     filtered_projects = []
     filtered_topics = []
     if project.course:
         all_course_projects = Project.objects.filter(
             course=project.course, is_active=True
         ).order_by("order", "title")
-        filtered_projects = [
-            p for p in all_course_projects if getattr(p, "type", None) == "project"
-        ]
-        filtered_topics = [
-            p for p in all_course_projects if getattr(p, "type", None) == "topic"
-        ]
+        filtered_projects = [p for p in all_course_projects if p.type == PROJECT]
+        filtered_topics = [p for p in all_course_projects if p.type == TOPIC]
 
     context = {
         "project": project,
@@ -168,23 +213,21 @@ def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
 
 
 def lesson_details_view(request: HttpRequest, slug: str, part_slug: str) -> HttpResponse:
-    """
-    Article-style view for a single project part, with navigation and sidebar.
-    """
     project = get_object_or_404(Project, slug=slug, is_active=True)
     parts = list(Lesson.objects.filter(project=project).order_by("order", "title"))
     part = get_object_or_404(Lesson, project=project, slug=part_slug)
-    # Find prev/next part
+
     prev_part = next_part = None
     lesson_number = None
     for idx, p in enumerate(parts):
         if p.order == part.order:
-            lesson_number = idx + 1  # 1-based index for display
+            lesson_number = idx + 1
             if idx > 0:
                 prev_part = parts[idx - 1]
             if idx < len(parts) - 1:
                 next_part = parts[idx + 1]
             break
+
     context = {
         "project": project,
         "part": part,

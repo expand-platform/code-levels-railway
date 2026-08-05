@@ -1,0 +1,28 @@
+@import "../colors/theme-colors.css";
+
+.workouts-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.workouts-switch-label {
+  transform: scale(1.35);
+  flex-shrink: 0;
+}
+
+.workouts-switch-label .ball {
+  background-color: var(--dark-grey);
+  transition: background-color 0.2s linear, transform 0.2s linear;
+}
+
+.workouts-switch .checkbox:checked + .workouts-switch-label .ball {
+  background-color: var(--yellow);
+}
+
+.workouts-switch-label .switch-icon {
+  line-height: 1;
+  user-select: none;
+  font-size: 0.72rem;
+}

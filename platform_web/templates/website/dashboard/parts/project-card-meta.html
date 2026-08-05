@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% if show_workouts and project.type == 'workout' %}
+  <div class="project-card-meta d-flex align-items-center gap-2">
+    <span class="project-type-badge project-type-badge--workout">{% trans 'Workout' %}</span>
+  </div>
+{% endif %}
