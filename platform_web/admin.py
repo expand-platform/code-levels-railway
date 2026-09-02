@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.http import HttpRequest
+from django.utils.translation import gettext_lazy as _
 from django_summernote.widgets import SummernoteWidget
 from django import forms
 
@@ -15,6 +16,7 @@ from platform_web.models.project.Lesson import Lesson
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.project.Difficulty import Difficulty
 from platform_web.models.project.Framework import Framework
+from platform_web.models.project.Skill import Skill
 
 from platform_web.models.base import WebsiteConfig
 from platform_web.models.base import SocialMediaLink
@@ -50,9 +52,18 @@ class WebsiteVersionAdmin(admin.ModelAdmin):
     readonly_fields = ("released_at",)
 
 
+class SkillsInline(SortableInlineAdminMixin, admin.TabularInline):  # type: ignore[misc]
+    model = Skill
+    extra = 1
+    fields = ("name", "order")
+    ordering = ["order"]
+    show_change_link = True
+
+
 class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
     list_display = ("order", "title")
     search_fields = ("title",)
+    inlines = [SkillsInline]
 
 
 class ProgrammingLanguageAdmin(admin.ModelAdmin):
@@ -133,6 +144,7 @@ class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
                     "is_video_course",
                     "language_order",
                     "course_order",
+                    "skill_order",
                     "order",
                     "slug",
                     "uuid",
@@ -235,9 +247,60 @@ class LessonsAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
         return qs.order_by("order")
 
 
-class SkillsAdmin(admin.ModelAdmin):
-    list_display = ("name", "order")
+class SkillAdminForm(forms.ModelForm):
+    class Meta:
+        model = Skill
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        projects_field = self.fields.get("projects")
+        if not projects_field:
+            return
+        if self.instance.pk and self.instance.related_course_id:
+            projects_field.queryset = Project.objects.filter(
+                course_id=self.instance.related_course_id,
+                is_active=True,
+            ).order_by("skill_order", "course_order", "title")
+        else:
+            projects_field.queryset = Project.objects.filter(is_active=True)
+            projects_field.help_text = _(
+                "Save the skill with a course first, then assign projects from that course."
+            )
+
+
+class SkillsAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
+    form = SkillAdminForm
+    list_display = ("order", "name", "related_course")
+    list_filter = ("related_course",)
     search_fields = ("name",)
+    ordering = ("order",)
+    filter_horizontal = ("projects",)
+    readonly_fields = ("uuid",)
+    fieldsets = (
+        (
+            "General",
+            {
+                "fields": (
+                    "name",
+                    "related_course",
+                    "projects",
+                )
+            },
+        ),
+        (
+            "Settings",
+            {
+                "fields": (
+                    "order",
+                    "uuid",
+                )
+            },
+        ),
+    )
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related("related_course")
 
 
 class DifficultiesAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
@@ -315,6 +378,7 @@ class BlogPostsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Course, CourseAdmin)
+admin.site.register(Skill, SkillsAdmin)
 admin.site.register(Difficulty, DifficultiesAdmin)
 
 admin.site.register(ProgrammingLanguage, ProgrammingLanguageAdmin)

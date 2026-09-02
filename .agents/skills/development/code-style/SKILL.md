@@ -1,107 +1,83 @@
 ---
 name: codelevels-code-style
 description: >-
-  Django code style and project conventions for CodeLevels.net — models, views,
-  templates, static assets, admin, and i18n. Use when implementing features,
-  adding pages or API endpoints, placing CSS/JS, or when unsure how this repo
-  is structured. For cleanup after writing code, use the refactor skill.
+  Django conventions for CodeLevels.net — models, views, templates, static
+  assets, admin, and i18n. Use when implementing features, adding pages or
+  API endpoints, placing CSS/JS, or when unsure how this repo is structured.
+  After writing code, apply the refactor skill. Before similar work, scan
+  the mistakes log.
 ---
 
 # CodeLevels Code Style
 
-Educational platform for learning programming through **projects**, **topics**, **workouts**, and **courses**. Stack: Django, Jazzmin admin (`/cp/`), django-allauth, DRF (`api/`), Whitenoise, Railway deploy.
+Educational platform: **projects**, **topics**, **workouts**, **courses**, **roadmap**.
+Stack: Django, Jazzmin (`/cp/`), django-allauth, DRF (`api/`), Whitenoise, Railway.
+
+**Before coding:** scan [MISTAKES.md](../mistakes/MISTAKES.md) for matching tags.
+**After coding:** apply [refactor](../refactor/SKILL.md) on touched files.
+Python commands: `poetry run` — see [environment](../environment/SKILL.md).
 
 ## Principles
 
-1. **Minimize scope** — smallest correct diff; no drive-by refactors while implementing.
-2. **OOP / SOLID / DRY** — reuse existing services, mixins, and view patterns before adding new abstractions.
-3. **Split modules when justified** — only when a file grows unwieldy or a concern is clearly separable; explain what moved, where, and why.
-4. **Match existing conventions** — read surrounding code before writing; new code should look native to the repo.
-5. **Cleanup after write** — when the feature works, apply [refactor](../refactor/SKILL.md) on the touched files.
+1. Smallest correct diff — no drive-by refactors while implementing.
+2. Reuse existing services, mixins, and view patterns (OOP / SOLID / DRY).
+3. Split a module only when it is unwieldy; say what moved and why.
+4. Read surrounding code first; match local conventions.
 
-## Project layout
+## Layout
 
 | Path | Role |
 |------|------|
-| `code_levels/` | Django project settings (`settings/base.py`, `dev.py`, `prod.py`) |
-| `platform_web/` | Main web app — models, views, templates, admin, services |
-| `api/` | DRF endpoints, Telegram integration, `UserProfile` |
-| `static/` | Source CSS/JS (`staticfiles/` is collectstatic output) |
-| `content/` | Markdown source for projects/topics (not templates) |
+| `code_levels/` | Settings (`base.py`, `dev.py`, `prod.py`) |
+| `platform_web/` | Main app — models, views, templates, admin, services |
+| `api/` | DRF, Telegram, `UserProfile` |
+| `static/` | Source CSS/JS (`staticfiles/` = collectstatic) |
+| `content/` | Markdown for projects/topics (not templates) |
 
-Primary app for UI work: **`platform_web`**.
+UI work lives in **`platform_web`**.
 
-## Naming conventions
+## Naming
 
-### Models
-- Class: PascalCase (`Project`, `Lesson`)
-- File: PascalCase in domain folders — `models/project/Project.py`; snake_case in `models/base/`
-- Constants: UPPER_SNAKE (`PROJECT`, `WORKOUT`, `PROJECT_TYPE_CHOICES`)
-- Explicit `db_table` in plural snake_case (`projects`, `project_parts`)
-- SEO/slug: use `SeoSlugMixin` when the model needs public URLs
+**Models** — PascalCase class (`Project`); PascalCase file in domain folders (`models/project/Project.py`), snake_case in `models/base/`; `UPPER_SNAKE` constants; explicit plural-snake `db_table`; `SeoSlugMixin` for public URLs.
 
-### Views
-- CBV: `{Name}View` (`HomeView`, `SettingsView`)
-- FBV: `{resource}_view`, `{resource}_by_{filter}_view` (`projects_view`, `projects_by_course_view`)
-- Shared render helpers for list pages — see `MODE_SETTINGS` in `platform_web/views/projects.py`
-- Export new views from `platform_web/views/__init__.py`; wire in `platform_web/urls.py`
-- Auth: `LoginRequiredMixin` or `@login_required`; paid tiers via `platform_web/decorators.py`
+**Views** — CBV `{Name}View`; FBV `{resource}_view` / `{resource}_by_{filter}_view`. List pages share `MODE_SETTINGS` in `platform_web/views/Projects.py`. Export from `platform_web/views/__init__.py`; wire in `platform_web/urls.py`. Auth: `LoginRequiredMixin` / `@login_required`; paid tiers: `platform_web/decorators.py`.
 
-### Templates
-- Pages: `platform_web/templates/website/dashboard/pages/{name}.html`
-- Partials: `platform_web/templates/website/dashboard/parts/{area}/{name}.html`
-- Extend `website/dashboard/parts/layout.html` for dashboard pages
-- Use `{% block page_css %}` / `{% block page_js %}` only when layout defaults are insufficient
-- Any partial using `{% trans %}` / `{% blocktrans %}` must `{% load i18n %}` at the top
+Import the **git-tracked** module name. View files are PascalCase (`Roadmap.py`, `Projects.py`, `Home.py`). Windows can hide a lowercase git path; `git mv` so Railway/Linux matches the working tree.
 
-### Static files
+**Templates** — pages `.../dashboard/pages/{name}.html`; partials `.../parts/{area}/{name}.html`; extend `website/dashboard/parts/layout.html`. Use `{% block page_css %}` / `{% block page_js %}` only when layout defaults are insufficient. Any partial with `{% trans %}` / `{% blocktrans %}` must `{% load i18n %}` at the top.
 
-CSS is grouped by role:
+**URLs** — paths kebab-case; names snake_case; admin is `/cp/` (not `/admin/`).
+
+## Static files
 
 | Folder | Role |
 |--------|------|
-| `elements/` | Reusable UI — buttons, cards, badges, toggles, timeline |
-| `layout/` | Public shell (`nav.css`, `theme-switch.css`) |
-| `layout/dashboard/` | Dashboard shell — sidebar, nav, content chrome, projects sections |
-| `pages/` | Page sheets — `home`, `settings`, `lesson_details`, `project_detail`, … |
+| `elements/` | Reusable UI (buttons, cards, badges, toggles, timeline) |
+| `layout/` | Public shell |
+| `layout/dashboard/` | Dashboard shell (sidebar, nav, chrome) |
+| `pages/` | Page-specific sheets |
 | `colors/` | Theme tokens (`theme-colors.css`) |
 
-| File | Element |
-|------|---------|
-| `elements/buttons.css` | Buttons |
-| `elements/cards.css` | Project/content cards |
-| `elements/badges.css` | Type badges (card meta) |
-| `elements/toggles.css` | Toggle switches |
-| `elements/timeline.css` | Project timeline |
-
-- Dashboard shell barrel: `layout/dashboard/layout.css` — load from dashboard `layout.html` (do **not** put in public `layout/layout.css`)
-- Page CSS: `static/css/pages/{page}.css` — page-specific only; load in `{% block page_css %}`
-- JS: `static/js/dashboard/{feature}.js`
-- Shared helpers: `static/js/helpers/`, `static/css/colors/theme-colors.css`
-- Prefer CSS variables from `theme-colors.css` over hard-coded colors
-- Reusable element styles go in `elements/`; register new files in `elements/elements.css`
-- Load page-specific assets in template blocks when not global
-- Theme tokens must exist in both `data-theme="light"` and `data-theme="dark"` when used
-
-### URLs
-- Paths: kebab-case (`desktop-app/`, `projects/course/<slug:course_slug>/`)
-- Names: snake_case (`projects_by_course`, `lesson_details`)
-- Admin: `/cp/` (not `/admin/`)
+- Dashboard barrel: `layout/dashboard/layout.css` — load from dashboard `layout.html`, **not** public `layout/layout.css`
+- Page CSS: `static/css/pages/{page}.css` in `{% block page_css %}`
+- JS: `static/js/dashboard/{feature}.js`; shared helpers: `static/js/helpers/`
+- Register new element files in `elements/elements.css`
+- Colors: variables from `theme-colors.css`; define tokens in both `data-theme="light"` and `data-theme="dark"`
+- Detail-page back links: `data-smart-back` + `static/js/helpers/smartBack.js` (list URL in `sessionStorage`, not `localStorage`)
 
 ## i18n
 
-**English-only UI for now.** Always wrap user-facing strings for future translation:
+English-only UI for now, but wrap every user-facing string:
 
 - Templates: `{% load i18n %}` + `{% trans '...' %}`
-- Python models/choices: `gettext_lazy as _`
-- Runtime messages in views: `gettext as _`
+- Models/choices: `gettext_lazy as _`
+- View messages: `gettext as _`
 
-Do not add Russian `.po` files unless explicitly requested. Content-level language (`Project.language`, translation jobs) is separate from Django i18n.
+No Russian `.po` files unless asked. `Project.language` / translation jobs are separate from Django i18n.
 
-## Common implementation patterns
+## Patterns
 
-### List pages (projects / topics / courses)
-`platform_web/views/projects.py` drives three modes via `MODE_SETTINGS`:
+**List pages** (`projects` / `topics` / `courses`) — one view, `MODE_SETTINGS`:
 
 ```python
 MODE_SETTINGS = {
@@ -111,46 +87,31 @@ MODE_SETTINGS = {
 }
 ```
 
-Single template: `website/dashboard/pages/projects.html`. Course blocks use `course.filtered_projects`; attach filtered querysets in the view loop.
+Template: `website/dashboard/pages/projects.html`. Course blocks use `course.filtered_projects` (attach in the view loop).
 
-### Global template context
-`platform_web.context_processors.website_config` provides `website_config`, sidebar nav data (`sidebar_project_courses`, `sidebar_topic_languages`). Use `WebsiteSettings` keys from `platform_web/config/web_config.py` for typed context keys.
+**Roadmap** — `RoadmapView` + `Skill` (`models/project/Skill.py`). Skills belong to a course; projects M2M ordered by `Project.skill_order`. Sidebar: `sidebar_roadmap_courses`. Staff reorder when workouts are on: `/api/skill/<id>/reorder_projects/`.
 
-### Admin
-Register in `platform_web/admin.py`:
-- `SortableAdminMixin` for ordered models
-- `NestedModelAdmin` + inlines for Project → Lessons
-- `SummernoteWidget` for rich text fields
-- Fieldsets: General / SEO / Settings
+**Context** — `platform_web.context_processors.website_config` → `website_config`, `sidebar_project_courses`, `sidebar_roadmap_courses`, `sidebar_topic_languages`. Typed keys: `platform_web/config/web_config.py`.
 
-### Services
-Business logic in `platform_web/services/model/` (`SlugService`, `SeoService`, …) — static methods, PascalCase `*Service` suffix.
+**Admin** (`platform_web/admin.py`) — `SortableAdminMixin`; `NestedModelAdmin` + inlines for Project → Lessons; `SummernoteWidget` for rich text; fieldsets General / SEO / Settings.
+
+**Services** — `platform_web/services/model/` (`SlugService`, `SeoService`, …), static methods, `*Service` suffix.
 
 ## Feature checklist
 
-When adding a user-facing feature:
+1. Model + migration
+2. View + URL
+3. Template (page or partial)
+4. CSS in the matching sheet; JS if needed
+5. Admin fieldsets/filters if staff-managed
+6. `{% trans %}` on new UI strings
+7. Check light + dark (`data-theme` on `:root`)
+8. Refactor pass on touched files
 
-1. Model + migration (if new fields/types)
-2. View logic + URL (if new page or filter)
-3. Template partial or page
-4. CSS in the matching dashboard stylesheet; JS if interaction needed
-5. Admin fieldsets / filters if staff manage the data
-6. `{% trans %}` on all new UI strings
-7. Manual check: light + dark theme (`data-theme` on `:root`)
-8. Apply [refactor](../refactor/SKILL.md) on touched files
-
-## What to avoid
+## Avoid
 
 - New abstractions for one-off logic
-- Hard-coded colors instead of theme CSS variables
+- Hard-coded colors; unused CSS/theme tokens/comments after a UI change
 - Russian UI strings without a translation workflow
-- Changing sidebar or unrelated pages when the task is scoped to one list/view
-- `localStorage` for server-rendered filters unless persistence across visits is explicitly required — prefer GET params for list filters (same pattern as `search`)
-- Leaving unused CSS/theme tokens/comments after a UI change — clean them in the refactor pass
-
-## Related skills
-
-- **Refactor / cleanup:** [refactor](../refactor/SKILL.md)
-- **Environment / venv:** [environment](../environment/SKILL.md)
-- **Before coding:** [mistakes](../mistakes/SKILL.md) — read [`MISTAKES.md`](../mistakes/MISTAKES.md) for known pitfalls
-- **Product scope:** `.agents/skills/product/mvp/SKILL.md`, `.agents/skills/product/todo/SKILL.md`
+- Changing sidebar/unrelated pages when the task is one list/view
+- `localStorage` for server-rendered list filters — use GET params (same as `search`)

@@ -1,4 +1,5 @@
 import uuid
+from typing import TYPE_CHECKING
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -35,6 +36,9 @@ TRANSLATION_STATUS_CHOICES = [
 
 
 class Project(SeoSlugMixin, models.Model):
+    if TYPE_CHECKING:
+        objects: models.Manager
+
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to="project_images/", blank=True, null=True)
 
@@ -69,6 +73,7 @@ class Project(SeoSlugMixin, models.Model):
 
     language_order = models.PositiveIntegerField(default=0)
     course_order = models.PositiveIntegerField(default=0)
+    skill_order = models.PositiveIntegerField(default=0)
 
     slug = models.SlugField(max_length=255, blank=True)
     

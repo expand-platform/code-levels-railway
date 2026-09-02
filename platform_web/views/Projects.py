@@ -43,6 +43,13 @@ def _list_page_titles(page_mode, project_type):
     return label, label
 
 
+def filter_by_workouts_toggle(projects_qs, show_workouts):
+    """Show regular projects, plus workouts when the toggle is on."""
+    if show_workouts:
+        return projects_qs.filter(type__in=[PROJECT, WORKOUT])
+    return projects_qs.filter(type=PROJECT)
+
+
 def _apply_list_filters(
     projects_qs,
     *,
@@ -52,8 +59,8 @@ def _apply_list_filters(
     search_query,
     show_workouts,
 ):
-    if page_mode == "projects" and show_workouts:
-        projects_qs = projects_qs.filter(type__in=[PROJECT, WORKOUT])
+    if page_mode == "projects":
+        projects_qs = filter_by_workouts_toggle(projects_qs, show_workouts)
     elif project_type != "all":
         projects_qs = projects_qs.filter(type=project_type)
 

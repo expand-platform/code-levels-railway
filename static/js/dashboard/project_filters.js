@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const workoutsSwitchLabel = document.querySelector('.workouts-switch-label');
   const filterForm = document.querySelector('.projects-filters-form');
 
+  if (showWorkoutsToggle && filterForm) {
+    showWorkoutsToggle.addEventListener('change', function () {
+      filterForm.submit();
+    });
+  }
+
   if (!searchIcon || !searchInput || !resetButton) {
     return;
   }
@@ -39,12 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
     searchInput.value = '';
     searchInput.form.submit();
   });
-
-  if (showWorkoutsToggle && filterForm) {
-    showWorkoutsToggle.addEventListener('change', function () {
-      filterForm.submit();
-    });
-  }
 
   document.addEventListener('mousedown', function (e) {
     if (searchInput.classList.contains('hidden')) {

@@ -18,6 +18,13 @@ urlpatterns = [
     path("settings/", SettingsView.as_view(), name="settings"),
     path("account/logout/", CustomLogoutView.as_view(), name="logout"),
     
+    path("roadmap/", RoadmapView.as_view(), name="roadmap"),
+    path(
+        "roadmap/course/<slug:course_slug>/",
+        RoadmapView.as_view(),
+        name="roadmap_by_course",
+    ),
+    
     # Projects, topics, courses
     path("projects/", projects_view, name="projects"),
     path("topics/", topics_view, name="topics"),

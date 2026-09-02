@@ -27,7 +27,21 @@
         </a>
       </div>
       {% if sidebar_project_courses %}
-        {% include 'website/dashboard/parts/sidebar/projects-list.html' %}
+        {% trans 'All projects' as sidebar_all_projects %}
+        {% include 'website/dashboard/parts/sidebar/courses-list.html' with collapse_id='projectsSidebarCollapse' route='projects' all_url_name='projects' all_label=sidebar_all_projects course_url_name='projects_by_course' courses=sidebar_project_courses %}
+      {% endif %}
+    </li>
+
+    <li class="has-submenu" data-submenu="roadmap">
+      <div class="menu-row">
+        <a href="{% url 'roadmap' %}" data-route="roadmap" class="main-link" data-bs-toggle="collapse" data-bs-target="#roadmapSidebarCollapse" aria-expanded="false" aria-controls="roadmapSidebarCollapse" aria-label="{% trans 'Toggle Roadmap courses' %}">
+          <i class="bx bi bi-map"></i>
+          <span class="text">{% trans 'Roadmap' %}</span>
+        </a>
+      </div>
+      {% if sidebar_roadmap_courses %}
+        {% trans 'All courses' as sidebar_all_roadmap_courses %}
+        {% include 'website/dashboard/parts/sidebar/courses-list.html' with collapse_id='roadmapSidebarCollapse' route='roadmap' all_url_name='roadmap' all_label=sidebar_all_roadmap_courses course_url_name='roadmap_by_course' courses=sidebar_roadmap_courses %}
       {% endif %}
     </li>
   </ul>

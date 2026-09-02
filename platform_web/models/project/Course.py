@@ -1,12 +1,17 @@
 import uuid
+from typing import TYPE_CHECKING
 
 from django.db import models
+
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 
 from platform_web.services.model.SlugService import SlugService
 
 
 class Course(models.Model):
+    if TYPE_CHECKING:
+        objects: models.Manager
+
     title = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)

@@ -12,12 +12,16 @@ website_title = _("CodeLevels")
 website_tagline = _("Your step-by-step coding journey")
 
 
+def _sidebar_courses(**filters):
+    return Course.objects.filter(**filters).distinct().order_by("order", "title")
+
+
 def _get_sidebar_project_courses():
-    return (
-        Course.objects.filter(projects__is_active=True, projects__type=PROJECT)
-        .distinct()
-        .order_by("order", "title")
-    )
+    return _sidebar_courses(projects__is_active=True, projects__type=PROJECT)
+
+
+def _get_sidebar_roadmap_courses():
+    return _sidebar_courses(skills__isnull=False)
 
 
 def _get_sidebar_topic_languages():
@@ -26,6 +30,7 @@ def _get_sidebar_topic_languages():
         .distinct()
         .order_by("order", "name")
     )
+
 
 def website_config(request: HttpRequest) -> dict:
     website_config = WebsiteConfig.objects.order_by('id').first()
@@ -36,6 +41,7 @@ def website_config(request: HttpRequest) -> dict:
     social_media_links = SocialMediaLink.objects.all()
     changelog = Changelog.objects.order_by('-released_at').first()
     sidebar_project_courses = _get_sidebar_project_courses()
+    sidebar_roadmap_courses = _get_sidebar_roadmap_courses()
     sidebar_topic_languages = _get_sidebar_topic_languages()
 
     return {
@@ -43,5 +49,6 @@ def website_config(request: HttpRequest) -> dict:
         WebsiteSettings.social_media_links: social_media_links,
         WebsiteSettings.changelog: changelog,
         'sidebar_project_courses': sidebar_project_courses,
+        'sidebar_roadmap_courses': sidebar_roadmap_courses,
         'sidebar_topic_languages': sidebar_topic_languages,
     }

@@ -2,6 +2,7 @@ from django.urls import path
 from api.views import (
     ReorderLessonsView,
     ReorderProjectsByCourseView,
+    ReorderProjectsBySkillView,
 )
 from api.telegram_api import ValidateTelegramTokenView, TelegramAccessLevelView
 
@@ -16,6 +17,11 @@ urlpatterns = [
         "course/<int:course_id>/reorder_projects/",
         ReorderProjectsByCourseView.as_view(),
         name="reorder-projects-by-course",
+    ),
+    path(
+        "skill/<int:skill_id>/reorder_projects/",
+        ReorderProjectsBySkillView.as_view(),
+        name="reorder-projects-by-skill",
     ),
     path("telegram/validate-token/", ValidateTelegramTokenView.as_view(), name="telegram-validate-token"),
     path("telegram/access-level/", TelegramAccessLevelView.as_view(), name="telegram-access-level"),

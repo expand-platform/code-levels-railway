@@ -1,13 +1,42 @@
+const REORDER_URL = {
+  skill: (id) => `/api/skill/${id}/reorder_projects/`,
+  language: (id) => `/api/language/${id}/reorder_projects/`,
+  course: (id) => `/api/course/${id}/reorder_projects/`,
+}
+
+function getGridScope(grid) {
+  const skillId = grid.getAttribute('data-skill-id')
+  if (skillId) {
+    return { type: 'skill', id: skillId }
+  }
+  const languageId = grid.getAttribute('data-language-id')
+  if (languageId) {
+    return { type: 'language', id: languageId }
+  }
+  const courseId = grid.getAttribute('data-course-id')
+  if (courseId) {
+    return { type: 'course', id: courseId }
+  }
+  return null
+}
+
+function getReorderUrl(scope) {
+  return scope ? REORDER_URL[scope.type](scope.id) : ''
+}
+
+function isReorderEnabled(grid, scope) {
+  if (!scope) return false
+  if (scope.type === 'language') return true
+  return grid.getAttribute('data-reorder-enabled') === 'true'
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.projects-grid').forEach(function (grid) {
-    const languageId = grid.getAttribute('data-language-id');
-    const courseId = grid.getAttribute('data-course-id');
+    const scope = getGridScope(grid);
     const saveOrderBtn = document.getElementById(
-      'save-grid-order-btn-' + (languageId || courseId)
+      'save-grid-order-btn-' + (scope && scope.id)
     );
-    const reorderEnabled =
-      !courseId || grid.getAttribute('data-reorder-enabled') === 'true';
-    const canReorder = !!saveOrderBtn && reorderEnabled;
+    const canReorder = !!saveOrderBtn && isReorderEnabled(grid, scope);
 
     if (!canReorder) {
       return;
@@ -34,12 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         order: idx + 1,
       }));
 
-      let url = '';
-      if (languageId) {
-        url = `/api/language/${languageId}/reorder_projects/`;
-      } else if (courseId) {
-        url = `/api/course/${courseId}/reorder_projects/`;
-      }
+      const url = getReorderUrl(scope);
       if (!url) {
         return;
       }

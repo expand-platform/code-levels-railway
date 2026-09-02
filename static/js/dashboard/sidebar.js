@@ -63,6 +63,8 @@ document.addEventListener("DOMContentLoaded", function () {
         activeRoute = 'settings';
     } else if (pathname.includes('/projects')) {
         activeRoute = 'projects';
+    } else if (pathname.includes('/roadmap')) {
+        activeRoute = 'roadmap';
     } else if (pathname.includes('/admin')) {
         activeRoute = 'admin';
     }

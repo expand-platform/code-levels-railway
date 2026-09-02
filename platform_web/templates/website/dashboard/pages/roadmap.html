@@ -1,0 +1,87 @@
+{% extends 'website/dashboard/parts/layout.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block meta %}
+  <meta name="csrf-token" content="{{ csrf_token }}" />
+{% endblock %}
+
+{% block title %}
+  {% trans 'Roadmap' %} | {{ website_config.site_name }}
+{% endblock %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'css/pages/roadmap.css' %}" />
+{% endblock %}
+
+{% block dashboard_content %}
+  <section class="row align-items-end mb-2">
+    <form method="get" class="projects-filters-form row w-100 align-items-end mb-0">
+      <div class="col col-md-9 flex-basis-100-smo dashboard-title head-title d-flex align-items-center justify-content-between mb-3 mb-md-0">
+        <div class="left">
+          <h1>{% trans 'Roadmap' %}</h1>
+          <ul class="breadcrumb">
+            <li>
+              <a href="{% url 'home' %}">{{ website_config.site_name }}</a>
+            </li>
+            <li>
+              <i class="fs-6 bi bi-caret-right-fill"></i>
+            </li>
+            <li>
+              <a {% if not selected_course %}class="active" {% endif %}href="{% url 'roadmap' %}">{% trans 'Roadmap' %}</a>
+            </li>
+            {% if selected_course %}
+              <li>
+                <i class="fs-6 bi bi-caret-right-fill"></i>
+              </li>
+              <li>
+                <a class="active" href="{% url 'roadmap_by_course' selected_course.slug %}">{{ selected_course.title }}</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      <div class="col col-md-3 d-flex justify-content-end align-items-center mb-3 mb-md-0">
+        {% include 'website/dashboard/parts/workouts-switch.html' %}
+      </div>
+    </form>
+  </section>
+
+  {% if courses %}
+    {% for course in courses %}
+      <section class="roadmap-course">
+        <h2 class="roadmap-course__title mb-4">{{ course.title }}</h2>
+
+        <ol class="skills-timeline">
+          {% for skill in course.skills.all %}
+            <li class="skills-timeline__item">
+              <div class="skills-timeline__skill">
+                <span class="skills-timeline__circle" aria-hidden="true"></span>
+                <h3 class="skills-timeline__name">{{ skill.name }}</h3>
+              </div>
+              {% if skill.projects.all %}
+                <div class="skills-timeline__projects">
+                  {% if user.is_staff and can_reorder_projects %}
+                    <button id="save-grid-order-btn-{{ skill.id }}" class="btn btn-sm btn-success mb-2" style="display:none;">{% trans "Save Order" %}</button>
+                  {% endif %}
+                  <div
+                    class="project-list projects-grid row gap-md-3 px-md-3"
+                    id="projects-grid-skill-{{ skill.id }}"
+                    data-skill-id="{{ skill.id }}"
+                    {% if can_reorder_projects %}data-reorder-enabled="true"{% endif %}
+                  >
+                    {% for project in skill.projects.all %}
+                      {% include 'website/dashboard/parts/project_card.html' %}
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ol>
+      </section>
+    {% endfor %}
+  {% else %}
+    <p class="text-muted">{% trans 'No skills on the roadmap yet.' %}</p>
+  {% endif %}
+{% endblock %}

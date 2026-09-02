@@ -34,9 +34,20 @@
 {% block dashboard_content %}
   <section class="project-details">
     <section class="container position-relative">
-      {# < #}
+      {% if project.type == 'topic' %}
+        {% url 'topics' as smart_back_url %}
+      {% else %}
+        {% url 'projects' as smart_back_url %}
+      {% endif %}
       <div class="back-to-project-wrapper position-absolute mb-3">
-        <a href="{% url 'projects' %}" class="nav-icon back-icon btn btn-light shadow rounded-circle" title="{% trans 'Back to projects' %}"><i class="bi bi-chevron-left"></i></a>
+        <a href="{{ smart_back_url }}"
+           class="nav-icon back-icon btn btn-light shadow rounded-circle"
+           data-smart-back
+           data-back-title-projects="{% trans 'Back to projects' %}"
+           data-back-title-topics="{% trans 'Back to topics' %}"
+           data-back-title-roadmap="{% trans 'Back to roadmap' %}"
+           data-back-title-courses="{% trans 'Back to courses' %}"
+           title="{% if project.type == 'topic' %}{% trans 'Back to topics' %}{% else %}{% trans 'Back to projects' %}{% endif %}"><i class="bi bi-chevron-left"></i></a>
       </div>
       <h1 class="title">{{ project.title }}</h1>
 
