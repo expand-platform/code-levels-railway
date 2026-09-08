@@ -12,6 +12,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  document.querySelectorAll('.project-page-mode-buttons .btn-check').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      if (filterForm) {
+        filterForm.submit();
+      }
+    });
+  });
+
   if (!searchIcon || !searchInput || !resetButton) {
     return;
   }

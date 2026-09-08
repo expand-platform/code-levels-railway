@@ -1,4 +1,5 @@
 {% extends 'website/dashboard/parts/layout.html' %}
+{% load static %}
 {% load i18n %}
 
 {% block meta %}
@@ -9,11 +10,21 @@
   {{ page_title }} | {{ website_config.site_name }}
 {% endblock %}
 
+{% block page_css %}
+  {% if user.is_staff %}
+    <link rel="stylesheet" href="{% static 'css/pages/projects/plus-button.css' %}" />
+  {% endif %}
+{% endblock %}
+
+{% block page_js %}
+  {% if user.is_staff %}
+    <script src="{% static 'js/pages/projects/plus-button.js' %}" defer></script>
+  {% endif %}
+{% endblock %}
+
 {% block dashboard_content %}
   {% if user.is_staff %}
-    <div class="plus-button add-project" style="position: fixed; right: 36px; bottom: 36px; z-index: 1050; border-radius: 50%;">
-      <a href="{% url 'admin:platform_web_project_add' %}" target="_blank" class="add-project-button btn d-flex align-items-center justify-content-center" title="{% trans 'Add New Project' %}"><i class="bi bi-plus"></i></a>
-    </div>
+    {% include 'website/dashboard/parts/project/plus-button.html' %}
   {% endif %}
 
   <section class="row align-items-end mb-2">

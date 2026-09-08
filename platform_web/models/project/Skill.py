@@ -17,7 +17,7 @@ class Skill(models.Model):
         Course,
         on_delete=models.CASCADE,
         related_name="skills",
-        verbose_name=_("Related course"),
+        verbose_name=_("Course"),
     )
     projects = models.ManyToManyField(
         Project,

@@ -18,23 +18,31 @@ urlpatterns = [
     path("settings/", SettingsView.as_view(), name="settings"),
     path("account/logout/", CustomLogoutView.as_view(), name="logout"),
     
-    path("roadmap/", RoadmapView.as_view(), name="roadmap"),
+    path("roadmap/", JobsView.as_view(), name="roadmap"),
     path(
         "roadmap/course/<slug:course_slug>/",
-        RoadmapView.as_view(),
+        JobsView.as_view(),
         name="roadmap_by_course",
     ),
-    
-    # Projects, topics, courses
-    path("projects/", projects_view, name="projects"),
-    path("topics/", topics_view, name="topics"),
-    
-    # sort by project / language
+
+    # Projects: course → projects; ?view=roadmap is course → skill → projects
+    path("projects/", projects_page_view, name="projects"),
     path(
         "projects/course/<slug:course_slug>/",
-        projects_by_course_view,
+        projects_page_view,
         name="projects_by_course",
     ),
+    path("old/", projects_page_view, name="old"),
+    path(
+        "old/course/<slug:course_slug>/",
+        projects_page_view,
+        name="old_by_course",
+    ),
+
+    # Topics, courses
+    path("topics/", topics_view, name="topics"),
+    
+    # sort by language
     path(
         "topics/language/<slug:language_slug>/",
         topics_by_language_view,

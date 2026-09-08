@@ -1,7 +1,8 @@
 import uuid
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 
@@ -18,6 +19,16 @@ class Course(models.Model):
 
     languages = models.ManyToManyField(
         ProgrammingLanguage, related_name="courses", blank=True
+    )
+    is_job_course = models.BooleanField(
+        default=False,  # type: ignore[arg-type]
+        verbose_name=_("Is job course"),
+        help_text=cast(
+            str,
+            _(
+                "Job-track course. Projects attach via skills, not as the project's home course."
+            ),
+        ),
     )
 
     order = models.PositiveIntegerField(default=0)

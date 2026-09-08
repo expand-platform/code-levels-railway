@@ -19,6 +19,7 @@
       </li>
     {% endif %}
 
+    {% comment %} Projects {% endcomment %}
     <li class="has-submenu" data-submenu="projects">
       <div class="menu-row">
         <a href="{% url 'projects' %}" data-route="projects" class="main-link" data-bs-toggle="collapse" data-bs-target="#projectsSidebarCollapse" aria-expanded="false" aria-controls="projectsSidebarCollapse" aria-label="{% trans 'Toggle Projects courses' %}">
@@ -32,6 +33,7 @@
       {% endif %}
     </li>
 
+    {% comment %} Roadmap {% endcomment %}
     <li class="has-submenu" data-submenu="roadmap">
       <div class="menu-row">
         <a href="{% url 'roadmap' %}" data-route="roadmap" class="main-link" data-bs-toggle="collapse" data-bs-target="#roadmapSidebarCollapse" aria-expanded="false" aria-controls="roadmapSidebarCollapse" aria-label="{% trans 'Toggle Roadmap courses' %}">
@@ -39,9 +41,9 @@
           <span class="text">{% trans 'Roadmap' %}</span>
         </a>
       </div>
-      {% if sidebar_roadmap_courses %}
-        {% trans 'All courses' as sidebar_all_roadmap_courses %}
-        {% include 'website/dashboard/parts/sidebar/courses-list.html' with collapse_id='roadmapSidebarCollapse' route='roadmap' all_url_name='roadmap' all_label=sidebar_all_roadmap_courses course_url_name='roadmap_by_course' courses=sidebar_roadmap_courses %}
+      {% if sidebar_job_courses %}
+        {% trans 'All roadmaps' as sidebar_all_roadmap %}
+        {% include 'website/dashboard/parts/sidebar/courses-list.html' with collapse_id='roadmapSidebarCollapse' route='roadmap' all_url_name='roadmap' all_label=sidebar_all_roadmap course_url_name='roadmap_by_course' courses=sidebar_job_courses %}
       {% endif %}
     </li>
   </ul>

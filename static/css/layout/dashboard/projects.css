@@ -23,16 +23,6 @@
   color: rgb(202, 29, 29);
 }
 
-.add-project-button {
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 2rem;
-  background: #007bff;
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-}
-
 .project-search-input {
   min-width: 250px;
   transition: width 0.3s ease;
@@ -60,4 +50,15 @@
   border: none;
   border-bottom: 1px solid var(--light-grey);
   color: #333;
+}
+
+.project-page-mode-buttons .btn {
+  --bs-btn-color: var(--text-grey);
+  --bs-btn-border-color: var(--dark-grey);
+  --bs-btn-hover-color: var(--text-black);
+  --bs-btn-hover-bg: var(--light-grey);
+  --bs-btn-hover-border-color: var(--dark-grey);
+  --bs-btn-active-color: white;
+  --bs-btn-active-bg: var(--dark-grey);
+  --bs-btn-active-border-color: var(--dark-grey);
 }

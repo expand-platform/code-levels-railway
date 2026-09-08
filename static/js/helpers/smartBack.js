@@ -4,10 +4,12 @@ const LIST_PATHS = [
   /^\/projects$/,
   /^\/topics$/,
   /^\/roadmap$/,
+  /^\/old$/,
   /^\/projects\/course\/[^/]+$/,
   /^\/topics\/language\/[^/]+$/,
   /^\/courses\/course\/\d+$/,
   /^\/roadmap\/course\/[^/]+$/,
+  /^\/old\/course\/[^/]+$/,
 ]
 
 function isSameOrigin(referrer) {

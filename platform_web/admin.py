@@ -61,7 +61,8 @@ class SkillsInline(SortableInlineAdminMixin, admin.TabularInline):  # type: igno
 
 
 class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
-    list_display = ("order", "title")
+    list_display = ("order", "title", "is_job_course")
+    list_filter = ("is_job_course",)
     search_fields = ("title",)
     inlines = [SkillsInline]
 
@@ -91,6 +92,12 @@ class ProjectAdminForm(forms.ModelForm):
             "description": SummernoteWidget(),
             "stages": SummernoteWidget(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        course_field = self.fields.get("course")
+        if course_field:
+            course_field.queryset = Course.objects.filter(is_job_course=False)
 
 
 class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
@@ -258,14 +265,21 @@ class SkillAdminForm(forms.ModelForm):
         if not projects_field:
             return
         if self.instance.pk and self.instance.related_course_id:
-            projects_field.queryset = Project.objects.filter(
-                course_id=self.instance.related_course_id,
-                is_active=True,
-            ).order_by("skill_order", "course_order", "title")
+            related_course = self.instance.related_course
+            projects_qs = Project.objects.filter(is_active=True)
+            if not related_course.is_job_course:
+                projects_qs = projects_qs.filter(course_id=related_course.pk)
+            else:
+                projects_field.help_text = _(
+                    "Projects can belong to any library course; they appear on this job track via this skill."
+                )
+            projects_field.queryset = projects_qs.order_by(
+                "skill_order", "course_order", "title"
+            )
         else:
             projects_field.queryset = Project.objects.filter(is_active=True)
             projects_field.help_text = _(
-                "Save the skill with a course first, then assign projects from that course."
+                "Save the skill with a course first, then assign projects."
             )
 
 

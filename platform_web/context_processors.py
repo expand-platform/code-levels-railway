@@ -6,7 +6,7 @@ from platform_web.config.web_config import WebsiteSettings
 from django.utils.translation import gettext_lazy as _
 from platform_web.models.project.Course import Course
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
-from platform_web.models.project.Project import PROJECT, TOPIC
+from platform_web.models.project.Project import TOPIC
 
 website_title = _("CodeLevels")
 website_tagline = _("Your step-by-step coding journey")
@@ -17,11 +17,11 @@ def _sidebar_courses(**filters):
 
 
 def _get_sidebar_project_courses():
-    return _sidebar_courses(projects__is_active=True, projects__type=PROJECT)
+    return _sidebar_courses(is_job_course=False, skills__isnull=False)
 
 
-def _get_sidebar_roadmap_courses():
-    return _sidebar_courses(skills__isnull=False)
+def _get_sidebar_job_courses():
+    return _sidebar_courses(is_job_course=True, skills__isnull=False)
 
 
 def _get_sidebar_topic_languages():
@@ -40,15 +40,15 @@ def website_config(request: HttpRequest) -> dict:
     website_config.tagline = _(website_config.tagline)
     social_media_links = SocialMediaLink.objects.all()
     changelog = Changelog.objects.order_by('-released_at').first()
+    sidebar_job_courses = _get_sidebar_job_courses()
     sidebar_project_courses = _get_sidebar_project_courses()
-    sidebar_roadmap_courses = _get_sidebar_roadmap_courses()
     sidebar_topic_languages = _get_sidebar_topic_languages()
 
     return {
         WebsiteSettings.website_config: website_config,
         WebsiteSettings.social_media_links: social_media_links,
         WebsiteSettings.changelog: changelog,
+        'sidebar_job_courses': sidebar_job_courses,
         'sidebar_project_courses': sidebar_project_courses,
-        'sidebar_roadmap_courses': sidebar_roadmap_courses,
         'sidebar_topic_languages': sidebar_topic_languages,
     }

@@ -3,7 +3,9 @@ from .Dashboard import DashboardView
 from .Settings import SettingsView
 from .Changelog import WebsiteChangelogView
 from .Roadmap import RoadmapView
+from .Jobs import JobsView
 from .Projects import (
+	projects_page_view,
 	projects_view,
 	projects_by_course_view,
 	topics_view,
@@ -25,6 +27,8 @@ __all__ = [
 	"SettingsView",
 	"WebsiteChangelogView",
 	"RoadmapView",
+	"JobsView",
+	"projects_page_view",
 	"projects_view",
 	"projects_by_course_view",
 	"topics_view",

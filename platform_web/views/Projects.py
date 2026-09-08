@@ -9,6 +9,9 @@ from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 
 
 MAX_SEARCH_LENGTH = 100
+PROJECTS_LAYOUT_QUERY = "view"
+PROJECTS_LAYOUT_DEFAULT = "default"
+PROJECTS_LAYOUT_ROADMAP = "roadmap"
 
 MODE_SETTINGS = {
     "projects": {
@@ -109,12 +112,19 @@ def _render_projects_page(
         "breadcrumb_label": breadcrumb_label,
         "selected_course_id": selected_course_id,
         "selected_language_id": selected_language_id,
+        "projects_layout": PROJECTS_LAYOUT_DEFAULT,
+        "show_layout_toggle": page_mode == "projects",
+        "layout_query": "",
     }
 
     context_key = "courses"
 
     if filter_by == "course":
-        items = Course.objects.prefetch_related("projects").order_by("order", "title")
+        items = (
+            Course.objects.filter(is_job_course=False)
+            .prefetch_related("projects")
+            .order_by("order", "title")
+        )
         if selected_course_id is not None:
             items = items.filter(id=selected_course_id)
 
@@ -157,12 +167,25 @@ def _render_projects_page(
     return render(request, "website/dashboard/pages/projects.html", context)
 
 
+def projects_page_view(request, course_slug: str | None = None):
+    if request.GET.get(PROJECTS_LAYOUT_QUERY) == PROJECTS_LAYOUT_ROADMAP:
+        from .Roadmap import RoadmapView
+
+        kwargs = {}
+        if course_slug:
+            kwargs["course_slug"] = course_slug
+        return RoadmapView.as_view()(request, **kwargs)
+    if course_slug:
+        return projects_by_course_view(request, course_slug)
+    return projects_view(request)
+
+
 def projects_view(request):
     return _render_projects_page(request, page_mode="projects")
 
 
 def projects_by_course_view(request, course_slug: str):
-    course = get_object_or_404(Course, slug=course_slug)
+    course = get_object_or_404(Course, slug=course_slug, is_job_course=False)
     return _render_projects_page(
         request,
         page_mode="projects",
@@ -188,10 +211,11 @@ def courses_view(request):
 
 
 def courses_by_course_view(request, course_id: int):
+    course = get_object_or_404(Course, pk=course_id, is_job_course=False)
     return _render_projects_page(
         request,
         page_mode="courses",
-        selected_course_id=course_id,
+        selected_course_id=course.pk,
     )
 
 

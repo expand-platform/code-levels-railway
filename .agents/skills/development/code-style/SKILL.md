@@ -89,9 +89,9 @@ MODE_SETTINGS = {
 
 Template: `website/dashboard/pages/projects.html`. Course blocks use `course.filtered_projects` (attach in the view loop).
 
-**Roadmap** — `RoadmapView` + `Skill` (`models/project/Skill.py`). Skills belong to a course; projects M2M ordered by `Project.skill_order`. Sidebar: `sidebar_roadmap_courses`. Staff reorder when workouts are on: `/api/skill/<id>/reorder_projects/`.
+**Roadmap** — `JobsView` at `/roadmap/` (job tracks). **Projects** — `projects_page_view` at `/projects/` (course → projects; non-job). `?view=roadmap` is `RoadmapView` (course → skill → projects). Legacy alias: `projects_page_view` at `/old/`. Skills belong to a course; projects M2M ordered by `Project.skill_order`. Sidebar: `sidebar_job_courses`, `sidebar_project_courses` (courses with skills). Staff reorder when workouts are on: `/api/skill/<id>/reorder_projects/`.
 
-**Context** — `platform_web.context_processors.website_config` → `website_config`, `sidebar_project_courses`, `sidebar_roadmap_courses`, `sidebar_topic_languages`. Typed keys: `platform_web/config/web_config.py`.
+**Context** — `platform_web.context_processors.website_config` → `website_config`, `sidebar_project_courses`, `sidebar_job_courses`, `sidebar_topic_languages`. Typed keys: `platform_web/config/web_config.py`.
 
 **Admin** (`platform_web/admin.py`) — `SortableAdminMixin`; `NestedModelAdmin` + inlines for Project → Lessons; `SummernoteWidget` for rich text; fieldsets General / SEO / Settings.
 

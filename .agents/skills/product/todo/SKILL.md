@@ -9,7 +9,16 @@ description: >-
 
 Remove items when they ship. Add items when the user asks.
 
-- добавить GUIDES / Blog posts / articles / tutorials / guides / etc.
+Job-first catalog and funnel: [career-tracks](../career-tracks/SKILL.md).
+
+## Job-first (next)
+
+- catalog of job tracks on the public home (teaser for guests, full list after login)
+- each track = plan (roadmap) + projects, not a generic language course
+- seed / rename `Course` rows to the 12 market job titles
+- FAQ per track (and school-wide)
+- mentor AI in the founder’s voice
+- “Ask the mentor” form on-site → contacts
 - changelog page (template/view/model already exist — `changelog.html`, `WebsiteChangelogView`, `Changelog`; still needs URL, entries, and a way to open it)
 
 ## For my students
@@ -20,4 +29,6 @@ Remove items when they ship. Add items when the user asks.
 
 ## Extra (additional)
 
+- GUIDES / Blog posts / articles / tutorials / guides / etc.
 - Codelevels Bot + discipline bot + some smart automatizations for student engagement
+- when uploading an image, append a unique suffix (random alphanumeric string or uuid4) so filenames don’t collide / cache-bust

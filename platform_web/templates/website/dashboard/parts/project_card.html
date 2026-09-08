@@ -5,7 +5,6 @@
   data-id="{{ project.id }}"
 >
   <div class="project-inner w-100{% if project.slug %} h-100 d-flex flex-column{% endif %}">
-    {% include 'website/dashboard/parts/project-card-meta.html' %}
 
     {% if project.image %}
       {% if project.slug %}
@@ -26,5 +25,7 @@
         <h3 class="mb-3"><span style="color: var(--text-grey);">{{ project.title }}</span></h3>
       {% endif %}
     </div>
+
+    {% comment %} {% include 'website/dashboard/parts/project-card-meta.html' %} {% endcomment %}
   </div>
 </div>
