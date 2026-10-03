@@ -81,10 +81,12 @@
 }
 
 #sidebar .side-menu li {
-    height: 48px;
+    --height: 45px;
+    height: var(--height);
+    line-height: var(--height);
     background: transparent;
     margin-left: 6px;
-    border-radius: 48px 0 0 48px;
+    border-radius: var(--height) 0 0 var(--height);
 }
 
 #sidebar .side-menu li.has-submenu {

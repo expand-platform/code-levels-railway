@@ -2,9 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.utils.translation import gettext as _
 
-from platform_web.models.project.Course import Course
+from platform_web.models.project.Course import Course, CourseType
 from platform_web.models.project.Lesson import Lesson
-from platform_web.models.project.Project import Project, PROJECT, TOPIC, WORKOUT
+from platform_web.models.project.Project import Project, ProjectType
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 
 
@@ -12,21 +12,28 @@ MAX_SEARCH_LENGTH = 100
 PROJECTS_LAYOUT_QUERY = "view"
 PROJECTS_LAYOUT_DEFAULT = "default"
 PROJECTS_LAYOUT_ROADMAP = "roadmap"
+PROJECTS_CONTENT_QUERY = "content"
+PROJECTS_CONTENT_CONCEPTS = "concepts"
 
 MODE_SETTINGS = {
     "projects": {
         "filter_by": "course",
-        "project_type": "project",
+        "project_type": ProjectType.PROJECT,
         "is_video_course": "false",
     },
     "topics": {
         "filter_by": "language",
-        "project_type": "topic",
+        "project_type": ProjectType.TOPIC,
         "is_video_course": "false",
+    },
+    "concepts": {
+        "filter_by": "language",
+        "project_type": ProjectType.CONCEPT,
+        "is_video_course": None,
     },
     "courses": {
         "filter_by": "course",
-        "project_type": "project",
+        "project_type": ProjectType.PROJECT,
         "is_video_course": "true",
     },
 }
@@ -40,6 +47,9 @@ def _list_page_titles(page_mode, project_type):
     if project_type == "topic":
         label = _("Topics")
         return label, label
+    if project_type == "concept":
+        label = _("Concepts")
+        return label, label
     if project_type == "all":
         return _("All Projects & Topics"), _("Projects & Topics")
     label = _("Projects")
@@ -49,8 +59,8 @@ def _list_page_titles(page_mode, project_type):
 def filter_by_workouts_toggle(projects_qs, show_workouts):
     """Show regular projects, plus workouts when the toggle is on."""
     if show_workouts:
-        return projects_qs.filter(type__in=[PROJECT, WORKOUT])
-    return projects_qs.filter(type=PROJECT)
+        return projects_qs.filter(type__in=[ProjectType.PROJECT, ProjectType.WORKOUT])
+    return projects_qs.filter(type=ProjectType.PROJECT)
 
 
 def _apply_list_filters(
@@ -74,7 +84,9 @@ def _apply_list_filters(
 
     if search_query:
         # Search always targets projects only (workouts toggle is off while searching).
-        projects_qs = projects_qs.filter(title__icontains=search_query, type=PROJECT)
+        projects_qs = projects_qs.filter(title__icontains=search_query)
+        if page_mode == "projects":
+            projects_qs = projects_qs.filter(type=ProjectType.PROJECT)
 
     return projects_qs
 
@@ -114,6 +126,8 @@ def _render_projects_page(
         "selected_language_id": selected_language_id,
         "projects_layout": PROJECTS_LAYOUT_DEFAULT,
         "show_layout_toggle": page_mode == "projects",
+        "show_content_filters": page_mode == "projects",
+        "content_mode": "projects",
         "layout_query": "",
     }
 
@@ -121,7 +135,7 @@ def _render_projects_page(
 
     if filter_by == "course":
         items = (
-            Course.objects.filter(is_job_course=False)
+            Course.objects.filter(type=CourseType.REGULAR)
             .prefetch_related("projects")
             .order_by("order", "title")
         )
@@ -168,7 +182,11 @@ def _render_projects_page(
 
 
 def projects_page_view(request, course_slug: str | None = None):
-    if request.GET.get(PROJECTS_LAYOUT_QUERY) == PROJECTS_LAYOUT_ROADMAP:
+    show_roadmap = (
+        request.GET.get(PROJECTS_LAYOUT_QUERY) == PROJECTS_LAYOUT_ROADMAP
+        or request.GET.get(PROJECTS_CONTENT_QUERY) == PROJECTS_CONTENT_CONCEPTS
+    )
+    if show_roadmap:
         from .Roadmap import RoadmapView
 
         kwargs = {}
@@ -185,7 +203,7 @@ def projects_view(request):
 
 
 def projects_by_course_view(request, course_slug: str):
-    course = get_object_or_404(Course, slug=course_slug, is_job_course=False)
+    course = get_object_or_404(Course, slug=course_slug, type=CourseType.REGULAR)
     return _render_projects_page(
         request,
         page_mode="projects",
@@ -195,6 +213,10 @@ def projects_by_course_view(request, course_slug: str):
 
 def topics_view(request):
     return _render_projects_page(request, page_mode="topics")
+
+
+def concepts_view(request):
+    return _render_projects_page(request, page_mode="concepts")
 
 
 def topics_by_language_view(request, language_slug: str):
@@ -211,7 +233,7 @@ def courses_view(request):
 
 
 def courses_by_course_view(request, course_id: int):
-    course = get_object_or_404(Course, pk=course_id, is_job_course=False)
+    course = get_object_or_404(Course, pk=course_id, type=CourseType.REGULAR)
     return _render_projects_page(
         request,
         page_mode="courses",
@@ -230,8 +252,12 @@ def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
         all_course_projects = Project.objects.filter(
             course=project.course, is_active=True
         ).order_by("order", "title")
-        filtered_projects = [p for p in all_course_projects if p.type == PROJECT]
-        filtered_topics = [p for p in all_course_projects if p.type == TOPIC]
+        filtered_projects = [
+            p for p in all_course_projects if p.type == ProjectType.PROJECT
+        ]
+        filtered_topics = [
+            p for p in all_course_projects if p.type == ProjectType.TOPIC
+        ]
 
     context = {
         "project": project,

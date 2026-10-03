@@ -30,7 +30,7 @@
 
   <section class="row align-items-end mb-2">
     <form method="get" class="projects-filters-form row w-100 align-items-end mb-0">
-      <div class="col {% if show_layout_toggle %}col-md-3{% else %}col-md-9{% endif %} flex-basis-100-smo dashboard-title head-title d-flex align-items-center justify-content-between mb-3 mb-md-0">
+      <div class="col col-md-3 flex-basis-100-smo dashboard-title head-title d-flex align-items-center justify-content-between mb-3 mb-md-0">
         <div class="left">
           <h1>{{ page_title }}</h1>
           <ul class="breadcrumb">
@@ -54,13 +54,7 @@
           </ul>
         </div>
       </div>
-      {% if show_layout_toggle %}
-        {% include 'website/dashboard/parts/project_filters.html' %}
-      {% else %}
-        <div class="col col-md-3 d-flex justify-content-end align-items-center mb-3 mb-md-0">
-          {% include 'website/dashboard/parts/workouts-switch.html' %}
-        </div>
-      {% endif %}
+      {% include 'website/dashboard/parts/project_filters.html' %}
     </form>
   </section>
 

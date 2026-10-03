@@ -10,7 +10,7 @@ from nested_admin.nested import NestedTabularInline, NestedModelAdmin
 from platform_web.config.web_config import WebsiteConfigScheme
 from platform_web.models.blog.BlogPost import BlogPost
 
-from platform_web.models.project.Course import Course
+from platform_web.models.project.Course import Course, CourseType
 from platform_web.models.project.Project import Project
 from platform_web.models.project.Lesson import Lesson
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
@@ -61,8 +61,8 @@ class SkillsInline(SortableInlineAdminMixin, admin.TabularInline):  # type: igno
 
 
 class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
-    list_display = ("order", "title", "is_job_course")
-    list_filter = ("is_job_course",)
+    list_display = ("order", "title", "type")
+    list_filter = ("type",)
     search_fields = ("title",)
     inlines = [SkillsInline]
 
@@ -97,7 +97,7 @@ class ProjectAdminForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         course_field = self.fields.get("course")
         if course_field:
-            course_field.queryset = Course.objects.filter(is_job_course=False)
+            course_field.queryset = Course.objects.exclude(type=CourseType.JOB)
 
 
 class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
@@ -267,7 +267,7 @@ class SkillAdminForm(forms.ModelForm):
         if self.instance.pk and self.instance.related_course_id:
             related_course = self.instance.related_course
             projects_qs = Project.objects.filter(is_active=True)
-            if not related_course.is_job_course:
+            if related_course.type != CourseType.JOB:
                 projects_qs = projects_qs.filter(course_id=related_course.pk)
             else:
                 projects_field.help_text = _(

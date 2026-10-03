@@ -171,6 +171,49 @@
     margin-top: 2rem;
 }
 
+.project-details .content ol.lessons-roadmap,
+.project-details .content ol.lessons-roadmap li {
+    list-style: none;
+    font-size: 1rem;
+}
+
+.lessons-roadmap__link {
+    color: var(--blue);
+    text-decoration: none;
+}
+
+.lessons-roadmap__link:hover {
+    text-decoration: underline;
+}
+
+.lessons-roadmap:not(.is-detailed) .skills-timeline__projects {
+    display: none;
+}
+
+.lessons-roadmap__thumb {
+    display: block;
+    max-width: 16rem;
+    border-radius: 8px;
+}
+
+.lessons-roadmap__excerpt {
+    margin: 0;
+    max-width: 36rem;
+    color: var(--text-grey);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.lessons-roadmap__excerpt a {
+    color: var(--text-grey);
+    text-decoration: none;
+}
+
+.lessons-roadmap__excerpt a:hover {
+    color: var(--text-grey);
+    text-decoration: underline;
+}
+
 .list-group-link {
     color: var(--blue);
     text-decoration: none;

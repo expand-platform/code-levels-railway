@@ -61,7 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
         activeRoute = 'topics';
     } else if (pathname.includes('/settings') || pathname.includes('/account')) {
         activeRoute = 'settings';
-    } else if (pathname.includes('/projects') || pathname.includes('/old')) {
+    } else if (pathname.includes('/languages')) {
+        activeRoute = 'languages';
+    } else if (pathname.includes('/projects')) {
         activeRoute = 'projects';
     } else if (pathname.includes('/roadmap')) {
         activeRoute = 'roadmap';

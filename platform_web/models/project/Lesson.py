@@ -1,6 +1,10 @@
+import html
+import re
 import uuid
 
 from django.db import models
+from django.utils.html import strip_tags
+from django.utils.text import Truncator
 from django.utils.translation import gettext_lazy as _
 from platform_web.mixins.SeoSlugMixin import SeoSlugMixin
 from platform_web.models.project.Project import Project
@@ -59,6 +63,18 @@ class Lesson(SeoSlugMixin, models.Model):
         db_table = "project_parts"
         ordering = ["order"]
         
+    def content_excerpt(self, limit: int = 160) -> str:
+        html_text = re.sub(
+            r"<br\s*/?>|</(?:p|div|li|h[1-6]|tr|blockquote|section|article)\s*>",
+            " ",
+            self.description or "",
+            flags=re.IGNORECASE,
+        )
+        text = " ".join(html.unescape(strip_tags(html_text)).split())
+        if not text:
+            return ""
+        return Truncator(text).chars(limit)
+
     def __str__(self):
         title = self.title
         return str(title) if title else f"Lesson {self.pk}"

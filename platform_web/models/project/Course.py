@@ -1,5 +1,5 @@
 import uuid
-from typing import TYPE_CHECKING, cast
+from dataclasses import dataclass
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -9,10 +9,23 @@ from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.services.model.SlugService import SlugService
 
 
-class Course(models.Model):
-    if TYPE_CHECKING:
-        objects: models.Manager
+@dataclass
+class CourseType:
+    REGULAR: str = "regular"
+    LANGUAGE: str = "language"
+    JOB: str = "job"
+    GUIDE: str = "guide"
 
+
+COURSE_TYPE_CHOICES = [
+    (CourseType.REGULAR, _("Regular course")),
+    (CourseType.LANGUAGE, _("Language course")),
+    (CourseType.JOB, _("Job course")),
+    (CourseType.GUIDE, _("Guide")),
+]
+
+
+class Course(models.Model):
     title = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
@@ -20,15 +33,11 @@ class Course(models.Model):
     languages = models.ManyToManyField(
         ProgrammingLanguage, related_name="courses", blank=True
     )
-    is_job_course = models.BooleanField(
-        default=False,  # type: ignore[arg-type]
-        verbose_name=_("Is job course"),
-        help_text=cast(
-            str,
-            _(
-                "Job-track course. Projects attach via skills, not as the project's home course."
-            ),
-        ),
+    type = models.CharField(
+        max_length=20,
+        choices=COURSE_TYPE_CHOICES,
+        default=CourseType.REGULAR,
+        verbose_name=_("Course type"),
     )
 
     order = models.PositiveIntegerField(default=0)
@@ -45,7 +54,7 @@ class Course(models.Model):
         if not self.slug and self.title:
             self.slug = SlugService.generate_unique_slug(
                 self.title,
-                self.__class__,
+                models.Model, self.__class__,
                 exclude_pk=self.pk,
                 fallback_prefix="course",
             )

@@ -18,6 +18,7 @@
 {% block page_css %}
   <link rel="stylesheet" href="{% static 'css/pages/project_detail.css' %}" />
   <link rel="stylesheet" href="{% static 'css/layout/dashboard/projects-common.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/elements/timeline.css' %}" />
 {% endblock %}
 
 {% block page_js %}
@@ -36,18 +37,29 @@
     <section class="container position-relative">
       {% if project.type == 'topic' %}
         {% url 'topics' as smart_back_url %}
+      {% elif project.type == 'concept' %}
+        {% url 'concepts' as smart_back_url %}
       {% else %}
         {% url 'projects' as smart_back_url %}
       {% endif %}
       <div class="back-to-project-wrapper position-absolute mb-3">
         <a href="{{ smart_back_url }}"
-           class="nav-icon back-icon btn btn-light shadow rounded-circle"
-           data-smart-back
-           data-back-title-projects="{% trans 'Back to projects' %}"
-           data-back-title-topics="{% trans 'Back to topics' %}"
-           data-back-title-roadmap="{% trans 'Back to roadmap' %}"
-           data-back-title-courses="{% trans 'Back to courses' %}"
-           title="{% if project.type == 'topic' %}{% trans 'Back to topics' %}{% else %}{% trans 'Back to projects' %}{% endif %}"><i class="bi bi-chevron-left"></i></a>
+          class="nav-icon back-icon btn btn-light shadow rounded-circle"
+          data-smart-back
+          data-back-title-projects="{% trans 'Back to projects' %}"
+          data-back-title-topics="{% trans 'Back to topics' %}"
+          data-back-title-concepts="{% trans 'Back to concepts' %}"
+          data-back-title-roadmap="{% trans 'Back to roadmap' %}"
+          data-back-title-courses="{% trans 'Back to courses' %}"
+          title="{% if project.type == 'topic' %}
+            {% trans 'Back to topics' %}
+          {% elif project.type == 'concept' %}
+            {% trans 'Back to concepts' %}
+          {% else %}
+            {% trans 'Back to projects' %}
+          {% endif %}">
+          <i class="bi bi-chevron-left"></i>
+        </a>
       </div>
       <h1 class="title">{{ project.title }}</h1>
 
@@ -80,6 +92,12 @@
             <div class="d-flex align-items-center mb-4 mb-md-0">
               <h2 class="subtitle m-0 mb-md-0 me-2">{% trans 'Project Stages' %}</h2>
               <button id="toggle-stages-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Stages' %}"><i id="toggle-stages-icon" class="bi bi-chevron-down"></i></button>
+              <div class="btn-group btn-group-sm project-page-mode-buttons stages-view-toggle ms-auto" role="group" aria-label="{% trans 'Stages view' %}">
+                <input type="radio" class="btn-check" name="stages-view" id="stages-view-default" value="default" autocomplete="off" checked />
+                <label class="btn btn-outline-primary" for="stages-view-default">{% trans 'Default' %}</label>
+                <input type="radio" class="btn-check" name="stages-view" id="stages-view-timeline" value="timeline" autocomplete="off" />
+                <label class="btn btn-outline-primary" for="stages-view-timeline">{% trans 'Timeline' %}</label>
+              </div>
             </div>
             <div id="stages-timeline">
               {% include 'website/dashboard/parts/project/timeline.html' %}
@@ -89,31 +107,42 @@
 
         {% if parts %}
           <section class="project-parts mb-5">
-            <div class="d-flex align-items-center mb-3">
+            <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
               <h2 class="subtitle mb-0 me-2">{% trans 'Lessons' %}</h2>
               <button id="toggle-parts-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Lessons' %}"><i id="toggle-parts-icon" class="bi bi-chevron-down"></i></button>
               {% if user.is_staff %}
-                <button id="save-order-btn" class="btn btn-sm btn-success ms-3" style="display:none;">{% trans 'Save Order' %}</button>
+                <button id="save-order-btn" class="btn btn-sm btn-success" style="display:none;">{% trans 'Save Order' %}</button>
               {% endif %}
+              <div class="btn-group btn-group-sm project-page-mode-buttons lessons-view-toggle ms-auto" role="group" aria-label="{% trans 'Lessons view' %}">
+                <input type="radio" class="btn-check" name="lessons-view" id="lessons-view-default" value="default" autocomplete="off" checked />
+                <label class="btn btn-outline-primary" for="lessons-view-default">{% trans 'Default' %}</label>
+                <input type="radio" class="btn-check" name="lessons-view" id="lessons-view-list" value="list" autocomplete="off" />
+                <label class="btn btn-outline-primary" for="lessons-view-list">{% trans 'List' %}</label>
+                <input type="radio" class="btn-check" name="lessons-view" id="lessons-view-detailed" value="detailed" autocomplete="off" />
+                <label class="btn btn-outline-primary" for="lessons-view-detailed">{% trans 'Detailed' %}</label>
+              </div>
             </div>
 
-            <form id="reorder-form" method="post" style="margin:0;">
-              {% csrf_token %}
-              <ol id="parts-list" class="list-group" data-project-slug="{{ project.slug }}">
-                {% for part in parts %}
-                  <li class="part-item list-group-item d-flex flex-column flex-md-row row-gap-2 justify-content-between align-items-md-center" data-id="{{ part.id }}">
-                    <span class="d-md-flex align-items-center">
-                      {% if user.is_staff %}
-                        <span class="drag-handle me-2" style="cursor:move;"><i class="bi bi-list"></i></span>
-                      {% endif %}
-                      {% comment %} <a class="list-group-link" href="{% url 'lesson_details' slug=project.slug part_slug=part.slug %}"><span class="d-md-none me-2 me-md-0">#{{ forloop.counter }}.</span>{{ part.title }}</a> {% endcomment %}
-                      <a class="list-group-link" href="{% url 'lesson_details' slug=project.slug part_slug=part.slug %}"><span class="d-md-none me-2 me-md-0">#{{ forloop.counter }}.</span>{{ part.title }}</a>
-                    </span>
-                    <span class="badge d-none d-md-block bg-light text-dark border" style="font-size: 0.95em; max-width: 25%">#{{ forloop.counter }}</span>
-                  </li>
-                {% endfor %}
-              </ol>
-            </form>
+            <div id="parts-views">
+              {% include 'website/dashboard/parts/project/lessons_roadmap.html' %}
+
+              <form id="reorder-form" method="post" style="margin:0;" hidden>
+                {% csrf_token %}
+                <ol id="parts-list" class="list-group" data-project-slug="{{ project.slug }}">
+                  {% for part in parts %}
+                    <li class="part-item list-group-item d-flex flex-column flex-md-row row-gap-2 justify-content-between align-items-md-center" data-id="{{ part.id }}">
+                      <span class="d-md-flex align-items-center">
+                        {% if user.is_staff %}
+                          <span class="drag-handle me-2" style="cursor:move;"><i class="bi bi-list"></i></span>
+                        {% endif %}
+                        <a class="list-group-link" href="{% url 'lesson_details' slug=project.slug part_slug=part.slug %}"><span class="d-md-none me-2 me-md-0">#{{ forloop.counter }}.</span>{{ part.title }}</a>
+                      </span>
+                      <span class="badge d-none d-md-block bg-light text-dark border" style="font-size: 0.95em; max-width: 25%">#{{ forloop.counter }}</span>
+                    </li>
+                  {% endfor %}
+                </ol>
+              </form>
+            </div>
           </section>
         {% else %}
           <p class="no-content text-grey m-0">

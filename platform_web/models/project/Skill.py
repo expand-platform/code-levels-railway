@@ -1,5 +1,4 @@
 import uuid
-from typing import TYPE_CHECKING, cast
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -9,9 +8,6 @@ from platform_web.models.project.Project import Project
 
 
 class Skill(models.Model):
-    if TYPE_CHECKING:
-        objects: models.Manager
-
     name = models.CharField(max_length=100)
     related_course = models.ForeignKey(
         Course,
@@ -23,13 +19,11 @@ class Skill(models.Model):
         Project,
         blank=True,
         related_name="skills",
-        help_text=cast(
-            str, _("Projects shown under this skill on the roadmap")
-        ),
+        help_text=_("Projects shown under this skill on the roadmap"),
     )
     order = models.PositiveIntegerField(
         default=0,  # type: ignore[arg-type]
-        help_text=cast(str, _("Ordering for admin sorting")),
+        help_text=_("Ordering for admin sorting"),
     )
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 

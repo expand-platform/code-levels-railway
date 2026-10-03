@@ -3,13 +3,12 @@ const RETURN_URL_KEY = 'codelevels:smartBack:returnUrl'
 const LIST_PATHS = [
   /^\/projects$/,
   /^\/topics$/,
+  /^\/concepts$/,
   /^\/roadmap$/,
-  /^\/old$/,
   /^\/projects\/course\/[^/]+$/,
   /^\/topics\/language\/[^/]+$/,
   /^\/courses\/course\/\d+$/,
   /^\/roadmap\/course\/[^/]+$/,
-  /^\/old\/course\/[^/]+$/,
 ]
 
 function isSameOrigin(referrer) {
@@ -89,6 +88,9 @@ function backTitleForReturnUrl(returnUrl, link) {
   }
   if (path === '/topics' || path.startsWith('/topics/language/')) {
     return link.dataset.backTitleTopics || link.getAttribute('title')
+  }
+  if (path === '/concepts') {
+    return link.dataset.backTitleConcepts || link.getAttribute('title')
   }
   if (path.startsWith('/courses/course/')) {
     return link.dataset.backTitleCourses || link.getAttribute('title')

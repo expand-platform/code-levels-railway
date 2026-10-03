@@ -3,13 +3,15 @@
 	if (!root) return
 
 	const rawStages = document.getElementById('project-stages-raw')
+	const horizontalView = document.getElementById('stages-horizontal-view')
+	const verticalView = document.getElementById('stages-vertical-view')
 	const track = document.getElementById('timeline-track')
 	const title = document.getElementById('timeline-title')
 	const text = document.getElementById('timeline-text')
 	const prevBtn = root.querySelector('[data-action="prev"]')
 	const nextBtn = root.querySelector('[data-action="next"]')
 
-	if (!rawStages || !track || !title || !text || !prevBtn || !nextBtn) return
+	if (!rawStages || !horizontalView || !verticalView || !track || !title || !text || !prevBtn || !nextBtn) return
 
 	function normalize(value) {
 		return (value || '').replace(/\s+/g, ' ').trim()
@@ -55,11 +57,57 @@
 		}
 	}
 
-	const stages = getStageItems(rawStages).map(splitHeadlineAndBody)
+	function splitVerticalStage(value) {
+		const clean = normalize(value)
+		const colonSplit = clean.match(/^([^:]{1,80}):\s*(.+)$/)
+		if (colonSplit) {
+			return { headline: normalize(colonSplit[1]), body: normalize(colonSplit[2]) }
+		}
+		return splitHeadlineAndBody(clean)
+	}
+
+	const rawStageItems = getStageItems(rawStages)
+	const stages = rawStageItems.map(splitHeadlineAndBody)
 	if (!stages.length) {
 		root.style.display = 'none'
 		return
 	}
+
+	rawStageItems.map(splitVerticalStage).forEach((stage, index) => {
+		const item = document.createElement('li')
+		item.className = 'stages-vertical-timeline__item'
+
+		const marker = document.createElement('span')
+		marker.className = 'stages-vertical-timeline__marker'
+		marker.textContent = String(index + 1)
+		marker.setAttribute('aria-hidden', 'true')
+		item.appendChild(marker)
+
+		const content = document.createElement('div')
+		content.className = 'stages-vertical-timeline__content'
+		const heading = document.createElement('h3')
+		heading.className = 'stages-vertical-timeline__title'
+		heading.textContent = stage.headline || `Stage ${index + 1}`
+		content.appendChild(heading)
+
+		if (stage.body) {
+			const description = document.createElement('p')
+			description.className = 'stages-vertical-timeline__description'
+			description.textContent = stage.body
+			content.appendChild(description)
+		}
+
+		item.appendChild(content)
+		verticalView.appendChild(item)
+	})
+
+	document.querySelectorAll('input[name="stages-view"]').forEach((toggle) => {
+		toggle.addEventListener('change', function () {
+			const showVertical = toggle.value === 'timeline' && toggle.checked
+			horizontalView.hidden = showVertical
+			verticalView.hidden = !showVertical
+		})
+	})
 
 	let activeIndex = 0
 

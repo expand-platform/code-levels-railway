@@ -14,6 +14,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('.project-page-mode-buttons .btn-check').forEach(function (radio) {
     radio.addEventListener('change', function () {
+      if (radio.name === 'content' && radio.value === 'concepts') {
+        const roadmap = document.getElementById('projects-layout-roadmap');
+        if (roadmap) roadmap.checked = true;
+      }
+      if (radio.name === 'view' && radio.value === 'default') {
+        const withProjects = document.getElementById('projects-content-projects');
+        if (withProjects) withProjects.checked = true;
+      }
       if (filterForm) {
         filterForm.submit();
       }

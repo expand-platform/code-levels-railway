@@ -4,11 +4,13 @@ from .Settings import SettingsView
 from .Changelog import WebsiteChangelogView
 from .Roadmap import RoadmapView
 from .Jobs import JobsView
+from .Languages import LanguagesView
 from .Projects import (
 	projects_page_view,
 	projects_view,
 	projects_by_course_view,
 	topics_view,
+	concepts_view,
 	topics_by_language_view,
 	courses_view,
 	courses_by_course_view,
@@ -28,10 +30,12 @@ __all__ = [
 	"WebsiteChangelogView",
 	"RoadmapView",
 	"JobsView",
+	"LanguagesView",
 	"projects_page_view",
 	"projects_view",
 	"projects_by_course_view",
 	"topics_view",
+	"concepts_view",
 	"topics_by_language_view",
 	"courses_view",
 	"courses_by_course_view",

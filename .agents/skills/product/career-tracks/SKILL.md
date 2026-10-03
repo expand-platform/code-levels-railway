@@ -18,7 +18,7 @@ language. Group tracks by **family** in the catalog UI only.
 
 ## Families and tracks
 
-Titles and slugs for the future `Course` seed (`is_job_course=True`). Do not invent extra tracks.
+Titles and slugs for the future `Course` seed (`type="job"`). Do not invent extra tracks.
 
 ### Python
 
@@ -71,9 +71,8 @@ Every public surface is a step toward login → FAQ/AI → mentor contact.
 
 1. **Catalog** — families + tracks. Nav label is **Roadmap** (`/roadmap/`).
    **Projects** (`/projects/`) is course → projects + workouts; `?view=roadmap`
-   is course → skill → projects. The previous flat URL `/old/` aliases the same
-   page. Guests see a teaser list; full catalog after login (“Sign in to see the
-   full list”).
+   is course → skill → projects. Guests see a teaser list; full catalog after
+   login (“Sign in to see the full list”).
 2. **Track** — plan (roadmap skills) + projects for that job title.
 3. **FAQ** — common questions for the track / school.
 4. **Mentor AI** — answers in the founder’s voice (same person as the
@@ -81,6 +80,10 @@ Every public surface is a step toward login → FAQ/AI → mentor contact.
 5. **Ask the mentor** — form on the site, wired to contacts.
 
 Do not hide the catalog entirely from guests. Tease, then gate depth.
+
+## Concepts
+
+There is no Concepts sidebar item. On Projects, the filters panel toggles **Projects** (default) and **Concepts only** (`?content=concepts`). Concepts only is the skill timeline: numbered points and skill names, without the projects under each track.
 
 ## Existing models
 

@@ -27,6 +27,12 @@ Job-first catalog and funnel: [career-tracks](../career-tracks/SKILL.md).
 - update / add new projects for my students (skills related, too)
 - each student can now add a profile icon and see where they are on the roadmap
 
+## Course kinds
+
+`Course.type` is the admin dropdown (`job`, `language`, `guide`, `regular`). Regular is the default. Job tracks use job courses; Projects uses regular courses; Languages (`/languages/`) uses language courses. Migration is generated, not applied.
+
+- Guides still have no page (see Extra).
+
 ## Extra (additional)
 
 - GUIDES / Blog posts / articles / tutorials / guides / etc.

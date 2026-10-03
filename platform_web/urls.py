@@ -24,6 +24,12 @@ urlpatterns = [
         JobsView.as_view(),
         name="roadmap_by_course",
     ),
+    path("languages/", LanguagesView.as_view(), name="languages"),
+    path(
+        "languages/course/<slug:course_slug>/",
+        LanguagesView.as_view(),
+        name="languages_by_course",
+    ),
 
     # Projects: course → projects; ?view=roadmap is course → skill → projects
     path("projects/", projects_page_view, name="projects"),
@@ -32,15 +38,10 @@ urlpatterns = [
         projects_page_view,
         name="projects_by_course",
     ),
-    path("old/", projects_page_view, name="old"),
-    path(
-        "old/course/<slug:course_slug>/",
-        projects_page_view,
-        name="old_by_course",
-    ),
 
     # Topics, courses
     path("topics/", topics_view, name="topics"),
+    path("concepts/", concepts_view, name="concepts"),
     
     # sort by language
     path(

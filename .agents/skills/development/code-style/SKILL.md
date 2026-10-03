@@ -89,7 +89,7 @@ MODE_SETTINGS = {
 
 Template: `website/dashboard/pages/projects.html`. Course blocks use `course.filtered_projects` (attach in the view loop).
 
-**Roadmap** — `JobsView` at `/roadmap/` (job tracks). **Projects** — `projects_page_view` at `/projects/` (course → projects; non-job). `?view=roadmap` is `RoadmapView` (course → skill → projects). Legacy alias: `projects_page_view` at `/old/`. Skills belong to a course; projects M2M ordered by `Project.skill_order`. Sidebar: `sidebar_job_courses`, `sidebar_project_courses` (courses with skills). Staff reorder when workouts are on: `/api/skill/<id>/reorder_projects/`.
+**Roadmap** — `JobsView` at `/roadmap/` (job tracks). **Projects** — `projects_page_view` at `/projects/` (course → projects; non-job). `?view=roadmap` is `RoadmapView` (course → skill → projects). **Languages** — `LanguagesView` at `/languages/` (language courses → skills, including skills with no projects). Skills belong to a course; projects M2M ordered by `Project.skill_order`. Sidebar and `/roadmap/` list job courses that have at least one skill, including skills with no projects. Courses with no skills are left out of the sidebar and the roadmap. Language courses with no skills still appear on `/languages/`. Context: `sidebar_job_courses`, `sidebar_project_courses`, `sidebar_language_courses`. Staff reorder when workouts are on: `/api/skill/<id>/reorder_projects/`.
 
 **Context** — `platform_web.context_processors.website_config` → `website_config`, `sidebar_project_courses`, `sidebar_job_courses`, `sidebar_topic_languages`. Typed keys: `platform_web/config/web_config.py`.
 
@@ -99,7 +99,7 @@ Template: `website/dashboard/pages/projects.html`. Course blocks use `course.fil
 
 ## Feature checklist
 
-1. Model + migration
+1. Model + generate migration (`makemigrations`); check it, do not apply — see [environment](../environment/SKILL.md)
 2. View + URL
 3. Template (page or partial)
 4. CSS in the matching sheet; JS if needed

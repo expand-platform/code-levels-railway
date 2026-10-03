@@ -14,22 +14,33 @@ function togglePartsNav() {
 }
 
 function togglePartsList() {
-  const list = document.getElementById('parts-list')
+  const views = document.getElementById('parts-views')
   const icon = document.getElementById('toggle-parts-icon')
-  if (!list) return
-  if (list.style.display === 'none') {
-    list.style.display = ''
+  if (!views) return
+  if (views.style.display === 'none') {
+    views.style.display = ''
     if (icon) {
       icon.classList.remove('bi-chevron-right')
       icon.classList.add('bi-chevron-down')
     }
   } else {
-    list.style.display = 'none'
+    views.style.display = 'none'
     if (icon) {
       icon.classList.remove('bi-chevron-down')
       icon.classList.add('bi-chevron-right')
     }
   }
+}
+
+function setLessonsView(view) {
+  const roadmap = document.getElementById('lessons-roadmap')
+  const listForm = document.getElementById('reorder-form')
+  const showList = view === 'list'
+  if (roadmap) {
+    roadmap.hidden = showList
+    roadmap.classList.toggle('is-detailed', view === 'detailed')
+  }
+  if (listForm) listForm.hidden = !showList
 }
 
 // Project Detail Page JS
@@ -101,6 +112,12 @@ document.addEventListener('click', function (event) {
   event.preventDefault()
   toggleDescriptionSection()
 });
+
+document.querySelectorAll('input[name="lessons-view"]').forEach(function (toggle) {
+  toggle.addEventListener('change', function () {
+    if (toggle.checked) setLessonsView(toggle.value)
+  })
+})
 
 
 document.addEventListener('DOMContentLoaded', function () {

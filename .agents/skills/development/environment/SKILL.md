@@ -13,9 +13,10 @@ Resolve the live path with `poetry env info -p` — do not hard-code it.
 
 ```bash
 cd d:/Coding/django/code-levels-railway
-poetry run python manage.py migrate
 poetry run python manage.py runserver
 poetry run python manage.py makemigrations platform_web
+poetry run python manage.py sqlmigrate platform_web <number>
+poetry run python manage.py migrate --plan
 poetry run python manage.py shell
 poetry run python manage.py check
 poetry run pytest
@@ -23,6 +24,8 @@ poetry install
 poetry add <package>                 # runtime
 poetry add --group dev <package>     # dev
 ```
+
+**Migrations:** generate with `makemigrations`, then check with `sqlmigrate` and `migrate --plan`. Do **not** apply them (`migrate`) unless the user explicitly asks.
 
 - `manage.py` loads `.env` via `python-dotenv`; default settings: `code_levels.settings.dev`
 - Local env files (gitignored): `.env`, `.env.dev`, `.env.prod`

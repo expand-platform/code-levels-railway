@@ -1,5 +1,5 @@
+from dataclasses import dataclass
 import uuid
-from typing import TYPE_CHECKING
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -10,17 +10,19 @@ from platform_web.models.project.Difficulty import Difficulty
 from platform_web.models.project.Framework import Framework
 from platform_web.models.project.Course import Course
 
+@dataclass
+class ProjectType:
+    TOPIC: str = "topic"
+    PROJECT: str = "project"
+    WORKOUT: str = "workout"
+    CONCEPT: str = "concept"
 
-TOPIC = "topic"
-PROJECT = "project"
-WORKOUT = "workout"
-GUIDE = "guide"
 
 PROJECT_TYPE_CHOICES = [
-    (TOPIC, _("Topic")),
-    (PROJECT, _("Project")),
-    (WORKOUT, _("Workout")),
-    (GUIDE, _("Guide")),
+    (ProjectType.TOPIC, _("Topic")),
+    (ProjectType.PROJECT, _("Project")),
+    (ProjectType.WORKOUT, _("Workout")),
+    (ProjectType.CONCEPT, _("Concept")),
 ]
 
 LANGUAGE_CHOICES = [
@@ -36,13 +38,10 @@ TRANSLATION_STATUS_CHOICES = [
 
 
 class Project(SeoSlugMixin, models.Model):
-    if TYPE_CHECKING:
-        objects: models.Manager
-
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to="project_images/", blank=True, null=True)
 
-    type = models.CharField(max_length=20, choices=PROJECT_TYPE_CHOICES, default=TOPIC)
+    type = models.CharField(max_length=20, choices=PROJECT_TYPE_CHOICES, default=ProjectType.PROJECT)
 
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="projects", null=True, blank=True
