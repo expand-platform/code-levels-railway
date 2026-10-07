@@ -7,20 +7,9 @@
           <a class="lessons-roadmap__link" href="{% url 'lesson_details' slug=project.slug part_slug=part.slug %}">{{ part.title }}</a>
         </h3>
       </div>
-      {% if part.thumbnail or part.content_excerpt %}
-        <div class="skills-timeline__projects">
-          {% if part.thumbnail %}
-            
-              <img src="{{ part.thumbnail.url }}" alt="{{ part.title }}" class="lessons-roadmap__thumb" />
-          {% endif %}
-          {% if part.content_excerpt %}
-            <div class="space mb-3"></div>
-            <div class="lessons-roadmap__excerpt">
-              <a href="{% url 'lesson_details' slug=project.slug part_slug=part.slug %}">
-                {{ part.content_excerpt|safe }}
-              </a>
-            </div>
-          {% endif %}
+      {% if part.objectives %}
+        <div class="skills-timeline__content">
+          {{ part.objectives|safe }}
         </div>
       {% endif %}
     </li>

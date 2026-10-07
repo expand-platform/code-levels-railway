@@ -1,0 +1,13 @@
+<ul class="breadcrumb">
+  <li>
+    <a href="{% url 'home' %}">{{ website_config.site_name }}</a>
+  </li>
+  {% for crumb in breadcrumbs %}
+    <li>
+      <i class="fs-6 bi bi-caret-right-fill"></i>
+    </li>
+    <li>
+      <a {% if crumb.active %}class="active" {% endif %}href="{% if crumb.url %}{{ crumb.url }}{% else %}#{% endif %}">{{ crumb.label }}</a>
+    </li>
+  {% endfor %}
+</ul>

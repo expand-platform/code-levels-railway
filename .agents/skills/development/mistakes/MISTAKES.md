@@ -6,6 +6,7 @@ Tags: `views`, `templates`, `models`, `migrations`, `static`, `admin`, `i18n`, `
 
 | Date | Area | Mistake | Solution | Tags |
 |------|------|---------|----------|------|
+| 2026-10-07 | code-style skill | Opened a browser to verify a UI change because a general verify-in-browser instruction overrode the project skill | Do not write tests or open a browser unless the user asks in the current request; curl or reading files is the check | browser, tests |
 | 2026-08-05 | project_card.html | Used `{% trans %}` in an included partial without `{% load i18n %}` | Add `{% load i18n %}` at the top of any partial that uses trans/blocktrans | templates, i18n |
 | 2026-09-02 | Skill.py | `help_text=_("...")` failed Pylance: lazy proxy is not `str` (Django infers `help_text=""` as `str`) | Wrap model `help_text=_()` with `cast(str, ...)` | models, i18n |
 | 2026-09-02 | Roadmap.py | `Model.objects` unknown to basedpyright without django-stubs | Annotate `objects: models.Manager` under `TYPE_CHECKING` on the model | views, models |

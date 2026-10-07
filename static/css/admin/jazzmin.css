@@ -2,14 +2,25 @@
     position: fixed !important;
 }
 
-.inline-group td.field-contents {
+.inline-group td.field-contents,
+.inline-group td.field-objectives {
     width: 55%;
     min-width: 28rem;
 }
 
-.inline-group td.field-contents iframe {
+.inline-group td.field-contents iframe,
+.inline-group td.field-objectives iframe {
     width: 100% !important;
     max-width: 100%;
+}
+
+.inline-group td.field-order {
+    width: 4.5rem;
+    white-space: nowrap;
+}
+
+.inline-group td.field-order input {
+    width: 4.5rem;
 }
 
 .form-row.field-projects_by_course label,

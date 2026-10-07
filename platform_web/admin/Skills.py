@@ -11,7 +11,19 @@ from platform_web.models.project.Skill import Skill
 
 
 class SkillContentsWidget(SummernoteWidget):
-    """Course-inline outline editor. Empty HTML is stored as ''."""
+    """Outline editor. Empty HTML is stored as ''."""
+
+    @classmethod
+    def compact(cls):
+        return cls(
+            attrs={
+                "summernote": {
+                    "width": 480,
+                    "height": 180,
+                    "toolbar": [],
+                }
+            }
+        )
 
     def value_from_datadict(self, data, files, name):
         value = super().value_from_datadict(data, files, name)

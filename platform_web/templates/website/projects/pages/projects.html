@@ -1,6 +1,5 @@
 {% extends 'website/projects/parts/layout.html' %}
 {% load static %}
-{% load i18n %}
 
 {% block meta %}
   <meta name="csrf-token" content="{{ csrf_token }}" />
@@ -27,28 +26,7 @@
     {% include 'website/projects/parts/project/plus-button.html' %}
   {% endif %}
 
-  <section class="row align-items-end mb-2">
-    <form method="get" class="projects-filters-form row w-100 align-items-end mb-0">
-      <div class="col col-md-3 flex-basis-100-smo dashboard-title head-title d-flex align-items-center justify-content-between mb-3 mb-md-0">
-        <div class="left">
-          <h1 class="projects-title-row mb-0">{{ page_title }}</h1>
-          <ul class="breadcrumb">
-            <li>
-              <a href="{% url 'home' %}">{{ website_config.site_name }}</a>
-            </li>
-            <li>
-              <i class="fs-6 bi bi-caret-right-fill"></i>
-            </li>
-            <li>
-              <a class="active" href="#">{{ breadcrumb_label }}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      {% include 'website/projects/parts/project_filters.html' %}
-    </form>
-  </section>
+  {% include 'website/projects/parts/page_heading.html' %}
 
   <section class="projects">
     {% if filter_by == 'course' %}

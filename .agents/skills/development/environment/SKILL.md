@@ -2,14 +2,17 @@
 name: codelevels-environment
 description: >-
   Run Python and Django commands in the Poetry-managed virtualenv for
-  CodeLevels.net. Use when running manage.py, tests, scripts, migrations,
-  or installing dependencies.
+  CodeLevels.net. Use when running manage.py, scripts, migrations, or
+  installing dependencies. Do not write or run tests unless the user
+  explicitly asks in the current request.
 ---
 
 # CodeLevels Environment
 
 Poetry owns the venv (`pyproject.toml`, `poetry.lock`). No in-repo `.venv/`.
 Resolve the live path with `poetry env info -p` — do not hard-code it.
+
+Do not add tests, edit `platform_web/tests.py`, or run `pytest` / the test suite unless the user explicitly asks in the current request. `poetry run pytest` below is only for that case.
 
 ```bash
 cd d:/Coding/django/code-levels-railway

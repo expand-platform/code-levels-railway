@@ -10,6 +10,8 @@ description: >-
 
 Run after a feature/fix (same session) unless the user skips cleanup. Stay on **files touched in this task**.
 
+Do not write tests or open a browser while cleaning up, unless the user explicitly asks in the current request.
+
 After the pass, **report to the user** (do not only edit silently):
 
 | | |

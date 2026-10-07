@@ -19,7 +19,28 @@ class CoursesView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["sections"] = _course_sections()
+        course_type_filter = self.request.GET.get("type", "")
+        if course_type_filter not in {
+            CourseType.LANGUAGE,
+            CourseType.REGULAR,
+            CourseType.JOB,
+        }:
+            course_type_filter = ""
+        sections = _course_sections()
+        if course_type_filter:
+            sections = [
+                section
+                for section in sections
+                if section["type"] == course_type_filter
+            ]
+        context["sections"] = sections
+        context["page_title"] = _("Courses")
+        context["breadcrumbs"] = [
+            {"label": _("Courses"), "url": "", "active": True},
+        ]
+        context["show_course_filters"] = True
+        context["course_type_filter"] = course_type_filter
+        context["course_type_filters"] = _course_type_filters()
         return context
 
 
@@ -27,8 +48,10 @@ def _course_sections():
     grouped, other = _group_courses()
     sections = []
     for course_type, title, url_name, needs_skills in COURSE_SECTIONS:
-        _add_section(sections, title, grouped[course_type], url_name, needs_skills)
-    _add_section(sections, _("Other"), other, "", False)
+        _add_section(
+            sections, title, grouped[course_type], url_name, needs_skills, course_type
+        )
+    _add_section(sections, _("Other"), other, "", False, "")
     return sections
 
 
@@ -47,13 +70,22 @@ def _group_courses():
     return grouped, other
 
 
-def _add_section(sections, title, courses, url_name, needs_skills):
+def _course_type_filters():
+    return (
+        ("", _("All")),
+        (CourseType.LANGUAGE, _("Language")),
+        (CourseType.REGULAR, _("Regular")),
+        (CourseType.JOB, _("Job")),
+    )
+
+
+def _add_section(sections, title, courses, url_name, needs_skills, course_type):
     if not courses:
         return
     for course in courses:
         course.detail_url = _detail_url(course, url_name, needs_skills)
     courses.sort(key=lambda course: course.detail_url == "")
-    sections.append({"title": title, "courses": courses})
+    sections.append({"title": title, "courses": courses, "type": course_type})
 
 
 def _detail_url(course, url_name, needs_skills):

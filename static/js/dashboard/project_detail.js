@@ -1,18 +1,3 @@
-function togglePartsNav() {
-  const nav = document.getElementById('parts-navigation')
-  const icon = document.getElementById('toggle-parts-nav-icon')
-  if (!nav) return
-  if (nav.style.display === 'none') {
-    nav.style.display = ''
-    icon.classList.remove('bi-chevron-right')
-    icon.classList.add('bi-chevron-left')
-  } else {
-    nav.style.display = 'none'
-    icon.classList.remove('bi-chevron-left')
-    icon.classList.add('bi-chevron-right')
-  }
-}
-
 function togglePartsList() {
   const views = document.getElementById('parts-views')
   const icon = document.getElementById('toggle-parts-icon')
@@ -38,38 +23,8 @@ function setLessonsView(view) {
   const showList = view === 'list'
   if (roadmap) {
     roadmap.hidden = showList
-    roadmap.classList.toggle('is-detailed', view === 'detailed')
   }
   if (listForm) listForm.hidden = !showList
-}
-
-// Project Detail Page JS
-function toggleStages() {
-  const list = document.getElementById('stages-list');
-  if (list.style.display === 'none') {
-    list.style.display = 'block';
-  } else {
-    list.style.display = 'none';
-  }
-}
-
-function toggleStagesList() {
-  const list = document.getElementById('stages-timeline')
-  const icon = document.getElementById('toggle-stages-icon')
-  if (!list) return
-  if (list.style.display === 'none') {
-    list.style.display = ''
-    if (icon) {
-      icon.classList.remove('bi-chevron-right')
-      icon.classList.add('bi-chevron-down')
-    }
-  } else {
-    list.style.display = 'none'
-    if (icon) {
-      icon.classList.remove('bi-chevron-down')
-      icon.classList.add('bi-chevron-right')
-    }
-  }
 }
 
 function toggleDescriptionSection() {
@@ -100,13 +55,6 @@ document.addEventListener('click', function (event) {
 });
 
 document.addEventListener('click', function (event) {
-  const toggleBtn = event.target.closest('#toggle-stages-btn')
-  if (!toggleBtn) return
-  event.preventDefault()
-  toggleStagesList()
-});
-
-document.addEventListener('click', function (event) {
   const toggleBtn = event.target.closest('#toggle-description-btn')
   if (!toggleBtn) return
   event.preventDefault()
@@ -125,20 +73,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const saveOrderBtn = document.getElementById('save-order-btn');
   const isAdmin = !!saveOrderBtn;
 
-  // Get project slug from a data attribute on the parts list or another element
-  let projectSlug = null;
-  if (partsList) {
-    projectSlug = partsList.getAttribute('data-project-slug');
-    // fallback: try from another element if needed
-    if (!projectSlug) {
-      const projectElem = document.getElementById('project-details');
-      if (projectElem) projectSlug = projectElem.getAttribute('data-project-slug');
-    }
-  }
+  const projectSlug = partsList ? partsList.getAttribute('data-project-slug') : null;
 
   if (partsList && isAdmin && projectSlug) {
-    const sortable = new Sortable(partsList, {
-      // handle: '.drag-handle',
+    new Sortable(partsList, {
       animation: 150,
       onEnd: function () {
         saveOrderBtn.style.display = 'inline-block';

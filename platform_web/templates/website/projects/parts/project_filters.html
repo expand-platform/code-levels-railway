@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="col col-md-9 flex-basis-100-smo d-flex justify-content-end align-items-end">
+<div class="col col-md-7 flex-basis-100-smo d-flex justify-content-end align-items-end">
   <div class="projects-filters-panel col d-flex flex-wrap justify-content-md-end align-items-center column-gap-3 row-gap-2 mb-3" role="region" aria-label="{% trans 'Filters' %}">
     {% if show_layout_toggle %}
       <div class="btn-group btn-group-sm project-page-mode-buttons" role="group" aria-label="{% trans 'Projects layout' %}">
@@ -9,6 +9,14 @@
 
         <input type="radio" class="btn-check" name="view" id="projects-layout-default" value="default" autocomplete="off"{% if projects_layout == 'default' %} checked{% endif %} />
         <label class="btn btn-outline-primary" for="projects-layout-default">{% trans 'List' %}</label>
+      </div>
+    {% endif %}
+    {% if show_course_filters %}
+      <div class="btn-group btn-group-sm project-page-mode-buttons" role="group" aria-label="{% trans 'Course type' %}">
+        {% for value, label in course_type_filters %}
+          <input type="radio" class="btn-check" name="type" id="course-type-{% if value %}{{ value }}{% else %}all{% endif %}" value="{{ value }}" autocomplete="off"{% if course_type_filter == value %} checked{% endif %} />
+          <label class="btn btn-outline-primary" for="course-type-{% if value %}{{ value }}{% else %}all{% endif %}">{{ label }}</label>
+        {% endfor %}
       </div>
     {% endif %}
     {% if show_content_filters %}

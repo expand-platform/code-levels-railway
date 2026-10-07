@@ -1,19 +1,34 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from django_summernote.widgets import SummernoteWidget
 from django import forms
 
 from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
-from nested_admin.nested import NestedTabularInline
 
+from platform_web.admin.Skills import SkillContentsWidget
 from platform_web.models.project.Lesson import Lesson
 from platform_web.models.project.Project import Project
 
 
-class LessonsInline(SortableInlineAdminMixin, NestedTabularInline):
+class LessonInlineForm(forms.ModelForm):
+    class Meta:
+        model = Lesson
+        fields = ("order", "title", "objectives")
+        labels = {
+            "order": _("ID"),
+        }
+        widgets = {
+            "objectives": SkillContentsWidget.compact(),
+        }
+
+
+class LessonsInline(SortableInlineAdminMixin, admin.TabularInline):  # type: ignore[misc]
     model = Lesson
+    form = LessonInlineForm
     extra = 1
-    fields = ("title", "order", "description")
+    fields = ("order", "title", "objectives")
     ordering = ["order"]
+    show_change_link = True
 
 
 class LessonAdminForm(forms.ModelForm):

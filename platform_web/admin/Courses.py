@@ -19,15 +19,7 @@ class SkillInlineForm(forms.ModelForm):
         model = Skill
         fields = ("name", "order", "contents")
         widgets = {
-            "contents": SkillContentsWidget(
-                attrs={
-                    "summernote": {
-                        "width": 480,
-                        "height": 180,
-                        "toolbar": [],
-                    }
-                }
-            ),
+            "contents": SkillContentsWidget.compact(),
         }
 
 

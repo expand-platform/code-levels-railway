@@ -121,7 +121,9 @@ def _render_projects_page(
         "show_workouts": show_workouts,
         "can_reorder_projects": can_reorder_projects,
         "page_title": page_title,
-        "breadcrumb_label": breadcrumb_label,
+        "breadcrumbs": [
+            {"label": breadcrumb_label, "url": "", "active": True},
+        ],
         "selected_course_id": selected_course_id,
         "selected_language_id": selected_language_id,
         "projects_layout": PROJECTS_LAYOUT_DEFAULT,

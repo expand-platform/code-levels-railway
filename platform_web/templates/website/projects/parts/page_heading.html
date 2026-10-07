@@ -1,0 +1,11 @@
+<section class="row align-items-end mb-2">
+  <form method="get" class="projects-filters-form row w-100 align-items-end mb-0">
+    <div class="col col-md-5 flex-basis-100-smo dashboard-title head-title d-flex align-items-center justify-content-between mb-3 mb-md-0">
+      <div class="left">
+        <h1 class="projects-title-row mb-0">{{ page_title }}</h1>
+        {% include 'website/projects/parts/breadcrumb.html' %}
+      </div>
+    </div>
+    {% include 'website/projects/parts/project_filters.html' %}
+  </form>
+</section>

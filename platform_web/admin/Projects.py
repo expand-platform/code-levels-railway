@@ -3,7 +3,6 @@ from django_summernote.widgets import SummernoteWidget
 from django import forms
 
 from adminsortable2.admin import SortableAdminMixin
-from nested_admin.nested import NestedModelAdmin
 
 from platform_web.admin.Lessons import LessonsInline
 from platform_web.models.project.Course import Course, CourseType
@@ -27,7 +26,7 @@ class ProjectAdminForm(forms.ModelForm):
 
 
 @admin.register(Project)
-class ProjectAdmin(SortableAdminMixin, NestedModelAdmin):  # type: ignore[misc]
+class ProjectAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
     form = ProjectAdminForm
     inlines = [LessonsInline]
     changeform_format = "horizontal_tabs"

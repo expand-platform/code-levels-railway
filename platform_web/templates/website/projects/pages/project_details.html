@@ -18,7 +18,6 @@
 {% block page_css %}
   <link rel="stylesheet" href="{% static 'css/pages/project_detail.css' %}" />
   <link rel="stylesheet" href="{% static 'css/layout/dashboard/projects-common.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/elements/timeline.css' %}" />
 {% endblock %}
 
 {% block page_js %}
@@ -29,7 +28,6 @@
   <script src="{% static 'js/common/highlight.js' %}" type="module" defer></script>
 
   <script src="{% static 'js/dashboard/project_detail.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/timeline.js' %}" defer></script>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -87,28 +85,10 @@
           <hr class="line mb-5" />
         {% endif %}
 
-        {% if project.stages %}
-          <section class="stages mb-5">
-            <div class="d-flex align-items-center mb-4 mb-md-0">
-              <h2 class="subtitle m-0 mb-md-0 me-2">{% trans 'Project Stages' %}</h2>
-              <button id="toggle-stages-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Stages' %}"><i id="toggle-stages-icon" class="bi bi-chevron-down"></i></button>
-              <div class="btn-group btn-group-sm project-page-mode-buttons stages-view-toggle ms-auto" role="group" aria-label="{% trans 'Stages view' %}">
-                <input type="radio" class="btn-check" name="stages-view" id="stages-view-default" value="default" autocomplete="off" checked />
-                <label class="btn btn-outline-primary" for="stages-view-default">{% trans 'Default' %}</label>
-                <input type="radio" class="btn-check" name="stages-view" id="stages-view-timeline" value="timeline" autocomplete="off" />
-                <label class="btn btn-outline-primary" for="stages-view-timeline">{% trans 'Timeline' %}</label>
-              </div>
-            </div>
-            <div id="stages-timeline">
-              {% include 'website/projects/parts/project/timeline.html' %}
-            </div>
-          </section>
-        {% endif %}
-
         {% if parts %}
           <section class="project-parts mb-5">
-            <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
-              <h2 class="subtitle mb-0 me-2">{% trans 'Lessons' %}</h2>
+            <div class="d-flex align-items-center flex-wrap gap-2 mb-4">
+              <h2 class="subtitle mb-0">{% trans 'Learning plan' %}</h2>
               <button id="toggle-parts-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Lessons' %}"><i id="toggle-parts-icon" class="bi bi-chevron-down"></i></button>
               {% if user.is_staff %}
                 <button id="save-order-btn" class="btn btn-sm btn-success" style="display:none;">{% trans 'Save Order' %}</button>
@@ -118,8 +98,6 @@
                 <label class="btn btn-outline-primary" for="lessons-view-default">{% trans 'Default' %}</label>
                 <input type="radio" class="btn-check" name="lessons-view" id="lessons-view-list" value="list" autocomplete="off" />
                 <label class="btn btn-outline-primary" for="lessons-view-list">{% trans 'List' %}</label>
-                <input type="radio" class="btn-check" name="lessons-view" id="lessons-view-detailed" value="detailed" autocomplete="off" />
-                <label class="btn btn-outline-primary" for="lessons-view-detailed">{% trans 'Detailed' %}</label>
               </div>
             </div>
 

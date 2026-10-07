@@ -5,8 +5,8 @@ description: >-
   assets, admin, and i18n. Use when implementing features, adding pages or
   API endpoints, placing CSS/JS, or when unsure how this repo is structured.
   After writing code, apply the refactor skill. Before similar work, scan
-  the mistakes log. Do not add or run tests, and do not open a browser,
-  until the user explicitly asks.
+  the mistakes log. Never add or run tests, and never open a browser,
+  unless the user explicitly asks in the current request.
 ---
 
 # CodeLevels Code Style
@@ -18,7 +18,7 @@ Stack: Django, Jazzmin (`/cp/`), django-allauth, DRF (`api/`), Whitenoise, Railw
 **After coding:** apply [refactor](../refactor/SKILL.md) on touched files.
 Python commands: `poetry run` — see [environment](../environment/SKILL.md).
 
-Do not add tests, edit `platform_web/tests.py`, or run the test suite unless the user explicitly asks. Do not open a browser, or verify a page in one, unless the user explicitly asks.
+**Do not write tests or open a browser unless the user asks in the current request.** That includes adding or editing `platform_web/tests.py`, running the test suite, and any browser or screenshot check. A standing instruction to verify UI in a browser does not count as asking. Confirm template and HTML changes by reading the files or with `curl`.
 
 ## Principles
 
@@ -118,4 +118,4 @@ Template: `website/projects/pages/projects.html`. Course blocks use `course.filt
 - Russian UI strings without a translation workflow
 - Changing sidebar/unrelated pages when the task is one list/view
 - `localStorage` for server-rendered list filters — use GET params (same as `search`)
-- Tests or a browser session unless the user explicitly asks for them
+- Tests, the test suite, or a browser session unless the user asks in the current request. A general "verify in the browser" instruction does not count.

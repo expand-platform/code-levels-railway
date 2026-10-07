@@ -1,5 +1,6 @@
 from django.db.models import Exists, OuterRef, Prefetch, Q
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
@@ -65,12 +66,9 @@ class RoadmapView(TemplateView):
             Prefetch("skills", queryset=skills)
         ).order_by("order", "title")
         context["page_title"] = self.page_title
-        context["list_url_name"] = self.list_url_name
-        context["detail_url_name"] = self.detail_url_name
         context["empty_message"] = self.empty_message
         context["show_workouts"] = show_workouts
         context["can_reorder_projects"] = show_workouts
-        context["selected_course"] = selected_course
         context["page_mode"] = "projects" if self.show_layout_toggle else None
         context["projects_layout"] = PROJECTS_LAYOUT_ROADMAP
         context["show_layout_toggle"] = self.show_layout_toggle
@@ -81,7 +79,14 @@ class RoadmapView(TemplateView):
             query.append(f"{PROJECTS_LAYOUT_QUERY}={PROJECTS_LAYOUT_ROADMAP}")
         if concepts_only:
             query.append("content=concepts")
-        context["layout_query"] = f"?{'&'.join(query)}" if query else ""
+        layout_query = f"?{'&'.join(query)}" if query else ""
+        context["breadcrumbs"] = _breadcrumbs(
+            self.page_title,
+            self.list_url_name,
+            self.detail_url_name,
+            selected_course,
+            layout_query,
+        )
         if self.include_empty_skill_tracks:
             context["courses"] = courses
         else:
@@ -89,3 +94,22 @@ class RoadmapView(TemplateView):
                 course for course in courses if course.skills.all()
             ]
         return context
+
+
+def _breadcrumbs(page_title, list_url_name, detail_url_name, selected_course, layout_query):
+    crumbs = [
+        {
+            "label": page_title,
+            "url": reverse(list_url_name) + layout_query,
+            "active": selected_course is None,
+        }
+    ]
+    if selected_course:
+        crumbs.append(
+            {
+                "label": selected_course.title,
+                "url": reverse(detail_url_name, args=[selected_course.slug]) + layout_query,
+                "active": True,
+            }
+        )
+    return crumbs
