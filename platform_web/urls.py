@@ -1,8 +1,9 @@
-from django.urls import path
-from platform_web.views import *
 from django.shortcuts import redirect
+from django.urls import path
+from django.views.generic import RedirectView
 
-from platform_web.views import BlogView, BlogDetailView
+from platform_web.middleware import require_courses, require_user_dashboard
+from platform_web.views import *
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
@@ -15,23 +16,48 @@ urlpatterns = [
     ),
     
     # Account
-    path("settings/", SettingsView.as_view(), name="settings"),
+    path("settings/", require_user_dashboard(SettingsView.as_view()), name="settings"),
     path("account/logout/", CustomLogoutView.as_view(), name="logout"),
+
+    # Dashboard
+    path("dashboard/", require_user_dashboard(DashboardView.as_view()), name="dashboard"),
+    path("dashboard/payment/", require_user_dashboard(DashboardPaymentView.as_view()), name="dashboard_payment"),
+    path("dashboard/chat/", require_user_dashboard(DashboardChatView.as_view()), name="dashboard_chat"),
     
-    path("roadmap/", JobsView.as_view(), name="roadmap"),
+    path("job-tracks/", JobsView.as_view(), name="job_tracks"),
+    path(
+        "job-tracks/course/<slug:course_slug>/",
+        JobsView.as_view(),
+        name="job_tracks_by_course",
+    ),
+    path(
+        "roadmap/",
+        RedirectView.as_view(pattern_name="job_tracks", permanent=True, query_string=True),
+    ),
     path(
         "roadmap/course/<slug:course_slug>/",
-        JobsView.as_view(),
-        name="roadmap_by_course",
+        RedirectView.as_view(
+            pattern_name="job_tracks_by_course", permanent=True, query_string=True
+        ),
     ),
-    path("languages/", LanguagesView.as_view(), name="languages"),
+    path("roadmaps/", RoadmapsView.as_view(), name="roadmaps"),
+    path(
+        "roadmaps/course/<slug:course_slug>/",
+        RoadmapsView.as_view(),
+        name="roadmaps_by_course",
+    ),
+    path(
+        "languages/",
+        RedirectView.as_view(pattern_name="roadmaps", permanent=True, query_string=True),
+    ),
     path(
         "languages/course/<slug:course_slug>/",
-        LanguagesView.as_view(),
-        name="languages_by_course",
+        RedirectView.as_view(
+            pattern_name="roadmaps_by_course", permanent=True, query_string=True
+        ),
     ),
 
-    # Projects: course → projects; ?view=roadmap is course → skill → projects
+    # Projects: course → skill → projects; ?view=default is the project grid
     path("projects/", projects_page_view, name="projects"),
     path(
         "projects/course/<slug:course_slug>/",
@@ -42,6 +68,7 @@ urlpatterns = [
     # Topics, courses
     path("topics/", topics_view, name="topics"),
     path("concepts/", concepts_view, name="concepts"),
+    path("courses/", require_courses(CoursesView.as_view()), name="courses"),
     
     # sort by language
     path(

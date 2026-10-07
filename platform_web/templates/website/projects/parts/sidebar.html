@@ -1,0 +1,114 @@
+{% load i18n %}
+
+<section id="sidebar">
+  <div class="row p-2">
+    <div class="logo col">
+      <a href="{% url 'home' %}" class="brand ms-4"><span class="text">{{ website_config.site_name }}</span></a>
+    </div>
+    <div class="col text-end">
+      {% comment %}keep line{% endcomment %}
+    </div>
+  </div>
+  <ul class="side-menu top">
+    {% if user.is_staff %}
+      <li class="">
+        <a href="{% url 'admin:index' %}" data-route="admin">
+          <i class="bx bi bi-person-lock bx"></i>
+          <span class="text">{% trans 'Admin' %}</span>
+        </a>
+      </li>
+    {% endif %}
+
+    {% if user_dashboard_enabled %}
+      <li>
+        <a href="{% url 'dashboard' %}" data-route="dashboard">
+          <i class="bx bi bi-grid-1x2"></i>
+          <span class="text">{% trans 'Dashboard' %}</span>
+        </a>
+      </li>
+    {% endif %}
+
+    {% comment %} Projects {% endcomment %}
+    <li class="has-submenu" data-submenu="projects">
+      <div class="menu-row">
+        <a href="{% url 'projects' %}" data-route="projects" class="main-link" data-bs-toggle="collapse" data-bs-target="#projectsSidebarCollapse" aria-expanded="false" aria-controls="projectsSidebarCollapse" aria-label="{% trans 'Toggle Projects courses' %}">
+          <i class="bx bi bi-braces"></i>
+          <span class="text">{% trans 'Projects' %}</span>
+        </a>
+      </div>
+      {% if sidebar_project_courses %}
+        {% trans 'All projects' as sidebar_all_projects %}
+        {% include 'website/projects/parts/sidebar/courses-list.html' with collapse_id='projectsSidebarCollapse' route='projects' all_url_name='projects' all_label=sidebar_all_projects course_url_name='projects_by_course' courses=sidebar_project_courses %}
+      {% endif %}
+    </li>
+
+    {% comment %} Roadmaps {% endcomment %}
+    <li class="has-submenu" data-submenu="roadmaps">
+      <div class="menu-row">
+        <a href="{% url 'roadmaps' %}" data-route="roadmaps" class="main-link" data-bs-toggle="collapse" data-bs-target="#roadmapsSidebarCollapse" aria-expanded="false" aria-controls="roadmapsSidebarCollapse" aria-label="{% trans 'Toggle Roadmaps courses' %}">
+          <i class="bx bi bi-map"></i>
+          <span class="text">{% trans 'Roadmaps' %}</span>
+        </a>
+      </div>
+      {% if sidebar_language_courses %}
+        {% trans 'All roadmaps' as sidebar_all_roadmaps %}
+        {% include 'website/projects/parts/sidebar/courses-list.html' with collapse_id='roadmapsSidebarCollapse' route='roadmaps' all_url_name='roadmaps' all_label=sidebar_all_roadmaps course_url_name='roadmaps_by_course' courses=sidebar_language_courses %}
+      {% endif %}
+    </li>
+    
+    {% comment %} Job tracks {% endcomment %}
+    <li class="has-submenu" data-submenu="job-tracks">
+      <div class="menu-row">
+        <a href="{% url 'job_tracks' %}" data-route="job-tracks" class="main-link" data-bs-toggle="collapse" data-bs-target="#jobTracksSidebarCollapse" aria-expanded="false" aria-controls="jobTracksSidebarCollapse" aria-label="{% trans 'Toggle Job tracks courses' %}">
+          <i class="bx bi bi-diagram-3"></i>
+          <span class="text">{% trans 'Job tracks' %}</span>
+        </a>
+      </div>
+      {% if sidebar_job_courses %}
+        {% trans 'All job tracks' as sidebar_all_job_tracks %}
+        {% include 'website/projects/parts/sidebar/courses-list.html' with collapse_id='jobTracksSidebarCollapse' route='job-tracks' all_url_name='job_tracks' all_label=sidebar_all_job_tracks course_url_name='job_tracks_by_course' courses=sidebar_job_courses %}
+      {% endif %}
+    </li>
+
+    {% if courses_enabled %}
+      <li>
+        <a href="{% url 'courses' %}" data-route="courses">
+          <i class="bx bi bi-collection"></i>
+          <span class="text">{% trans 'Courses' %}</span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+  <ul class="side-menu bottom">
+    <li class="">
+      <a href="{% url 'desktop_app' %}" class="settings-link" data-route="desktop_app">
+        <i class="bx bi bi-windows"></i>
+        <span class="text">{% trans 'Desktop App' %}</span>
+      </a>
+    </li>
+    {% if user.is_authenticated and user_dashboard_enabled %}
+      <li class="">
+        <a href="{% url 'settings' %}" class="settings-link" data-route="settings">
+          <i class="bx bi bi-gear"></i>
+          <span class="text">{% trans 'Account' %}</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if user.is_authenticated %}
+      <li>
+        <a href="{% url 'logout' %}" class="logout" data-route="logout">
+          <i class="bx bi bi-box-arrow-left"></i>
+          <span class="text">{% trans 'Logout' %}</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="">
+        <a href="{% url 'account_login' %}" class="settings-link" data-route="login">
+          <i class="bx bi bi-box-arrow-in-right"></i>
+          <span class="text">{% trans 'Login' %}</span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</section>
+<!-- SIDEBAR -->

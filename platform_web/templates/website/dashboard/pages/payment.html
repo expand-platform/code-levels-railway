@@ -1,0 +1,23 @@
+{% extends 'website/dashboard/parts/layout.html' %}
+{% load i18n %}
+
+{% block title %}
+  {% trans "Payment" %} | {{ website_config.site_name }}
+{% endblock %}
+
+{% block dashboard_content %}
+  {% trans "Payment" as heading %}
+  {% trans "Plans and invoices will live here." as intro %}
+  {% include 'website/dashboard/parts/page-head.html' with heading=heading intro=intro %}
+
+  <div class="user-dash-billing">
+    <article class="user-dash-panel">
+      <h2>{% trans "Current plan" %}</h2>
+      <p>{% trans "No plan is connected to this account yet." %}</p>
+    </article>
+    <article class="user-dash-panel">
+      <h2>{% trans "Invoices" %}</h2>
+      <p>{% trans "Checkout and past payments will show up here." %}</p>
+    </article>
+  </div>
+{% endblock %}

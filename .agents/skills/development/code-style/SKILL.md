@@ -5,7 +5,8 @@ description: >-
   assets, admin, and i18n. Use when implementing features, adding pages or
   API endpoints, placing CSS/JS, or when unsure how this repo is structured.
   After writing code, apply the refactor skill. Before similar work, scan
-  the mistakes log.
+  the mistakes log. Do not add or run tests, and do not open a browser,
+  until the user explicitly asks.
 ---
 
 # CodeLevels Code Style
@@ -16,6 +17,8 @@ Stack: Django, Jazzmin (`/cp/`), django-allauth, DRF (`api/`), Whitenoise, Railw
 **Before coding:** scan [MISTAKES.md](../mistakes/MISTAKES.md) for matching tags.
 **After coding:** apply [refactor](../refactor/SKILL.md) on touched files.
 Python commands: `poetry run` — see [environment](../environment/SKILL.md).
+
+Do not add tests, edit `platform_web/tests.py`, or run the test suite unless the user explicitly asks. Do not open a browser, or verify a page in one, unless the user explicitly asks.
 
 ## Principles
 
@@ -44,7 +47,7 @@ UI work lives in **`platform_web`**.
 
 Import the **git-tracked** module name. View files are PascalCase (`Roadmap.py`, `Projects.py`, `Home.py`). Windows can hide a lowercase git path; `git mv` so Railway/Linux matches the working tree.
 
-**Templates** — pages `.../dashboard/pages/{name}.html`; partials `.../parts/{area}/{name}.html`; extend `website/dashboard/parts/layout.html`. Use `{% block page_css %}` / `{% block page_js %}` only when layout defaults are insufficient. Any partial with `{% trans %}` / `{% blocktrans %}` must `{% load i18n %}` at the top.
+**Templates** — project pages `website/projects/pages/{name}.html`; project partials `website/projects/parts/{area}/{name}.html`; extend `website/projects/parts/layout.html`. Public pages live in `website/pages/`; the site shell is `website/layout/base.html` (`website/layout/parts/` for its pieces). The user dashboard page is `website/dashboard/dashboard.html`. Use `{% block page_css %}` / `{% block page_js %}` only when layout defaults are insufficient. Any partial with `{% trans %}` / `{% blocktrans %}` must `{% load i18n %}` at the top.
 
 **URLs** — paths kebab-case; names snake_case; admin is `/cp/` (not `/admin/`).
 
@@ -87,13 +90,13 @@ MODE_SETTINGS = {
 }
 ```
 
-Template: `website/dashboard/pages/projects.html`. Course blocks use `course.filtered_projects` (attach in the view loop).
+Template: `website/projects/pages/projects.html`. Course blocks use `course.filtered_projects` (attach in the view loop).
 
-**Roadmap** — `JobsView` at `/roadmap/` (job tracks). **Projects** — `projects_page_view` at `/projects/` (course → projects; non-job). `?view=roadmap` is `RoadmapView` (course → skill → projects). **Languages** — `LanguagesView` at `/languages/` (language courses → skills, including skills with no projects). Skills belong to a course; projects M2M ordered by `Project.skill_order`. Sidebar and `/roadmap/` list job courses that have at least one skill, including skills with no projects. Courses with no skills are left out of the sidebar and the roadmap. Language courses with no skills still appear on `/languages/`. Context: `sidebar_job_courses`, `sidebar_project_courses`, `sidebar_language_courses`. Staff reorder when workouts are on: `/api/skill/<id>/reorder_projects/`.
+**Job tracks** — `JobsView` at `/job-tracks/` (job courses). `/roadmap/` redirects there. **Projects** — `projects_page_view` at `/projects/` is `RoadmapView` (course → skill → projects; non-job). `?view=default` is the project grid. **Roadmaps** — `RoadmapsView` at `/roadmaps/` (language courses → skills, including skills with no projects). Skills belong to a course; projects M2M ordered by `Project.skill_order`. Sidebar and `/job-tracks/` list job courses that have at least one skill, including skills with no projects. Courses with no skills are left out of the sidebar and the job tracks page. Language courses with no skills still appear on `/roadmaps/`. `/languages/` redirects there. Context: `sidebar_job_courses`, `sidebar_project_courses`, `sidebar_language_courses`. Staff reorder when workouts are on: `/api/skill/<id>/reorder_projects/`.
 
 **Context** — `platform_web.context_processors.website_config` → `website_config`, `sidebar_project_courses`, `sidebar_job_courses`, `sidebar_topic_languages`. Typed keys: `platform_web/config/web_config.py`.
 
-**Admin** (`platform_web/admin.py`) — `SortableAdminMixin`; `NestedModelAdmin` + inlines for Project → Lessons; `SummernoteWidget` for rich text; fieldsets General / SEO / Settings.
+**Admin** (`platform_web/admin/`) — one module per area (`WebsiteConfig`, `Versions`, `Projects`, `Skills`, `Courses`, `Lessons`, `Others`). `__init__.py` imports each module so registrations run. `SortableAdminMixin`; `NestedModelAdmin` + inlines for Project → Lessons; `SummernoteWidget` for rich text; fieldsets General / SEO / Settings.
 
 **Services** — `platform_web/services/model/` (`SlugService`, `SeoService`, …), static methods, `*Service` suffix.
 
@@ -115,3 +118,4 @@ Template: `website/dashboard/pages/projects.html`. Course blocks use `course.fil
 - Russian UI strings without a translation workflow
 - Changing sidebar/unrelated pages when the task is one list/view
 - `localStorage` for server-rendered list filters — use GET params (same as `search`)
+- Tests or a browser session unless the user explicitly asks for them

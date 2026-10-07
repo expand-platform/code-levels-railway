@@ -2,6 +2,35 @@
     position: fixed !important;
 }
 
-/* #jazzy-tabs li {
-    
-} */
+.inline-group td.field-contents {
+    width: 55%;
+    min-width: 28rem;
+}
+
+.inline-group td.field-contents iframe {
+    width: 100% !important;
+    max-width: 100%;
+}
+
+.form-row.field-projects_by_course label,
+.form-row.field-projects_by_skills label {
+    display: none;
+}
+
+.field-projects_by_course .readonly,
+.field-projects_by_skills .readonly {
+    width: 100%;
+    max-width: none;
+}
+
+.course-related-projects {
+    width: 100%;
+}
+
+.course-skill-projects + .course-skill-projects {
+    margin-top: 1.25rem;
+}
+
+.course-skill-projects h4 {
+    margin-bottom: 0.5rem;
+}

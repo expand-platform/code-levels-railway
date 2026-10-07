@@ -1,4 +1,4 @@
-{% extends 'website/parts/layout/base.html' %}
+{% extends 'website/layout/base.html' %}
 {% load static %}
 {% load i18n %}
 
@@ -14,7 +14,7 @@
 {% block content %}
   <section class="home">
     <section class="hero">
-      {% include 'website/parts/layout/home-nav.html' %}
+      {% include 'website/layout/parts/home-nav.html' %}
 
       <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="{% static 'media/video/hero-poster.png' %}">
         <source src="{% static 'media/video/hero-1.mp4' %}" type="video/mp4" />

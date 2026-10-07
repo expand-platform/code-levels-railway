@@ -1,4 +1,4 @@
-{% extends 'website/parts/layout/base.html' %}
+{% extends 'website/layout/base.html' %}
 {% load static %}
 {% load socialaccount %}
 {% load i18n %}
@@ -21,7 +21,7 @@
         <section class="row justify-content-center">
           <form method="POST" action="" class="form col-10 py-2 w-100">
             <div class="d-flex gap-3">
-              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-keyboard me-2"></i> {% trans "Type manually" %}</button>
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="bi bi-keyboard me-2"></i> {% trans "Using email" %}</button>
               <a class="login-with-google-btn" href="{% provider_login_url 'google' %}">{% trans "Sign up with Google" %}</a>
             </div>
 

@@ -162,11 +162,40 @@
 	color: var(--black);
 }
 
-.skills-timeline__projects {
+.skills-timeline__projects,
+.skills-timeline__content {
 	position: relative;
 	z-index: 1;
 	margin-top: 1rem;
 	padding-left: 2.35rem;
+}
+
+.skills-timeline__content {
+	color: var(--black);
+}
+
+.skills-timeline__content ol,
+.skills-timeline__content ul {
+	margin: 0;
+	padding-left: 1.25rem;
+}
+
+.skills-timeline__content ol,
+.skills-timeline__content ol li {
+	list-style-type: decimal;
+}
+
+.skills-timeline__content ul,
+.skills-timeline__content ul li {
+	list-style-type: disc;
+}
+
+.skills-timeline__content li + li {
+	margin-top: 0.35rem;
+}
+
+.skills-timeline__content p {
+	margin: 0;
 }
 
 .stages-vertical-timeline {

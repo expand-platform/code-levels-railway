@@ -1,0 +1,23 @@
+{% load i18n %}
+
+{% if url_name %}
+  {% with current=request.resolver_match.view_name %}
+    <a href="{% url url_name %}" class="user-dash__link{% if current == url_name %} is-active{% endif %}"{% if current == url_name %} aria-current="page"{% endif %}>
+  {% endwith %}
+{% elif href %}
+  <a href="{{ href }}" class="user-dash__link" target="_blank" rel="noopener noreferrer">
+{% else %}
+  <span class="user-dash__link is-disabled" title="{% trans 'Link is not set yet' %}">
+{% endif %}
+
+<i class="bi {{ icon }}" aria-hidden="true"></i>
+<span>{{ label }}</span>
+{% if href %}
+  <i class="bi bi-box-arrow-up-right user-dash__external" aria-hidden="true"></i>
+{% endif %}
+
+{% if url_name or href %}
+  </a>
+{% else %}
+  </span>
+{% endif %}

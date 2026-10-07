@@ -1,3 +1,4 @@
+from platform_web.middleware import courses_allowed, user_dashboard_allowed
 from platform_web.models.base.social_media_link import SocialMediaLink
 from platform_web.models.base.website_config import WebsiteConfig
 from platform_web.models.base import Changelog
@@ -10,6 +11,8 @@ from platform_web.models.project.Project import ProjectType
 
 website_title = _("CodeLevels")
 website_tagline = _("Your step-by-step coding journey")
+
+#! TODO: refactor context processors to use only queries that page needs
 
 
 def _sidebar_courses(course_type):
@@ -47,8 +50,22 @@ def website_config(request: HttpRequest) -> dict:
         website_config = WebsiteConfig(site_name=website_title, tagline=website_tagline)
     # Переводим tagline перед передачей в шаблон
     website_config.tagline = _(website_config.tagline)
-    social_media_links = SocialMediaLink.objects.all()
+    social_media_links = list(SocialMediaLink.objects.all())
+    discord_url = ""
+    telegram_url = ""
+   
+    for link in social_media_links:
+        name = (link.name or "").lower()
+        if not link.url:
+            continue
+        if "discord" in name and not discord_url:
+            discord_url = link.url
+        elif "telegram" in name and not telegram_url:
+            telegram_url = link.url
+    
     changelog = Changelog.objects.order_by('-released_at').first()
+    user_dashboard_enabled = user_dashboard_allowed(request.user)
+    courses_enabled = courses_allowed(request.user)
     sidebar_job_courses = _get_sidebar_job_courses()
     sidebar_project_courses = _get_sidebar_project_courses()
     sidebar_language_courses = _get_sidebar_language_courses()
@@ -62,4 +79,8 @@ def website_config(request: HttpRequest) -> dict:
         'sidebar_project_courses': sidebar_project_courses,
         'sidebar_language_courses': sidebar_language_courses,
         'sidebar_topic_languages': sidebar_topic_languages,
+        'discord_url': discord_url,
+        'telegram_url': telegram_url,
+        'user_dashboard_enabled': user_dashboard_enabled,
+        'courses_enabled': courses_enabled,
     }

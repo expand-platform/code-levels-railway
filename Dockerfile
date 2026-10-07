@@ -14,15 +14,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-# Install project dependencies
-# Copy only requirements first to leverage Docker layer caching
 COPY requirements.txt /app/
 RUN pip install --upgrade pip \
  && pip install -r /app/requirements.txt
 
 COPY . /app
 
-# Add entrypoint to run migrations and collectstatic at container start
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 

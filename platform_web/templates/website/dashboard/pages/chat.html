@@ -1,0 +1,22 @@
+{% extends 'website/dashboard/parts/layout.html' %}
+{% load i18n %}
+
+{% block title %}
+  {% trans "AI chat" %} | {{ website_config.site_name }}
+{% endblock %}
+
+{% block dashboard_content %}
+  {% trans "AI chat" as heading %}
+  {% trans "Ask the mentor about your track." as intro %}
+  {% include 'website/dashboard/parts/page-head.html' with heading=heading intro=intro %}
+
+  <section class="user-dash-chat" aria-label="{% trans 'AI chat' %}">
+    <div class="user-dash-chat__log">
+      <p class="user-dash-chat__bubble">{% trans "Replies are not connected yet. Your questions will show up in this thread." %}</p>
+    </div>
+    <div class="user-dash-chat__composer">
+      <input type="text" disabled placeholder="{% trans 'Message the mentor' %}" aria-label="{% trans 'Message the mentor' %}" />
+      <button type="button" disabled>{% trans "Send" %}</button>
+    </div>
+  </section>
+{% endblock %}

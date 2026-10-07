@@ -69,7 +69,7 @@ Keep title spelling as in the table (**VueJS**, **ReactJS**, **Antibot**, **Odoo
 
 Every public surface is a step toward login → FAQ/AI → mentor contact.
 
-1. **Catalog** — families + tracks. Nav label is **Roadmap** (`/roadmap/`).
+1. **Catalog** — families + tracks. Nav label is **Job tracks** (`/job-tracks/`).
    **Projects** (`/projects/`) is course → projects + workouts; `?view=roadmap`
    is course → skill → projects. Guests see a teaser list; full catalog after
    login (“Sign in to see the full list”).

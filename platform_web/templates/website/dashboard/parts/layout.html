@@ -1,45 +1,37 @@
-{% extends 'website/parts/layout/base.html' %}
+{% extends 'website/layout/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
-  Dashboard | {{ website_config.site_name }}
+  {% trans "Dashboard" %} | {{ website_config.site_name }}
 {% endblock %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'css/layout/dashboard/layout.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/layout/dashboard/user.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/pages/user-dashboard.css' %}" />
   <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap" />
 {% endblock %}
 
 {% block js %}
-  <script src="{% static 'js/libs/Sortable.min.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
-  <script src="{% static 'js/helpers/smartBack.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/projects.js' %}" defer type="module"></script>
-  <script src="{% static 'js/dashboard/project_filters.js' %}" defer type="module"></script>
   <script src="{% static 'js/dashboard/theme_switch.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/user.js' %}" defer type="module"></script>
 {% endblock %}
 
 {% block layout %}
-  <section class="dashboard">
-    <!-- SIDEBAR -->
-    {% include 'website/dashboard/parts/nav.html' %}
-    {% include 'website/dashboard/parts/sidebar.html' %}
+  <div class="user-dash">
+    {% include 'website/dashboard/parts/navbar.html' %}
 
-    <!-- CONTENT -->
-    <section id="content">
-      <!-- NAVBAR -->
+    <div class="user-dash__frame">
+      <div class="user-dash__backdrop" data-user-dash-backdrop hidden></div>
+      {% include 'website/dashboard/parts/sidebar.html' %}
 
-      <!-- MAIN -->
-      <main class="dashboard-content">
-        <div class="container">
+      <main class="user-dash__main">
+        <div class="user-dash__main-inner">
           {% block dashboard_content %}
 
           {% endblock %}
         </div>
       </main>
-      <!-- MAIN -->
-    </section>
-    <!-- CONTENT -->
-  </section>
+    </div>
+  </div>
 {% endblock %}

@@ -59,14 +59,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     else if (search.includes('type=topic') || pathname.includes('/topic') || pathname.includes('/topics')) {
         activeRoute = 'topics';
+    } else if (pathname.includes('/account/login') || pathname.includes('/account/signup')) {
+        activeRoute = 'login';
     } else if (pathname.includes('/settings') || pathname.includes('/account')) {
         activeRoute = 'settings';
-    } else if (pathname.includes('/languages')) {
-        activeRoute = 'languages';
+    } else if (pathname.includes('/dashboard')) {
+        activeRoute = 'dashboard';
+    } else if (pathname.includes('/courses')) {
+        activeRoute = 'courses';
+    } else if (pathname.includes('/roadmaps')) {
+        activeRoute = 'roadmaps';
     } else if (pathname.includes('/projects')) {
         activeRoute = 'projects';
-    } else if (pathname.includes('/roadmap')) {
-        activeRoute = 'roadmap';
+    } else if (pathname.includes('/job-tracks')) {
+        activeRoute = 'job-tracks';
     } else if (pathname.includes('/admin')) {
         activeRoute = 'admin';
     }

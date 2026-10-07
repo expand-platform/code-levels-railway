@@ -12,8 +12,29 @@
 }
 
 .language-block h2 {
-  margin-bottom: 1rem;
   color: var(--black);
+}
+
+.course-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.language-block .course-title-row {
+  margin-bottom: 1rem;
+}
+
+.course-title-row h2 {
+  margin-bottom: 0;
+}
+
+.course-skills-edit {
+  display: inline-flex;
+  color: var(--blue);
+  font-size: 1rem;
+  line-height: 1;
 }
 
 .reset-button {

@@ -1,7 +1,9 @@
+import os
 import uuid
 from dataclasses import dataclass
 
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
@@ -25,8 +27,21 @@ COURSE_TYPE_CHOICES = [
 ]
 
 
+def course_image_upload_to(instance, filename):
+    base, ext = os.path.splitext(os.path.basename(filename))
+    stem = slugify(base)[:60] or "course"
+    tail = uuid.uuid4().hex[:8]
+    return f"course_images/{stem}-{tail}{ext.lower()}"
+
+
 class Course(models.Model):
     title = models.CharField(max_length=255, unique=True)
+    image = models.ImageField(
+        upload_to=course_image_upload_to,
+        blank=True,
+        null=True,
+        verbose_name=_("Image"),
+    )
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
 

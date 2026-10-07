@@ -6,7 +6,12 @@ from code_levels.settings.allauth.base import *
 from code_levels.settings.plugins.colored_logs import *
 from code_levels.settings.admin.jazzmin import JAZZMIN_SETTINGS_DICT
 from code_levels.settings.drf import REST_FRAMEWORK, SIMPLE_JWT
-
+from code_levels.settings.features.feature_flags import (
+    COURSES,
+    COURSES_AVAILABLE,
+    DASHBOARD,
+    USER_DASHBOARD,
+)
 from code_levels.settings.config.Dotenv import dotenv
 
 # plugins
@@ -166,3 +171,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+FEATURE_FLAGS = {
+    DASHBOARD: USER_DASHBOARD,
+    COURSES: COURSES_AVAILABLE,
+}

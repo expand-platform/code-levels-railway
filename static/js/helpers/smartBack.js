@@ -4,11 +4,13 @@ const LIST_PATHS = [
   /^\/projects$/,
   /^\/topics$/,
   /^\/concepts$/,
-  /^\/roadmap$/,
+  /^\/job-tracks$/,
+  /^\/roadmaps$/,
   /^\/projects\/course\/[^/]+$/,
   /^\/topics\/language\/[^/]+$/,
   /^\/courses\/course\/\d+$/,
-  /^\/roadmap\/course\/[^/]+$/,
+  /^\/job-tracks\/course\/[^/]+$/,
+  /^\/roadmaps\/course\/[^/]+$/,
 ]
 
 function isSameOrigin(referrer) {
@@ -30,6 +32,10 @@ function normalizePath(pathname) {
 function isListPath(pathname) {
   const path = normalizePath(pathname)
   return LIST_PATHS.some((pattern) => pattern.test(path))
+}
+
+function isCourseList(path, root) {
+  return path === root || path.startsWith(`${root}/course/`)
 }
 
 function isCurrentOrNestedPage(referrer) {
@@ -83,7 +89,7 @@ function getRememberedReturnUrl() {
 
 function backTitleForReturnUrl(returnUrl, link) {
   const path = normalizePath(new URL(returnUrl, window.location.origin).pathname)
-  if (path === '/roadmap' || path.startsWith('/roadmap/course/')) {
+  if (isCourseList(path, '/job-tracks') || isCourseList(path, '/roadmaps')) {
     return link.dataset.backTitleRoadmap || link.getAttribute('title')
   }
   if (path === '/topics' || path.startsWith('/topics/language/')) {

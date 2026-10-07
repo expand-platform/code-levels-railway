@@ -1,25 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let jazzyTabs = document.querySelector("#jazzy-tabs")
+    const jazzyTabs = document.querySelector("#jazzy-tabs")
+    if (!jazzyTabs) return
 
-    if (jazzyTabs) {
-        let tabs = jazzyTabs.querySelectorAll("li a")
-        let contentBlocks = document.querySelectorAll("[role='tabpanel']")
-        tabs.forEach((tab, index) => {
+    const tabs = jazzyTabs.querySelectorAll("li a")
+    const contentBlocks = document.querySelectorAll("[role='tabpanel']")
 
-            tab.addEventListener("click", (e) => {
-                e.preventDefault();
-                tabs.forEach((tab) => {
-                    tab.classList.remove("active")
-                })
-                tab.classList.add("active")
+    function showTab(index) {
+        const tab = tabs[index]
+        const panel = contentBlocks[index]
+        if (!tab || !panel) return
 
-                contentBlocks.forEach((content) => {
-                    content.style.display = "none"
-                })
-                contentBlocks[index].style.display = "block"
-                contentBlocks[index].style.opacity = "1"
-                console.log('- contentBlocks -', contentBlocks[index]);
-            })
+        tabs.forEach((item) => item.classList.remove("active"))
+        tab.classList.add("active")
+        contentBlocks.forEach((content) => {
+            content.style.display = "none"
         })
+        panel.style.display = "block"
+        panel.style.opacity = "1"
     }
+
+    tabs.forEach((tab, index) => {
+        tab.addEventListener("click", (event) => {
+            event.preventDefault()
+            showTab(index)
+        })
+    })
+
+    if (!window.location.hash) return
+    const hashIndex = Array.from(tabs).findIndex(
+        (tab) => tab.getAttribute("href") === window.location.hash
+    )
+    if (hashIndex === -1) return
+    showTab(hashIndex)
+    window.scrollTo({ top: 0, behavior: "smooth" })
 });

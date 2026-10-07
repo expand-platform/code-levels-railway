@@ -1,0 +1,46 @@
+{% load i18n %}
+
+{% for course in courses %}
+  <section class="roadmap-course">
+    <div class="course-title-row">
+      <h2 class="roadmap-course__title">{{ course.title }}</h2>
+      {% include 'website/projects/parts/course/edit-skills.html' %}
+    </div>
+
+    {% if course.skills.all %}
+      <ol class="skills-timeline">
+        {% for skill in course.skills.all %}
+          <li class="skills-timeline__item">
+            <div class="skills-timeline__skill">
+              <span class="skills-timeline__circle" aria-hidden="true"></span>
+              <h3 class="skills-timeline__name">{{ skill.name }}</h3>
+            </div>
+            {% if not concepts_only and skill.projects.all %}
+              <div class="skills-timeline__projects">
+                {% if user.is_staff and can_reorder_projects %}
+                  <button id="save-grid-order-btn-{{ skill.id }}" class="btn btn-sm btn-success mb-2" style="display:none;">{% trans "Save Order" %}</button>
+                {% endif %}
+                <div
+                  class="project-list projects-grid row gap-md-3 px-md-3"
+                  id="projects-grid-skill-{{ skill.id }}"
+                  data-skill-id="{{ skill.id }}"
+                  {% if can_reorder_projects %}data-reorder-enabled="true"{% endif %}
+                >
+                  {% for project in skill.projects.all %}
+                    {% include 'website/projects/parts/project_card.html' %}
+                  {% endfor %}
+                </div>
+              </div>
+            {% elif skill.contents and not skill.has_projects %}
+              <div class="skills-timeline__content">
+                {{ skill.contents|safe }}
+              </div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      <p class="text-muted mb-0">{% trans "No skills yet." %}</p>
+    {% endif %}
+  </section>
+{% endfor %}

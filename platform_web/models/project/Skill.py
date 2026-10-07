@@ -1,4 +1,5 @@
 import uuid
+from typing import cast
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -20,6 +21,17 @@ class Skill(models.Model):
         blank=True,
         related_name="skills",
         help_text=_("Projects shown under this skill on the roadmap"),
+    )
+    contents = models.TextField(
+        blank=True,
+        default="",
+        verbose_name=_("Content"),
+        help_text=cast(
+            str,
+            _(
+                "Numbered list shown under this skill on the course timeline when it has no projects."
+            ),
+        ),
     )
     order = models.PositiveIntegerField(
         default=0,  # type: ignore[arg-type]

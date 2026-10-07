@@ -1,0 +1,45 @@
+{% extends 'website/layout/base.html' %}
+{% load static %}
+
+{% block title %}
+  Dashboard | {{ website_config.site_name }}
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/layout/dashboard/layout.css' %}" />
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap" />
+{% endblock %}
+
+{% block js %}
+  <script src="{% static 'js/libs/Sortable.min.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/sidebar.js' %}" defer type="module"></script>
+  <script src="{% static 'js/helpers/smartBack.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/projects.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/project_filters.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/theme_switch.js' %}" defer type="module"></script>
+{% endblock %}
+
+{% block layout %}
+  <section class="dashboard">
+    <!-- SIDEBAR -->
+    {% include 'website/projects/parts/nav.html' %}
+    {% include 'website/projects/parts/sidebar.html' %}
+
+    <!-- CONTENT -->
+    <section id="content">
+      <!-- NAVBAR -->
+
+      <!-- MAIN -->
+      <main class="dashboard-content">
+        <div class="container">
+          {% block dashboard_content %}
+
+          {% endblock %}
+        </div>
+      </main>
+      <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+  </section>
+{% endblock %}

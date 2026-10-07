@@ -1,0 +1,31 @@
+{% load html_tags %}
+
+<section class="user-dash-column">
+  <header class="user-dash-column__head">
+    <h2>{{ heading }}</h2>
+    <a href="{{ see_all_url }}">{{ see_all }}</a>
+  </header>
+
+  {% if items %}
+    <ul class="user-dash-column__list">
+      {% for item in items %}
+        <li>
+          <article class="user-dash-card">
+            {% if item.slug %}
+              <h3><a href="{% url 'project_details' item.slug %}">{{ item.title }}</a></h3>
+            {% else %}
+              <h3>{{ item.title }}</h3>
+            {% endif %}
+            {% with text=item.description|plain_text|truncatewords:18 %}
+              {% if text %}
+                <p>{{ text }}</p>
+              {% endif %}
+            {% endwith %}
+          </article>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="user-dash-empty">{{ empty }}</p>
+  {% endif %}
+</section>

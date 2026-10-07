@@ -1,0 +1,13 @@
+{% load i18n %}
+{% if user.is_staff %}
+  <a
+    href="{% url 'admin:platform_web_course_change' course.pk %}#skills-tab"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="course-skills-edit"
+    title="{% trans 'Edit skills' %}"
+    aria-label="{% trans 'Edit skills' %}"
+  >
+    <i class="bi bi-pencil" aria-hidden="true"></i>
+  </a>
+{% endif %}

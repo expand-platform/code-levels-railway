@@ -1,6 +1,8 @@
+from html import unescape
 from html.parser import HTMLParser
 
 from django import template
+from django.utils.html import strip_tags
 
 register = template.Library()
 
@@ -29,6 +31,13 @@ class _LiTextExtractor(HTMLParser):
     def handle_data(self, data):
         if self._in_li:
             self._current.append(data)
+
+
+@register.filter
+def plain_text(value):
+    if not value:
+        return ""
+    return unescape(strip_tags(str(value)))
 
 
 @register.filter

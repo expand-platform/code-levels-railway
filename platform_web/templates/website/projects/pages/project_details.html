@@ -1,0 +1,179 @@
+{% extends 'website/projects/parts/layout.html' %}
+{% load static %}
+{% load codepen_tags %}
+{% load i18n %}
+
+{% block title %}
+  {{ project.seo_title|default:project.title }} | {{ website_config.site_name }}
+{% endblock %}
+
+{% block meta %}
+  {% if project.seo_description %}
+    <meta name="description" content="{{ project.seo_description|striptags|truncatechars:160 }}" />
+  {% elif project.description %}
+    <meta name="description" content="{{ project.description|striptags|truncatechars:160 }}" />
+  {% endif %}
+{% endblock %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'css/pages/project_detail.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/layout/dashboard/projects-common.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/elements/timeline.css' %}" />
+{% endblock %}
+
+{% block page_js %}
+  <script async src="https://public.codepenassets.com/embed/index.js" defer></script>
+  <script src="{% static 'js/libs/medium-zoom.min.js' %}" type="module" defer></script>
+
+  <script src="{% static 'js/common/zoomImage.js' %}" type="module" defer></script>
+  <script src="{% static 'js/common/highlight.js' %}" type="module" defer></script>
+
+  <script src="{% static 'js/dashboard/project_detail.js' %}" defer type="module"></script>
+  <script src="{% static 'js/dashboard/timeline.js' %}" defer></script>
+{% endblock %}
+
+{% block dashboard_content %}
+  <section class="project-details">
+    <section class="container position-relative">
+      {% if project.type == 'topic' %}
+        {% url 'topics' as smart_back_url %}
+      {% elif project.type == 'concept' %}
+        {% url 'concepts' as smart_back_url %}
+      {% else %}
+        {% url 'projects' as smart_back_url %}
+      {% endif %}
+      <div class="back-to-project-wrapper position-absolute mb-3">
+        <a href="{{ smart_back_url }}"
+          class="nav-icon back-icon btn btn-light shadow rounded-circle"
+          data-smart-back
+          data-back-title-projects="{% trans 'Back to projects' %}"
+          data-back-title-topics="{% trans 'Back to topics' %}"
+          data-back-title-concepts="{% trans 'Back to concepts' %}"
+          data-back-title-roadmap="{% trans 'Back to roadmap' %}"
+          data-back-title-courses="{% trans 'Back to courses' %}"
+          title="{% if project.type == 'topic' %}
+            {% trans 'Back to topics' %}
+          {% elif project.type == 'concept' %}
+            {% trans 'Back to concepts' %}
+          {% else %}
+            {% trans 'Back to projects' %}
+          {% endif %}">
+          <i class="bi bi-chevron-left"></i>
+        </a>
+      </div>
+      <h1 class="title">{{ project.title }}</h1>
+
+      {% include 'website/projects/parts/project/counter.html' %}
+      {% include 'website/projects/parts/project/tags.html' %}
+      {% include 'website/projects/parts/project/thumbnail.html' %}
+      {% include 'website/projects/parts/project/updated.html' %}
+
+      {% if project.codepen_url %}
+        {% include 'website/projects/parts/project/codepen.html' %}
+      {% endif %}
+
+      <div class="content box">
+        {% if project.description %}
+          <section class="description mb-4">
+            <div class="d-flex align-items-center mb-3">
+              <h2 class="subtitle mb-0 me-2">{% trans 'In this project' %}</h2>
+              <button id="toggle-description-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Description' %}"><i id="toggle-description-icon" class="bi bi-chevron-down"></i></button>
+            </div>
+            <div id="description-content">
+              <p>{{ project.description|safe }}</p>
+            </div>
+          </section>
+
+          <hr class="line mb-5" />
+        {% endif %}
+
+        {% if project.stages %}
+          <section class="stages mb-5">
+            <div class="d-flex align-items-center mb-4 mb-md-0">
+              <h2 class="subtitle m-0 mb-md-0 me-2">{% trans 'Project Stages' %}</h2>
+              <button id="toggle-stages-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Stages' %}"><i id="toggle-stages-icon" class="bi bi-chevron-down"></i></button>
+              <div class="btn-group btn-group-sm project-page-mode-buttons stages-view-toggle ms-auto" role="group" aria-label="{% trans 'Stages view' %}">
+                <input type="radio" class="btn-check" name="stages-view" id="stages-view-default" value="default" autocomplete="off" checked />
+                <label class="btn btn-outline-primary" for="stages-view-default">{% trans 'Default' %}</label>
+                <input type="radio" class="btn-check" name="stages-view" id="stages-view-timeline" value="timeline" autocomplete="off" />
+                <label class="btn btn-outline-primary" for="stages-view-timeline">{% trans 'Timeline' %}</label>
+              </div>
+            </div>
+            <div id="stages-timeline">
+              {% include 'website/projects/parts/project/timeline.html' %}
+            </div>
+          </section>
+        {% endif %}
+
+        {% if parts %}
+          <section class="project-parts mb-5">
+            <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+              <h2 class="subtitle mb-0 me-2">{% trans 'Lessons' %}</h2>
+              <button id="toggle-parts-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Lessons' %}"><i id="toggle-parts-icon" class="bi bi-chevron-down"></i></button>
+              {% if user.is_staff %}
+                <button id="save-order-btn" class="btn btn-sm btn-success" style="display:none;">{% trans 'Save Order' %}</button>
+              {% endif %}
+              <div class="btn-group btn-group-sm project-page-mode-buttons lessons-view-toggle ms-auto" role="group" aria-label="{% trans 'Lessons view' %}">
+                <input type="radio" class="btn-check" name="lessons-view" id="lessons-view-default" value="default" autocomplete="off" checked />
+                <label class="btn btn-outline-primary" for="lessons-view-default">{% trans 'Default' %}</label>
+                <input type="radio" class="btn-check" name="lessons-view" id="lessons-view-list" value="list" autocomplete="off" />
+                <label class="btn btn-outline-primary" for="lessons-view-list">{% trans 'List' %}</label>
+                <input type="radio" class="btn-check" name="lessons-view" id="lessons-view-detailed" value="detailed" autocomplete="off" />
+                <label class="btn btn-outline-primary" for="lessons-view-detailed">{% trans 'Detailed' %}</label>
+              </div>
+            </div>
+
+            <div id="parts-views">
+              {% include 'website/projects/parts/project/lessons_roadmap.html' %}
+
+              <form id="reorder-form" method="post" style="margin:0;" hidden>
+                {% csrf_token %}
+                <ol id="parts-list" class="list-group" data-project-slug="{{ project.slug }}">
+                  {% for part in parts %}
+                    <li class="part-item list-group-item d-flex flex-column flex-md-row row-gap-2 justify-content-between align-items-md-center" data-id="{{ part.id }}">
+                      <span class="d-md-flex align-items-center">
+                        {% if user.is_staff %}
+                          <span class="drag-handle me-2" style="cursor:move;"><i class="bi bi-list"></i></span>
+                        {% endif %}
+                        <a class="list-group-link" href="{% url 'lesson_details' slug=project.slug part_slug=part.slug %}"><span class="d-md-none me-2 me-md-0">#{{ forloop.counter }}.</span>{{ part.title }}</a>
+                      </span>
+                      <span class="badge d-none d-md-block bg-light text-dark border" style="font-size: 0.95em; max-width: 25%">#{{ forloop.counter }}</span>
+                    </li>
+                  {% endfor %}
+                </ol>
+              </form>
+            </div>
+          </section>
+        {% else %}
+          <p class="no-content text-grey m-0">
+            {% trans "No lessons here, but we'll launch them soon." %}
+          </p>
+        {% endif %}
+
+        {% if parts %}
+          <div class="project-start mb-2">
+            <a href="{% url 'lesson_details' slug=project.slug part_slug=parts.0.slug %}" class="start-project-btn d-inline-block">
+              <i class="bi bi-chevron-double-right d-inline-block pt-1"></i>
+              <span>{{ project.title|truncatechars:65 }}</span>
+            </a>
+          </div>
+        {% endif %}
+
+        <!-- Admin action buttons: bottom right corner -->
+        {% if user.is_staff %}
+          <div style="position: fixed; right: 32px; bottom: 32px; z-index: 1050; display: flex; flex-direction: column; gap: 1rem;">
+            <!-- Edit button -->
+            <a href="{% url 'admin:platform_web_project_change' project.pk %}" target="_blank" class="nav-icon btn btn-light shadow rounded-circle d-flex align-items-center justify-content-center" title="{% trans 'Edit Project' %}"><i class="bi bi-pencil"></i></a>
+            <!-- Add lesson button -->
+            <a href="{% url 'admin:platform_web_lesson_add' %}?project={{ project.pk }}" target="_blank" class="nav-icon btn btn-light shadow rounded-circle d-flex align-items-center justify-content-center" title="{% trans 'Add Lesson' %}"><i class="bi bi-plus-lg text-success"></i></a>
+            <!-- Delete button -->
+            <form method="post" action="{% url 'admin:platform_web_project_delete' project.pk %}" onsubmit="return confirm('{% trans 'Are you sure you want to delete this project?' %}');">
+              {% csrf_token %}
+              <button type="submit" class="nav-icon btn btn-light shadow rounded-circle d-flex align-items-center justify-content-center" title="{% trans 'Delete Project' %}"><i class="bi bi-trash text-danger"></i></button>
+            </form>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  </section>
+{% endblock %}

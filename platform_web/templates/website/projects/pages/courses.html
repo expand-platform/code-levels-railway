@@ -1,0 +1,35 @@
+{% extends 'website/projects/parts/layout.html' %}
+{% load i18n %}
+
+{% block title %}
+  {% trans "Courses" %} | {{ website_config.site_name }}
+{% endblock %}
+
+{% block dashboard_content %}
+  <section class="row align-items-end mb-4">
+    <div class="col dashboard-title head-title">
+      <h1 class="projects-title-row mb-0">{% trans "Courses" %}</h1>
+    </div>
+  </section>
+
+  <section class="projects">
+    {% if sections %}
+      <div class="project-languages-section">
+        {% for section in sections %}
+          <section class="language-block">
+            <div class="course-title-row">
+              <h2>{{ section.title }}</h2>
+            </div>
+            <div class="project-list projects-grid row gap-md-3 px-md-3">
+              {% for course in section.courses %}
+                {% include 'website/projects/parts/course_card.html' %}
+              {% endfor %}
+            </div>
+          </section>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>{% trans "No courses found." %}</p>
+    {% endif %}
+  </section>
+{% endblock %}

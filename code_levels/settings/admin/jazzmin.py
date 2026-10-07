@@ -1,10 +1,9 @@
 JAZZMIN_SETTINGS_DICT = {
     "topmenu_links": [
-        {"name": "Home", "url": "home"},
         {"name": "Projects", "url": "projects"},
-        {"name": "Roadmap", "url": "roadmap"},
-        # {"name": "Topics", "url": "topics"},
-        # {"name": "Blog", "url": "blog"},
+        {"name": "Roadmaps", "url": "roadmaps"},
+        {"name": "Courses", "url": "courses"},
+        {"name": "Job tracks", "url": "job_tracks"},
     ],
     "custom_css": "css/admin/jazzmin.css",
     "custom_js": "js/admin/jazzmin.js"

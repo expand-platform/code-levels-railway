@@ -1,0 +1,26 @@
+{% load i18n %}
+
+<div class="project-card">
+  <div class="project-inner w-100 h-100 d-flex flex-column">
+    {% if course.image %}
+      {% if course.detail_url %}
+        <a href="{{ course.detail_url }}">
+          <img src="{{ course.image.url }}" alt="{{ course.title }}" class="project-image" />
+        </a>
+      {% else %}
+        <img src="{{ course.image.url }}" alt="{{ course.title }}" class="project-image" />
+      {% endif %}
+    {% endif %}
+
+    <div class="project-info flex-grow-1 d-flex flex-column justify-content-between">
+      {% if course.detail_url %}
+        <h3 class="mb-4">
+          <a href="{{ course.detail_url }}" style="color: var(--blue);">{{ course.title }}</a>
+        </h3>
+      {% else %}
+        <h3 class="mb-1"><span class="text-grey">{{ course.title }}</span></h3>
+        <p class="text-grey small mb-0">{% trans "Available soon" %}</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
