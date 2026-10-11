@@ -9,6 +9,7 @@ from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.project.Difficulty import Difficulty
 from platform_web.models.project.Framework import Framework
 from platform_web.models.project.Course import Course
+from platform_web.services.model.ImageUpload import ImageUploadService
 
 @dataclass
 class ProjectType:
@@ -16,6 +17,10 @@ class ProjectType:
     PROJECT: str = "project"
     WORKOUT: str = "workout"
     CONCEPT: str = "concept"
+
+
+def project_image_upload_to(instance, filename):
+    return ImageUploadService.unique_path(filename, "project_images", "project")
 
 
 PROJECT_TYPE_CHOICES = [
@@ -39,7 +44,7 @@ TRANSLATION_STATUS_CHOICES = [
 
 class Project(SeoSlugMixin, models.Model):
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="project_images/", blank=True, null=True)
+    image = models.ImageField(upload_to=project_image_upload_to, blank=True, null=True)
 
     type = models.CharField(max_length=20, choices=PROJECT_TYPE_CHOICES, default=ProjectType.PROJECT)
 

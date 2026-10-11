@@ -4,11 +4,10 @@
   class="project-card{% if project.type == 'workout' %} project-card--workout{% endif %}{% if project.difficulty %} project-card--difficulty-{{ project.difficulty|difficulty_level }}{% endif %}"
   data-id="{{ project.id }}"
 >
-  <div class="project-inner w-100{% if project.slug %} h-100 d-flex flex-column{% endif %}">
-
+  <div class="project-inner w-100{% if project.slug or project.link %} h-100 d-flex flex-column{% endif %}">
     {% if project.image %}
-      {% if project.slug %}
-        <a href="{% url 'project_details' slug=project.slug %}">
+      {% if project.slug or project.link %}
+        <a href="{% if project.slug %}{% url 'project_details' slug=project.slug %}{% else %}{{ project.link }}{% endif %}"{% if project.link and not project.slug %} target="_blank" rel="noopener noreferrer"{% endif %}>
           <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image" />
         </a>
       {% else %}
@@ -16,16 +15,14 @@
       {% endif %}
     {% endif %}
 
-    <div class="project-info{% if project.slug %} flex-grow-1 d-flex flex-column justify-content-between{% endif %}">
-      {% if project.slug %}
+    <div class="project-info{% if project.slug or project.link %} flex-grow-1 d-flex flex-column justify-content-between{% endif %}">
+      {% if project.slug or project.link %}
         <h3 class="mb-4">
-          <a href="{% url 'project_details' slug=project.slug %}" style="color: var(--blue);">{{ project.title }}</a>
+          <a href="{% if project.slug %}{% url 'project_details' slug=project.slug %}{% else %}{{ project.link }}{% endif %}"{% if project.link and not project.slug %} target="_blank" rel="noopener noreferrer"{% endif %} style="color: var(--blue);">{{ project.title }}</a>
         </h3>
       {% else %}
         <h3 class="mb-3"><span style="color: var(--text-grey);">{{ project.title }}</span></h3>
       {% endif %}
     </div>
-
-    {% comment %} {% include 'website/projects/parts/project-card-meta.html' %} {% endcomment %}
   </div>
 </div>

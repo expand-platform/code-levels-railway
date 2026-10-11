@@ -88,6 +88,9 @@ urlpatterns = [
     path("projects/<slug:slug>/", project_details_view, name="project_details"),
     path("projects/<slug:slug>/<slug:part_slug>/", lesson_details_view, name="lesson_details"),
 
+    # Games
+    path("games/", GamesView.as_view(), name="games"),
+
     # Blog
     path("blog/", BlogView.as_view(), name="blog"),
     path("blog/<slug:slug>/", BlogDetailView.as_view(), name="blog_details"),

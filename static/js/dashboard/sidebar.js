@@ -52,29 +52,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const pathname = window.location.pathname;
     const search = window.location.search;
 
-    // decide active route without relying on visible text (i18n-safe)
+    const pathRoutes = [
+        ['/account/login', 'login'],
+        ['/account/signup', 'login'],
+        ['/settings', 'settings'],
+        ['/account', 'settings'],
+        ['/dashboard', 'dashboard'],
+        ['/courses', 'courses'],
+        ['/games', 'games'],
+        ['/roadmaps', 'roadmaps'],
+        ['/projects', 'projects'],
+        ['/job-tracks', 'job-tracks'],
+        ['/admin', 'admin'],
+    ];
     let activeRoute = null;
     if (search.includes('is_video_course=true') || search.includes('is_video_course')) {
         activeRoute = 'courses';
-    }
-    else if (search.includes('type=topic') || pathname.includes('/topic') || pathname.includes('/topics')) {
+    } else if (search.includes('type=topic') || pathname.includes('/topic') || pathname.includes('/topics')) {
         activeRoute = 'topics';
-    } else if (pathname.includes('/account/login') || pathname.includes('/account/signup')) {
-        activeRoute = 'login';
-    } else if (pathname.includes('/settings') || pathname.includes('/account')) {
-        activeRoute = 'settings';
-    } else if (pathname.includes('/dashboard')) {
-        activeRoute = 'dashboard';
-    } else if (pathname.includes('/courses')) {
-        activeRoute = 'courses';
-    } else if (pathname.includes('/roadmaps')) {
-        activeRoute = 'roadmaps';
-    } else if (pathname.includes('/projects')) {
-        activeRoute = 'projects';
-    } else if (pathname.includes('/job-tracks')) {
-        activeRoute = 'job-tracks';
-    } else if (pathname.includes('/admin')) {
-        activeRoute = 'admin';
+    } else {
+        const match = pathRoutes.find(([path]) => pathname.includes(path));
+        activeRoute = match ? match[1] : null;
     }
 
     sideMenuLinks.forEach(link => {

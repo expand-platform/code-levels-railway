@@ -18,11 +18,11 @@ class SeoSlugMixin:
         if not self.slug and self.title:
             self.slug = SlugService.generate_unique_slug(
                 self.title,
-                self.__class__,
+                self.__class__,  # type: ignore
                 exclude_pk=self.pk,
                 fallback_prefix=self.__class__.__name__.lower(),
             )
-        super().save(*args, **kwargs)
+        super().save(*args, **kwargs)  # type: ignore
 
     def _fill_seo(self):
         if not self.seo_title:

@@ -9,8 +9,19 @@ function escapeHtml(value) {
 }
 
 function safeUrl(url) {
-  if (typeof url !== 'string' || !url.startsWith('/') || url.startsWith('//')) return ''
-  return url
+  if (typeof url !== 'string') return ''
+  if (url.startsWith('/') && !url.startsWith('//')) return url
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol === 'https:' || parsed.protocol === 'http:') return parsed.href
+  } catch {
+    return ''
+  }
+  return ''
+}
+
+function isExternalHref(href) {
+  return href.startsWith('http://') || href.startsWith('https://')
 }
 
 function highlight(title, query) {
@@ -115,12 +126,17 @@ function setupProjectSearch(root) {
         const course = project.course
           ? '<span class="project-search-results__course">' + escapeHtml(project.course) + '</span>'
           : ''
+        const href = safeUrl(project.url)
+        const external = isExternalHref(href)
+        const blank = external ? ' target="_blank" rel="noopener noreferrer" data-external="1"' : ''
         return (
           '<li><a id="project-search-option-' +
           index +
           '" class="project-search-results__link" role="option" href="' +
-          escapeHtml(safeUrl(project.url)) +
-          '"><span class="project-search-results__title">' +
+          escapeHtml(href) +
+          '"' +
+          blank +
+          '><span class="project-search-results__title">' +
           highlight(project.title, query) +
           '</span>' +
           course +
@@ -167,8 +183,14 @@ function setupProjectSearch(root) {
     modal = new window.bootstrap.Modal(root)
   }
 
-  function openProject(href) {
+  function openProject(option) {
+    const href = option.href
+    const external = option.dataset.external === '1'
     forceClose()
+    if (external) {
+      window.open(href, '_blank', 'noopener,noreferrer')
+      return
+    }
     window.location.assign(href)
   }
 
@@ -198,7 +220,7 @@ function setupProjectSearch(root) {
       const active = results.querySelector('.is-active')
       if (!active) return
       event.preventDefault()
-      openProject(active.href)
+      openProject(active)
     } else if (event.key === 'Escape') {
       event.preventDefault()
       event.stopPropagation()
@@ -210,7 +232,7 @@ function setupProjectSearch(root) {
     const option = event.target.closest('a[href]')
     if (!option || !results.contains(option)) return
     event.preventDefault()
-    openProject(option.href)
+    openProject(option)
   })
 
   results.addEventListener('mousemove', (event) => {

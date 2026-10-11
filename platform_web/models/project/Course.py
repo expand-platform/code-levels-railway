@@ -1,13 +1,12 @@
-import os
 import uuid
 from dataclasses import dataclass
 
 from django.db import models
-from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 
+from platform_web.services.model.ImageUpload import ImageUploadService
 from platform_web.services.model.SlugService import SlugService
 
 
@@ -28,10 +27,7 @@ COURSE_TYPE_CHOICES = [
 
 
 def course_image_upload_to(instance, filename):
-    base, ext = os.path.splitext(os.path.basename(filename))
-    stem = slugify(base)[:60] or "course"
-    tail = uuid.uuid4().hex[:8]
-    return f"course_images/{stem}-{tail}{ext.lower()}"
+    return ImageUploadService.unique_path(filename, "course_images", "course")
 
 
 class Course(models.Model):

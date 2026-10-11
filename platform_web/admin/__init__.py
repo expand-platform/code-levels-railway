@@ -5,3 +5,4 @@ from . import Skills
 from . import Courses
 from . import Lessons
 from . import Others
+from . import Games

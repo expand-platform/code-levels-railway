@@ -6,6 +6,7 @@ from .projects.Roadmap import RoadmapView
 from .projects.Jobs import JobsView
 from .projects.Roadmaps import RoadmapsView
 from .projects.Courses import CoursesView
+from .projects.GamesView import GamesView
 from .projects.Projects import (
 	projects_page_view,
 	projects_view,
@@ -31,6 +32,7 @@ __all__ = [
 	"DashboardPaymentView",
 	"DashboardChatView",
 	"CoursesView",
+	"GamesView",
 	"SettingsView",
 	"WebsiteChangelogView",
 	"RoadmapView",

@@ -2,15 +2,27 @@
 
 <div class="plus-button-wrap">
   <div class="plus" id="plus-button" title="{% trans 'Add' %}">
+
+    {% comment %} ! Make a loop for all projects types {% endcomment %}
     <div class="plus__line plus__line--v">
+      {% comment %} projects {% endcomment %}
       <a href="{% url 'admin:platform_web_project_add' %}" target="_blank" rel="noopener noreferrer" class="plus__link" title="{% trans 'Add New Project' %}" aria-label="{% trans 'Add New Project' %}">
         <i class="bi bi-lightning-charge-fill" aria-hidden="true"></i>
       </a>
+
+      {% comment %} skills {% endcomment %}
       <a href="{% url 'admin:platform_web_skill_add' %}" target="_blank" rel="noopener noreferrer" class="plus__link" title="{% trans 'Add New Skill' %}" aria-label="{% trans 'Add New Skill' %}">
         <i class="fa-solid fa-dumbbell" aria-hidden="true"></i>
       </a>
+
+      {% comment %} courses {% endcomment %}
       <a href="{% url 'admin:platform_web_course_add' %}" target="_blank" rel="noopener noreferrer" class="plus__link" title="{% trans 'Add New Course' %}" aria-label="{% trans 'Add New Course' %}">
         <i class="bi bi-journal-code" aria-hidden="true"></i>
+      </a>
+
+      {% comment %} games {% endcomment %}
+      <a href="{% url 'admin:platform_web_game_add' %}" target="_blank" rel="noopener noreferrer" class="plus__link" title="{% trans 'Add New Game' %}" aria-label="{% trans 'Add New Game' %}">
+        <i class="bi bi-joystick" aria-hidden="true"></i>
       </a>
     </div>
     <div class="plus__line plus__line--h"></div>
