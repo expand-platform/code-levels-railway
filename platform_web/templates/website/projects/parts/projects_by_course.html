@@ -29,3 +29,6 @@
     {% endfor %}
   </div>
 {% endif %}
+{% if list_empty_message %}
+  <p class="text-muted">{{ list_empty_message }}</p>
+{% endif %}

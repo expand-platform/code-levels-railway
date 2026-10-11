@@ -41,6 +41,7 @@
     <!-- JS Libraries -->
     <script src="{% static 'js/libs/jquery.min.js' %}" defer></script>
     <script src="{% static 'js/libs/bootstrap.min.js' %}" defer></script>
+    <script src="{% static 'js/dashboard/projectSearchModal.js' %}" defer type="module"></script>
 
     {% block js %}
 
@@ -48,6 +49,7 @@
     {% block page_js %}
 
     {% endblock %}
+
 
     {% if not debug %}
       <!-- Google tag (gtag.js) -->
@@ -70,5 +72,6 @@
         {% endblock %}
       </main>
     {% endblock %}
+    {% include 'website/projects/parts/project-search-modal.html' %}
   </body>
 </html>

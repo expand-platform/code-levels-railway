@@ -9,6 +9,7 @@
   <a class="user-dash__brand" href="{% url 'dashboard' %}">{{ website_config.site_name }}</a>
 
   <div class="user-dash__nav-end">
+    {% include 'website/projects/parts/project-search-trigger.html' %}
     {% include 'website/projects/parts/theme-switch.html' %}
     <a class="user-dash__user" href="{% url 'settings' %}">{{ user.username }}</a>
   </div>

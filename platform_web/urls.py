@@ -64,6 +64,7 @@ urlpatterns = [
         projects_page_view,
         name="projects_by_course",
     ),
+    path("projects/search-index/", project_search_index_view, name="project_search_index"),
 
     # Topics, courses
     path("topics/", topics_view, name="topics"),

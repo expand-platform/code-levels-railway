@@ -1,0 +1,42 @@
+{% load i18n %}
+<div
+  class="modal fade project-search-modal"
+  id="project-search-modal"
+  tabindex="-1"
+  aria-labelledby="project-search-title"
+  aria-hidden="true"
+  data-search-url="{% url 'project_search_index' %}"
+  data-msg-hint="{% trans 'Type a project name' %}"
+  data-msg-empty="{% trans 'No projects found' %}"
+  data-msg-loading="{% trans 'Loading projects…' %}"
+  data-msg-error="{% trans 'Could not load projects' %}"
+>
+  <div class="modal-dialog project-search-dialog">
+    <div class="modal-content">
+      <div class="project-search-modal__field">
+        <i class="bi bi-search" aria-hidden="true"></i>
+        <input
+          id="project-search-field"
+          type="search"
+          placeholder="{% trans 'Search projects…' %}"
+          autocomplete="off"
+          spellcheck="false"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-controls="project-search-results"
+          aria-expanded="false"
+          aria-labelledby="project-search-title"
+        />
+        <h2 id="project-search-title" class="visually-hidden">{% trans 'Search projects' %}</h2>
+      </div>
+      <p class="project-search-modal__status" data-project-search-status>{% trans 'Type a project name' %}</p>
+      <ul id="project-search-results" class="project-search-results" role="listbox" hidden></ul>
+      <div class="project-search-modal__hint">
+        <span><kbd>↑</kbd><kbd>↓</kbd> {% trans 'to move' %}</span>
+        <span><kbd>Enter</kbd> {% trans 'to open' %}</span>
+        <span><kbd>Esc</kbd> {% trans 'to close' %}</span>
+        <span><kbd>Ctrl-I</kbd> {% trans 'to search' %}</span>
+      </div>
+    </div>
+  </div>
+</div>

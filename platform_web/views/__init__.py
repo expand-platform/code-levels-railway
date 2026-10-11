@@ -18,6 +18,7 @@ from .projects.Projects import (
 	project_details_view,
 	lesson_details_view,
 )
+from .projects.ProjectSearch import project_search_index_view
 from .auth.logout import CustomLogoutView, LogoutView, logout_then_login
 from .seo.robots import robots_txt
 from .pages.NotFound import NotFoundPreview, NotFoundView, not_found_404
@@ -45,6 +46,7 @@ __all__ = [
 	"courses_by_course_view",
 	"project_details_view",
 	"lesson_details_view",
+	"project_search_index_view",
 	"CustomLogoutView",
 	"LogoutView",
 	"logout_then_login",
