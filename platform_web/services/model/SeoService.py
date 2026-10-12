@@ -7,9 +7,7 @@ class SeoService:
         config = WebsiteConfig.objects.first()
         site_name = config.site_name if config else "CodeLevels"
         return f"{project_title} | {site_name}"
-    
+
     @staticmethod
-    def generate_initial_seo_description(project_title):
-        config = WebsiteConfig.objects.first()
-        site_name = config.site_name if config else "CodeLevels"
-        return f"{project_title} | {site_name}"
+    def generate_initial_seo_description(description, title):
+        return description or SeoService.generate_initial_seo_title(title)

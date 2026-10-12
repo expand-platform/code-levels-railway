@@ -10,8 +10,8 @@
 {% block meta %}
   {% if project.seo_description %}
     <meta name="description" content="{{ project.seo_description|striptags|truncatechars:160 }}" />
-  {% elif project.description %}
-    <meta name="description" content="{{ project.description|striptags|truncatechars:160 }}" />
+  {% elif project.content %}
+    <meta name="description" content="{{ project.content|striptags|truncatechars:160 }}" />
   {% endif %}
 {% endblock %}
 
@@ -71,14 +71,14 @@
       {% endif %}
 
       <div class="content box">
-        {% if project.description %}
+        {% if project.content %}
           <section class="description mb-4">
             <div class="d-flex align-items-center mb-3">
               <h2 class="subtitle mb-0 me-2">{% trans 'In this project' %}</h2>
               <button id="toggle-description-btn" type="button" class="btn btn-link p-0 ms-1" style="font-size: 1.3rem; color: #888;" title="{% trans 'Show/Hide Description' %}"><i id="toggle-description-icon" class="bi bi-chevron-down"></i></button>
             </div>
             <div id="description-content">
-              <p>{{ project.description|safe }}</p>
+              <p>{{ project.content|safe }}</p>
             </div>
           </section>
 

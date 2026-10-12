@@ -14,7 +14,7 @@ class ProjectAdminForm(forms.ModelForm):
         model = Project
         fields = "__all__"
         widgets = {
-            "description": SummernoteWidget(),
+            "content": SummernoteWidget(),
             "stages": SummernoteWidget(),
         }
 
@@ -39,7 +39,7 @@ class ProjectAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
         "updated_at",
     )
     list_filter = ("type", "course")
-    search_fields = ("title", "description")
+    search_fields = ("title", "description", "content")
     ordering = ("course_order",)
     readonly_fields = ("uuid", "created_at", "updated_at")
     fieldsets = (
@@ -56,6 +56,7 @@ class ProjectAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
                     "framework",
                     "codepen_url",
                     "description",
+                    "content",
                     "stages",
                 )
             },

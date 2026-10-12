@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import cast
 import uuid
 
 from django.db import models
@@ -60,8 +61,15 @@ class Project(SeoSlugMixin, models.Model):
     )
     codepen_url = models.URLField(blank=True, null=True)
 
+    content = models.TextField(
+        blank=True,
+        verbose_name=_("Content"),
+        help_text=cast(str, _("Project body shown on the project page")),
+    )
     description = models.TextField(
-        blank=True, help_text=_("Description for the Dashboard")
+        blank=True,
+        default="",
+        help_text=cast(str, _("Short text shown on the project card")),
     )
     stages = models.TextField(blank=True, null=True, default="")
 

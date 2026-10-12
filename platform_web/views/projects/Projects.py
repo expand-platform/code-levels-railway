@@ -202,11 +202,11 @@ def _render_projects_page(
 
 
 def projects_page_view(request, course_slug: str | None = None):
-    show_grid = (
-        request.GET.get(PROJECTS_LAYOUT_QUERY) == PROJECTS_LAYOUT_DEFAULT
-        and request.GET.get(PROJECTS_CONTENT_QUERY) != PROJECTS_CONTENT_CONCEPTS
+    show_roadmap = (
+        request.GET.get(PROJECTS_LAYOUT_QUERY) == PROJECTS_LAYOUT_ROADMAP
+        or request.GET.get(PROJECTS_CONTENT_QUERY) == PROJECTS_CONTENT_CONCEPTS
     )
-    if not show_grid:
+    if show_roadmap:
         from .Roadmap import RoadmapView
 
         kwargs = {}

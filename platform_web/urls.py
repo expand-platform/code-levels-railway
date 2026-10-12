@@ -57,7 +57,7 @@ urlpatterns = [
         ),
     ),
 
-    # Projects: course → skill → projects; ?view=default is the project grid
+    # Projects: course → projects list; ?view=roadmap is course → skill → projects
     path("projects/", projects_page_view, name="projects"),
     path(
         "projects/course/<slug:course_slug>/",

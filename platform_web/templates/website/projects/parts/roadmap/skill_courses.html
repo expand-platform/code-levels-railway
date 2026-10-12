@@ -27,7 +27,11 @@
                   {% if can_reorder_projects %}data-reorder-enabled="true"{% endif %}
                 >
                   {% for project in skill.projects.all %}
-                    {% include 'website/projects/parts/project_card.html' %}
+                    {% if page_mode == "projects" %}
+                      {% include 'website/projects/parts/project_card.html' with show_description=True %}
+                    {% else %}
+                      {% include 'website/projects/parts/project_card.html' %}
+                    {% endif %}
                   {% endfor %}
                 </div>
               </div>

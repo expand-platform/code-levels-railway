@@ -29,5 +29,6 @@ class SeoSlugMixin:
             self.seo_title = SeoService.generate_initial_seo_title(self.title)
         if not self.seo_description:
             self.seo_description = SeoService.generate_initial_seo_description(
-                self.title
+                getattr(self, "description", ""),
+                self.title,
             )
