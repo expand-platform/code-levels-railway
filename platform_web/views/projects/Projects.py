@@ -56,6 +56,25 @@ def _list_page_titles(page_mode, project_type):
     return label, label
 
 
+def _course_sequence(course, *types):
+    """Active non-video course items in progression order. course_order is only a sort key."""
+    return list(
+        Project.objects.filter(
+            course=course,
+            is_active=True,
+            is_video_course=False,
+            type__in=types,
+        ).order_by("course_order", "order", "-updated_at", "title")
+    )
+
+
+def _sequence_position(items, project):
+    for index, item in enumerate(items, start=1):
+        if item.pk == project.pk:
+            return index
+    return None
+
+
 def filter_by_workouts_toggle(projects_qs, show_workouts):
     """Show regular projects, plus workouts when the toggle is on."""
     if show_workouts:
@@ -247,25 +266,30 @@ def project_details_view(request: HttpRequest, slug: str) -> HttpResponse:
     start_url = f"/projects/{project.slug}/parts/"
     parts = Lesson.objects.filter(project=project).order_by("order", "title")
 
-    filtered_projects = []
-    filtered_topics = []
+    project_position = None
+    progression_total = 0
+    topic_position = None
+    topics_total = 0
     if project.course:
-        all_course_projects = Project.objects.filter(
-            course=project.course, is_active=True
-        ).order_by("order", "title")
-        filtered_projects = [
-            p for p in all_course_projects if p.type == ProjectType.PROJECT
-        ]
-        filtered_topics = [
-            p for p in all_course_projects if p.type == ProjectType.TOPIC
-        ]
+        if project.type in (ProjectType.PROJECT, ProjectType.WORKOUT):
+            progression = _course_sequence(
+                project.course, ProjectType.PROJECT, ProjectType.WORKOUT
+            )
+            project_position = _sequence_position(progression, project)
+            progression_total = len(progression)
+        elif project.type == ProjectType.TOPIC:
+            topics = _course_sequence(project.course, ProjectType.TOPIC)
+            topic_position = _sequence_position(topics, project)
+            topics_total = len(topics)
 
     context = {
         "project": project,
         "start_url": start_url,
         "parts": parts,
-        "filtered_projects": filtered_projects,
-        "filtered_topics": filtered_topics,
+        "project_position": project_position,
+        "progression_total": progression_total,
+        "topic_position": topic_position,
+        "topics_total": topics_total,
     }
     return render(request, "website/projects/pages/project_details.html", context)
 
