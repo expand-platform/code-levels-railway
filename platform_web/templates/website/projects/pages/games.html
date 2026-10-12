@@ -1,6 +1,10 @@
 {% extends 'website/projects/parts/layout.html' %}
 {% load i18n static %}
 
+{% block meta %}
+  <meta name="csrf-token" content="{{ csrf_token }}" />
+{% endblock %}
+
 {% block title %}
   {{ page_title }} | {{ website_config.site_name }}
 {% endblock %}
@@ -28,7 +32,14 @@
   <section class="projects">
     <div class="project-languages-section">
       <section class="language-block">
-        <div class="project-list projects-grid row gap-md-3 px-md-3">
+        {% if user.is_staff and games %}
+          <button id="save-grid-order-btn-games" class="btn btn-sm btn-success mb-2" style="display:none;">{% trans "Save Order" %}</button>
+        {% endif %}
+        <div
+          class="project-list projects-grid row gap-md-3 px-md-3"
+          id="projects-grid-games"
+          {% if user.is_staff and games %}data-reorder-scope="games" data-reorder-enabled="true"{% endif %}
+        >
           {% for project in games %}
             {% include 'website/projects/parts/project_card.html' %}
           {% empty %}

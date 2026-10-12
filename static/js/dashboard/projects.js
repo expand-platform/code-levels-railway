@@ -2,9 +2,13 @@ const REORDER_URL = {
   skill: (id) => `/api/skill/${id}/reorder_projects/`,
   language: (id) => `/api/language/${id}/reorder_projects/`,
   course: (id) => `/api/course/${id}/reorder_projects/`,
+  games: () => '/api/games/reorder/',
 }
 
 function getGridScope(grid) {
+  if (grid.getAttribute('data-reorder-scope') === 'games') {
+    return { type: 'games', id: 'games' }
+  }
   const skillId = grid.getAttribute('data-skill-id')
   if (skillId) {
     return { type: 'skill', id: skillId }

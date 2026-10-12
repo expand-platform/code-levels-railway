@@ -1,5 +1,6 @@
 from django.urls import path
 from api.views import (
+    ReorderGamesView,
     ReorderLessonsView,
     ReorderProjectsByCourseView,
     ReorderProjectsBySkillView,
@@ -23,6 +24,7 @@ urlpatterns = [
         ReorderProjectsBySkillView.as_view(),
         name="reorder-projects-by-skill",
     ),
+    path("games/reorder/", ReorderGamesView.as_view(), name="reorder-games"),
     path("telegram/validate-token/", ValidateTelegramTokenView.as_view(), name="telegram-validate-token"),
     path("telegram/access-level/", TelegramAccessLevelView.as_view(), name="telegram-access-level"),
 ]

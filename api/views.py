@@ -6,6 +6,7 @@ from platform_web.models.project.Project import Project
 from platform_web.models.project.Lesson import Lesson
 from platform_web.models.project.Course import Course
 from platform_web.models.project.Skill import Skill
+from platform_web.models.project.Game import Game
 
 
 def _apply_order(model, order_data, order_field, **filters):
@@ -61,4 +62,12 @@ class ReorderProjectsBySkillView(APIView):
         _apply_order(
             Project, request.data.get("order", []), "skill_order", skills=skill
         )
+        return Response({"success": True})
+
+
+class ReorderGamesView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def post(self, request):
+        _apply_order(Game, request.data.get("order", []), "order")
         return Response({"success": True})
