@@ -7,7 +7,7 @@ const REORDER_URL = {
 
 function getGridScope(grid) {
   if (grid.getAttribute('data-reorder-scope') === 'games') {
-    return { type: 'games', id: 'games' }
+    return { type: 'games', id: grid.getAttribute('data-course-id') || 'games' }
   }
   const skillId = grid.getAttribute('data-skill-id')
   if (skillId) {

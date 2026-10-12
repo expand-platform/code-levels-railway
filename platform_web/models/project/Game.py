@@ -1,5 +1,7 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
+from platform_web.models.project.Course import Course
 from platform_web.services.model.ImageUpload import ImageUploadService
 
 
@@ -13,6 +15,14 @@ class Game(models.Model):
 
     description = models.TextField(blank=True)
     link = models.URLField(max_length=500)
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="games",
+        verbose_name=_("Course"),
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

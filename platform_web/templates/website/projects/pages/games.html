@@ -30,23 +30,18 @@
   {% include 'website/projects/parts/page_heading.html' %}
 
   <section class="projects">
-    <div class="project-languages-section">
-      <section class="language-block">
-        {% if user.is_staff and games %}
-          <button id="save-grid-order-btn-games" class="btn btn-sm btn-success mb-2" style="display:none;">{% trans "Save Order" %}</button>
+    {% if courses or ungrouped_games %}
+      <div class="project-languages-section">
+        {% for course in courses %}
+          {% include 'website/projects/parts/games_group.html' with heading=course.title games=course.games.all grid_id=course.id %}
+        {% endfor %}
+        {% if ungrouped_games %}
+          {% trans "Other" as other_heading %}
+          {% include 'website/projects/parts/games_group.html' with heading=other_heading games=ungrouped_games grid_id='ungrouped' %}
         {% endif %}
-        <div
-          class="project-list projects-grid row gap-md-3 px-md-3"
-          id="projects-grid-games"
-          {% if user.is_staff and games %}data-reorder-scope="games" data-reorder-enabled="true"{% endif %}
-        >
-          {% for project in games %}
-            {% include 'website/projects/parts/project_card.html' %}
-          {% empty %}
-            <p>{% trans "No games found." %}</p>
-          {% endfor %}
-        </div>
-      </section>
-    </div>
+      </div>
+    {% else %}
+      <p>{% trans "No games found." %}</p>
+    {% endif %}
   </section>
 {% endblock %}

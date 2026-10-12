@@ -1,0 +1,21 @@
+{% load i18n %}
+
+<section class="language-block">
+  <div class="course-title-row">
+    <h2>{{ heading }}</h2>
+  </div>
+  {% if user.is_staff %}
+    <button id="save-grid-order-btn-{{ grid_id }}" class="btn btn-sm btn-success mb-2" style="display:none;">{% trans "Save Order" %}</button>
+  {% endif %}
+  <div
+    class="project-list projects-grid row gap-md-3 px-md-3"
+    id="projects-grid-{{ grid_id }}"
+    data-reorder-scope="games"
+    data-course-id="{{ grid_id }}"
+    {% if user.is_staff %}data-reorder-enabled="true"{% endif %}
+  >
+    {% for project in games %}
+      {% include 'website/projects/parts/project_card.html' %}
+    {% endfor %}
+  </div>
+</section>
