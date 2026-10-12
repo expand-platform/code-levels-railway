@@ -15,7 +15,7 @@
     {% if user.is_staff %}data-reorder-enabled="true"{% endif %}
   >
     {% for project in games %}
-      {% include 'website/projects/parts/project_card.html' %}
+      {% include 'website/projects/parts/project_card.html' with show_description=True %}
     {% endfor %}
   </div>
 </section>

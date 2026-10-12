@@ -15,13 +15,16 @@
       {% endif %}
     {% endif %}
 
-    <div class="project-info{% if project.slug or project.link %} flex-grow-1 d-flex flex-column justify-content-between{% endif %}">
+    <div class="project-info{% if project.slug or project.link %} flex-grow-1 d-flex flex-column{% endif %}">
       {% if project.slug or project.link %}
-        <h3 class="mb-4">
+        <h3 class="{% if show_description and project.description %}mb-2{% else %}mb-4{% endif %}">
           <a href="{% if project.slug %}{% url 'project_details' slug=project.slug %}{% else %}{{ project.link }}{% endif %}"{% if project.link and not project.slug %} target="_blank" rel="noopener noreferrer"{% endif %} style="color: var(--blue);">{{ project.title }}</a>
         </h3>
       {% else %}
-        <h3 class="mb-3"><span style="color: var(--text-grey);">{{ project.title }}</span></h3>
+        <h3 class="{% if show_description and project.description %}mb-2{% else %}mb-3{% endif %}"><span style="color: var(--text-grey);">{{ project.title }}</span></h3>
+      {% endif %}
+      {% if show_description and project.description %}
+        <p class="project-card-description">{{ project.description|linebreaksbr }}</p>
       {% endif %}
     </div>
   </div>
