@@ -2,15 +2,12 @@
 
 <div class="col col-md-7 flex-basis-100-smo d-flex justify-content-end align-items-end">
   <div class="projects-filters-panel col d-flex flex-wrap justify-content-md-end align-items-center column-gap-3 row-gap-2 mb-3" role="region" aria-label="{% trans 'Filters' %}">
-    {% if show_layout_toggle %}
-      <div class="btn-group btn-group-sm project-page-mode-buttons" role="group" aria-label="{% trans 'Projects layout' %}">
-        {% comment %} list {% endcomment %}
-        <input type="radio" class="btn-check" name="view" id="projects-layout-default" value="default" autocomplete="off"{% if projects_layout == 'default' %} checked{% endif %} />
-        <label class="btn btn-outline-primary" for="projects-layout-default">{% trans 'List' %}</label>
-        
-        {% comment %} roadmap {% endcomment %}
-        <input type="radio" class="btn-check" name="view" id="projects-layout-roadmap" value="roadmap" autocomplete="off"{% if projects_layout != 'default' %} checked{% endif %} />
-        <label class="btn btn-outline-primary" for="projects-layout-roadmap">{% trans 'Roadmap' %}</label>
+    {% if layout_toggle %}
+      <div class="btn-group btn-group-sm project-page-mode-buttons" role="group" aria-label="{{ layout_toggle.label }}">
+        {% for option in layout_toggle.options %}
+          <input type="radio" class="btn-check" name="view" id="layout-{{ option.value }}" value="{{ option.value }}" autocomplete="off"{% if option.checked %} checked{% endif %} />
+          <label class="btn btn-outline-primary" for="layout-{{ option.value }}">{{ option.label }}</label>
+        {% endfor %}
       </div>
     {% endif %}
     {% if show_course_filters %}

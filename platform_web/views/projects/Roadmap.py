@@ -4,14 +4,11 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
+from platform_web.config.ProjectConfig import ProjectConfig
 from platform_web.models.project.Course import Course, CourseType
 from platform_web.models.project.Project import Project
 from platform_web.models.project.Skill import Skill
-from .Projects import (
-    PROJECTS_LAYOUT_QUERY,
-    PROJECTS_LAYOUT_ROADMAP,
-    filter_by_workouts_toggle,
-)
+from .Projects import filter_by_workouts_toggle
 
 
 class RoadmapView(TemplateView):
@@ -19,7 +16,7 @@ class RoadmapView(TemplateView):
     course_type = CourseType.REGULAR
     include_courses_without_skills = False
     include_empty_skill_tracks = False
-    show_layout_toggle = True
+    layout_kind = ProjectConfig.LAYOUT_PROJECTS
     show_workouts_by_default = False
     page_title = _("Projects")
     list_url_name = "projects"
@@ -36,7 +33,6 @@ class RoadmapView(TemplateView):
         context = super().get_context_data(**kwargs)
         workouts_default = "1" if self.show_workouts_by_default else "0"
         show_workouts = self.request.GET.get("show_workouts", workouts_default) == "1"
-        concepts_only = self.request.GET.get("content") == "concepts"
         course_slug = self.kwargs.get("course_slug")
         active_projects = filter_by_workouts_toggle(
             Project.objects.filter(is_active=True).select_related("difficulty"),
@@ -53,15 +49,14 @@ class RoadmapView(TemplateView):
         skills = Skill.objects.annotate(has_projects=has_projects).order_by(
             "order", "name"
         )
-        if not concepts_only and not self.include_empty_skill_tracks:
+        if not self.include_empty_skill_tracks:
             skills = skills.filter(
                 Q(pk__in=Skill.objects.filter(projects__in=active_projects).values("pk"))
                 | (Q(has_projects=False) & ~Q(contents=""))
             )
-        if not concepts_only:
-            skills = skills.prefetch_related(
-                Prefetch("projects", queryset=active_projects)
-            )
+        skills = skills.prefetch_related(
+            Prefetch("projects", queryset=active_projects)
+        )
         courses = courses.prefetch_related(
             Prefetch("skills", queryset=skills)
         ).order_by("order", "title")
@@ -69,17 +64,17 @@ class RoadmapView(TemplateView):
         context["empty_message"] = self.empty_message
         context["show_workouts"] = show_workouts
         context["can_reorder_projects"] = show_workouts
-        context["page_mode"] = "projects" if self.show_layout_toggle else None
-        context["projects_layout"] = PROJECTS_LAYOUT_ROADMAP
-        context["show_layout_toggle"] = self.show_layout_toggle
+        current_layout, layout_query = self._layout()
+        context["page_mode"] = (
+            "projects" if self.layout_kind == ProjectConfig.LAYOUT_PROJECTS else None
+        )
+        context["layout_toggle"] = ProjectConfig.layout_toggle(
+            self.layout_kind, current_layout
+        )
+        context["hide_skill_contents"] = (
+            current_layout == ProjectConfig.ROADMAP_LAYOUT_LIST
+        )
         context["show_content_filters"] = True
-        context["concepts_only"] = concepts_only
-        query = []
-        if self.show_layout_toggle:
-            query.append(f"{PROJECTS_LAYOUT_QUERY}={PROJECTS_LAYOUT_ROADMAP}")
-        if concepts_only:
-            query.append("content=concepts")
-        layout_query = f"?{'&'.join(query)}" if query else ""
         context["breadcrumbs"] = _breadcrumbs(
             self.page_title,
             self.list_url_name,
@@ -94,6 +89,17 @@ class RoadmapView(TemplateView):
                 course for course in courses if course.skills.all()
             ]
         return context
+
+    def _layout(self):
+        if self.layout_kind == ProjectConfig.LAYOUT_ROADMAP:
+            current = ProjectConfig.roadmap_layout(self.request.GET)
+            default = ProjectConfig.PROJECTS_LAYOUT_ROADMAP
+        elif self.layout_kind == ProjectConfig.LAYOUT_PROJECTS:
+            current = ProjectConfig.PROJECTS_LAYOUT_ROADMAP
+            default = ProjectConfig.PROJECTS_LAYOUT_DEFAULT
+        else:
+            return "", ""
+        return current, ProjectConfig.view_query(current, default=default)
 
 
 def _breadcrumbs(page_title, list_url_name, detail_url_name, selected_course, layout_query):

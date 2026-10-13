@@ -2,41 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.utils.translation import gettext as _
 
+from platform_web.config.ProjectConfig import ProjectConfig, ProjectType
 from platform_web.models.project.Course import Course, CourseType
 from platform_web.models.project.Lesson import Lesson
-from platform_web.models.project.Project import Project, ProjectType
+from platform_web.models.project.Project import Project
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
-
-
-MAX_SEARCH_LENGTH = 100
-PROJECTS_LAYOUT_QUERY = "view"
-PROJECTS_LAYOUT_DEFAULT = "default"
-PROJECTS_LAYOUT_ROADMAP = "roadmap"
-PROJECTS_CONTENT_QUERY = "content"
-PROJECTS_CONTENT_CONCEPTS = "concepts"
-
-MODE_SETTINGS = {
-    "projects": {
-        "filter_by": "course",
-        "project_type": ProjectType.PROJECT,
-        "is_video_course": "false",
-    },
-    "topics": {
-        "filter_by": "language",
-        "project_type": ProjectType.TOPIC,
-        "is_video_course": "false",
-    },
-    "concepts": {
-        "filter_by": "language",
-        "project_type": ProjectType.CONCEPT,
-        "is_video_course": None,
-    },
-    "courses": {
-        "filter_by": "course",
-        "project_type": ProjectType.PROJECT,
-        "is_video_course": "true",
-    },
-}
 
 
 def _list_page_titles(page_mode, project_type):
@@ -46,9 +16,6 @@ def _list_page_titles(page_mode, project_type):
         return label, label
     if project_type == "topic":
         label = _("Topics")
-        return label, label
-    if project_type == "concept":
-        label = _("Concepts")
         return label, label
     if project_type == "all":
         return _("All Projects & Topics"), _("Projects & Topics")
@@ -116,12 +83,12 @@ def _render_projects_page(
     selected_course_id=None,
     selected_language_id=None,
 ):
-    mode_settings = MODE_SETTINGS.get(page_mode, MODE_SETTINGS["projects"])
+    mode_settings = ProjectConfig.mode(page_mode)
 
     filter_by = mode_settings["filter_by"]
     project_type = mode_settings["project_type"]
     is_video_course = mode_settings["is_video_course"]
-    search_query = request.GET.get("search", "").strip()[:MAX_SEARCH_LENGTH]
+    search_query = ProjectConfig.search_query(request.GET)
     show_workouts = (
         page_mode == "projects"
         and not search_query
@@ -145,8 +112,10 @@ def _render_projects_page(
         ],
         "selected_course_id": selected_course_id,
         "selected_language_id": selected_language_id,
-        "projects_layout": PROJECTS_LAYOUT_DEFAULT,
-        "show_layout_toggle": page_mode == "projects",
+        "layout_toggle": ProjectConfig.layout_toggle(
+            ProjectConfig.LAYOUT_PROJECTS if page_mode == "projects" else ProjectConfig.LAYOUT_NONE,
+            ProjectConfig.PROJECTS_LAYOUT_DEFAULT,
+        ),
         "show_content_filters": page_mode == "projects",
         "layout_query": "",
     }
@@ -203,8 +172,7 @@ def _render_projects_page(
 
 def projects_page_view(request, course_slug: str | None = None):
     show_roadmap = (
-        request.GET.get(PROJECTS_LAYOUT_QUERY) == PROJECTS_LAYOUT_ROADMAP
-        or request.GET.get(PROJECTS_CONTENT_QUERY) == PROJECTS_CONTENT_CONCEPTS
+        ProjectConfig.requested_layout(request.GET) == ProjectConfig.PROJECTS_LAYOUT_ROADMAP
     )
     if show_roadmap:
         from .Roadmap import RoadmapView
@@ -233,10 +201,6 @@ def projects_by_course_view(request, course_slug: str):
 
 def topics_view(request):
     return _render_projects_page(request, page_mode="topics")
-
-
-def concepts_view(request):
-    return _render_projects_page(request, page_mode="concepts")
 
 
 def topics_by_language_view(request, language_slug: str):

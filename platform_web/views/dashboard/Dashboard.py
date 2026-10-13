@@ -37,9 +37,6 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             _recommendation_column(
                 _("Topics"), ProjectType.TOPIC, "topics", _("No topics yet.")
             ),
-            _recommendation_column(
-                _("Concepts"), ProjectType.CONCEPT, "concepts", _("No concepts yet.")
-            ),
         ]
         return context
 

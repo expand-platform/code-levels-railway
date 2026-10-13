@@ -15,7 +15,7 @@
               <span class="skills-timeline__circle" aria-hidden="true"></span>
               <h3 class="skills-timeline__name">{{ skill.name }}</h3>
             </div>
-            {% if not concepts_only and skill.projects.all %}
+            {% if skill.projects.all %}
               <div class="skills-timeline__projects">
                 {% if user.is_staff and can_reorder_projects %}
                   <button id="save-grid-order-btn-{{ skill.id }}" class="btn btn-sm btn-success mb-2" style="display:none;">{% trans "Save Order" %}</button>
@@ -35,7 +35,7 @@
                   {% endfor %}
                 </div>
               </div>
-            {% elif skill.contents and not skill.has_projects %}
+            {% elif skill.contents and not skill.has_projects and not hide_skill_contents %}
               <div class="skills-timeline__content">
                 {{ skill.contents|safe }}
               </div>

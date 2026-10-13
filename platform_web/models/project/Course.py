@@ -15,14 +15,12 @@ class CourseType:
     REGULAR: str = "regular"
     LANGUAGE: str = "language"
     JOB: str = "job"
-    GUIDE: str = "guide"
 
 
 COURSE_TYPE_CHOICES = [
     (CourseType.REGULAR, _("Regular course")),
-    (CourseType.LANGUAGE, _("Language course")),
+    (CourseType.LANGUAGE, _("Roadmap")),
     (CourseType.JOB, _("Job course")),
-    (CourseType.GUIDE, _("Guide")),
 ]
 
 

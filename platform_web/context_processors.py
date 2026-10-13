@@ -15,17 +15,16 @@ website_tagline = _("Your step-by-step coding journey")
 #! TODO: refactor context processors to use only queries that page needs
 
 
-def _sidebar_courses(course_type):
-    # Courses with no skills are empty. A skill with no projects still counts.
-    return (
-        Course.objects.filter(type=course_type, skills__isnull=False)
-        .distinct()
-        .order_by("order", "title")
-    )
+def _sidebar_courses(course_type, *, require_skills=True):
+    courses = Course.objects.filter(type=course_type)
+    if require_skills:
+        # A skill with no projects still counts. Courses with no skills are left out.
+        courses = courses.filter(skills__isnull=False).distinct()
+    return courses.order_by("order", "title")
 
 
 def _get_sidebar_project_courses():
-    return _sidebar_courses(CourseType.REGULAR)
+    return _sidebar_courses(CourseType.REGULAR, require_skills=False)
 
 
 def _get_sidebar_job_courses():

@@ -35,8 +35,6 @@
     <section class="container position-relative">
       {% if project.type == 'topic' %}
         {% url 'topics' as smart_back_url %}
-      {% elif project.type == 'concept' %}
-        {% url 'concepts' as smart_back_url %}
       {% else %}
         {% url 'projects' as smart_back_url %}
       {% endif %}
@@ -46,13 +44,10 @@
           data-smart-back
           data-back-title-projects="{% trans 'Back to projects' %}"
           data-back-title-topics="{% trans 'Back to topics' %}"
-          data-back-title-concepts="{% trans 'Back to concepts' %}"
           data-back-title-roadmap="{% trans 'Back to roadmap' %}"
           data-back-title-courses="{% trans 'Back to courses' %}"
           title="{% if project.type == 'topic' %}
             {% trans 'Back to topics' %}
-          {% elif project.type == 'concept' %}
-            {% trans 'Back to concepts' %}
           {% else %}
             {% trans 'Back to projects' %}
           {% endif %}">

@@ -3,15 +3,8 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 
-from platform_web.models.project.Course import Course, CourseType
-
-
-# type, heading, detail url name, link only when the course has a skill
-COURSE_SECTIONS = (
-    (CourseType.LANGUAGE, _("Language courses"), "roadmaps_by_course", False),
-    (CourseType.REGULAR, _("Regular courses"), "projects_by_course", True),
-    (CourseType.JOB, _("Job courses"), "job_tracks_by_course", True),
-)
+from platform_web.config.CoursesConfig import CoursesConfig
+from platform_web.models.project.Course import Course
 
 
 class CoursesView(TemplateView):
@@ -20,11 +13,7 @@ class CoursesView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         course_type_filter = self.request.GET.get("type", "")
-        if course_type_filter not in {
-            CourseType.LANGUAGE,
-            CourseType.REGULAR,
-            CourseType.JOB,
-        }:
+        if course_type_filter not in CoursesConfig.valid_types():
             course_type_filter = ""
         sections = _course_sections()
         if course_type_filter:
@@ -40,23 +29,28 @@ class CoursesView(TemplateView):
         ]
         context["show_course_filters"] = True
         context["course_type_filter"] = course_type_filter
-        context["course_type_filters"] = _course_type_filters()
+        context["course_type_filters"] = CoursesConfig.type_filters()
         return context
 
 
 def _course_sections():
     grouped, other = _group_courses()
     sections = []
-    for course_type, title, url_name, needs_skills in COURSE_SECTIONS:
+    for section in CoursesConfig.SECTIONS:
         _add_section(
-            sections, title, grouped[course_type], url_name, needs_skills, course_type
+            sections,
+            section.heading,
+            grouped[section.type],
+            section.url_name,
+            section.needs_skills,
+            section.type,
         )
     _add_section(sections, _("Other"), other, "", False, "")
     return sections
 
 
 def _group_courses():
-    grouped = {section[0]: [] for section in COURSE_SECTIONS}
+    grouped = {section.type: [] for section in CoursesConfig.SECTIONS}
     other = []
     courses = Course.objects.annotate(skill_count=Count("skills")).order_by(
         "order", "title"
@@ -68,15 +62,6 @@ def _group_courses():
         else:
             bucket.append(course)
     return grouped, other
-
-
-def _course_type_filters():
-    return (
-        ("", _("All")),
-        (CourseType.LANGUAGE, _("Language")),
-        (CourseType.REGULAR, _("Regular")),
-        (CourseType.JOB, _("Job")),
-    )
 
 
 def _add_section(sections, title, courses, url_name, needs_skills, course_type):

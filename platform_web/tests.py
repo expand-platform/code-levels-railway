@@ -7,40 +7,8 @@ from code_levels.settings.features.feature_flags import DASHBOARD, FeatureFlag
 from platform_web.models.base.social_media_link import SocialMediaLink
 from platform_web.models.base.website_config import WebsiteConfig
 from platform_web.models.project.Course import Course, CourseType
-from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.project.Project import Project, ProjectType
 from platform_web.models.project.Skill import Skill
-
-
-class ConceptsPageTests(TestCase):
-	def test_page_groups_only_concepts_by_language_and_links_to_details(self):
-		language = ProgrammingLanguage.objects.create(name="Django")
-		concept = Project.objects.create(
-			title="Authentication",
-			type=ProjectType.CONCEPT,
-			slug="authentication-concept",
-		)
-		concept.programming_languages.add(language)
-		Project.objects.create(
-			title="Django project",
-			type="project",
-			slug="django-project",
-		).programming_languages.add(language)
-
-		response = self.client.get(reverse("concepts"))
-
-		self.assertEqual(response.status_code, 200)
-		self.assertContains(response, "Django")
-		self.assertContains(response, "Authentication")
-		self.assertContains(response, reverse("project_details", args=[concept.slug]))
-		self.assertNotContains(response, "Django project")
-
-		detail_response = self.client.get(
-			reverse("project_details", args=[concept.slug])
-		)
-
-		self.assertEqual(detail_response.status_code, 200)
-		self.assertContains(detail_response, 'href="/concepts/"')
 
 
 class JobTrackLayoutTests(TestCase):
@@ -204,39 +172,6 @@ class SkillContentTimelineTests(TestCase):
 		projects_roadmap = self.client.get(reverse("projects"), {"view": "roadmap"})
 		self.assertContains(projects_roadmap, "Elements")
 
-		concepts = self.client.get(
-			reverse("projects"), {"view": "roadmap", "content": "concepts"}
-		)
-		self.assertContains(concepts, "Elements")
-
-
-class ConceptsTimelineTests(TestCase):
-	def test_concepts_only_hides_projects_and_sidebar_link(self):
-		course = Course.objects.create(
-			title="Web Development",
-			slug="web-development",
-			type=CourseType.REGULAR,
-		)
-		skill = Skill.objects.create(name="HTML basics", related_course=course)
-		project = Project.objects.create(
-			title="Captain card",
-			type=ProjectType.PROJECT,
-			slug="captain-card",
-			is_active=True,
-		)
-		skill.projects.add(project)
-
-		roadmap = self.client.get(reverse("projects"), {"view": "roadmap"})
-		self.assertContains(roadmap, "HTML basics")
-		self.assertContains(roadmap, "Captain card")
-		self.assertNotContains(roadmap, 'data-route="concepts"')
-
-		concepts = self.client.get(
-			reverse("projects"), {"view": "roadmap", "content": "concepts"}
-		)
-		self.assertContains(concepts, "HTML basics")
-		self.assertNotContains(concepts, "Captain card")
-
 
 class CourseAdminProjectTabsTests(TestCase):
 	def setUp(self):
@@ -350,7 +285,7 @@ class UserDashboardTests(TestCase):
 		)
 		Project.objects.create(
 			title="Auth concept",
-			type=ProjectType.CONCEPT,
+			type=ProjectType.PROJECT,
 			slug="auth-concept",
 		)
 		Project.objects.create(

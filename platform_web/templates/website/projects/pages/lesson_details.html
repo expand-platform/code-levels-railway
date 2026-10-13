@@ -55,8 +55,6 @@
           {% trans 'Lesson' %}#{{ lesson_number }} {% trans 'of' %} {{ project.parts.count }}
           {% if project.type == 'topic' %}
             {% trans 'in topic' %}
-          {% elif project.type == 'guide' %}
-            {% trans 'in guide' %}
           {% else %}
             {% trans 'in project' %}
           {% endif %}

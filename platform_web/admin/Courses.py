@@ -69,6 +69,7 @@ class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
     changeform_format = "horizontal_tabs"
     jazzmin_section_order = (
         "General",
+        "Settings",
         "Skills",
         "Projects by course",
         "Projects by skills",
@@ -91,11 +92,18 @@ class CourseAdmin(SortableAdminMixin, admin.ModelAdmin):  # type: ignore[misc]
                         "slug",
                         "languages",
                         "type",
+                    )
+                },
+            ),
+            (
+                "Settings",
+                {
+                    "fields": (
                         "order",
                         "uuid",
                     )
                 },
-            )
+            ),
         ]
         if obj is None:
             return fieldsets

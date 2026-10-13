@@ -26,6 +26,5 @@ class GamesView(TemplateView):
         context["breadcrumbs"] = [
             {"label": _("Games"), "url": "", "active": True},
         ]
-        context["show_layout_toggle"] = False
         context["show_content_filters"] = False
         return context

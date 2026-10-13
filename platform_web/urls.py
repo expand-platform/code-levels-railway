@@ -68,7 +68,6 @@ urlpatterns = [
 
     # Topics, courses
     path("topics/", topics_view, name="topics"),
-    path("concepts/", concepts_view, name="concepts"),
     path("courses/", require_courses(CoursesView.as_view()), name="courses"),
     
     # sort by language

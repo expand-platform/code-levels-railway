@@ -1,23 +1,16 @@
-from dataclasses import dataclass
 from typing import cast
 import uuid
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from platform_web.config.ProjectConfig import ProjectType
 from platform_web.mixins.SeoSlugMixin import SeoSlugMixin
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.project.Difficulty import Difficulty
 from platform_web.models.project.Framework import Framework
 from platform_web.models.project.Course import Course
 from platform_web.services.model.ImageUpload import ImageUploadService
-
-@dataclass
-class ProjectType:
-    TOPIC: str = "topic"
-    PROJECT: str = "project"
-    WORKOUT: str = "workout"
-    CONCEPT: str = "concept"
 
 
 def project_image_upload_to(instance, filename):
@@ -28,7 +21,6 @@ PROJECT_TYPE_CHOICES = [
     (ProjectType.TOPIC, _("Topic")),
     (ProjectType.PROJECT, _("Project")),
     (ProjectType.WORKOUT, _("Workout")),
-    (ProjectType.CONCEPT, _("Concept")),
 ]
 
 LANGUAGE_CHOICES = [

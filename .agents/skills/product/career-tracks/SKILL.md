@@ -81,10 +81,6 @@ Every public surface is a step toward login → FAQ/AI → mentor contact.
 
 Do not hide the catalog entirely from guests. Tease, then gate depth.
 
-## Concepts
-
-There is no Concepts sidebar item. On Projects, the filters panel toggles **Projects** (default) and **Concepts only** (`?content=concepts`). Concepts only is the skill timeline: numbered points and skill names, without the projects under each track.
-
 ## Existing models
 
 Reuse `Course` → `Skill` → `Project`. Homepage and sidebar should lead with

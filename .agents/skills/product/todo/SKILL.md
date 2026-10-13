@@ -38,14 +38,11 @@ Student home (`/dashboard/`). Replace the current recommendation columns with:
 
 ## Course kinds
 
-`Course.type` is the admin dropdown (`job`, `language`, `guide`, `regular`). Regular is the default. Job tracks use job courses; Projects uses regular courses; Roadmaps (`/roadmaps/`) uses language courses. Migration is generated, not applied.
-
-- Guides still have no page (see Extra).
+`Course.type` is the admin dropdown (`job`, `language`, `regular`). Regular is the default. Job tracks use job courses; Projects uses regular courses; Roadmaps (`/roadmaps/`) uses language courses.
 
 ## Extra (additional)
 
 - project details (`/projects/<slug>/`): course progression order is wrong. `project_details_view` loads sibling projects with `.order_by("order", "title")`, while the projects list uses `course_order`. The counter shows the stored `course_order` for projects and the list position for topics, so the number can disagree with the course order
-- roadmap page (`/roadmaps/`): Default / List toggle. Default keeps the skill timeline with the outline list items under each skill (`Skill.contents`). List hides those items and shows only the skill names
 - drag-and-drop to reorder skills across projects (staff). Projects already reorder inside a skill when workouts are on (`/api/skill/<id>/reorder_projects/`); skills have `order` but the skill groups themselves are not draggable
 - GUIDES / Blog posts / articles / tutorials / guides / etc.
 - Codelevels Bot + discipline bot + some smart automatizations for student engagement

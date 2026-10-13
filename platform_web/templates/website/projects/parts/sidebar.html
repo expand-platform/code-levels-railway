@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<section id="sidebar">
+<section id="sidebar" data-submenu-open="{% trans 'Open submenu' %}" data-submenu-close="{% trans 'Close submenu' %}">
   <div class="row p-2">
     <div class="logo col">
       <a href="{% url 'home' %}" class="brand ms-4"><span class="text">{{ website_config.site_name }}</span></a>
@@ -31,7 +31,7 @@
     {% comment %} Projects {% endcomment %}
     <li class="has-submenu" data-submenu="projects">
       <div class="menu-row">
-        <a href="{% url 'projects' %}" data-route="projects" class="main-link" data-bs-toggle="collapse" data-bs-target="#projectsSidebarCollapse" aria-expanded="false" aria-controls="projectsSidebarCollapse" aria-label="{% trans 'Toggle Projects courses' %}">
+        <a href="{% url 'projects' %}" data-route="projects" class="main-link">
           <i class="bx bi bi-braces"></i>
           <span class="text">{% trans 'Projects' %}</span>
         </a>
@@ -45,7 +45,7 @@
     {% comment %} Roadmaps {% endcomment %}
     <li class="has-submenu" data-submenu="roadmaps">
       <div class="menu-row">
-        <a href="{% url 'roadmaps' %}" data-route="roadmaps" class="main-link" data-bs-toggle="collapse" data-bs-target="#roadmapsSidebarCollapse" aria-expanded="false" aria-controls="roadmapsSidebarCollapse" aria-label="{% trans 'Toggle Roadmaps courses' %}">
+        <a href="{% url 'roadmaps' %}" data-route="roadmaps" class="main-link">
           <i class="bx bi bi-map"></i>
           <span class="text">{% trans 'Roadmaps' %}</span>
         </a>
@@ -59,7 +59,7 @@
     {% comment %} Job tracks {% endcomment %}
     <li class="has-submenu" data-submenu="job-tracks">
       <div class="menu-row">
-        <a href="{% url 'job_tracks' %}" data-route="job-tracks" class="main-link" data-bs-toggle="collapse" data-bs-target="#jobTracksSidebarCollapse" aria-expanded="false" aria-controls="jobTracksSidebarCollapse" aria-label="{% trans 'Toggle Job tracks courses' %}">
+        <a href="{% url 'job_tracks' %}" data-route="job-tracks" class="main-link">
           <i class="bx bi bi-diagram-3"></i>
           <span class="text">{% trans 'Job tracks' %}</span>
         </a>
@@ -83,6 +83,10 @@
         <i class="bx bi bi-joystick"></i>
         <span class="text">{% trans 'Games' %}</span>
       </a>
+    </li>
+    {% comment %} Search {% endcomment %}
+    <li>
+      {% include 'website/projects/parts/project-search-trigger.html' with show_label=True %}
     </li>
   </ul>
   <ul class="side-menu bottom">

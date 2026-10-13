@@ -7,5 +7,8 @@
   aria-haspopup="dialog"
   aria-controls="project-search-modal"
 >
-  <i class="bi bi-search" aria-hidden="true"></i>
+  <i class="{% if show_label %}bx {% endif %}bi bi-search" aria-hidden="true"></i>
+  {% if show_label %}
+    <span class="text">{% trans 'Search' %}</span>
+  {% endif %}
 </button>

@@ -25,7 +25,7 @@
 }
 
 
-#sidebar::--webkit-scrollbar {
+#sidebar::-webkit-scrollbar {
     display: none;
 }
 
@@ -117,37 +117,56 @@
 #sidebar .side-menu li.has-submenu .menu-row {
     display: flex;
     align-items: center;
-    gap: 6px;
 }
 
 #sidebar .side-menu li.has-submenu .main-link {
-    flex: 1;
+    flex: 0 1 auto;
+    width: auto;
+    max-width: calc(100% - 1.35rem);
+    min-width: 0;
     min-height: 40px;
 }
 
-#sidebar .side-menu li.has-submenu .submenu-toggle {
-    width: 40px;
-    min-width: 40px;
-    height: 40px;
-    border: 0;
-    border-radius: 50%;
-    color: var(--black);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: color .2s ease, transform .2s ease;
+#sidebar .side-menu li.has-submenu:has(.submenu-collapse) .main-link .text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-#sidebar .side-menu li.has-submenu .submenu-toggle:hover {
-    color: var(--blue);
+#sidebar .side-menu li.has-submenu .submenu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: auto;
+    min-height: 40px;
+    margin-left: .75rem;
+    padding: 0 0.4rem 0 0;
+    border: 0;
+    background: transparent;
+    color: var(--black);
+    cursor: pointer;
 }
 
 #sidebar .side-menu li.has-submenu .submenu-toggle i {
+    font-size: 0.75rem;
+    line-height: 1;
     transition: transform .2s ease;
 }
 
-#sidebar .side-menu li.has-submenu .submenu-toggle:not(.collapsed) i {
+#sidebar .side-menu li.has-submenu .submenu-toggle[aria-expanded="true"] i {
     transform: rotate(180deg);
+}
+
+#sidebar .side-menu li.has-submenu .submenu-toggle:hover,
+#sidebar .menu-row.active .submenu-toggle {
+    color: var(--blue);
+}
+
+#sidebar .side-menu li.has-submenu .submenu-toggle:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: -2px;
+    border-radius: 8px;
 }
 
 #sidebar .side-menu li.has-submenu .submenu-collapse {
@@ -200,10 +219,24 @@
     color: var(--blue);
 }
 
-#sidebar .side-menu li a .bx {
+#sidebar .side-menu li .bx {
     min-width: calc(60px - ((4px + 6px) * 2));
     display: flex;
     justify-content: center;
     padding: 1px 0 0 0;
     margin: 0 -2px 0 0;
+}
+
+#sidebar .side-menu li .project-search-trigger {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    gap: 0;
+    justify-content: flex-start;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+#sidebar .side-menu li .project-search-trigger i {
+    font-size: 1em;
 }
