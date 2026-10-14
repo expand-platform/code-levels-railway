@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
-from platform_web.config.ProjectConfig import ProjectConfig
+from platform_web.config.models.ProjectConfig import ProjectConfig
 from platform_web.models.project.Course import Course, CourseType
 from platform_web.models.project.Project import Project
 from platform_web.models.project.Skill import Skill

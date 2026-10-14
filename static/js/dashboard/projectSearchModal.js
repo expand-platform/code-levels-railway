@@ -1,4 +1,4 @@
-import { ProjectSearch } from '../helpers/projectSearch.js'
+import { ProjectSearch, setOpenSearch } from '../helpers/projectSearch.js'
 
 function escapeHtml(value) {
   return String(value)
@@ -55,29 +55,11 @@ function setupProjectSearch(root) {
     error: root.dataset.msgError || '',
   }
   let modal = new window.bootstrap.Modal(root)
-  let catalogPromise = null
   let requestId = 0
   let activeIndex = -1
 
   function loadCatalog() {
-    if (!catalogPromise) {
-      catalogPromise = fetch(root.dataset.searchUrl, {
-        headers: { Accept: 'application/json' },
-      })
-        .then((response) => {
-          const contentType = response.headers.get('content-type') || ''
-          if (!response.ok || !contentType.includes('application/json')) {
-            throw new Error('search index failed')
-          }
-          return response.json()
-        })
-        .then((data) => new ProjectSearch(data.projects))
-        .catch((error) => {
-          catalogPromise = null
-          throw error
-        })
-    }
-    return catalogPromise
+    return ProjectSearch.load(root.dataset.searchUrl)
   }
 
   function showStatus(message) {
@@ -155,7 +137,7 @@ function setupProjectSearch(root) {
       showStatus(messages.hint)
       return
     }
-    if (!catalogPromise) showStatus(messages.loading)
+    if (!ProjectSearch.hasCatalog(root.dataset.searchUrl)) showStatus(messages.loading)
 
     loadCatalog()
       .then((search) => {
@@ -253,12 +235,7 @@ function setupProjectSearch(root) {
     showStatus(messages.hint)
   })
 
-  document.addEventListener('keydown', (event) => {
-    if (event.repeat || event.shiftKey || event.altKey) return
-    if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== 'i') return
-    event.preventDefault()
-    openSearch()
-  })
+  setOpenSearch(openSearch)
 
   document.querySelectorAll('[data-project-search-open]').forEach((button) => {
     button.addEventListener('click', openSearch)

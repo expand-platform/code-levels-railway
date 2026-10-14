@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from django.utils.translation import gettext as _
 
-from platform_web.config.ProjectConfig import ProjectConfig, ProjectType
+from platform_web.config.models.ProjectConfig import ProjectConfig, ProjectType
 from platform_web.models.project.Course import Course, CourseType
 from platform_web.models.project.Lesson import Lesson
 from platform_web.models.project.Project import Project

@@ -1,6 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 
-from platform_web.config.ProjectConfig import ProjectConfig
+from platform_web.config.models.ProjectConfig import ProjectConfig
 from platform_web.models.project.Course import CourseType
 
 from .Roadmap import RoadmapView

@@ -4,7 +4,7 @@ import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from platform_web.config.ProjectConfig import ProjectType
+from platform_web.config.models.ProjectConfig import ProjectType
 from platform_web.mixins.SeoSlugMixin import SeoSlugMixin
 from platform_web.models.project.ProgrammingLanguage import ProgrammingLanguage
 from platform_web.models.project.Difficulty import Difficulty

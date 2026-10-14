@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 
-from platform_web.config.CoursesConfig import CoursesConfig
+from platform_web.config.models.CoursesConfig import CoursesConfig
 from platform_web.models.project.Course import Course
 
 

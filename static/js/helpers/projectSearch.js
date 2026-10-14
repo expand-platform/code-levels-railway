@@ -1,5 +1,45 @@
+let openHandler = null
+
+export function setOpenSearch(handler) {
+  openHandler = handler
+}
+
+export function openSearch() {
+  if (openHandler) openHandler()
+}
+
+
 export class ProjectSearch {
   static #SHORT_QUERY = 3
+  static #catalogs = new Map()
+
+  static load(url) {
+    const cached = ProjectSearch.#catalogs.get(url)
+    if (cached) return cached
+
+    const request = fetch(url, {
+      headers: { Accept: 'application/json' },
+    })
+      .then((response) => {
+        const contentType = response.headers.get('content-type') || ''
+        if (!response.ok || !contentType.includes('application/json')) {
+          throw new Error('search index failed')
+        }
+        return response.json()
+      })
+      .then((data) => new ProjectSearch(data.projects))
+      .catch((error) => {
+        ProjectSearch.#catalogs.delete(url)
+        throw error
+      })
+
+    ProjectSearch.#catalogs.set(url, request)
+    return request
+  }
+
+  static hasCatalog(url) {
+    return ProjectSearch.#catalogs.has(url)
+  }
 
   constructor(projects, limit = 8) {
     this.projects = Array.isArray(projects) ? projects : []
