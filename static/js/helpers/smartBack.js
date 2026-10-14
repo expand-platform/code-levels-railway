@@ -54,6 +54,10 @@ export function shouldUseHistoryBack(referrer = document.referrer) {
   return true
 }
 
+function hasPreviousHistoryEntry() {
+  return window.history.length > 1
+}
+
 function toStoredUrl(url) {
   return url.pathname + url.search
 }
@@ -117,7 +121,7 @@ function onSmartBackClick(event) {
   if (!link) return
   if (event.button !== 0) return
   if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
-  if (!shouldUseHistoryBack()) return
+  if (!shouldUseHistoryBack() || !hasPreviousHistoryEntry()) return
   event.preventDefault()
   history.back()
 }
