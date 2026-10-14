@@ -24,7 +24,17 @@ def _sidebar_courses(course_type, *, require_skills=True):
 
 
 def _get_sidebar_project_courses():
-    return _sidebar_courses(CourseType.REGULAR, require_skills=False)
+    # Match the projects list: active, non-video projects. Empty courses stay out.
+    return (
+        Course.objects.filter(
+            type=CourseType.REGULAR,
+            projects__is_active=True,
+            projects__is_video_course=False,
+            projects__type=ProjectType.PROJECT,
+        )
+        .distinct()
+        .order_by("order", "title")
+    )
 
 
 def _get_sidebar_job_courses():

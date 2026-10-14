@@ -7,12 +7,12 @@ from platform_web.models.project.Project import Project, ProjectType
 
 
 class SearchService:
-    """Active projects, games, and roadmaps for the command-palette search."""
+    """Active projects, workouts, games, and roadmaps for the command-palette search."""
 
     @staticmethod
     def catalog() -> list[dict[str, str]]:
         return [
-            *SearchService._projects(),
+            *SearchService._projects_and_workouts(),
             *SearchService._games(),
             *SearchService._roadmaps(),
         ]
@@ -22,23 +22,36 @@ class SearchService:
         return {"title": title, "url": url, "course": group, "kind": kind}
 
     @staticmethod
-    def _projects() -> list[dict[str, str]]:
-        projects = (
-            Project.objects.filter(is_active=True, type=ProjectType.PROJECT)
+    def _projects_and_workouts() -> list[dict[str, str]]:
+        rows = (
+            Project.objects.filter(
+                is_active=True,
+                type__in=[ProjectType.PROJECT, ProjectType.WORKOUT],
+            )
             .exclude(slug="")
             .select_related("course")
-            .only("title", "slug", "course__title")
+            .only("title", "slug", "type", "course__title")
             .order_by("title")
         )
-        return [
-            SearchService._item(
-                project.title,
-                reverse("project_details", kwargs={"slug": project.slug}),
-                project.course.title if project.course is not None else "",
-                "project",
+        workout_label = _("Workout")
+        items = []
+        for project in rows:
+            course = project.course.title if project.course is not None else ""
+            if project.type == ProjectType.WORKOUT:
+                group = f"{workout_label} · {course}" if course else workout_label
+                kind = "workout"
+            else:
+                group = course
+                kind = "project"
+            items.append(
+                SearchService._item(
+                    project.title,
+                    reverse("project_details", kwargs={"slug": project.slug}),
+                    group,
+                    kind,
+                )
             )
-            for project in projects
-        ]
+        return items
 
     @staticmethod
     def _games() -> list[dict[str, str]]:
